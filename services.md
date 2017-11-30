@@ -22,13 +22,17 @@ Tools:
 
 #### METS profile
 
-All file refs are to be put in `<fileSec>`
-  - `<fileGrp USE="IMAGE">` → master input images
-    + <file ID="name" MIMETYPE="img"> → single page image id
-      * <FLocat LOCTYPE="URL" xlink:href="..."> → URL to get image from
-  - `<fileGrp USE="fulltext">` → recognition output on page level
-    + <file ID="name" MIMETYPE="xml"> → single page image id
-      * <FLocat LOCTYPE="URL" xlink:href="..."> → URL to get PAGE xml from
+All file refs are to be put in `<fileSec>` with two different `fileGrp` sections, one for images, one for textual content.
+```xml
+<fileGrp USE="IMAGE"> <!-- master input images -->
+  <file ID="name" MIMETYPE="img" /> <!-- single page image id -->
+    <FLocat LOCTYPE="URL" xlink:href="..." /> <!-- URL to get image from -->
+</fileGrp>
+<fileGrp USE="FULLTEXT"> <!-- recognition results -->
+  <file ID="name" MIMETYPE="xml" /> <!-- single page xml id -->
+    <FLocat LOCTYPE="URL" xlink:href="..." /> <!-- URL to get PAGE XML from -->
+</fileGrp>
+```
 
 ## Image preprocessing
 
