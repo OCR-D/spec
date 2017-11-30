@@ -66,3 +66,43 @@ Tools:
   - `unpaper`
 
 ### Deskewing
+
+Information:
+  - Skew
+
+Level of operation:
+  - Page
+  - Region
+
+### Binarization
+
+Information:
+  - For each pixel {0,1}
+
+Level of operation:
+  - Page
+  - Region
+  - Line
+
+Tools:
+  - `kraken`
+  - ...
+
+## Layout analysis
+
+### Page segmentation
+
+Information:
+  - Localization of regions
+
+Level of operation:
+  - Page
+
+Tools:
+  - `Tesseract`
+  - `kraken`
+
+### Line splitting
+
+Information:
+  - Localization of lines
