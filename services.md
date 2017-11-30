@@ -5,6 +5,7 @@
 Input:
   - METS file
   - User-defined parameters
+  
 Output:
   - METS file
   - Process metadata (“provenance”)
