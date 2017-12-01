@@ -3,17 +3,17 @@
 ## Input output data
 
 Input:
-  - METS file
+  - [METS](https://www.loc.gov/standards/mets/) file ([OCR-D profile](https://github.com/OCR-D/spec/blob/master/services.md#mets-profile))
   - User-defined parameters
   
 Output:
-  - METS file
-  - Process metadata (“provenance”)
+  - [METS](https://www.loc.gov/standards/mets/) file ([OCR-D profile](https://github.com/OCR-D/spec/blob/master/services.md#mets-profile))
+  - Process metadata ([provenance](https://en.wikipedia.org/wiki/Data_lineage#Data_Provenance))
   
 ### Input preparation
 
 Information:
-  - PAGE XML skeleton
+  - [PAGE-XML](https://github.com/PRImA-Research-Lab/PAGE-XML) file (OCR-D profile)
 
 Level of operation:
   - Document
@@ -23,20 +23,19 @@ Tools:
 
 #### METS profile
 
-All file refs are to be put in `<fileSec>` with two different `fileGrp` sections, one for images, one for textual content.
+METS files must contain a minimum of one [`<fileSec>`](https://www.loc.gov/standards/mets/docs/mets.v1-9.html#fileSec) element with at least two distinct [`<fileGrp>`](https://www.loc.gov/standards/mets/docs/mets.v1-9.html#fileGrp) children, one for images and one for textual content.
 ```xml
-<fileGrp USE="IMAGE"> <!-- master input images -->
-  <file ID="name" MIMETYPE="img" /> <!-- single page image id -->
-  <FLocat LOCTYPE="URL" xlink:href="..." /> <!-- URL to get image from -->
-</fileGrp>
-<fileGrp USE="FULLTEXT"> <!-- recognition results -->
-  <file ID="name" MIMETYPE="xml" /> <!-- single page xml id -->
-  <FLocat LOCTYPE="URL" xlink:href="..." /> <!-- URL to get PAGE XML from -->
-</fileGrp>
-<fileGrp USE="IIIF"> <!-- additional output -->
-  <file ID="doc_name" MIMETYPE="application/json" /> <!-- document IIF manifest -->
-  <FLocat LOCTYPE="URL" xlink:href="..." /> <!-- URL to get JSON from -->
-</fileGrp>
+<fileSec>
+  <fileGrp USE="IMAGE"> <!-- master input images -->
+    <file ID="name" MIMETYPE="image/tif" /> <!-- single page image id -->
+    <FLocat LOCTYPE="URL" xlink:href="..." /> <!-- URL to image -->
+  </fileGrp>
+  ...
+  <fileGrp USE="FULLTEXT"> <!-- recognition results -->
+    <file ID="name" MIMETYPE="text/xml" /> <!-- single page xml id -->
+    <FLocat LOCTYPE="URL" xlink:href="..." /> <!-- URL to page xml -->
+  </fileGrp>
+</fileSec>
 ```
 
 ## Image preprocessing
