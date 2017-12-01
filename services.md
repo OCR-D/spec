@@ -27,11 +27,15 @@ All file refs are to be put in `<fileSec>` with two different `fileGrp` sections
 ```xml
 <fileGrp USE="IMAGE"> <!-- master input images -->
   <file ID="name" MIMETYPE="img" /> <!-- single page image id -->
-    <FLocat LOCTYPE="URL" xlink:href="..." /> <!-- URL to get image from -->
+  <FLocat LOCTYPE="URL" xlink:href="..." /> <!-- URL to get image from -->
 </fileGrp>
 <fileGrp USE="FULLTEXT"> <!-- recognition results -->
   <file ID="name" MIMETYPE="xml" /> <!-- single page xml id -->
-    <FLocat LOCTYPE="URL" xlink:href="..." /> <!-- URL to get PAGE XML from -->
+  <FLocat LOCTYPE="URL" xlink:href="..." /> <!-- URL to get PAGE XML from -->
+</fileGrp>
+<fileGrp USE="IIIF"> <!-- additional output -->
+  <file ID="doc_name" MIMETYPE="application/json"/> <!-- document IIF manifest -->
+  <FLocat LOCTYPE="URL" xlink:href="..." /> <!-- URL to get JSON from -->
 </fileGrp>
 ```
 
