@@ -34,7 +34,7 @@ All file refs are to be put in `<fileSec>` with two different `fileGrp` sections
   <FLocat LOCTYPE="URL" xlink:href="..." /> <!-- URL to get PAGE XML from -->
 </fileGrp>
 <fileGrp USE="IIIF"> <!-- additional output -->
-  <file ID="doc_name" MIMETYPE="application/json"/> <!-- document IIF manifest -->
+  <file ID="doc_name" MIMETYPE="application/json" /> <!-- document IIF manifest -->
   <FLocat LOCTYPE="URL" xlink:href="..." /> <!-- URL to get JSON from -->
 </fileGrp>
 ```
