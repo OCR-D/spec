@@ -68,7 +68,7 @@ Level of operation:
   - Page
 
 Result format:
-  - PAGE XML
+  - PAGE XML
 ```xml
 <Border>
 	<Coords points="25,25 25,4895 3483,4895 3483,25"/>
@@ -85,12 +85,12 @@ Level of operation:
   - Region
   
 Result format:
-  - PAGE XML
-  - Page level:
+  - PAGE XML
+  - Page level
 ```xml
 <AlternativeImage filename="deskewed.tif" comments="deskewed" skew="1.67" rotation="normal"/>
 ```
-  - Region level:
+  - Region level
 ```xml
 ToDO
 ```
@@ -133,7 +133,7 @@ Level of operation:
   - Page
 
 Result format:
-  - PAGE XML
+  - PAGE XML
 ```xml
 <TextRegion id="r0">
   <Coords points="54,178 267,391 324,448 111,235"/>
@@ -149,7 +149,7 @@ Level of operation:
   - Region
   
 Result format:
-  - PAGE XML
+  - PAGE XML
 ```xml
 <TextLine>
   <Coords points="85,0 928,843 976,891 133,48"/>
@@ -169,7 +169,7 @@ Result format:
 ```xml
 <TextRegion id="r0" type="caption">
 ```
-  - METS XML
+  - METS XML
 ```xml
 ```
 
@@ -182,7 +182,7 @@ Level of operation:
   - Document
 
 Result format:
-  - METS XML
+  - METS XML
 ```xml
 ```
 
