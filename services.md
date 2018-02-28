@@ -137,7 +137,7 @@ Result format:
   - PAGE XML
 ```xml
 <TextRegion id="r0">
-			<Coords points="54,178 267,391 324,448 111,235"/>
+  <Coords points="54,178 267,391 324,448 111,235"/>
 </TextRegion>
 ```
 
@@ -152,6 +152,9 @@ Level of operation:
 Result format:
   - PAGE XML
 ```xml
+<TextLine>
+  <Coords points="85,0 928,843 976,891 133,48"/>
+</TextLine>
 ```
 
 ### Region classification
@@ -160,9 +163,32 @@ Information:
   - Function of regions
 
 Level of operation:
+  - Page
+
+Result format:
+  - PAGE XML
+```xml
+<TextRegion id="r0" type="caption">
+```
+  - METS XML
+```xml
+```
+
+### Document analysis
+
+Information:
+  - Function of regions
+  
+Level of operation:
   - Document
 
 Result format:
   - METS XML
 ```xml
 ```
+
+## Text production
+
+### Text recognition
+
+### Post correction
