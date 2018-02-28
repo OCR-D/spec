@@ -116,11 +116,10 @@ Service Processing Time: <time in milliseconds>
   
 2. Mapping of Exit Codes to HTTP Responses
 
-Exit Code | HTTP Response
-0 | 200 (Success)
-1 | 400 (Bad formed request)
-2 | 500 (General server error )
-3 | 503 (Service unavailable)
-... | ...
-
-
+| Exit Code | HTTP Response |
+| --------- | ------------- |
+| 0 | 200 (Success) |
+| 1 | 400 (Bad formed request) |
+| 2 | 500 (General server error) |
+| 3 | 503 (Service unavailable) |
+| ... | ... |
