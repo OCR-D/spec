@@ -86,7 +86,6 @@ Level of operation:
   
 Result format:
   - PAGE XML
-  - ToDo!
   - Page level:
 ```xml
 <AlternativeImage filename="deskewed.tif" comments="deskewed" skew="1.67" rotation="normal"/>
