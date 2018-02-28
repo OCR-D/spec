@@ -1,4 +1,4 @@
-# OCR-D services
+# OCR-D interfaces
 
 ## Input output data
 
