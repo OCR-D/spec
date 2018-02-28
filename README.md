@@ -114,7 +114,7 @@ Exit code: <Enumeration of Exit codes, 0 = OK, any value > 0 corresponds to a pa
 Service invocation Timestamp: <timestamp>    
 Service Processing Time: <time in milliseconds>    
   
-2. Mapping of Exit Codes to HTTP Responses
+Mapping of Exit Codes to HTTP Responses
 
 | Exit Code | HTTP Response |
 | --------- | ------------- |
