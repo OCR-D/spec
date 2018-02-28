@@ -18,9 +18,6 @@ Information:
 Level of operation:
   - Document
 
-Tools:
-  - ToDO
-
 #### METS profile
 
 METS files must contain a minimum of one [`<fileSec>`](https://www.loc.gov/standards/mets/docs/mets.v1-9.html#fileSec) element with at least two distinct [`<fileGrp>`](https://www.loc.gov/standards/mets/docs/mets.v1-9.html#fileGrp) children, one for images and one for textual content.
@@ -43,30 +40,39 @@ METS files must contain a minimum of one [`<fileSec>`](https://www.loc.gov/stand
 ### Characterisation
 
 Information:
-  - Image file format
-  - Resolution
-  - Color scheme
-  - ...
+  - Identification of various image metadata, e.g.
+    + Image file format
+    + Resolution
+    + Color scheme
+    + Compression
+  - Identification of special characterstics of/difficulties with the image, e.g.
+    + Missing page parts
+    + Coffee staines
 
 Level of operation:
-  - Page
+  - Page image
 
-Tools:
-  - `exiftool`
+Result format:
+  - PAGE XML
+```xml
+<Page imageCompression="JPEG" imageHeight="3062" imagePhotometricInterpretation="RGB" imageResolutionUnit="inches" imageWidth="2097" imageXResolution="300" imageYResolution="300">
+```
 
-Status:
- 
 ### Cropping
 
 Information:
-  - Print space
+  - Detection of print space
 
 Level of operation:
   - Page
 
-Tools:
-  - `scantailor`
-  - `unpaper`
+Result format:
+  - PAGE XML
+```xml
+<Border>
+	<Coords points="25,25 25,4895 3483,4895 3483,25"/>
+</Border>
+```
 
 ### Deskewing
 
@@ -76,6 +82,18 @@ Information:
 Level of operation:
   - Page
   - Region
+  
+Result format:
+  - PAGE XML
+  - ToDo!
+  - Page level:
+```xml
+<AlternativeImage filename="deskewed.tif" comments="deskewed" skew="1.67" rotation="normal"/>
+```
+  - Region level:
+```xml
+ToDO
+```
 
 ### Binarization
 
@@ -87,9 +105,22 @@ Level of operation:
   - Region
   - Line
 
-Tools:
-  - `kraken`
+Result format:
+  - PAGE XML
+```xml
+<AlternativeImage filename="page_b.tif" comments="B/W"/>
+```
+
+### Dewarping
+
+Information:
   - ...
+
+Level of operation:
+  - Line
+
+Result format:
+  - ???
 
 ## Layout analysis
 
@@ -101,11 +132,36 @@ Information:
 Level of operation:
   - Page
 
-Tools:
-  - `Tesseract`
-  - `kraken`
+Result format:
+  - PAGE XML
+```xml
+<TextRegion id="r0">
+			<Coords points="54,178 267,391 324,448 111,235"/>
+</TextRegion>
+```
 
-### Line splitting
+### Region segmentation
 
 Information:
   - Localization of lines
+
+Level of operation:
+  - Region
+  
+Result format:
+  - PAGE XML
+```xml
+```
+
+### Region classification
+
+Information:
+  - Function of regions
+
+Level of operation:
+  - Document
+
+Result format:
+  - METS XML
+```xml
+```
