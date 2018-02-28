@@ -93,5 +93,41 @@ Workflow registry (myexperiment.org): With the services registered in a dedicate
 
 
 ## 4. Data and metadata exchange format(s)
+* METS
+* PAGE
+* ALTO
+
 ## 5. Repository
+TODO
+
 ## 6. Appendix
+Minimal log information that each module should provide is described below.  Any additional, important information pertaining to the execution of the services within the module should be appended to this information. The logging information is necessary for detecting failed services, tracing the execution, and debugging purposes. The information required for reproducing the results will be extracted from these logs. 
+
+Service name: <name of the module/sub-module>
+Service version: <module version>
+Service description: <textual description of the service>
+Service URL: <location where the service is deployed>
+Service Implementation: <implementation library name, version>
+Input data URL: <URLs of the input data>
+Input parameters: <list of input parameters>
+Output file name and size: <name of the output file and size>
+Exit code: <Enumeration of Exit codes, 0 = OK, any value > 0 corresponds to a particular error code>
+Service invocation Timestamp: <timestamp>
+Service Processing Time: <time in milliseconds>
+
+2. Mapping of Exit Codes to HTTP Responses
+
+Exit Code
+HTTP Response
+0
+200 (Success)
+1
+400 (Bad formed request)
+2
+500 (General server error )
+3
+503 (Service unavailable)
+…
+…
+
+
