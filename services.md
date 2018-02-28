@@ -55,7 +55,8 @@ Level of operation:
 Result format:
   - PAGE XML
 ```xml
-<Page imageCompression="JPEG" imageHeight="3062" imagePhotometricInterpretation="RGB" imageResolutionUnit="inches" imageWidth="2097" imageXResolution="300" imageYResolution="300">
+<Page imageCompression="JPEG" imageHeight="3062" imagePhotometricInterpretation="RGB"
+      imageResolutionUnit="inches" imageWidth="2097" imageXResolution="300" imageYResolution="300">
 ```
 
 ### Cropping
