@@ -120,7 +120,10 @@ Level of operation:
   - Line
 
 Result format:
-  - ???
+  - PAGE XML
+```xml
+???
+```
 
 ## Layout analysis
 
