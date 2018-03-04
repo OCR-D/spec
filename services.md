@@ -122,7 +122,7 @@ Level of operation:
 Result format:
   - PAGE XML
 ```xml
-???
+<AlternativeImage lineRef="l01" filename="line_01_dewarped.tif" comments="dewarped" ... />
 ```
 
 ## Layout analysis
