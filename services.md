@@ -70,9 +70,9 @@ Level of operation:
 Result format:
   - PAGE XML
 ```xml
-<Border>
+<PrintSpace>
 	<Coords points="25,25 25,4895 3483,4895 3483,25"/>
-</Border>
+</PrintSpace>
 ```
 
 ### Deskewing
