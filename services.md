@@ -15,7 +15,7 @@ Output:
 Information:
   - [PAGE-XML](https://github.com/PRImA-Research-Lab/PAGE-XML) file (OCR-D profile)
 
-Level of operation:
+Input:
   - Document
 
 #### METS profile
@@ -49,11 +49,11 @@ Information:
     + Missing page parts
     + Coffee staines
 
-Level of operation:
+Input:
   - Page image
 
-Result format:
-  - PAGE XML
+Output:
+  - PAGE XML enriched with image metadata in corresponding attributes
 ```xml
 <Page imageCompression="JPEG" imageHeight="3062" imagePhotometricInterpretation="RGB"
       imageResolutionUnit="inches" imageWidth="2097" imageXResolution="300" imageYResolution="300">
@@ -64,11 +64,11 @@ Result format:
 Information:
   - Detection of print space
 
-Level of operation:
-  - Page
+Input:
+  - Page image
 
-Result format:
-  - PAGE XML
+Output:
+  - PAGE XML `<PrintSpace>` with coordinates corresponding to the print space 
 ```xml
 <PrintSpace>
 	<Coords points="25,25 25,4895 3483,4895 3483,25"/>
@@ -80,19 +80,14 @@ Result format:
 Information:
   - Skew
 
-Level of operation:
+Input:
   - Page
   - Region
   
-Result format:
-  - PAGE XML
-  - Page level
+Output:
+  - PAGE XML `<AlternativeImage>` linking to the deskewed image and process meta data
 ```xml
-<AlternativeImage filename="deskewed.tif" comments="deskewed" skew="1.67" rotation="normal"/>
-```
-  - Region level
-```xml
-ToDO
+<AlternativeImage filename="deskewed.tif" comments="deskewed" skew="1.67" rotation="normal" ... />
 ```
 
 ### Binarization
@@ -100,27 +95,27 @@ ToDO
 Information:
   - For each pixel {0,1}
 
-Level of operation:
+Input:
   - Page
   - Region
   - Line
 
-Result format:
-  - PAGE XML
+Output:
+  - PAGE XML `<AlternativeImage>` linking to the binarized image and process meta data
 ```xml
-<AlternativeImage filename="page_b.tif" comments="B/W"/>
+<AlternativeImage filename="page_b.tif" comments="B/W" ... />
 ```
 
 ### Dewarping
 
 Information:
-  - ...
+  - Removal of distortion
 
-Level of operation:
+Input:
   - Line
 
-Result format:
-  - PAGE XML
+Output:
+  - PAGE XML `<AlternativeImage>` linking to the dewarped image and process meta data
 ```xml
 <AlternativeImage lineRef="l01" filename="line_01_dewarped.tif" comments="dewarped" ... />
 ```
@@ -132,15 +127,18 @@ Result format:
 Information:
   - Localization of regions
 
-Level of operation:
+Input:
   - Page
 
-Result format:
-  - PAGE XML
+Output:
+  - PAGE XML with Regions, corresponding coordinates and their classification
 ```xml
 <TextRegion id="r0">
   <Coords points="54,178 267,391 324,448 111,235"/>
 </TextRegion>
+<GraphicRegion id="r1">
+  <Coords points="55,532 269,768 326,800 109,532"/>
+</GraphicRegion>
 ```
 
 ### Region segmentation
@@ -148,11 +146,11 @@ Result format:
 Information:
   - Localization of lines
 
-Level of operation:
+Input:
   - Region
   
-Result format:
-  - PAGE XML
+Output:
+  - PAGE XML `<TextLine>` for each line (and corresponding coordinates) in a `<TextRegion>`
 ```xml
 <TextLine>
   <Coords points="85,0 928,843 976,891 133,48"/>
@@ -164,16 +162,19 @@ Result format:
 Information:
   - Function of regions
 
-Level of operation:
+Input:
   - Page
 
-Result format:
-  - PAGE XML
+Output:
+  - METS structural map `<mets:structMap>` linking (typed) structures and regions
 ```xml
-<TextRegion id="r0" type="caption">
-```
-  - METS XML
-```xml
+<structMap TYPE="logical">
+  <div ID="STRUCT1" LABEL="Überschrift" TYPE="heading">
+    <fptr>
+      <area FILEID="FILE001" COORDS="0123 4567 8901 2345"/>
+    </fptr>
+  </div>
+</structMap>
 ```
 
 ### Document analysis
@@ -181,16 +182,62 @@ Result format:
 Information:
   - Function of regions
   
-Level of operation:
+Input:
   - Document
 
-Result format:
-  - METS XML
+Output:
+  - METS XML structural map `<mets:structMap>` linking (typed) structures and pages
 ```xml
+<structMap TYPE="logical">
+  <div ID="LOG1" LABEL="Inhaltsverzeichnis" TYPE="table of contents">
+    <div ID="div1" LABEL="1. Einleitung" ORDER="1">
+      <fptr FILEID="FILE001" ID="LOG001"/>
+    </div>
+    <div ID="div2" LABEL="2. Fortsetzung" ORDER="2">
+      <fptr FILEID="FILE002" ID="LOG002"/>
+    </div>
+  </div>
+</structMap>
 ```
 
 ## Text production
 
 ### Text recognition
 
+Information:
+  - OCR core functionality
+
+Input:
+  - Line
+
+Output:
+  - PAGE XML `<TextEquiv>` with recognized text
+```xml
+<TextRegion id="r02" type="text" textColour="black">
+  ...
+  <TextLine id=”l01”>
+    <Coords points="222 250, 222 477, 2259 477, 2259 250"/>
+  </TextLine>
+  <TextEquiv id=”l01”>befondere Ausgabe dic Kreditorgamſation deſ Hanse⸗Bund</TextEquiv>
+</TextRegion>
+```
+
 ### Post correction
+Information:
+  - Improvement of recognized text
+
+Input:
+  - Seite
+  - Dokument
+
+Output:
+  - PAGE XML `<TextEquiv>` with improved text
+```xml
+<TextRegion id="r02" type="text" textColour="black">
+  ...
+  <TextLine id=”l01”>
+    <Coords points="222 250, 222 477, 2259 477, 2259 250"/>
+  </TextLine>
+  <TextEquiv id=”l01”>beſondere Aufgabe die Kreditorganiſation des Hanse⸗Bund</TextEquiv>
+</TextRegion>
+```
