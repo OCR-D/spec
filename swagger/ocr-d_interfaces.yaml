@@ -45,7 +45,7 @@ paths:
            required: true
            description: XML holding all information of the digitized document. All references of the images are available via fileGrp section (ID="OCR-D-IMG") inside the METS document. in (see http://www.loc.gov/standards/mets/mets.xsd)
          - in: formData
-           name: imageID
+           name: groupID
            type: array
            items: 
              type: string
@@ -78,7 +78,7 @@ paths:
            required: true
            description: XML holding all information of the digitized document. All references of the images are available via fileGrp section (ID="OCR-D-IMG") inside the METS document. in (see http://www.loc.gov/standards/mets/mets.xsd)
          - in: formData
-           name: imageID
+           name: groupID
            type: array
            items: 
                type: string 
@@ -111,7 +111,7 @@ paths:
            required: true
            description: XML holding all information of the digitized document. All references of the images are available via fileGrp section (ID="OCR-D-IMG") inside the METS document. in (see http://www.loc.gov/standards/mets/mets.xsd)
          - in: formData
-           name: imageID
+           name: groupID
            type: array
            items: 
              type: string
@@ -168,7 +168,7 @@ paths:
            required: true
            description: XML holding all information of the digitized document. All references of the images are available via fileGrp section (ID="OCR-D-IMG") inside the METS document. in (see http://www.loc.gov/standards/mets/mets.xsd)
          - in: formData
-           name: imageID
+           name: groupID
            type: array
            items: 
              type: string
@@ -233,7 +233,7 @@ paths:
            required: true
            description: XML holding all information of the digitized document. All references of the images are available via fileGrp section (ID="OCR-D-IMG" or ”OCR-D-IMG-CROP”) inside the METS document. in (see http://www.loc.gov/standards/mets/mets.xsd)
          - in: formData
-           name: imageID
+           name: groupID
            type: array
            items: 
              type: string
@@ -298,7 +298,7 @@ paths:
            required: true
            description: XML holding all information of the digitized document. All references of the images are available via fileGrp section (ID="OCR-D-IMG" or ”OCR-D-IMG-CROP” or ”OCR-D-IMG-DESKEW”) inside the METS document. in (see http://www.loc.gov/standards/mets/mets.xsd)
          - in: formData
-           name: imageID
+           name: groupID
            type: array
            items: 
              type: string
@@ -363,7 +363,7 @@ paths:
            required: true
            description: XML holding all information of the digitized document. All references of the images are available via fileGrp section (ID="OCR-D-IMG" or ”OCR-D-IMG-CROP” or ”OCR-D-IMG-DESKEW” or ”OCR-D-IMG-DESPECK”) inside the METS document. in (see http://www.loc.gov/standards/mets/mets.xsd)
          - in: formData
-           name: imageID
+           name: groupID
            type: array
            items: 
              type: string
@@ -428,7 +428,7 @@ paths:
            required: true
            description: XML holding all information of the digitized document. All references of the images are available via fileGrp section (ID="OCR-D-IMG" or ”OCR-D-IMG-CROP” or ”OCR-D-IMG-DESKEW” or ”OCR-D-IMG-DESPECK” or ”OCR-D-IMG-DEWARP”) inside the METS document. in (see http://www.loc.gov/standards/mets/mets.xsd)
          - in: formData
-           name: imageID
+           name: groupID
            type: array
            items: 
              type: string
@@ -493,7 +493,7 @@ paths:
            required: true
            description: XML holding all information of the digitized document. All references of the images are available via fileGrp section (ID="OCR-D-IMG" or ”OCR-D-IMG-CROP” or ”OCR-D-IMG-DESKEW” or ”OCR-D-IMG-DESPECK” or ”OCR-D-IMG-DEWARP” or ”OCR-D-IMG-BIN”) inside the METS document. in (see http://www.loc.gov/standards/mets/mets.xsd)
          - in: formData
-           name: imageID
+           name: groupID
            type: array
            items: 
              type: string
@@ -534,7 +534,7 @@ paths:
            required: true
            description: XML holding all information of the digitized document. All references of the images are available via fileGrp section (ID="OCR-D-IMG" or ”OCR-D-IMG-CROP” or ”OCR-D-IMG-DESKEW” or ”OCR-D-IMG-DESPECK” or ”OCR-D-IMG-DEWARP” or ”OCR-D-IMG-BIN”) inside the METS document. in (see http://www.loc.gov/standards/mets/mets.xsd)
          - in: formData
-           name: imageID
+           name: groupID
            type: array
            items: 
              type: string
@@ -567,7 +567,7 @@ paths:
            required: true
            description: XML holding all information of the digitized document. All references of the images are available via fileGrp section (ID="OCR-D-IMG" or ”OCR-D-IMG-CROP” or ”OCR-D-IMG-DESKEW” or ”OCR-D-IMG-DESPECK” or ”OCR-D-IMG-DEWARP” or ”OCR-D-IMG-BIN”) inside the METS document. in (see http://www.loc.gov/standards/mets/mets.xsd)
          - in: formData
-           name: imageID
+           name: groupID
            type: array
            items: 
              type: string
@@ -600,7 +600,7 @@ paths:
            required: true
            description: XML holding all information of the digitized document. All references of the PAGE XML files are available via fileGrp section (ID= "OCR-D-SEG-PAGE" or ”OCR-D-SEG-BLOCK” or ”OCR-D-SEG-LINE”) inside the METS document. in (see http://www.loc.gov/standards/mets/mets.xsd)
          - in: formData
-           name: imageID
+           name: groupID
            type: array
            items: 
              type: string
@@ -646,7 +646,7 @@ paths:
       tags:
       - "Textoptimierung"
       summary: "OCR on page level"
-      description: "Do OCR based on existing approaches. Combining and/or optimization of different OCR algorithms. ."
+      description: "Do OCR based on existing approaches. Combining and/or optimization of different OCR algorithms."
       operationId: "createText"
       consumes:
       - "multipart/form-data"
@@ -659,7 +659,7 @@ paths:
            required: true
            description: XML holding all information of the digitized document. All references of the PAGE XML files are available via fileGrp section (ID= "OCR-D-SEG-PAGE" or ”OCR-D-SEG-BLOCK” or ”OCR-D-SEG-LINE”) inside the METS document. in (see http://www.loc.gov/standards/mets/mets.xsd)
          - in: formData
-           name: imageID
+           name: groupID
            type: array
            items: 
              type: string
