@@ -2,8 +2,7 @@
     <!-- 
          Example METS file for the OCR-D Workflow.
          http://ocr-d.de/
-         This file contains (or at least a reference to) all collected information of a
-         complete manuscript/book/...(Bitte durch korrekten Begriff ersetzen) .
+         This container file holds (references to) all information and resources that constitute the digital object.
     -->
 <mets:mets xmlns:mets="http://www.loc.gov/METS/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="info:lc/xmlns/premis-v2 http://www.loc.gov/standards/premis/v2/premis-v2-0.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-6.xsd http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/version17/mets.v1-7.xsd http://www.loc.gov/mix/v10 http://www.loc.gov/standards/mix/mix10/mix10.xsd">
   <mets:metsHdr CREATEDATE="2017-11-30T16:18:26">
@@ -13,12 +12,11 @@
     </mets:agent>
   </mets:metsHdr>
     <!-- 
-         This section should contain all necessary information about the manuscript/book/...(Bitte durch korrekten Begriff ersetzen)
+         This section should contain all necessary information about the digital object.
          Mandatory values are:
-           ??? Gibt es eine Art ISBN-Nummer, die immer vorhanden sein sollte?
-           Welche Merkmale sollten hier auftauchen.
-           Wird das im Laufe des Workflows erweitert oder ist das nach Modul 1.A
-           fix?
+           physicalLocation: Prefix of ISIL file (http://sigel.staatsbibliothek-berlin.de/en/startseite/)
+           recordIdentifier: Pica Production Number (PPN)   
+           Both values together are building an unique ID of the digital object.
     -->
   <mets:dmdSec ID="DMDLOG_0001">
     <mets:mdWrap MDTYPE="MODS">
@@ -113,7 +111,7 @@
     <!-- 
          This section has to contain all necessary information about the OCR-D workflow to
          reproduce the results.
-         Hat hier jemand schon Beispiele?
+         Due to the amount of information the provenance data should be referenced.
     -->
     <mets:digiprovMD ID="DIGIPROV-OCR-D">
       <mets:mdWrap MDTYPE="OTHER" MIMETYPE="text/xml" OTHERMDTYPE="PROVONE">
@@ -141,12 +139,9 @@
                ”OCR-D-SEG-LINE”      Line segmentation. (Module 2, submodule B: line segmentation)
                ”OCR-D-SEG-CLASS”     Block classification. (Module 2, submodule C: segment classification)
                ”OCR-D-SEG-DOC”       Document analysis. (Module 2, submodule D: document analysis)
-               ”OCR-D-OCR-TESS"      OCR with Tesseract. (Module 3, submodule A: OCR)
-               "OCR-D-OCR-ANY"       OCR with any other language. (Module 3, submodule A: OCR)
-               "OCR-D-COR-CIS"       CIS post correction. (Module 3, submodule B: OCR)
-               "OCR-D-COR-ASC"       ASC post correction. (Module 3, submodule B: OCR)
-               "OCR-D-GT-PAGE"       Ground Truth data in PAGE XML format.
-               "OCR-D-GT-ALTO"       Ground Truth data in ALTO format.
+               "OCR-D-OCR-..."       OCR with any algorithm. Examples: Tesseract, anyOCR (Module 3, submodule A: OCR)
+               "OCR-D-COR-..."       Post correction with any algorithm. Examples: CIR, ASV (Module 3, submodule B: OCR)
+               "OCR-D-GT-..."        Ground Truth data in any format: Examples: PAGE XML, ALTO, TXT, TEI.
                
          Not all fileGrps are mandatory.     
          For all fileGrps belonging to Module 1 or 2 at least the unmanipulated source images (”OCR-D-IMG”)have
@@ -156,16 +151,16 @@
          
          IMPORTANT:      
          Files which corresponds to the same source image are linked via the same groupId. 
-         (Suggestions for a specific groupID: PAGE_0001, PAGE_0002)
+         (Suggestions for a specific groupID: FILE_0001_IMAGE (id of the original image)
     -->
     <!-- 
                ”OCR-D-IMG”           The unmanipulated source images.
     -->
     <mets:fileGrp USE="OCR-D-IMG">
-      <mets:file ID="FILE_0001_IMAGE" GROUPID="PAGE_0001" MIMETYPE="image/tif">
+      <mets:file ID="FILE_0001_IMAGE" GROUPID="FILE_0001_IMAGE" MIMETYPE="image/tif">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000001.tif" />
       </mets:file>
-      <mets:file ID="FILE_0002_IMAGE" GROUPID="PAGE_0002" MIMETYPE="image/tif">
+      <mets:file ID="FILE_0002_IMAGE" GROUPID="FILE_0002_IMAGE" MIMETYPE="image/tif">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000002.tif" />
       </mets:file>
     </mets:fileGrp>
@@ -173,10 +168,10 @@
                ”OCR-D-IMG-DESKEW”,   Deskewed images. (Module 1, submodule B: image optimization)
     -->
     <mets:fileGrp USE="OCR-D-IMG-DESKEW">
-      <mets:file ID="FILE_0001_IMAGE_DESKEW" GROUPID="PAGE_0001" MIMETYPE="image/tif">
+      <mets:file ID="FILE_0001_IMAGE_DESKEW" GROUPID="FILE_0001_IMAGE" MIMETYPE="image/tif">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000001_DESKEW.tif" />
       </mets:file>
-      <mets:file ID="FILE_0002_IMAGE_DESKEW" GROUPID="PAGE_0002" MIMETYPE="image/tif">
+      <mets:file ID="FILE_0002_IMAGE_DESKEW" GROUPID="FILE_0002_IMAGE" MIMETYPE="image/tif">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000002_DESKEW.tif" />
       </mets:file>
     </mets:fileGrp>
@@ -184,10 +179,10 @@
                ”OCR-D-IMG-DESPECK”,  Despeckled images. (Module 1, submodule B: image optimization)
     -->
     <mets:fileGrp USE="OCR-D-IMG-DESPECK">
-      <mets:file ID="FILE_0001_IMAGE_DESPECK" GROUPID="PAGE_0001" MIMETYPE="image/tif">
+      <mets:file ID="FILE_0001_IMAGE_DESPECK" GROUPID="FILE_0001_IMAGE" MIMETYPE="image/tif">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000001_DESPECK.tif" />
       </mets:file>
-      <mets:file ID="FILE_0002_IMAGE_DESPECK" GROUPID="PAGE_0002" MIMETYPE="image/tif">
+      <mets:file ID="FILE_0002_IMAGE_DESPECK" GROUPID="FILE_0002_IMAGE" MIMETYPE="image/tif">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000002_DESPECK.tif" />
       </mets:file>
     </mets:fileGrp>
@@ -195,10 +190,10 @@
                ”OCR-D-IMG-DEWARP”,   Dewarped images. (Module 1, submodule B: image optimization)
     -->
     <mets:fileGrp USE="OCR-D-IMG-DEWARP">
-      <mets:file ID="FILE_0001_IMAGE_DEWARP" GROUPID="PAGE_0001" MIMETYPE="image/tif">
+      <mets:file ID="FILE_0001_IMAGE_DEWARP" GROUPID="FILE_0001_IMAGE" MIMETYPE="image/tif">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000001_DEWARP.tif" />
       </mets:file>
-      <mets:file ID="FILE_0002_IMAGE_DEWARP" GROUPID="PAGE_0002" MIMETYPE="image/tif">
+      <mets:file ID="FILE_0002_IMAGE_DEWARP" GROUPID="FILE_0002_IMAGE" MIMETYPE="image/tif">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000002_DEWARP.tif" />
       </mets:file>
     </mets:fileGrp>
@@ -206,10 +201,10 @@
                ”OCR-D-IMG-CROP”,     Cropped images. (Module 1, submodule B: image optimization)
     -->
 <mets:fileGrp USE="OCR-D-IMG-CROP">
-      <mets:file ID="FILE_0001_IMAGE_CROP" GROUPID="PAGE_0001" MIMETYPE="image/tif">
+      <mets:file ID="FILE_0001_IMAGE_CROP" GROUPID="FILE_0001_IMAGE" MIMETYPE="image/tif">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000001_CROP.tif" />
       </mets:file>
-      <mets:file ID="FILE_0002_IMAGE_CROP" GROUPID="PAGE_0002" MIMETYPE="image/tif">
+      <mets:file ID="FILE_0002_IMAGE_CROP" GROUPID="FILE_0002_IMAGE" MIMETYPE="image/tif">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000002_CROP.tif" />
       </mets:file>
     </mets:fileGrp>
@@ -217,10 +212,10 @@
                ”OCR-D-IMG-BIN”       Binarized images. (Module 1, submodule B: image optimization)
     -->
     <mets:fileGrp USE="OCR-D-IMG-BIN">
-      <mets:file ID="FILE_0001_IMAGE_BIN" GROUPID="PAGE_0001" MIMETYPE="image/tif">
+      <mets:file ID="FILE_0001_IMAGE_BIN" GROUPID="FILE_0001_IMAGE" MIMETYPE="image/tif">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000001_BIN.tif" />
       </mets:file>
-      <mets:file ID="FILE_0002_IMAGE_BIN" GROUPID="PAGE_0002" MIMETYPE="image/tif">
+      <mets:file ID="FILE_0002_IMAGE_BIN" GROUPID="FILE_0002_IMAGE" MIMETYPE="image/tif">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000002_BIN.tif" />
       </mets:file>
     </mets:fileGrp>
@@ -228,10 +223,10 @@
                ”OCR-D-SEG-PAGE”      Page segmentation. (Module 2, submodule A: page segmentation)
     -->
     <mets:fileGrp USE="OCR-D-SEG-PAGE">
-      <mets:file ID="FILE_0001_SEG_PAGE" GROUPID="PAGE_0001" MIMETYPE="text/xml">
+      <mets:file ID="FILE_0001_SEG_PAGE" GROUPID="FILE_0001_IMAGE" MIMETYPE="text/xml">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000001_SEG_PAGE.xml" />
       </mets:file>
-      <mets:file ID="FILE_0002_SEG_PAGE" GROUPID="PAGE_0002" MIMETYPE="text/xml">
+      <mets:file ID="FILE_0002_SEG_PAGE" GROUPID="FILE_0002_IMAGE" MIMETYPE="text/xml">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000002_SEG_PAGE.xml" />
       </mets:file>
     </mets:fileGrp>
@@ -239,10 +234,10 @@
                ”OCR-D-SEG-BLOCK”     Block segmentation. (Module 2, submodule A: page segmentation)
     -->
     <mets:fileGrp USE="OCR-D-SEG-BLOCK">
-      <mets:file ID="FILE_0001_SEG_BLOCK" GROUPID="PAGE_0001" MIMETYPE="text/xml">
+      <mets:file ID="FILE_0001_SEG_BLOCK" GROUPID="FILE_0001_IMAGE" MIMETYPE="text/xml">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000001_SEG_BLOCK.xml" />
       </mets:file>
-      <mets:file ID="FILE_0002_SEG_BLOCK" GROUPID="PAGE_0002" MIMETYPE="text/xml">
+      <mets:file ID="FILE_0002_SEG_BLOCK" GROUPID="FILE_0002_IMAGE" MIMETYPE="text/xml">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000002_SEG_BLOCK.xml" />
       </mets:file>
     </mets:fileGrp>
@@ -250,10 +245,10 @@
                ”OCR-D-SEG-LINE”      Line segmentation. (Module 2, submodule B: line segmentation)
     -->
     <mets:fileGrp USE="OCR-D-SEG-LINE">
-      <mets:file ID="FILE_0001_SEG_LINE" GROUPID="PAGE_0001" MIMETYPE="text/xml">
+      <mets:file ID="FILE_0001_SEG_LINE" GROUPID="FILE_0001_IMAGE" MIMETYPE="text/xml">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000001_SEG_LINE.xml" />
       </mets:file>
-      <mets:file ID="FILE_0002_SEG_LINE" GROUPID="PAGE_0002" MIMETYPE="text/xml">
+      <mets:file ID="FILE_0002_SEG_LINE" GROUPID="FILE_0002_IMAGE" MIMETYPE="text/xml">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000002_SEG_LINE.xml" />
       </mets:file>
     </mets:fileGrp>
@@ -261,10 +256,10 @@
                ”OCR-D-SEG-CLASS”     Block classification. (Module 2, submodule C: segment classification)
     -->
     <mets:fileGrp USE="OCR-D-SEG-CLASS">
-      <mets:file ID="FILE_0001_SEG_CLASS" GROUPID="PAGE_0001" MIMETYPE="text/xml">
+      <mets:file ID="FILE_0001_SEG_CLASS" GROUPID="FILE_0001_IMAGE" MIMETYPE="text/xml">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000001_SEG_CLASS.xml" />
       </mets:file>
-      <mets:file ID="FILE_0002_SEG_CLASS" GROUPID="PAGE_0002" MIMETYPE="text/xml">
+      <mets:file ID="FILE_0002_SEG_CLASS" GROUPID="FILE_0002_IMAGE" MIMETYPE="text/xml">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000002_SEG_CLASS.xml" />
       </mets:file>
     </mets:fileGrp>
@@ -272,10 +267,10 @@
                ”OCR-D-SEG-DOC”       Document analysis. (Module 2, submodule D: document analysis)
      -->
    <mets:fileGrp USE="OCR-D-SEG-DOC">
-      <mets:file ID="FILE_0001_SEG_DOC" GROUPID="PAGE_0001" MIMETYPE="text/xml">
+      <mets:file ID="FILE_0001_SEG_DOC" GROUPID="FILE_0001_IMAGE" MIMETYPE="text/xml">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000001_SEG_DOC.xml" />
       </mets:file>
-      <mets:file ID="FILE_0002_SEG_DOC" GROUPID="PAGE_0002" MIMETYPE="text/xml">
+      <mets:file ID="FILE_0002_SEG_DOC" GROUPID="FILE_0002_IMAGE" MIMETYPE="text/xml">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000002_SEG_DOC.xml" />
       </mets:file>
     </mets:fileGrp>
@@ -283,21 +278,21 @@
                ”OCR-D-OCR-TESS"      OCR with Tesseract. (Module 3, submodule A: OCR)
     -->
     <mets:fileGrp USE="OCR-D-OCR-TESS">
-      <mets:file ID="FILE_0001_OCR_TESS" GROUPID="PAGE_0001" MIMETYPE="text/xml">
+      <mets:file ID="FILE_0001_OCR_TESS" GROUPID="FILE_0001_IMAGE" MIMETYPE="text/xml">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000001_OCR_TESS.xml" />
       </mets:file>
-      <mets:file ID="FILE_0002_OCR_TESS" GROUPID="PAGE_0002" MIMETYPE="text/xml">
+      <mets:file ID="FILE_0002_OCR_TESS" GROUPID="FILE_0002_IMAGE" MIMETYPE="text/xml">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000002_OCR_TESS.xml" />
       </mets:file>
     </mets:fileGrp>
      <!-- 
-               "OCR-D-OCR-ANY"       OCR with any other language. (Module 3, submodule A: OCR)
+               "OCR-D-OCR-ANY"       OCR with anyOCR. (Module 3, submodule A: OCR)
     -->
     <mets:fileGrp USE="OCR-D-OCR-ANY">
-      <mets:file ID="FILE_0001_OCR_ANY" GROUPID="PAGE_0001" MIMETYPE="text/xml">
+      <mets:file ID="FILE_0001_OCR_ANY" GROUPID="FILE_0001_IMAGE" MIMETYPE="text/xml">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000001_OCR_ANY.xml" />
       </mets:file>
-      <mets:file ID="FILE_0002_OCR_ANY" GROUPID="PAGE_0002" MIMETYPE="text/xml">
+      <mets:file ID="FILE_0002_OCR_ANY" GROUPID="FILE_0002_IMAGE" MIMETYPE="text/xml">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000002_OCR_ANY.xml" />
       </mets:file>
     </mets:fileGrp>
@@ -305,32 +300,32 @@
                "OCR-D-COR-CIS"       CIS post correction. (Module 3, submodule B: OCR)
     -->
     <mets:fileGrp USE="OCR-D-COR-CIS">
-      <mets:file ID="FILE_0001_COR_CIS" GROUPID="PAGE_0001" MIMETYPE="text/xml">
+      <mets:file ID="FILE_0001_COR_CIS" GROUPID="FILE_0001_IMAGE" MIMETYPE="text/xml">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000001_COR_CIS.xml" />
       </mets:file>
-      <mets:file ID="FILE_0002_COR_CIS" GROUPID="PAGE_0002" MIMETYPE="text/xml">
+      <mets:file ID="FILE_0002_COR_CIS" GROUPID="FILE_0002_IMAGE" MIMETYPE="text/xml">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000002_COR_CIS.xml" />
       </mets:file>
     </mets:fileGrp>
      <!-- 
-               "OCR-D-COR-ASC"       ASC post correction. (Module 3, submodule B: OCR)
+               "OCR-D-COR-ASV"       ASV (Institut für Automatische Sprachverarbeitung) post correction. (Module 3, submodule B: OCR)
     -->
-    <mets:fileGrp USE="OCR-D-COR-ASC">
-      <mets:file ID="FILE_0001_COR_ASC" GROUPID="PAGE_0001" MIMETYPE="text/xml">
-        <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000001_COR_ASC.xml" />
+    <mets:fileGrp USE="OCR-D-COR-ASV">
+      <mets:file ID="FILE_0001_COR_ASV" GROUPID="FILE_0001_IMAGE" MIMETYPE="text/xml">
+        <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000001_COR_ASV.xml" />
       </mets:file>
-      <mets:file ID="FILE_0002_COR_ASC" GROUPID="PAGE_0002" MIMETYPE="text/xml">
-        <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000002_COR_ASC.xml" />
+      <mets:file ID="FILE_0002_COR_ASV" GROUPID="FILE_0002_IMAGE" MIMETYPE="text/xml">
+        <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000002_COR_ASV.xml" />
       </mets:file>
     </mets:fileGrp>
      <!-- 
                "OCR-D-GT-PAGE"       Ground Truth data in PAGE XML format.
     -->
     <mets:fileGrp USE="OCR-D-GT-PAGE">
-      <mets:file ID="FILE_0001_FULLTEXT" MIMETYPE="text/xml">
+      <mets:file ID="FILE_0001_FULLTEXT" GROUPID="FILE_0001_IMAGE" MIMETYPE="text/xml">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000001.xml" />
       </mets:file>
-      <mets:file ID="FILE_0002_FULLTEXT" MIMETYPE="text/xml">
+      <mets:file ID="FILE_0002_FULLTEXT" GROUPID="FILE_0002_IMAGE" MIMETYPE="text/xml">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000002.xml" />
       </mets:file>
     </mets:fileGrp>
@@ -339,10 +334,10 @@
                "OCR-D-GT-ALTO"       Ground Truth data in ALTO format.
     -->
     <mets:fileGrp USE="OCR-D-GT-ALTO">
-      <mets:file ID="FILE_0001_FULLTEXT_ALTO" MIMETYPE="text/xml">
+      <mets:file ID="FILE_0001_FULLTEXT_ALTO" GROUPID="FILE_0001_IMAGE" MIMETYPE="text/xml">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000001_GT_ALTO.xml" />
       </mets:file>
-      <mets:file ID="FILE_0002_FULLTEXT_ALTO" MIMETYPE="text/xml">
+      <mets:file ID="FILE_0002_FULLTEXT_ALTO" GROUPID="FILE_0002_IMAGE" MIMETYPE="text/xml">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000002_GT_ALTO.xml" />
       </mets:file>
     </mets:fileGrp>
