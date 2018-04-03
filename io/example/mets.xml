@@ -140,7 +140,7 @@
                ”OCR-D-SEG-CLASS”     Block classification. (Module 2, submodule C: segment classification)
                ”OCR-D-SEG-DOC”       Document analysis. (Module 2, submodule D: document analysis)
                "OCR-D-OCR-..."       OCR with any algorithm. Examples: Tesseract, anyOCR (Module 3, submodule A: OCR)
-               "OCR-D-COR-..."       Post correction with any algorithm. Examples: CIR, ASV (Module 3, submodule B: OCR)
+               "OCR-D-COR-..."       Post correction with any algorithm. Examples: CIS, ASV (Module 3, submodule B: OCR)
                "OCR-D-GT-..."        Ground Truth data in any format: Examples: PAGE XML, ALTO, TXT, TEI.
                
          Not all fileGrps are mandatory.     
@@ -297,7 +297,7 @@
       </mets:file>
     </mets:fileGrp>
      <!-- 
-               "OCR-D-COR-CIS"       CIS post correction. (Module 3, submodule B: OCR)
+               "OCR-D-COR-CIS"       CIS (Centrum für Informations- und Sprachverarbeitung) post correction. (Module 3, submodule B: OCR)
     -->
     <mets:fileGrp USE="OCR-D-COR-CIS">
       <mets:file ID="FILE_0001_COR_CIS" GROUPID="FILE_0001_IMAGE" MIMETYPE="text/xml">
