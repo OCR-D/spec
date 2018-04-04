@@ -325,7 +325,6 @@
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/ocrd-assets/raw/master/data/00000002.xml" />
       </mets:file>
     </mets:fileGrp>
-  </mets:fileSec>
      <!-- 
                "OCR-D-GT-ALTO"       Ground Truth data in ALTO format.
     -->
