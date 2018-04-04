@@ -146,8 +146,8 @@
          For all fileGrps belonging to Module 3 submodule B at least the OCR has to be available (”OCR-D-OCR-*”). 
          
          IMPORTANT:      
-         Files which corresponds to the same source image are linked via the same groupId. 
-         (Suggestions for a specific groupID: FILE_0001_IMAGE (id of the original image)
+         Files which correspond to the same source image are linked together via the same groupId. 
+         (Suggestion for a specific groupID: FILE_0001_IMAGE (id of the original image)
     -->
     <!-- 
                ”OCR-D-IMG”           The unmanipulated source images.
