@@ -227,7 +227,7 @@
       </mets:file>
     </mets:fileGrp>
     <!-- 
-               ”OCR-D-SEG-BLOCK”     Block segmentation. (Module 2, submodule A: page segmentation)
+               ”OCR-D-SEG-BLOCK”     Block segmentation. (Module 2, submodule A: block segmentation)
     -->
     <mets:fileGrp USE="OCR-D-SEG-BLOCK">
       <mets:file ID="FILE_0001_SEG_BLOCK" GROUPID="FILE_0001_IMAGE" MIMETYPE="text/xml">
