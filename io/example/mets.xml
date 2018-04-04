@@ -14,9 +14,7 @@
     <!-- 
          This section should contain all necessary information about the digital object.
          Mandatory values are:
-           physicalLocation: Prefix of ISIL file (http://sigel.staatsbibliothek-berlin.de/en/startseite/)
-           recordIdentifier: Pica Production Number (PPN)   
-           Both values together are building an unique ID of the digital object.
+           <mods:identifier type="purl">: Unique and persistent URL for the digital object. Used within OCR-D as unique identifier for the document.
     -->
   <mets:dmdSec ID="DMDLOG_0001">
     <mets:mdWrap MDTYPE="MODS">
