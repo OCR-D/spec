@@ -49,10 +49,13 @@ properties:
             - layout/analysis
         tags:
           description: Tools belong to this category, representing modules within the OCR-D project structure
-          enum:
-            - Image preprocessing
-            - Layout analysis
-            - Text recognition and optimization
-            - Model training
-            - Long-term archiving
-            - Quality assurance
+          type: array
+          items:
+            type: string
+            enum:
+              - Image preprocessing
+              - Layout analysis
+              - Text recognition and optimization
+              - Model training
+              - Long-term archiving
+              - Quality assurance
