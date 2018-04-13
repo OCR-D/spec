@@ -43,7 +43,7 @@ properties:
             - recognition/text-recognition
             - recognition/font-identifification
             - layout/segmentation
-            - layout/segmentation/page
+            - layout/segmentation/region
             - layout/segmentation/line
             - layout/segmentation/classification
             - layout/analysis
