@@ -26,7 +26,7 @@ info:
       
       * /layout/segmentation/line (Detect all text line regions inside the text regions of a page.)
       
-      * /layout/segmentation/classification | Classify all detected regions of a page.)
+      * /layout/segmentation/classification (Classify all detected regions of a page.)
       
       * /layout/analysis (Analyse regions on document level.)
   version: "0.9"
