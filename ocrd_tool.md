@@ -99,7 +99,7 @@ properties:
       "step": "layout/segmentation/region"
     },
     {
-      "tags": ["Texterkennung"],
+      "tags": ["Text recognition and optimization"],
       "description": "Recognize text in lines with tesseract",
       "binary": "ocrd_tesserocr_recognize",
       "step": "recognition/text-recognition",
