@@ -1,19 +1,5 @@
 # Command Line Interface (CLI) delivered by MP
 
-<!-- BEGIN-MARKDOWN-TOC -->
-* [CLI binary name](#cli-binary-name)
-* [Mandatory parameters for all commands:](#mandatory-parameters-for-all-commands)
-* [Optional parameters](#optional-parameters)
-* [Return value](#return-value)
-* [Logging](#logging)
-* [Example](#example)
-	* [Description](#description)
-	* [Input METS file](#input-mets-file)
-	* [Input JSON parameter file](#input-json-parameter-file)
-	* [Output METS file](#output-mets-file)
-
-<!-- END-MARKDOWN-TOC -->
-
 ## CLI binary name
 
 All CLI provided by MP must be standalone binaries, installable into `$PATH`.
