@@ -30,8 +30,6 @@ $> exiftool output.tif |grep 'X Resolution'
 
 ## Unique ID for the document processed
 
-> <del>[color=red] https://github.com/OCR-D/spec/issues/15</del>
-
 METS provided to the MP must be uniquely adressable within the global library community.
 
 For this purpose, the METS file MUST contain a `mods:identifier` that must contain a globally unique identifier for the document and have a `type` attribute with a value of, in order of preference:
@@ -92,9 +90,6 @@ PROCESSOR := [A-Z0-9\-]{3,}
 
 ## Grouping files with GROUPID
 
-> [color=red] <del>https://github.com/OCR-D/spec/issues/7</del>
-> https://github.com/OCR-D/spec/issues/9
-
 Files in multiple `mets:fileGrp` with different `USE` can represent the fact that they encode the same page by using the same `GROUPID`.
 
 If used, the `GROUPID` of the page MUST BE the `ID` of the file that represents the original image. In other words: For the file representing the original image, `ID` and `GROUPID` must be identical.
@@ -145,5 +140,3 @@ Always use URL. If it's a local file, prefix absolute path with `file://`.
 ## If in PAGE then in METS
 
 Every image URL referenced via `imageFileName` or the `filename` attribute of any `pc:AlternativeImage` MUST be represented in the METS file as a `mets:file` with corresponding `mets:FLocat@xlink:href`. 
-> [name=Volker Hartmann] Hier auch noch ein XML Snippet
-
