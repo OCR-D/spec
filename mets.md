@@ -129,8 +129,16 @@ The PAGE XML root element `<pc:PcGts>` MUST have exactly one `<pc:Page>`.
 ## Always use URL everywhere
 
 Always use URL. If it's a local file, prefix absolute path with `file://`.
-> [name=Volker Hartmann] :thumbsup: 
-Aber ein Beispiel wie oben wäre nicht schlecht.
+
+### Example
+
+```xml
+<mets:fileGrp USE="OCR-D-SEG-PAGE">
+    <mets:file ID="OCR-D-SEG-PAGE_0001" GROUPID="OCR-D-IMG_0001" MIMETYPE="text/xml">
+        <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="file:///path/to/workingDir/segmentation/page/page_0001.xml" />
+    </mets:file>
+</mets:fileGrp>
+```
 
 ## If in PAGE then in METS
 
