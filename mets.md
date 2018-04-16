@@ -1,14 +1,16 @@
 # Requirements on handling METS/PAGE
 
-MP must adhere to OCR-D conventions and mechanisms with regards to using METS as the control format for the execution of a job.
+OCR-D has decided to base its data exchange format on top of [METS](http://www.loc.gov/standards/mets/).
+
+For layout and text recognition results, the primary exchange format is [PAGE](https://github.com/OCR-D/PAGE-XML)
+
+This document defines a set of conventions and mechanism for using these formats.
 
 ## Pixel density of images must be explicit and high enough
 
-> [color=red] https://github.com/OCR-D/pyocrd/issues/37
+The pixel density is the ratio of the number of pixels that represent a a unit of measure of the scanned object. It is typically measured in pixels per inch (PPI, a.k.a. DPI).
 
-The pixel density is the ratio of the number of pixels that represent a a unit of measure of the scanned object. It's typically measured in pixels per inch (PPI, a.k.a. DPI).
-
-The original input images must have >= 150 ppi.
+The original input images MUST have >= 150 ppi.
 
 Every processing step that generates new images and changes their dimensions MUST make sure to adapt the density explictly when serialising the image.
 
