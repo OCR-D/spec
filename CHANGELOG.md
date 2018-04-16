@@ -15,7 +15,7 @@ Removed
 
 ## [1.0.0] - 2018-04-16
 
-Initial Relase
+Initial Release
 
 <!-- link-labels -->
 [1.0.0]: ../../compare/v1.0.0...HEAD
