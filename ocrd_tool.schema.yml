@@ -33,17 +33,29 @@ properties:
           description: Step in the OCR-D functional model for this tool
           type: string
           enum:
-            - preprocess
-            - segment-line
-            - segment-region
-            - recognize
+            - preprocessing/characterization
+            - preprocessing/optimization
+            - preprocessing/optimization/cropping
+            - preprocessing/optimization/deskewing
+            - preprocessing/optimization/despeckling
+            - preprocessing/optimization/dewarping
+            - preprocessing/optimization/binarization
+            - recognition/text-recognition
+            - recognition/font-identification
+            - layout/segmentation
+            - layout/segmentation/region
+            - layout/segmentation/line
+            - layout/segmentation/classification
+            - layout/analysis
         tags:
-          description: Tag
-          enum:
-            - Bildvorverarbeitung
-            - Layouterkennung
-            - Texterkennung
-            - Textoptimierung
-            - Modellbildung
-            - Langzeitarchivierung
-            - Qualitätssicherung
+          description: Tools belong to this category, representing modules within the OCR-D project structure
+          type: array
+          items:
+            type: string
+            enum:
+              - Image preprocessing
+              - Layout analysis
+              - Text recognition and optimization
+              - Model training
+              - Long-term archiving
+              - Quality assurance
