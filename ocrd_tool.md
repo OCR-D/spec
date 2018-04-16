@@ -10,8 +10,8 @@ To validate a `ocrd_tool.yml` file, use `ocrd validate-ocrd-tool -T /path/to/ocr
 
 ## Definition
 
-**This is a static copy as of 2018-04-13 14:43. Do not edit here but send PR to https://github.com/OCR-D/spec**
-
+<!-- Regenerate with 'shinclude -i ocrd_tool.md'. See https://github.com/kba/shinclude -->
+<!-- BEGIN-EVAL -w '```yaml' '```' -- cat ./ocrd_tool.schema.yml -->
 ```yaml
 type: object
 description: Schema for tools by OCR-D MP
@@ -48,60 +48,75 @@ properties:
           description: Step in the OCR-D functional model for this tool
           type: string
           enum:
-            - /preprocessing/characterization
-            - /preprocessing/optimization
-            - /preprocessing/optimization/cropping
-            - /preprocessing/optimization/deskewing
-            - /preprocessing/optimization/despeckling
-            - /preprocessing/optimization/dewarping
-            - /preprocessing/optimization/binarization
-            - /recognition/text-recognition
-            - /recognition/font-identifification
-            - /layout/segmentation
-            - /layout/segmentation/page
-            - /layout/segmentation/line
-            - /layout/segmentation/classification
-            - /layout/analysis
+            - preprocessing/characterization
+            - preprocessing/optimization
+            - preprocessing/optimization/cropping
+            - preprocessing/optimization/deskewing
+            - preprocessing/optimization/despeckling
+            - preprocessing/optimization/dewarping
+            - preprocessing/optimization/binarization
+            - recognition/text-recognition
+            - recognition/font-identification
+            - layout/segmentation
+            - layout/segmentation/region
+            - layout/segmentation/line
+            - layout/segmentation/classification
+            - layout/analysis
         tags:
           description: Tools belong to this category, representing modules within the OCR-D project structure
-          enum:
-            - Image preprocessing
-            - Layout analysis
-            - Text recognition and optimization
-            - Model training
-            - Long-term archiving
-            - Quality assurance
+          type: array
+          items:
+            type: string
+            enum:
+              - Image preprocessing
+              - Layout analysis
+              - Text recognition and optimization
+              - Model training
+              - Long-term archiving
+              - Quality assurance
 ```
+
+<!-- END-EVAL -->
 
 ## Example
 
+<!-- BEGIN-EVAL -w '```json' '```' -- cat ../ocrd_tesserocr/ocrd-tool.json -->
 ```json
 {
   "git_url": "https://github.com/ocr-d/ocrd_tesserocr",
   "dockerhub": "ocrd/ocrd-tesserocr",
   "tools": [
     {
-      "tags": ["Layout analysis"],
+      "tags": ["Layouterkennung"],
       "description": "Segment page into regions with tesseract",
       "binary": "ocrd_tesserocr_segment_line",
-      "step": "segment-line"
+      "step": "layout/segmentation"
     },
     {
-      "tags": ["Layout analysis"],
+      "tags": ["Layouterkennung"],
       "description": "Segment regions into lines with tesseract",
       "binary": "ocrd_tesserocr_segment_region",
-      "step": "segment-region"
+      "step": "layout/segmentation"
     },
     {
       "tags": ["Texterkennung"],
       "description": "Recognize text in lines with tesseract",
       "binary": "ocrd_tesserocr_recognize",
-      "step": "recognize"
+      "step": "recognition",
+      "parameters": {
+        "lang": {
+          "type": "string",
+          "enum": [
+            "eng",
+            "deu"
+          ]
+        }
+      }
     }
   ]
 }
 ```
 
-
+<!-- END-EVAL -->
 
 
