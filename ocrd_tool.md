@@ -1,12 +1,14 @@
-# Description of tools provided by MP
+# ocrd-tool.json
 
-Tools MUST be described in a file `ocrd_tool.yml` in the root of the
-repository. It must contain a YAML file adhering to the
-[`ocrd_tool.schema.yml` YAML Schema](https://github.com/OCR-D/spec/blob/master/ocrd_tool.schema.yml).
+Tools MUST be described in a file `ocrd_tool.json` in the root of the repository.
 
-In particular, every tool provided must be described in an entry under the `tools` key. These definitions drive the CLI and the web services.
+It must contain a JSON object adhering to the [ocrd-tool JSON Schema](#Definition).
 
-To validate a `ocrd_tool.yml` file, use `ocrd validate-ocrd-tool -T /path/to/ocrd_tool.yml`.
+In particular, every tool provided must be described in an array item under the
+`tools` key. These definitions drive the [CLI](cli) and the [web
+services](swagger).
+
+To validate a `ocrd_tool.json` file, use `ocrd validate-ocrd-tool -T /path/to/ocrd-tool.json`.
 
 ## Definition
 
@@ -79,6 +81,8 @@ properties:
 <!-- END-EVAL -->
 
 ## Example
+
+This is from the [ocrd_tesserocr sample project](https://github.com/OCR-D/ocrd_tesserocr):
 
 <!-- BEGIN-EVAL -w '```json' '```' -- cat ../ocrd_tesserocr/ocrd-tool.json -->
 ```json
