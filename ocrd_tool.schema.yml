@@ -41,7 +41,7 @@ properties:
             - preprocessing/optimization/dewarping
             - preprocessing/optimization/binarization
             - recognition/text-recognition
-            - recognition/font-identifification
+            - recognition/font-identification
             - layout/segmentation
             - layout/segmentation/region
             - layout/segmentation/line
