@@ -12,7 +12,7 @@ The pixel density is the ratio of the number of pixels that represent a a unit o
 
 The original input images MUST have >= 150 ppi.
 
-Every processing step that generates new images and changes their dimensions MUST make sure to adapt the density explictly when serialising the image.
+Every processing step that generates new images and changes their dimensions MUST make sure to adapt the density explicitly when serialising the image.
 
 ```sh
 $> exiftool input.tif |grep 'X Resolution'
@@ -30,7 +30,7 @@ $> exiftool output.tif |grep 'X Resolution'
 
 ## Unique ID for the document processed
 
-METS provided to the MP must be uniquely adressable within the global library community.
+METS provided to the MP must be uniquely addressable within the global library community.
 
 For this purpose, the METS file MUST contain a `mods:identifier` that must contain a globally unique identifier for the document and have a `type` attribute with a value of, in order of preference:
 
