@@ -1,4 +1,4 @@
-# Command Line Interface (CLI) delivered by MP
+# Command Line Interface (CLI)
 
 ## CLI binary name
 
@@ -10,19 +10,44 @@ Examples:
   * `ocrd-kraken-binarize`
   * `ocrd-tesserocr-recognize`
 
-## Mandatory parameters for all commands:
+## Mandatory parameters
 
-* `-m, --mets METS_IN` Input METS URL
-* `-w, --working-dir DIR` Working Directory.
-* `-I, --input-file-grp GRP` File group(s) used as input.
-* `-O, --output-file-grp GRP` File group(s) used as output.
+### `-m, --mets METS_IN`
+
+Input METS URL
+
+### `-w, --working-dir DIR`
+
+Working Directory.
+
+### `-I, --input-file-grp GRP`
+
+File group(s) used as input.
+
+### `-O, --output-file-grp GRP`
+
+File group(s) used as output.
 
 ## Optional parameters
 
-* `-g, --group-id GROUPID` `mets:file@GROUPID` to process. If no groupID is defined all files within the `inputGrp` will be processed. Repeatable and multiple IDs can be provided separated by comma.
-* `-p, --parameter PARAM_JSON` URL of parameter file in JSON format
-* `-l, --log-level LOGLEVEL` Minimum Log level. One of (OFF, ERROR, WARN, INFO (default), DEBUG, TRACE). Actual mechanism for filtering log messages must not be implemented by processors.
-* `-o, --output-mets METS_OUT` file path where processor MUST write resulting METS to. If not set, output METS is expected to be in the file `mets.xml` in the working directory.
+### `-g, --group-id GROUPID`
+
+The `mets:file@GROUPID` to process. If no groupID is defined all files within the `inputGrp` will be processed. Repeatable and multiple IDs can be provided separated by comma.
+
+### `-p, --parameter PARAM_JSON`
+
+URL of parameter file in JSON format
+
+### `-l, --log-level LOGLEVEL`
+
+Minimum Log level. One of `OFF`, `ERROR`, `WARN`, `INFO` (default), `DEBUG`, `TRACE`).
+
+Actual mechanism for filtering log messages must not be implemented by
+processors.
+
+### `-o, --output-mets METS_OUT`
+
+File path where processor MUST write resulting METS to. If not set, output METS is expected to be in the file `mets.xml` in the working directory.
 
 ## Return value
 
