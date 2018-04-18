@@ -1,10 +1,10 @@
 # Command Line Interface (CLI)
 
-## CLI binary name
+## CLI executable name
 
-All CLI provided by MP must be standalone binaries, installable into `$PATH`.
+All CLI provided by MP must be standalone executables, installable into `$PATH`.
 
-Every CLI binary's name must begin with `ocrd-`.
+Every CLI executable's name must begin with `ocrd-`.
 
 Examples:
   * `ocrd-kraken-binarize`
