@@ -82,5 +82,6 @@ To pack a workspace to OCRD-ZIP:
 
 ## IANA considerations
 
-Mimetype of OCRD-ZIP: `application/vnd.ocrd+zip`
+Proposed media type of OCRD-ZIP: `application/vnd.ocrd+zip`
 
+Proposed extension: `.ocrd.zip`
