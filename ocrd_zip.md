@@ -35,7 +35,7 @@ An OCRD-ZIP MUST be a valid ZIP file.
 
 The root folder of the ZIP filetree must contain a file `mets.xml`.
 
-### `file://`-URLs must be absolute
+### `file://`-URLs must be relative
 
 All resources referenced in the METS with a `file://`-URL (and consequently all
 those referenced in other files within the workspace -- see rule "When in PAGE
