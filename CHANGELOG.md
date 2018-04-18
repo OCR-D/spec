@@ -7,10 +7,17 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## TODO
 
-## [unreleased]
+## [1.1.0] - unreleased
+
 Added
+* Spec for OCRD-ZIP
+
 Changed
+* Use `executable` instead of `binary` to reduce confusion
+
 Fixed
+* typos (@stweil)
+
 Removed
 
 ## [1.0.0] - 2018-04-16
@@ -18,4 +25,5 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[1.1.0]: ../../compare/v1.1.0...v1.0.0
 [1.0.0]: ../../compare/v1.0.0...HEAD
