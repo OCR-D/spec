@@ -20,6 +20,7 @@ description: Schema for tools by OCR-D MP
 required:
   - git_url
   - tools
+additionalProperties: false
 properties:
   git_url:
     description: Github/Gitlab URL
@@ -32,12 +33,13 @@ properties:
     type: array
     items:
       type: object
+      additionalProperties: false
       required:
         - description
         - step
-        - exceutable
+        - executable
       properties:
-        exceutable:
+        executable:
           description: The name of the CLI executable in $PATH
           type: string
         parameterSchema:

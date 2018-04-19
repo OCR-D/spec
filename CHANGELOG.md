@@ -7,7 +7,13 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## TODO
 
-## [1.1.0] - unreleased
+## [1.1.1] - 2018-04-19
+
+Fixed:
+  * typo: `exceutable` -> `executable`
+  * disallow custom properties
+
+## [1.1.0] - 2018-04-19
 
 Added
 * Spec for OCRD-ZIP
