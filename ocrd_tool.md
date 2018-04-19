@@ -84,29 +84,27 @@ properties:
 
 This is from the [ocrd_tesserocr sample project](https://github.com/OCR-D/ocrd_tesserocr):
 
-<!-- BEGIN-EVAL -w '```json' '```' -- cat ../ocrd_tesserocr/ocrd-tool.json -->
+<!-- BEGIN-EVAL -w '```json' '```' -- cat ../ocrd_kraken/ocrd-tool.json -->
 ```json
 {
-  "git_url": "https://github.com/OCR-D/ocrd_tesserocr",
-  "dockerhub": "ocrd/tesserocr",
+  "git_url": "https://github.com/OCR-D/ocrd_kraken",
   "tools": [
     {
-      "tags": ["Layout analysis"],
-      "description": "Segment page into regions with tesseract",
-      "executable": "ocrd-tesserocr-segment-line",
-      "step": "layout/segmentation/line"
-    },
-    {
-      "tags": ["Layout analysis"],
-      "description": "Segment regions into lines with tesseract",
-      "executable": "ocrd-tesserocr-segment-region",
-      "step": "layout/segmentation/region"
-    },
-    {
-      "tags": ["Text recognition and optimization"],
-      "description": "Recognize text in lines with tesseract",
-      "executable": "ocrd-tesserocr-recognize",
-      "step": "recognition/text-recognition"
+      "executable": "ocrd-kraken-binarize",
+      "tags": ["Image preprocessing"],
+      "step": "preprocessing/optimization/binarization",
+      "description": "Binarize images with kraken",
+      "parameters": {
+        "structure-level": {
+          "type": "string",
+          "default": "page",
+          "enum": [
+            "page",
+            "region",
+            "line"
+          ]
+        }
+      }
     }
   ]
 }
