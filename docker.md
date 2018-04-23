@@ -5,10 +5,10 @@ MP should provide a
 result in a container which bundles the [tools developed by the MP](cli) along
 with all requirements.
 
-## Based on ocrd:pyocrd
+## Based on ocrd:core
 
 Docker containers should be based on the [ocrd base
-image](https://hub.docker.com/r/ocrd/pyocrd/) which itself is based on Ubuntu
+image](https://hub.docker.com/r/ocrd/core/) which itself is based on Ubuntu
 18.04. For one, this allows MP to use the `ocrd` tool to handle recurrent tasks
 in a spec-conformant way. Besides, it locally installed and containerized
 [CLI](cli) interchangeable.
