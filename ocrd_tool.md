@@ -97,7 +97,7 @@ This is from the [ocrd_tesserocr sample project](https://github.com/OCR-D/ocrd_t
       "step": "preprocessing/optimization/binarization",
       "description": "Binarize images with kraken",
       "parameters": {
-        "structure-level": {
+        "level-of-operation": {
           "type": "string",
           "default": "page",
           "enum": [
