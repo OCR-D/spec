@@ -25,8 +25,8 @@ allow processing host data in the container in a uniform way.
 
 ## Example
 
-```dockerfile=
-FROM ocrd:pyocrd
+```dockerfile
+FROM ocrd:core
 VOLUME ["/data"]
 
 # RUN-commands to install requirements, build and install
