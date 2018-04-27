@@ -76,6 +76,14 @@ PROCESSOR := [A-Z0-9\-]{3,}
 `<mets:fileGrp USE=”OCR-D-OCR-ANY”>` | AnyOCR
 `<mets:fileGrp USE=”OCR-D-COR-CIS”>` | CIS post-correction
 `<mets:fileGrp USE=”OCR-D-COR-ASV”>` | ASV post-correction
+`<mets:fileGrp USE=”OCR-D-GT-IMG-BIN”>` | Black-and-White images ground truth
+`<mets:fileGrp USE=”OCR-D-GT-IMG-CROP”>` | Cropped images ground truth
+`<mets:fileGrp USE=”OCR-D-GT-IMG-DESKEW”>` | Deskewed images ground truth
+`<mets:fileGrp USE=”OCR-D-GT-IMG-DESPECK”>` | Despeckled images ground truth
+`<mets:fileGrp USE=”OCR-D-GT-IMG-DEWARP”>` | Dewarped images ground truth
+`<mets:fileGrp USE=”OCR-D-GT-SEG-PAGE”>` | Page segmentation ground truth
+`<mets:fileGrp USE=”OCR-D-GT-SEG-BLOCK”>` | Block segmentation ground truth
+`<mets:fileGrp USE=”OCR-D-GT-SEG-LINE”>` | Line segmentation ground truth
 
 ## File ID syntax
 
