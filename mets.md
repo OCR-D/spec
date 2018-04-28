@@ -62,30 +62,32 @@ PROCESSOR := [A-Z0-9\-]{3,}
 ### Examples
 
 `<mets:fileGrp USE>` | Type of use for OCR-D
--- | --
-`<mets:fileGrp USE=”OCR-D-IMG”>` | The unmanipulated source images
-`<mets:fileGrp USE=”OCR-D-IMG-BIN”>` | Black-and-White images
-`<mets:fileGrp USE=”OCR-D-IMG-CROP”>` | Cropped images
-`<mets:fileGrp USE=”OCR-D-IMG-DESKEW”>` | Deskewed images
-`<mets:fileGrp USE=”OCR-D-IMG-DESPECK”>` | Despeckled images
-`<mets:fileGrp USE=”OCR-D-IMG-DEWARP”>` | Dewarped images
-`<mets:fileGrp USE=”OCR-D-SEG-PAGE”>` | Page segmentation
-`<mets:fileGrp USE=”OCR-D-SEG-BLOCK”>` | Block segmentation
-`<mets:fileGrp USE=”OCR-D-SEG-LINE”>` | Line segmentation
-`<mets:fileGrp USE=”OCR-D-SEG-WORD”>` | Word segmentation
-`<mets:fileGrp USE=”OCR-D-SEG-GLYPH”>` | Glyph segmentation
-`<mets:fileGrp USE=”OCR-D-OCR-TESS”>` | Tesseract OCR
-`<mets:fileGrp USE=”OCR-D-OCR-ANY”>` | AnyOCR
-`<mets:fileGrp USE=”OCR-D-COR-CIS”>` | CIS post-correction
-`<mets:fileGrp USE=”OCR-D-COR-ASV”>` | ASV post-correction
-`<mets:fileGrp USE=”OCR-D-GT-IMG-BIN”>` | Black-and-White images ground truth
-`<mets:fileGrp USE=”OCR-D-GT-IMG-CROP”>` | Cropped images ground truth
-`<mets:fileGrp USE=”OCR-D-GT-IMG-DESKEW”>` | Deskewed images ground truth
-`<mets:fileGrp USE=”OCR-D-GT-IMG-DESPECK”>` | Despeckled images ground truth
-`<mets:fileGrp USE=”OCR-D-GT-IMG-DEWARP”>` | Dewarped images ground truth
-`<mets:fileGrp USE=”OCR-D-GT-SEG-PAGE”>` | Page segmentation ground truth
-`<mets:fileGrp USE=”OCR-D-GT-SEG-BLOCK”>` | Block segmentation ground truth
-`<mets:fileGrp USE=”OCR-D-GT-SEG-LINE”>` | Line segmentation ground truth
+--                                          | --
+`<mets:fileGrp USE="OCR-D-IMG">`            | The unmanipulated source images
+`<mets:fileGrp USE="OCR-D-IMG-BIN">`        | Black-and-White images
+`<mets:fileGrp USE="OCR-D-IMG-CROP">`       | Cropped images
+`<mets:fileGrp USE="OCR-D-IMG-DESKEW">`     | Deskewed images
+`<mets:fileGrp USE="OCR-D-IMG-DESPECK">`    | Despeckled images
+`<mets:fileGrp USE="OCR-D-IMG-DEWARP">`     | Dewarped images
+`<mets:fileGrp USE="OCR-D-SEG-PAGE">`       | Page segmentation
+`<mets:fileGrp USE="OCR-D-SEG-BLOCK">`      | Block segmentation
+`<mets:fileGrp USE="OCR-D-SEG-LINE">`       | Line segmentation
+`<mets:fileGrp USE="OCR-D-SEG-WORD">`       | Word segmentation
+`<mets:fileGrp USE="OCR-D-SEG-GLYPH">`      | Glyph segmentation
+`<mets:fileGrp USE="OCR-D-OCR-TESS">`       | Tesseract OCR
+`<mets:fileGrp USE="OCR-D-OCR-ANY">`        | AnyOCR
+`<mets:fileGrp USE="OCR-D-COR-CIS">`        | CIS post-correction
+`<mets:fileGrp USE="OCR-D-COR-ASV">`        | ASV post-correction
+`<mets:fileGrp USE="OCR-D-GT-IMG-BIN">`     | Black-and-White images ground truth
+`<mets:fileGrp USE="OCR-D-GT-IMG-CROP">`    | Cropped images ground truth
+`<mets:fileGrp USE="OCR-D-GT-IMG-DESKEW">`  | Deskewed images ground truth
+`<mets:fileGrp USE="OCR-D-GT-IMG-DESPECK">` | Despeckled images ground truth
+`<mets:fileGrp USE="OCR-D-GT-IMG-DEWARP">`  | Dewarped images ground truth
+`<mets:fileGrp USE="OCR-D-GT-SEG-PAGE">`    | Page segmentation ground truth
+`<mets:fileGrp USE="OCR-D-GT-SEG-BLOCK">`   | Block segmentation ground truth
+`<mets:fileGrp USE="OCR-D-GT-SEG-LINE">`    | Line segmentation ground truth
+`<mets:fileGrp USE="OCR-D-GT-SEG-WORD">`    | Word segmentation ground truth
+`<mets:fileGrp USE="OCR-D-GT-SEG-GLYPH">`   | Glyph segmentation ground truth
 
 ## File ID syntax
 
