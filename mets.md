@@ -135,6 +135,10 @@ Every `<pc:Page>` element MUST have an attribute `image` which MUST always be th
 
 The PAGE XML root element `<pc:PcGts>` MUST have exactly one `<pc:Page>`.
 
+## Media Type for PAGE XML
+
+Every `<mets:file>` representing a PAGE document MUST have its `MIMETYPE` attribute set to `application/vnd.prima.page+xml`.
+
 ## Always use URL everywhere
 
 Always use URL. If it's a local file, prefix absolute path with `file://`.
@@ -143,7 +147,7 @@ Always use URL. If it's a local file, prefix absolute path with `file://`.
 
 ```xml
 <mets:fileGrp USE="OCR-D-SEG-PAGE">
-    <mets:file ID="OCR-D-SEG-PAGE_0001" GROUPID="OCR-D-IMG_0001" MIMETYPE="text/xml">
+    <mets:file ID="OCR-D-SEG-PAGE_0001" GROUPID="OCR-D-IMG_0001" MIMETYPE="application/vnd.prima.page+xml">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="file:///path/to/workingDir/segmentation/page/page_0001.xml" />
     </mets:file>
 </mets:fileGrp>
