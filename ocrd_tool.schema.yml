@@ -42,6 +42,7 @@ properties:
             - preprocessing/optimization/despeckling
             - preprocessing/optimization/dewarping
             - preprocessing/optimization/binarization
+            - preprocessing/optimization/grayscale_normalization
             - recognition/text-recognition
             - recognition/font-identification
             - layout/segmentation
