@@ -7,6 +7,11 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## TODO
 
+## [1.1.5] - 2018-05-15
+
+Added:
+
+* PAGE conventions
 
 ## [1.1.4] - 2018-05-02
 
@@ -57,6 +62,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[1.1.4]: ../../compare/v1.1.5...v1.1.4
 [1.1.4]: ../../compare/v1.1.4...v1.1.3
 [1.1.3]: ../../compare/v1.1.3...v1.1.2
 [1.1.2]: ../../compare/v1.1.2...v1.1.1
