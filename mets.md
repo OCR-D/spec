@@ -62,20 +62,32 @@ PROCESSOR := [A-Z0-9\-]{3,}
 ### Examples
 
 `<mets:fileGrp USE>` | Type of use for OCR-D
--- | --
-`<mets:fileGrp USE=”OCR-D-IMG”>` | The unmanipulated source images
-`<mets:fileGrp USE=”OCR-D-IMG-BIN”>` | Black-and-White images
-`<mets:fileGrp USE=”OCR-D-IMG-CROP”>` | Cropped images
-`<mets:fileGrp USE=”OCR-D-IMG-DESKEW”>` | Deskewed images
-`<mets:fileGrp USE=”OCR-D-IMG-DESPECK”>` | Despeckled images
-`<mets:fileGrp USE=”OCR-D-IMG-DEWARP”>` | Dewarped images
-`<mets:fileGrp USE=”OCR-D-SEG-PAGE”>` | Page segmentation
-`<mets:fileGrp USE=”OCR-D-SEG-BLOCK”>` | Block segmentation
-`<mets:fileGrp USE=”OCR-D-SEG-LINE”>` | Line segmentation
-`<mets:fileGrp USE=”OCR-D-OCR-TESS”>` | Tesseract OCR
-`<mets:fileGrp USE=”OCR-D-OCR-ANY”>` | AnyOCR
-`<mets:fileGrp USE=”OCR-D-COR-CIS”>` | CIS post-correction
-`<mets:fileGrp USE=”OCR-D-COR-ASV”>` | ASV post-correction
+--                                          | --
+`<mets:fileGrp USE="OCR-D-IMG">`            | The unmanipulated source images
+`<mets:fileGrp USE="OCR-D-IMG-BIN">`        | Black-and-White images
+`<mets:fileGrp USE="OCR-D-IMG-CROP">`       | Cropped images
+`<mets:fileGrp USE="OCR-D-IMG-DESKEW">`     | Deskewed images
+`<mets:fileGrp USE="OCR-D-IMG-DESPECK">`    | Despeckled images
+`<mets:fileGrp USE="OCR-D-IMG-DEWARP">`     | Dewarped images
+`<mets:fileGrp USE="OCR-D-SEG-PAGE">`       | Page segmentation
+`<mets:fileGrp USE="OCR-D-SEG-BLOCK">`      | Block segmentation
+`<mets:fileGrp USE="OCR-D-SEG-LINE">`       | Line segmentation
+`<mets:fileGrp USE="OCR-D-SEG-WORD">`       | Word segmentation
+`<mets:fileGrp USE="OCR-D-SEG-GLYPH">`      | Glyph segmentation
+`<mets:fileGrp USE="OCR-D-OCR-TESS">`       | Tesseract OCR
+`<mets:fileGrp USE="OCR-D-OCR-ANY">`        | AnyOCR
+`<mets:fileGrp USE="OCR-D-COR-CIS">`        | CIS post-correction
+`<mets:fileGrp USE="OCR-D-COR-ASV">`        | ASV post-correction
+`<mets:fileGrp USE="OCR-D-GT-IMG-BIN">`     | Black-and-White images ground truth
+`<mets:fileGrp USE="OCR-D-GT-IMG-CROP">`    | Cropped images ground truth
+`<mets:fileGrp USE="OCR-D-GT-IMG-DESKEW">`  | Deskewed images ground truth
+`<mets:fileGrp USE="OCR-D-GT-IMG-DESPECK">` | Despeckled images ground truth
+`<mets:fileGrp USE="OCR-D-GT-IMG-DEWARP">`  | Dewarped images ground truth
+`<mets:fileGrp USE="OCR-D-GT-SEG-PAGE">`    | Page segmentation ground truth
+`<mets:fileGrp USE="OCR-D-GT-SEG-BLOCK">`   | Block segmentation ground truth
+`<mets:fileGrp USE="OCR-D-GT-SEG-LINE">`    | Line segmentation ground truth
+`<mets:fileGrp USE="OCR-D-GT-SEG-WORD">`    | Word segmentation ground truth
+`<mets:fileGrp USE="OCR-D-GT-SEG-GLYPH">`   | Glyph segmentation ground truth
 
 ## File ID syntax
 
@@ -123,6 +135,10 @@ Every `<pc:Page>` element MUST have an attribute `image` which MUST always be th
 
 The PAGE XML root element `<pc:PcGts>` MUST have exactly one `<pc:Page>`.
 
+## Media Type for PAGE XML
+
+Every `<mets:file>` representing a PAGE document MUST have its `MIMETYPE` attribute set to `application/vnd.prima.page+xml`.
+
 ## Always use URL everywhere
 
 Always use URL. If it's a local file, prefix absolute path with `file://`.
@@ -131,7 +147,7 @@ Always use URL. If it's a local file, prefix absolute path with `file://`.
 
 ```xml
 <mets:fileGrp USE="OCR-D-SEG-PAGE">
-    <mets:file ID="OCR-D-SEG-PAGE_0001" GROUPID="OCR-D-IMG_0001" MIMETYPE="text/xml">
+    <mets:file ID="OCR-D-SEG-PAGE_0001" GROUPID="OCR-D-IMG_0001" MIMETYPE="application/vnd.prima.page+xml">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="file:///path/to/workingDir/segmentation/page/page_0001.xml" />
     </mets:file>
 </mets:fileGrp>
@@ -140,3 +156,5 @@ Always use URL. If it's a local file, prefix absolute path with `file://`.
 ## If in PAGE then in METS
 
 Every image URL referenced via `imageFileName` or the `filename` attribute of any `pc:AlternativeImage` MUST be represented in the METS file as a `mets:file` with corresponding `mets:FLocat@xlink:href`. 
+
+For every `mets:file` that represents a PAGE document, its `GROUPID` should be equal to the `pcGtsId` attribute of the `page:PcGts`.
