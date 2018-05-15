@@ -21,6 +21,7 @@ The `comments` attribute should be one or more (separated by comma) terms of the
 The `comments` attribute of the `<pg:AlternativeImage>` attribute should be used
 
   * `binarized`
+  * `grayscale_normalized`
   * `deskewed`
   * `despeckled`
   * `cropped`
