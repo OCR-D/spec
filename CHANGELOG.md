@@ -7,6 +7,9 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## TODO
 
+Added:
+  * ocrd-tool: Steps: `preprocessing/optimization/grayscale_normalization` and `layout/segmentation/word`
+
 
 ## [1.1.4] - 2018-05-02
 
