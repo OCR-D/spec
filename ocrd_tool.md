@@ -109,6 +109,13 @@ This is from the [ocrd_tesserocr sample project](https://github.com/OCR-D/ocrd_t
           ]
         }
       }
+    },
+    {
+      "executable": "ocrd-kraken-segment",
+      "tags": ["Layout analysis"],
+      "step": "layout/segmentation/region",
+      "description": "Region detection with kraken",
+      "parameters": {}
     }
   ]
 }
