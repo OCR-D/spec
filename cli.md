@@ -49,7 +49,7 @@ processors.
 
 File path where processor MUST write resulting METS to. If not set, output METS is expected to be in the file `mets.xml` in the working directory.
 
-### `-J, --tool-json`
+### `-J, --dump-json`
 
 Instead of processing METS, output the [ocrd-tool](ocrd_tool) description for
 this executable, in particular its parameters.
