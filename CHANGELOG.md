@@ -5,6 +5,10 @@ All notable changes to the specs will be documented in this file.
 
 Versioned according to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+
+* Fix example for ocrd_tool
+
 ## TODO
 
 ## [1.1.5] - 2018-05-15
