@@ -38,6 +38,7 @@ properties:
         - description
         - step
         - executable
+        - category
       properties:
         executable:
           description: The name of the CLI executable in $PATH
@@ -48,27 +49,29 @@ properties:
         description:
           description: Concise description what the tool does
           type: string
-        step:
-          description: Step in the OCR-D functional model for this tool
-          type: string
-          enum:
-            - preprocessing/characterization
-            - preprocessing/optimization
-            - preprocessing/optimization/cropping
-            - preprocessing/optimization/deskewing
-            - preprocessing/optimization/despeckling
-            - preprocessing/optimization/dewarping
-            - preprocessing/optimization/binarization
-            - preprocessing/optimization/grayscale_normalization
-            - recognition/text-recognition
-            - recognition/font-identification
-            - layout/segmentation
-            - layout/segmentation/region
-            - layout/segmentation/line
-            - layout/segmentation/word
-            - layout/segmentation/classification
-            - layout/analysis
-        tags:
+        steps:
+          description: This tool can be used at these steps in the OCR-D functional model
+          type: array
+          items:
+            type: string
+            enum:
+              - preprocessing/characterization
+              - preprocessing/optimization
+              - preprocessing/optimization/cropping
+              - preprocessing/optimization/deskewing
+              - preprocessing/optimization/despeckling
+              - preprocessing/optimization/dewarping
+              - preprocessing/optimization/binarization
+              - preprocessing/optimization/grayscale_normalization
+              - recognition/text-recognition
+              - recognition/font-identification
+              - layout/segmentation
+              - layout/segmentation/region
+              - layout/segmentation/line
+              - layout/segmentation/word
+              - layout/segmentation/classification
+              - layout/analysis
+        category:
           description: Tools belong to this category, representing modules within the OCR-D project structure
           type: array
           items:
