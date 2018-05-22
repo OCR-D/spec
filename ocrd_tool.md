@@ -95,11 +95,13 @@ This is from the [ocrd_tesserocr sample project](https://github.com/OCR-D/ocrd_t
 ```json
 {
   "git_url": "https://github.com/OCR-D/ocrd_kraken",
-  "tools": [
-    {
+  "tools": {
+    "ocrd-kraken-binarize": {
       "executable": "ocrd-kraken-binarize",
-      "tags": ["Image preprocessing"],
-      "step": "preprocessing/optimization/binarization",
+      "category": "Image preprocessing",
+      "steps": [
+        "preprocessing/optimization/binarization"
+      ],
       "description": "Binarize images with kraken",
       "parameters": {
         "level-of-operation": {
@@ -113,14 +115,17 @@ This is from the [ocrd_tesserocr sample project](https://github.com/OCR-D/ocrd_t
         }
       }
     },
-    {
+    "ocrd-kraken-segment": {
       "executable": "ocrd-kraken-segment",
-      "tags": ["Layout analysis"],
-      "step": "layout/segmentation/region",
-      "description": "Region detection with kraken",
+      "category": "Layout analysis",
+      "steps": [
+        "layout/segmentation/region"
+      ],
+      "description": "Block segmentation with kraken",
       "parameters": {}
     }
-  ]
+
+  }
 }
 ```
 
