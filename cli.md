@@ -106,13 +106,13 @@ Binarize images from METS file with GROUPIDs id0001, id0002 and id0003.
   <mets:fileSec>
       
     <mets:fileGrp USE="OCR-D-IMG">
-      <mets:file ID="OCR-D-IMG_0001" GROUPID="OCR-D-IMG_0001" MIMETYPE="image/tif">
+      <mets:file ID="OCR-D-IMG_0001" GROUPID="OCR-D-IMG_0001" MIMETYPE="image/tiff">
         <mets:FLocat LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000001.tif" />
       </mets:file>
-      <mets:file ID="OCR-D-IMG_0002" GROUPID="OCR-D-IMG_0002" MIMETYPE="image/tif">
+      <mets:file ID="OCR-D-IMG_0002" GROUPID="OCR-D-IMG_0002" MIMETYPE="image/tiff">
         <mets:FLocat LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000002.tif" />
       </mets:file>
-      <mets:file ID="OCR-D-IMG_0003" GROUPID="OCR-D-IMG_0003" MIMETYPE="image/tif">
+      <mets:file ID="OCR-D-IMG_0003" GROUPID="OCR-D-IMG_0003" MIMETYPE="image/tiff">
         <mets:FLocat LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000003.tif" />
       </mets:file>
     </mets:fileGrp>
@@ -142,13 +142,13 @@ This is the METS file as it is returned by the MP CLI:
   <mets:fileSec>
       
     <mets:fileGrp USE="OCR-D-IMG">
-      <mets:file ID="OCR-D-IMG_0001" GROUPID="OCR-D-IMG_0001" MIMETYPE="image/tif">
+      <mets:file ID="OCR-D-IMG_0001" GROUPID="OCR-D-IMG_0001" MIMETYPE="image/tiff">
         <mets:FLocat LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000001.tif" />
       </mets:file>
-      <mets:file ID="OCR-D-IMG_0002" GROUPID="OCR-D-IMG_0002" MIMETYPE="image/tif">
+      <mets:file ID="OCR-D-IMG_0002" GROUPID="OCR-D-IMG_0002" MIMETYPE="image/tiff">
         <mets:FLocat LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000002.tif" />
       </mets:file>
-      <mets:file ID="OCR-D-IMG_0003" GROUPID="OCR-D-IMG_0003" MIMETYPE="image/tif">
+      <mets:file ID="OCR-D-IMG_0003" GROUPID="OCR-D-IMG_0003" MIMETYPE="image/tiff">
         <mets:FLocat LOCTYPE="URL" xlink:href="https://github.com/OCR-D/spec/raw/master/io/example/00000003.tif" />
       </mets:file>
     </mets:fileGrp>

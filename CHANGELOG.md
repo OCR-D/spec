@@ -8,6 +8,7 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
 * Fix example for ocrd_tool
+* Fix TIFF media type
 
 ## TODO
 

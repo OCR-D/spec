@@ -153,10 +153,10 @@
                ”OCR-D-IMG”           The unmanipulated source images.
     -->
     <mets:fileGrp USE="OCR-D-IMG">
-      <mets:file ID="FILE_0001_IMAGE" GROUPID="FILE_0001_IMAGE" MIMETYPE="image/tif">
+      <mets:file ID="FILE_0001_IMAGE" GROUPID="FILE_0001_IMAGE" MIMETYPE="image/tiff">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/assets/raw/master/data/SBB0000F29300010000/00000001.tif" />
       </mets:file>
-      <mets:file ID="FILE_0002_IMAGE" GROUPID="FILE_0002_IMAGE" MIMETYPE="image/tif">
+      <mets:file ID="FILE_0002_IMAGE" GROUPID="FILE_0002_IMAGE" MIMETYPE="image/tiff">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/assets/raw/master/data/SBB0000F29300010000/00000002.tif" />
       </mets:file>
     </mets:fileGrp>
@@ -164,10 +164,10 @@
                ”OCR-D-IMG-DESKEW”,   Deskewed images. (Module 1, submodule B: image optimization)
     -->
     <mets:fileGrp USE="OCR-D-IMG-DESKEW">
-      <mets:file ID="FILE_0001_IMAGE_DESKEW" GROUPID="FILE_0001_IMAGE" MIMETYPE="image/tif">
+      <mets:file ID="FILE_0001_IMAGE_DESKEW" GROUPID="FILE_0001_IMAGE" MIMETYPE="image/tiff">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/assets/raw/master/data/SBB0000F29300010000/00000001_DESKEW.tif" />
       </mets:file>
-      <mets:file ID="FILE_0002_IMAGE_DESKEW" GROUPID="FILE_0002_IMAGE" MIMETYPE="image/tif">
+      <mets:file ID="FILE_0002_IMAGE_DESKEW" GROUPID="FILE_0002_IMAGE" MIMETYPE="image/tiff">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/assets/raw/master/data/SBB0000F29300010000/00000002_DESKEW.tif" />
       </mets:file>
     </mets:fileGrp>
@@ -175,10 +175,10 @@
                ”OCR-D-IMG-DESPECK”,  Despeckled images. (Module 1, submodule B: image optimization)
     -->
     <mets:fileGrp USE="OCR-D-IMG-DESPECK">
-      <mets:file ID="FILE_0001_IMAGE_DESPECK" GROUPID="FILE_0001_IMAGE" MIMETYPE="image/tif">
+      <mets:file ID="FILE_0001_IMAGE_DESPECK" GROUPID="FILE_0001_IMAGE" MIMETYPE="image/tiff">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/assets/raw/master/data/SBB0000F29300010000/00000001_DESPECK.tif" />
       </mets:file>
-      <mets:file ID="FILE_0002_IMAGE_DESPECK" GROUPID="FILE_0002_IMAGE" MIMETYPE="image/tif">
+      <mets:file ID="FILE_0002_IMAGE_DESPECK" GROUPID="FILE_0002_IMAGE" MIMETYPE="image/tiff">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/assets/raw/master/data/SBB0000F29300010000/00000002_DESPECK.tif" />
       </mets:file>
     </mets:fileGrp>
@@ -186,10 +186,10 @@
                ”OCR-D-IMG-DEWARP”,   Dewarped images. (Module 1, submodule B: image optimization)
     -->
     <mets:fileGrp USE="OCR-D-IMG-DEWARP">
-      <mets:file ID="FILE_0001_IMAGE_DEWARP" GROUPID="FILE_0001_IMAGE" MIMETYPE="image/tif">
+      <mets:file ID="FILE_0001_IMAGE_DEWARP" GROUPID="FILE_0001_IMAGE" MIMETYPE="image/tiff">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/assets/raw/master/data/SBB0000F29300010000/00000001_DEWARP.tif" />
       </mets:file>
-      <mets:file ID="FILE_0002_IMAGE_DEWARP" GROUPID="FILE_0002_IMAGE" MIMETYPE="image/tif">
+      <mets:file ID="FILE_0002_IMAGE_DEWARP" GROUPID="FILE_0002_IMAGE" MIMETYPE="image/tiff">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/assets/raw/master/data/SBB0000F29300010000/00000002_DEWARP.tif" />
       </mets:file>
     </mets:fileGrp>
@@ -197,10 +197,10 @@
                ”OCR-D-IMG-CROP”,     Cropped images. (Module 1, submodule B: image optimization)
     -->
 <mets:fileGrp USE="OCR-D-IMG-CROP">
-      <mets:file ID="FILE_0001_IMAGE_CROP" GROUPID="FILE_0001_IMAGE" MIMETYPE="image/tif">
+      <mets:file ID="FILE_0001_IMAGE_CROP" GROUPID="FILE_0001_IMAGE" MIMETYPE="image/tiff">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/assets/raw/master/data/SBB0000F29300010000/00000001_CROP.tif" />
       </mets:file>
-      <mets:file ID="FILE_0002_IMAGE_CROP" GROUPID="FILE_0002_IMAGE" MIMETYPE="image/tif">
+      <mets:file ID="FILE_0002_IMAGE_CROP" GROUPID="FILE_0002_IMAGE" MIMETYPE="image/tiff">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/assets/raw/master/data/SBB0000F29300010000/00000002_CROP.tif" />
       </mets:file>
     </mets:fileGrp>
@@ -208,10 +208,10 @@
                ”OCR-D-IMG-BIN”       Binarized images. (Module 1, submodule B: image optimization)
     -->
     <mets:fileGrp USE="OCR-D-IMG-BIN">
-      <mets:file ID="FILE_0001_IMAGE_BIN" GROUPID="FILE_0001_IMAGE" MIMETYPE="image/tif">
+      <mets:file ID="FILE_0001_IMAGE_BIN" GROUPID="FILE_0001_IMAGE" MIMETYPE="image/tiff">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/assets/raw/master/data/SBB0000F29300010000/00000001_BIN.tif" />
       </mets:file>
-      <mets:file ID="FILE_0002_IMAGE_BIN" GROUPID="FILE_0002_IMAGE" MIMETYPE="image/tif">
+      <mets:file ID="FILE_0002_IMAGE_BIN" GROUPID="FILE_0002_IMAGE" MIMETYPE="image/tiff">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/assets/raw/master/data/SBB0000F29300010000/00000002_BIN.tif" />
       </mets:file>
     </mets:fileGrp>
