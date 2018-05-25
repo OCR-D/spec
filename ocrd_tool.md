@@ -38,7 +38,7 @@ properties:
         - description
         - step
         - executable
-        - category
+        - categories
       properties:
         executable:
           description: The name of the CLI executable in $PATH
@@ -71,8 +71,8 @@ properties:
               - layout/segmentation/word
               - layout/segmentation/classification
               - layout/analysis
-        category:
-          description: Tools belong to this category, representing modules within the OCR-D project structure
+        categories:
+          description: Tools belong to this categories, representing modules within the OCR-D project structure
           type: array
           items:
             type: string
@@ -117,7 +117,9 @@ This is from the [ocrd_tesserocr sample project](https://github.com/OCR-D/ocrd_t
     },
     "ocrd-kraken-segment": {
       "executable": "ocrd-kraken-segment",
-      "category": "Layout analysis",
+      "category": [
+        "Layout analysis"
+      ],
       "steps": [
         "layout/segmentation/region"
       ],
