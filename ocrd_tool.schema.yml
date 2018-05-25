@@ -23,17 +23,28 @@ properties:
           - description
           - steps
           - executable
-          - category
+          - categories
         properties:
           executable:
             description: The name of the CLI executable in $PATH
             type: string
-          parameterSchema:
-            description: JSON Schema for the parameters.json file
+          parameters:
+            description: Object describing the parameters of a tool. Keys are parameter names, values sub-schemas.
             type: object
           description:
             description: Concise description what the tool does
-            type: string
+          categories:
+            description: Tools belong to this categories, representing modules within the OCR-D project structure
+            type: array
+            items:
+              type: string
+              enum:
+                - Image preprocessing
+                - Layout analysis
+                - Text recognition and optimization
+                - Model training
+                - Long-term preservation
+                - Quality assurance
           steps:
             description: This tool can be used at these steps in the OCR-D functional model
             type: array
@@ -56,15 +67,3 @@ properties:
                 - layout/segmentation/word
                 - layout/segmentation/classification
                 - layout/analysis
-          category:
-            description: Tools belong to this category, representing modules within the OCR-D project structure
-            type: array
-            items:
-              type: string
-              enum:
-                - Image preprocessing
-                - Layout analysis
-                - Text recognition and optimization
-                - Model training
-                - Long-term preservation
-                - Quality assurance
