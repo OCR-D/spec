@@ -43,8 +43,8 @@ properties:
         executable:
           description: The name of the CLI executable in $PATH
           type: string
-        parameterSchema:
-          description: JSON Schema for the parameters.json file
+        parameters:
+          description: Object describing the parameters of a tool. Keys are parameter names, values sub-schemas.
           type: object
         description:
           description: Concise description what the tool does
