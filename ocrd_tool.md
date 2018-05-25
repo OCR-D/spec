@@ -38,38 +38,41 @@ properties:
         - description
         - step
         - executable
+        - categories
       properties:
         executable:
           description: The name of the CLI executable in $PATH
           type: string
-        parameterSchema:
-          description: JSON Schema for the parameters.json file
+        parameters:
+          description: Object describing the parameters of a tool. Keys are parameter names, values sub-schemas.
           type: object
         description:
           description: Concise description what the tool does
           type: string
-        step:
-          description: Step in the OCR-D functional model for this tool
-          type: string
-          enum:
-            - preprocessing/characterization
-            - preprocessing/optimization
-            - preprocessing/optimization/cropping
-            - preprocessing/optimization/deskewing
-            - preprocessing/optimization/despeckling
-            - preprocessing/optimization/dewarping
-            - preprocessing/optimization/binarization
-            - preprocessing/optimization/grayscale_normalization
-            - recognition/text-recognition
-            - recognition/font-identification
-            - layout/segmentation
-            - layout/segmentation/region
-            - layout/segmentation/line
-            - layout/segmentation/word
-            - layout/segmentation/classification
-            - layout/analysis
-        tags:
-          description: Tools belong to this category, representing modules within the OCR-D project structure
+        steps:
+          description: This tool can be used at these steps in the OCR-D functional model
+          type: array
+          items:
+            type: string
+            enum:
+              - preprocessing/characterization
+              - preprocessing/optimization
+              - preprocessing/optimization/cropping
+              - preprocessing/optimization/deskewing
+              - preprocessing/optimization/despeckling
+              - preprocessing/optimization/dewarping
+              - preprocessing/optimization/binarization
+              - preprocessing/optimization/grayscale_normalization
+              - recognition/text-recognition
+              - recognition/font-identification
+              - layout/segmentation
+              - layout/segmentation/region
+              - layout/segmentation/line
+              - layout/segmentation/word
+              - layout/segmentation/classification
+              - layout/analysis
+        categories:
+          description: Tools belong to this categories, representing modules within the OCR-D project structure
           type: array
           items:
             type: string
@@ -92,11 +95,13 @@ This is from the [ocrd_tesserocr sample project](https://github.com/OCR-D/ocrd_t
 ```json
 {
   "git_url": "https://github.com/OCR-D/ocrd_kraken",
-  "tools": [
-    {
+  "tools": {
+    "ocrd-kraken-binarize": {
       "executable": "ocrd-kraken-binarize",
-      "tags": ["Image preprocessing"],
-      "step": "preprocessing/optimization/binarization",
+      "category": "Image preprocessing",
+      "steps": [
+        "preprocessing/optimization/binarization"
+      ],
       "description": "Binarize images with kraken",
       "parameters": {
         "level-of-operation": {
@@ -110,14 +115,19 @@ This is from the [ocrd_tesserocr sample project](https://github.com/OCR-D/ocrd_t
         }
       }
     },
-    {
+    "ocrd-kraken-segment": {
       "executable": "ocrd-kraken-segment",
-      "tags": ["Layout analysis"],
-      "step": "layout/segmentation/region",
-      "description": "Region detection with kraken",
+      "category": [
+        "Layout analysis"
+      ],
+      "steps": [
+        "layout/segmentation/region"
+      ],
+      "description": "Block segmentation with kraken",
       "parameters": {}
     }
-  ]
+
+  }
 }
 ```
 

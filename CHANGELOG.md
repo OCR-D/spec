@@ -16,6 +16,12 @@ Added:
 
 * -J/--dump-json, #30
 
+Changed
+
+  * ocrd-tool: tags -> category
+  * ocrd-tool: step -> steps (now an array)
+  * ocrd-tool: parameterSchema -> parameters
+
 ## TODO
 
 ## [1.1.5] - 2018-05-15
