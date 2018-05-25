@@ -7,8 +7,14 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Fixed:
+
 * Fix example for ocrd_tool
 * Fix TIFF media type
+
+Added:
+
+* -J/--dump-json, #30
 
 ## TODO
 
