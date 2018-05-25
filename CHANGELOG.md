@@ -18,9 +18,10 @@ Added:
 
 Changed
 
-  * ocrd-tool: tags -> category
-  * ocrd-tool: step -> steps (now an array)
-  * ocrd-tool: parameterSchema -> parameters
+  * ocrd-tool: tags -> category, #44
+  * ocrd-tool: step -> steps (now an array), #44
+  * ocrd-tool: parameterSchema -> parameters, #48
+  * ocrd-tool: 'tools' is an object now, not an array, #43
 
 ## TODO
 
