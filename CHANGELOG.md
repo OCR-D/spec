@@ -7,6 +7,10 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## TODO
+
+## [1.2.0] - 2018-05-25
+
 Fixed:
 
 * Fix example for ocrd_tool
@@ -22,8 +26,6 @@ Changed
   * ocrd-tool: step -> steps (now an array), #44
   * ocrd-tool: parameterSchema -> parameters, #48
   * ocrd-tool: 'tools' is an object now, not an array, #43
-
-## TODO
 
 ## [1.1.5] - 2018-05-15
 
@@ -81,6 +83,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[1.2.0]: ../../compare/v1.2.0...v1.1.5
 [1.1.5]: ../../compare/v1.1.5...v1.1.4
 [1.1.4]: ../../compare/v1.1.4...v1.1.3
 [1.1.3]: ../../compare/v1.1.3...v1.1.2
