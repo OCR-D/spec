@@ -2,60 +2,11 @@
 
 > Glossary of terms from the domain of image processing/OCR as used within the OCR-D framework
 
-<!-- BEGIN-MARKDOWN-TOC -->
-* [Layout and Typography](#layout-and-typography)
-	* [Block](#block)
-	* [Block type](#block-type)
-	* [Glyph](#glyph)
-	* [Grapheme Cluster](#grapheme-cluster)
-	* [Line](#line)
-	* [Reading Order](#reading-order)
-	* [Region](#region)
-	* [Symbol](#symbol)
-	* [TextLine](#textline)
-	* [Word](#word)
-* [Data](#data)
-	* [Ground Truth](#ground-truth)
-		* [Reference data](#reference-data)
-		* [Evaluation data](#evaluation-data)
-		* [Training data](#training-data)
-* [Activities](#activities)
-	* [Binarization](#binarization)
-	* [Dewarping](#dewarping)
-	* [Despeckling](#despeckling)
-	* [Deskewing](#deskewing)
-	* [Font indentification](#font-indentification)
-	* [Grayscale normalization](#grayscale-normalization)
-	* [Document analysis](#document-analysis)
-	* [Reading order detection](#reading-order-detection)
-	* [Cropping](#cropping)
-	* [Border removal](#border-removal)
-	* [Segmentation](#segmentation)
-	* [Block segmentation](#block-segmentation)
-	* [Block classification](#block-classification)
-	* [Line segmentation](#line-segmentation)
-	* [Word segmentation](#word-segmentation)
-	* [Glyph segmentation](#glyph-segmentation)
-* [Data Persistence](#data-persistence)
-	* [Software repository](#software-repository)
-	* [Ground Truth repository](#ground-truth-repository)
-	* [Research data repository](#research-data-repository)
-	* [Model repository](#model-repository)
-* [OCR-D modules](#ocr-d-modules)
-	* [Image preprocessing](#image-preprocessing)
-	* [Layout analysis](#layout-analysis)
-	* [Text recognition and optimization](#text-recognition-and-optimization)
-	* [Model training](#model-training)
-	* [Long-term preservation](#long-term-preservation)
-	* [Quality assurance](#quality-assurance)
-
-<!-- END-MARKDOWN-TOC -->
-
 ## Layout and Typography
 
 ### Block
 
-A block is a polygon inside a page.
+A block is a region described by a polygon inside a page.
 
 ### Block type
 
@@ -63,7 +14,7 @@ The semantics or function of a [block](#block) such as heading, page number, col
 
 ### Glyph
 
-**TODO**
+Within OCR-D, a glyph is the atomic unit within a [word](#word).
 
 ### Grapheme Cluster
 
@@ -75,11 +26,11 @@ See [TextLine](#textline)
 
 ### Reading Order
 
-Reading order is the intended order of regions within a document.
+Reading order is the intended order of [blocks](#block) within a document.
 
 ### Region
 
-See [Region](#Region)
+See [Block](#block)
 
 ### Symbol
 
@@ -87,7 +38,7 @@ See [Glyph](#glyph)
 
 ### TextLine
 
-A TextLine is a [block](#block) of text without line breaks.
+A TextLine is a [block](#block) of text without line break.
 
 ### Word
 
@@ -98,22 +49,31 @@ A word is a sequence of [glyphs](#glyph) not containing any word-bounding whites
 ### Ground Truth
 
 Ground Truth (GT) in the context of OCR-D is transcriptions in PAGE-XML format in
-combination with the original image.
+combination with the original image. Significant parts of the GT have been created
+manually.
 
 We distinguish different usage scenarios for GT:
 
 #### Reference data
 
-**TODO**
+With the term *reference data*, we refer to data which are intended to illustrate
+the different stages of an OCR/OLR process on representative materials. They are
+supposed to enable an assessment of common difficulties and challenges when
+running certain analysis operations and are therefore completely annotated
+manually at all levels.
 
 #### Evaluation data
 
-**TODO**
+*Evaluation data* are used to quantitatively evaluate the performance of OCR tools
+and/or algorithms. Parts of these data which correspond to the tool(s) under consideration
+are guaranteed to be recorded manually.
 
 #### Training data
 
-Most LSTM will be trained on line transcription/line image tuples. These can be
-generated from PAGE-XML of the [Ground Truth](#ground-truth).
+Many OCR-related tools need to be adapted to the specific domain of the works which are to
+be processed. This domain adaptation is called *training*. Data used to guide this process
+are called *training data*. It is essential that those parts of these data which are fed
+to the training algorithm are captured manually.
 
 ## Activities
 
@@ -127,7 +87,7 @@ See [Felix' Niklas interactive demo](http://felixniklas.com/imageprocessing/bina
 
 ### Dewarping
 
-Manipulating an image in such a way that it is rectangular, all text lines are
+Manipulating an image in such a way that all text lines are
 parallel to bottom/top edge of page and creases/folds/curving of page into
 spine of book has been corrected.
 
@@ -176,7 +136,7 @@ Detects the [reading order](#reading-order) of [blocks](#block).
 ### Cropping
 
 Detecting the print space in a page, as opposed to the margins. It is a form of
-[block segmentation](#block-segmentation)
+[block segmentation](#block-segmentation).
 
 Controlled term: `preprocessing/optimization/cropping`.
 
@@ -206,11 +166,15 @@ Controlled term:
 Determine the [type](#block-type) of a detected block.
 
 ### Line segmentation
-Segment [blocks](#block) into [textlines](#textline).
+Segment text [blocks](#block) into [textlines](#textline).
 
 Controlled term:
 - `SEG-LINE` (`USE`)
 - `layout/segmentation/line` (step)
+
+### OCR
+
+Map pixel areas to [glyphs](#glyph) and [words](#words). Can
 
 ### Word segmentation
 
@@ -226,13 +190,21 @@ Segment a [textline](#textline) into [glyphs](#glyph)
 
 Controlled term: `SEG-GLYPH`
 
+### Text recognition
+
+See [OCR](#ocr).
+
+### Text optimization
+
+Text optimization encompasses the manipulations to the text based on the steps
+up to and including text recognition. This includes (semi-)automatically correcting
+recognition errors, orthographical harmonization, fixing segmentation errors etc.
+
 ## Data Persistence
 
 ### Software repository
 
-**TODO** wrong use of document analysis
-
-The software repository contains all document analysis algorithms developed
+The software repository contains all OCR-D algorithms and tools developed
 during the project including tests. It will also contain the documentation and
 installation instructions for deploying a document analysis workflow.
 
@@ -242,21 +214,16 @@ Contains all the [ground truth](#ground-truth) data.
 
 ### Research data repository
 
-**TODO** wrong use of document analysis
-
-The research data repository contains the results of all
+The research data repository may contain the results of all
 [activities](#activities) during document analysis. At least it contains the
 end results of every processed document and its full provenance. The research
 data repository must be available locally.
 
 ### Model repository
 
-**TODO** wrong use of document analysis
-
-Contains all trained (OCR) models for document analysis. The model repository
-must be available locally. Ideally, a publicly available model repository will
+Contains all trained (OCR) models for text recognition. The model repository
+has to be available at least locally. Ideally, a publicly available model repository will
 be developed.
-
 
 ## OCR-D modules
 
@@ -265,24 +232,27 @@ workflow into six modules.
 
 ### Image preprocessing
 
-**TODO**
+Manipulating the input images for subsequent layout analysis and text recognition.
 
 ### Layout analysis
 
-**TODO**
+Detection of structure within the page.
 
 ### Text recognition and optimization
 
-**TODO**
+Recognition of text and post-correction of recognition errors.
 
 ### Model training
 
-**TODO**
+Generating data files from aligned ground truth text and images to configure
+the prediction of text and layout recognition engines.
 
-### Long-term preservation
+### Long-term preservation and persistence
 
-**TODO**
+Storing results of OCR and OLR indefinitely, taking into account versioning,
+multiple runs, provenance/parametrization and providing access to these saved
+snapshots in a granular fashion.
 
 ### Quality assurance
 
-**TODO**
+Providing measures, algorithms and software to estimate the quality of the [individual processes](#activities) within the OCR-D domain.
