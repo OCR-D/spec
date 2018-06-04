@@ -2,6 +2,8 @@
 
 > Glossary of terms from the domain of image processing/OCR as used within the OCR-D framework
 
+This section is non-normative.
+
 ## Layout and Typography
 
 ### Block
