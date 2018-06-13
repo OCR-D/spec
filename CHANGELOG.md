@@ -7,6 +7,11 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+
+Removed:
+
+  * --output-mets CLI option
+
 ## TODO
 
 ## [1.2.0] - 2018-05-25
