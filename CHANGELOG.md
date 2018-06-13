@@ -7,6 +7,10 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Added:
+
+  * Glossary
+
 ## TODO
 
 ## [1.2.0] - 2018-05-25
