@@ -7,6 +7,10 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Added:
+
+  * explain `GT-` prefix for `fileGrp@USE` of ground truth files
+
 ## TODO
 
 ## [1.2.0] - 2018-05-25
