@@ -50,9 +50,10 @@ A word is a sequence of [glyphs](#glyph) not containing any word-bounding whites
 
 ### Ground Truth
 
-Ground Truth (GT) in the context of OCR-D is transcriptions in PAGE-XML format in
-combination with the original image. Significant parts of the GT have been created
-manually.
+Ground truth (GT) [in the context of OCR-D](http://ocr-d.de/daten) are
+transcriptions, specific structure descriptions and word lists. These are
+essentially available in PAGE XML format in combination with the original
+image. Essential parts of the GT were created manually.
 
 We distinguish different usage scenarios for GT:
 
