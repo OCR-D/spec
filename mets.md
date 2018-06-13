@@ -45,10 +45,13 @@ For this purpose, the METS file MUST contain a `mods:identifier` that must conta
 All `mets:fileGrp` must have a `USE` attribute that hints at the provenance of the files. It MUST have the structure
 
 ```
-ID := "OCR-D-" + WORKFLOW_STEP + ("-" + PROCESSOR)?
+ID := "OCR-D-" + PREFIX? + WORKFLOW_STEP + ("-" + PROCESSOR)?
+PREFIX := ("" | "GT-")
 WORKFLOW_STEP := ("IMG" | "SEG" | "OCR" | "COR")
 PROCESSOR := [A-Z0-9\-]{3,}
 ```
+
+`PREFIX` can be `GT-` to indicate that these files are [ground truth](glossary#ground-truth).
 
 `WORKFLOW_STEP` can be one of:
 
