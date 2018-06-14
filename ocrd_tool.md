@@ -100,7 +100,7 @@ This is from the [ocrd_tesserocr sample project](https://github.com/OCR-D/ocrd_t
     "ocrd-kraken-binarize": {
       "executable": "ocrd-kraken-binarize",
       "categories": [
-        "Image Preprocessing"
+        "Image preprocessing"
       ],
       "steps": [
         "preprocessing/optimization/binarization"
@@ -110,11 +110,7 @@ This is from the [ocrd_tesserocr sample project](https://github.com/OCR-D/ocrd_t
         "level-of-operation": {
           "type": "string",
           "default": "page",
-          "enum": [
-            "page",
-            "region",
-            "line"
-          ]
+          "enum": ["page", "block", "line"]
         }
       }
     },
@@ -127,7 +123,39 @@ This is from the [ocrd_tesserocr sample project](https://github.com/OCR-D/ocrd_t
         "layout/segmentation/region"
       ],
       "description": "Block segmentation with kraken",
-      "parameters": {}
+      "parameters": {
+        "text_direction": {
+          "type": "string",
+          "description": "Sets principal text direction",
+          "enum": ["horizontal-lr", "horizontal-rl", "vertical-lr", "vertical-rl"],
+          "default": "horizontal-lr"
+        },
+        "script_detect": {
+          "type": "boolean",
+          "description": "Enable script detection on segmenter output",
+          "default": false
+        },
+        "maxcolseps": {"type": "number", "format": "integer", "default": 2},
+        "scale": {"type": "number", "format": "float", "default": null},
+        "black_colseps": {"type": "boolean", "default": false},
+        "white_colseps": {"type": "boolean", "default": false}
+      }
+    },
+    "ocrd-kraken-ocr": {
+      "executable": "ocrd-kraken-ocr",
+      "categories": ["Text recognition and optimization"],
+      "steps": [
+        "recognition/text-recognition"
+      ],
+      "description": "OCR with kraken",
+      "parameters": {
+        "lines-json": {
+          "type": "string",
+          "format": "url",
+          "required": "true",
+          "description": "URL to line segmentation in JSON"
+        }
+      }
     }
 
   }
