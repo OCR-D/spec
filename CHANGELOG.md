@@ -5,14 +5,23 @@ All notable changes to the specs will be documented in this file.
 
 Versioned according to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+
+## TODO
+
+## [1.3.0] - 2018-06-15
 
 Added:
 
-  * Glossary
-  * explain `GT-` prefix for `fileGrp@USE` of ground truth files
+  * Glossary, #56
 
-## TODO
+Removed:
+
+  * drop OCR-D-GT-PAGE, #61
+
+Fixed:
+
+  * explain `GT-` prefix for `fileGrp@USE` of ground truth files, #58
+  * various typos
 
 ## [1.2.0] - 2018-05-25
 
@@ -88,6 +97,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[1.3.0]: ../../compare/v1.3.0...v1.2.0
 [1.2.0]: ../../compare/v1.2.0...v1.1.5
 [1.1.5]: ../../compare/v1.1.5...v1.1.4
 [1.1.4]: ../../compare/v1.1.4...v1.1.3
