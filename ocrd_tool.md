@@ -1,6 +1,6 @@
 # ocrd-tool.json
 
-Tools MUST be described in a file `ocrd_tool.json` in the root of the repository.
+Tools MUST be described in a file `ocrd-tool.json` in the root of the repository.
 
 It must contain a JSON object adhering to the [ocrd-tool JSON Schema](#Definition).
 
@@ -8,7 +8,7 @@ In particular, every tool provided must be described in an array item under the
 `tools` key. These definitions drive the [CLI](cli) and the [web
 services](swagger).
 
-To validate a `ocrd_tool.json` file, use `ocrd validate-ocrd-tool -T /path/to/ocrd-tool.json`.
+To validate a `ocrd-tool.json` file, use `ocrd ocrd-tool /path/to/ocrd-tool.json validate`.
 
 ## Definition
 
