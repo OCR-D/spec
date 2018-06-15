@@ -9,6 +9,7 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 Added:
 
+  * Glossary
   * explain `GT-` prefix for `fileGrp@USE` of ground truth files
 
 ## TODO
