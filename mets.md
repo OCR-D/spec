@@ -53,7 +53,7 @@ PROCESSOR := [A-Z0-9\-]{3,}
 `WORKFLOW_STEP` can be one of:
 
 - `IMG`: Image(s)
-- `SEG`: Segmented page / regions
+- `SEG`: Segmented [blocks](glossary#block) / [lines](glossary#textline) / [words](glossary#word)
 - `OCR`: OCR produced from image
 - `COR`: Post-correction
 
