@@ -131,7 +131,6 @@
                ”OCR-D-IMG-CROP”,     Cropped images. (Module 1, submodule B: image optimization)
                                      (Cropped to whole page or only text region?)
                ”OCR-D-IMG-BIN”       Binarized images. (Module 1, submodule B: image optimization)
-               ”OCR-D-SEG-PAGE”      Page segmentation. (Module 2, submodule A: page segmentation)
                ”OCR-D-SEG-BLOCK”     Block segmentation. (Module 2, submodule A: page segmentation)
                ”OCR-D-SEG-LINE”      Line segmentation. (Module 2, submodule B: line segmentation)
                ”OCR-D-SEG-CLASS”     Block classification. (Module 2, submodule C: segment classification)
@@ -213,17 +212,6 @@
       </mets:file>
       <mets:file ID="FILE_0002_IMAGE_BIN" GROUPID="FILE_0002_IMAGE" MIMETYPE="image/tiff">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/assets/raw/master/data/SBB0000F29300010000/00000002_BIN.tif" />
-      </mets:file>
-    </mets:fileGrp>
-    <!-- 
-               ”OCR-D-SEG-PAGE”      Page segmentation. (Module 2, submodule A: page segmentation)
-    -->
-    <mets:fileGrp USE="OCR-D-SEG-PAGE">
-      <mets:file ID="FILE_0001_SEG_PAGE" GROUPID="FILE_0001_IMAGE" MIMETYPE="application/vnd.prima.page+xml">
-        <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/assets/raw/master/data/SBB0000F29300010000/00000001_SEG_PAGE.xml" />
-      </mets:file>
-      <mets:file ID="FILE_0002_SEG_PAGE" GROUPID="FILE_0002_IMAGE" MIMETYPE="application/vnd.prima.page+xml">
-        <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="https://github.com/OCR-D/assets/raw/master/data/SBB0000F29300010000/00000002_SEG_PAGE.xml" />
       </mets:file>
     </mets:fileGrp>
     <!-- 
