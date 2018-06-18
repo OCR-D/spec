@@ -8,6 +8,9 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Fixed:
+
+  - ocrd-tool: regex for `version` had a YAML error
 
 ## TODO
 
