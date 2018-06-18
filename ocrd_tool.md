@@ -18,10 +18,15 @@ To validate a `ocrd-tool.json` file, use `ocrd ocrd-tool /path/to/ocrd-tool.json
 type: object
 description: Schema for tools by OCR-D MP
 required:
+  - version
   - git_url
   - tools
 additionalProperties: false
 properties:
+  version:
+    description: "Version of the tool, expressed as MAJOR.MINOR.PATCH."
+    type: string
+    pattern: "^\d+\.\d+\.\d+$"
   git_url:
     description: Github/Gitlab URL
     type: string
@@ -96,6 +101,7 @@ This is from the [ocrd_tesserocr sample project](https://github.com/OCR-D/ocrd_t
 ```json
 {
   "git_url": "https://github.com/OCR-D/ocrd_kraken",
+  "version": "0.0.1",
   "tools": {
     "ocrd-kraken-binarize": {
       "executable": "ocrd-kraken-binarize",
