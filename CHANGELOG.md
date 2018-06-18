@@ -7,11 +7,14 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 
 
+
+## TODO
+
+## [2.0.0] - 2018-06-18
+
 Removed:
 
   * --output-mets CLI option
-
-## TODO
 
 ## [1.3.0] - 2018-06-15
 
@@ -102,6 +105,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[2.0.0]: ../../compare/v2.0.0...v1.3.0
 [1.3.0]: ../../compare/v1.3.0...v1.2.0
 [1.2.0]: ../../compare/v1.2.0...v1.1.5
 [1.1.5]: ../../compare/v1.1.5...v1.1.4
