@@ -8,15 +8,17 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+
+## TODO
+
+## [2.1.0] - 2018-06-18
+
 Added:
 
-  * ocrd-tool: Must defined `version`
+  * ocrd-tool: Must define `version`
   * METS: `mets:file` must have ID
   * METS: `mets:fileGrp` must have consistent MIMETYPE
   * METS: `mets:file` GROUPID must be unique with a `mets:fileGrp`
-
-
-## TODO
 
 ## [2.0.0] - 2018-06-18
 
@@ -113,6 +115,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[2.2.0]: ../../compare/v2.1.0...v2.0.0
 [2.0.0]: ../../compare/v2.0.0...v1.3.0
 [1.3.0]: ../../compare/v1.3.0...v1.2.0
 [1.2.0]: ../../compare/v1.2.0...v1.1.5
