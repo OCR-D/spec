@@ -40,9 +40,13 @@ For this purpose, the METS file MUST contain a `mods:identifier` that must conta
 * `url`
 
 
-## File Group id syntax
+## File Group 
 
-All `mets:fileGrp` must have a `USE` attribute that hints at the provenance of the files. It MUST have the structure
+All `mets:file` inside a `mets:fileGrp` MUST have the same `MIMETYPE`.
+
+## File Group USE syntax
+
+All `mets:fileGrp` MUST have a **unique** `USE` attribute that hints at the provenance of the files. It MUST have the structure
 
 ```
 ID := "OCR-D-" + PREFIX? + WORKFLOW_STEP + ("-" + PROCESSOR)?
@@ -92,7 +96,8 @@ PROCESSOR := [A-Z0-9\-]{3,}
 
 ## File ID syntax
 
-The `ID` attribute of a `mets:file` SHOULD be the `USE` of the containing `mets:fileGrp` combined with a 4-zero-padded number.
+Each `mets:file` must have an `ID` attribute. The `ID` attribute of a `mets:file` SHOULD be the `USE` of the containing `mets:fileGrp` combined with a 4-zero-padded number.
+The `ID` MUST be unique inside the METS file.
 
 ```
 FILEID := ID + "_" + [0-9]{4}
@@ -100,6 +105,12 @@ ID := "OCR-D-" + WORKFLOW_STEP + ("-" + PROCESSOR)?
 WORKFLOW_STEP := ("IMG" | "SEG" | "OCR" | "COR")
 PROCESSOR := [A-Z0-9\-]{3,}
 ```
+### Examples
+
+`<mets:file ID>` | ID of the file for OCR-D
+--               | --
+`<mets:file ID="OCR-D-IMG_0001">`            | The unmanipulated source image
+`<mets:file ID="OCR-D-IMG-BIN_0001">`        | Black-and-White image
 
 ## Grouping files with GROUPID
 
