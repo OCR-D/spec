@@ -26,7 +26,7 @@ properties:
   version:
     description: "Version of the tool, expressed as MAJOR.MINOR.PATCH."
     type: string
-    pattern: "^\d+\.\d+\.\d+$"
+    pattern: '^[0-9]+\.[0-9]+\.[0-9]+$'
   git_url:
     description: Github/Gitlab URL
     type: string
