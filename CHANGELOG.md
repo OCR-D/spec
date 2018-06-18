@@ -6,6 +6,13 @@ All notable changes to the specs will be documented in this file.
 Versioned according to [Semantic Versioning](http://semver.org/).
 
 
+## Unreleased
+
+Added:
+
+  * METS: `mets:file` must have ID
+  * METS: `mets:fileGrp` must have consistent MIMETYPE
+  * METS: `mets:file` GROUPID must be unique with a `mets:fileGrp`
 
 
 ## TODO
