@@ -6,6 +6,11 @@ All notable changes to the specs will be documented in this file.
 Versioned according to [Semantic Versioning](http://semver.org/).
 
 
+
+Removed:
+
+  * --output-mets CLI option
+
 ## TODO
 
 ## [1.3.0] - 2018-06-15
