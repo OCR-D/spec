@@ -8,12 +8,13 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## TODO
+
+## [2.1.2] - 2018-07-19
+
 Added:
 
   * Reference PAGE media type in PAGE conventions, #65
-
-
-## TODO
 
 ## [2.1.1] - 2018-06-18
 
@@ -125,6 +126,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[2.2.2]: ../../compare/v2.1.2...v2.1.1
 [2.2.1]: ../../compare/v2.1.1...v2.1.0
 [2.2.0]: ../../compare/v2.1.0...v2.0.0
 [2.0.0]: ../../compare/v2.0.0...v1.3.0
