@@ -8,6 +8,10 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Added:
+
+  * Reference PAGE media type in PAGE conventions, #65
+
 
 ## TODO
 
