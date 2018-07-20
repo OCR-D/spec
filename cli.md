@@ -36,7 +36,7 @@ The `mets:file@GROUPID` to process. If no groupID is defined all files within th
 
 ### `-p, --parameter PARAM_JSON`
 
-URL of parameter file in JSON format
+URL of parameter file in JSON format.
 
 ### `-l, --log-level LOGLEVEL`
 
@@ -61,6 +61,21 @@ Data printed to `STDERR` and `STDOUT` is captured linewise and stored as log dat
 Processors can adjust their logging verbosity according to the `--log-level` parameter but they are not required to.
 
 Errors, especially those leading to an exception, should be printed to `STDERR`.
+
+## URL/file convention
+
+Whenever a URL is expected, it should be possible to use a local file path
+instead and have the implementation interpret as a `file://` URL on the fly.
+
+Implementations should adhere to this algorithm when resolving a URL `u`:
+
+1. If `u` contains the string `://`: Do not modify.
+2. If `u` is an absolute path according to the mechanics of the underlying file system: Prepend `file://` to `u`.
+3. Otherwise: Resolve `u` as a path relative to the current working directory, prepend `file://` to `u`.
+
+**NOTE:** This convention is limited to the CLI for convenience of users and
+developers. In METS and PAGE documents, URLs must be strictly valid and
+resolvable by common software agents as-is.
 
 ## Example
 
