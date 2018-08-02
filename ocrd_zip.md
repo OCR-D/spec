@@ -1,7 +1,7 @@
 # OCRD-ZIP
 
 This document describes an exchange format to bundle a workspace described by a
-[METS file following OCR-D's conventions](mets).
+[METS file following OCR-D's conventions](/mets).
 
 ## Rationale
 
@@ -10,77 +10,144 @@ files such as images and metadata about those images such as PAGE or ALTO
 files. METS is a textual format, not suitable for embedding arbitrary,
 potentially binary, data. For various use cases (such as transfer via network,
 long-term preservation, reproducible tests etc.) it is desirable to have a
-self-contained representation of a workspace. With such a representation, data
-producers are not forced to provide dereferencable HTTP-URL for the files they
-produce and data consumers are not forced to dereference all HTTP-URL.
+self-contained representation of a [workspace](/mets).
+
+With such a representation, data producers are not forced to provide
+dereferencable HTTP-URL for the files they produce and data consumers are not
+forced to dereference all HTTP-URL.
 
 While METS does have mechanisms for embedding XML data and even base64-encoded
 binary data, the tradeoffs in file size, parsing speed and readability are too
 great to make this a viable solution for a mass digitization scenario.
 
-Instead, OCRD-ZIP is based on the widely used ZIP format which allows
-representing file hierarchies in a standardized, compressable archive format.
-Many formats like JAR (used in software development) and BagIt (used in
-long-term preservation) use the same principles: A zip file containing a
-manifest of contained resources and the resources themselves. For OCRD-ZIP, the
-METS file is the manifest.
+Instead, we propose an exchange format ("OCRD-ZIP") based on the BagIt spec
+used for data ingestion adopted in the web archiving community.
 
-## Format
+## BagIt profile
+
+As a baseline, an OCRD-ZIP must adhere to [v0.97+ of the BagIt
+specs](https://tools.ietf.org/html/draft-kunze-bagit-16), i.e.
+
+* all files in `data/`
+* a file `bagit.txt`
+* a file `bagit-info.txt`
+
+In addition, OCRD-ZIP adhere to a [BagIt
+profile](https://github.com/bagit-profiles/bagit-profiles) (see [Appendix A for
+the full definition](#appendix-a)):
+
+* `bagit-info.txt` MAY additionally contain these tags:
+  * `X-Ocrd-Mets`: Alternative path to the mets.xml file if its path IS NOT `/data/mets.xml`
+  * `X-Ocrd-Manifestation-Depth`: Whether all URL are dereferenced as files or only some
+* A file `url-sources.txt` MUST exist and contain a mapping from local file name to URL
+
+### `X-Ocrd-Mets`
+
+By default, the METS file should be at `data/mets.xml`. If this file has
+another name, it must be listed here and implementations MUST check for
+`X-Ocrd-Mets` before assuming `data/mets.xml`.
+
+### `X-Ocrd-Manifestation-Depth`
+
+Specifiy whether the bag contains the full manifestation of the data referenced in the METS (`full`)
+or only those files that were `file://` URLs before (`partial`). Default: `partial`.
+
+### `url-sources.txt`
+
+Simple text file, mapping Bag-local filenames to the URL of their original location if any.
+
+Every mapping must be on a new line.
+
+Every line should have the format `URL FILENAME`, i.e. a single space character between the two.
 
 ### ZIP
 
-An OCRD-ZIP MUST be a valid ZIP file.
+An OCRD-ZIP MUST be a serialized as a ZIP file.
 
-### `mets.xml` in the root folder
-
-The root folder of the ZIP filetree must contain a file `mets.xml`.
-
-### `file://`-URLs must be relative
+## `file://`-URLs must be relative
 
 All resources referenced in the METS with a `file://`-URL (and consequently all
 those referenced in other files within the workspace -- see rule "When in PAGE
-then in METS") must be referenced by `file://`-URL that must be relative to the
-root location of the workspace.
+then in METS") must be referenced by `file://`-URL that is absolute with root
+being the root location of the workspace, i.e. they MUST begin with
+`file:///data`
 
 Right:
-* `file://foo.xml`
-* `file://foo.tif`
-* `http://server/foo.tif`
+* `file:///data/foo.xml`
+* `file:///data/foo.tif`
+* `http:///data/server/foo.tif`
 
 Wrong:
 * `file:///absolute/path/somewhere/foo.tif`
 
-### When in ZIP then in METS
+## When in data then in METS
 
-All files except `mets.xml` itself that are contained in the OCRD-ZIP must be
-referenced in a `file/Flocat` in the `mets.xml`.
+All files except `mets.xml` itself that are contained in `data` directory must
+be referenced in a `mets:file/mets:Flocat` in the `mets.xml`.
 
 ## Packing a workspace as OCRD-ZIP
 
 To pack a workspace to OCRD-ZIP:
 
 * Create a temporary folder `TMP`
-* Copy source METS to `TMP/mets.xml`
-* Foreach file `f` in `TMP/mets.xml`:
-  * If it is not a `file://`-URL, continue
-  * Copy the file to a location `TMP`. The structure SHOULD be `<USE>/<ID>` where
+* Copy mets.xml to `TMP/mets.xml`
+* Foreach `mets:file` `f` in `TMP/mets.xml`:
+  * If it is not a `file://`-URL
+    * If `X-Ocrd-Manifestation-Depth` is `partial`
+      continue
+  * Download/Copy the file to a location within `TMP`. The structure SHOULD be `<USE>/<ID>` where
     * `<USE>` is the `USE` attribute of the parent `mets:fileGrp`
     * `<ID>` is the `ID` attribute of the `mets:file`
-  * Replace the URL of `f` with `file://<USE>/<ID>` in
+  * Replace the URL of `f` with `file:///data/<USE>/<ID>` in
     * all `mets:FLocat` of `TMP/mets.xml`
-    * all other files in the workspace
-* zip the directory with the `zip` utility
+    * all other files in the workspace, esp. PAGE-XML
+* Package `TMP` as a BagIt bag
 
 ## Unpacking OCRD-ZIP to a workspace
 
-* Unzip OCRD-ZIP `z` to a folder `TMP` (e.g. `/tmp/folder-1`)
+* Unzip OCRD-ZIP `z` to a folder `TMP`
 * Foreach file `f` in `TMP/mets.xml`:
   * If it is not a `file://`-URL, continue
   * Replace the URL of `f` with `file://<ABSPATH>`, where `<ABSPATH>` is the absolute path to `f`, in
-    * `TMP/mets.xml
-    * all files within `TMP`
+    * `TMP/mets.xml`
+    * all files within `TMP`, esp. PAGE-XML
 
-## IANA considerations
+## Appendix A - BagIt profile definition
+
+<!-- BEGIN-EVAL -w '```yaml' '```' -- cat ./bagit_ocrd_profile.yml  -->
+```yaml
+Bagit-Profile-Info:
+  Bagit-Profile-Identifier: https://ocr-d.github.io/bagit_ocrd.json
+  Source-Organization: OCR-D
+  External-Description: BagIt profile for OCR data
+  Version: 0.1
+Bag-Info:
+  Bagging-Date:
+    required: false
+  Source-Organization:
+    required: false
+  X-Ocrd-Mets:
+    default: 'data/mets.xml'
+  X-Ocrd-Manifestation-Depth:
+    default: partial
+    values: ["partial", "full"]
+Manifests-Required:
+  - md5
+  - sha512
+Allow-Fetch.txt: false
+Serialization: required
+Accept-Serialization: application/zip
+Accept-BagIt-Version:
+  - 1.0
+  - 0.97
+  - 0.96
+Tag-Files-Required:
+  - url-sources.txt
+```
+
+<!-- END-EVAL -->
+
+## Appendix B - IANA considerations
 
 Proposed media type of OCRD-ZIP: `application/vnd.ocrd+zip`
 
