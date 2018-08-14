@@ -10,6 +10,18 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## TODO
 
+## [2.2.2] - 2018-08-14
+
+Fixed:
+
+  * Missed `description` for parameters
+
+## [2.2.1] - 2018-07-25
+
+Changed
+
+  * spell out parameter properties in ocrd-tool.json schem
+
 ## [2.2.0] - 2018-07-23
 
 Added:
@@ -132,6 +144,8 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[2.2.2]: ../../compare/v2.2.2...v2.2.1
+[2.2.1]: ../../compare/v2.2.1...v2.2.0
 [2.2.0]: ../../compare/v2.2.0...v2.1.2
 [2.1.2]: ../../compare/v2.1.2...v2.1.1
 [2.1.1]: ../../compare/v2.1.1...v2.1.0
