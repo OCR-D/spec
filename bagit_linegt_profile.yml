@@ -1,0 +1,22 @@
+Bagit-Profile-Info:
+  Bagit-Profile-Identifier: https://ocr-d.github.io/bagit_linegt.json
+  Source-Organization: OCR-D
+  External-Description: BagIt profile for line-wise ground truth
+  Version: 0.1
+Bag-Info:
+  X-Mapping-Pattern:
+    required: false
+    default: basename
+Manifests-Required:
+  - 'md5'
+  - 'sha512'
+Allow-Fetch.txt: false
+Serialization: 'required'
+Accept-Serialization: 'application/zip'
+Accept-BagIt-Version:
+  - 1.0
+  - 0.97
+  - 0.96
+Tag-Files-Required:
+  # Map line filenames to PURL of the work it represents
+  - line_purl.txt
