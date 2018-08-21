@@ -64,7 +64,9 @@ Every line should have the format `URL FILENAME`, i.e. a single space character 
 
 An OCRD-ZIP MUST be a serialized as a ZIP file.
 
-## `file://`-URLs must be relative
+## Invariants
+
+### `file://`-URLs must be relative
 
 All resources referenced in the METS with a `file://`-URL (and consequently all
 those referenced in other files within the workspace -- see rule "When in PAGE
@@ -80,12 +82,14 @@ Right:
 Wrong:
 * `file:///absolute/path/somewhere/foo.tif`
 
-## When in data then in METS
+### When in data then in METS
 
 All files except `mets.xml` itself that are contained in `data` directory must
 be referenced in a `mets:file/mets:Flocat` in the `mets.xml`.
 
-## Packing a workspace as OCRD-ZIP
+## Algorithms
+
+### Packing a workspace as OCRD-ZIP
 
 To pack a workspace to OCRD-ZIP:
 
@@ -103,7 +107,7 @@ To pack a workspace to OCRD-ZIP:
     * all other files in the workspace, esp. PAGE-XML
 * Package `TMP` as a BagIt bag
 
-## Unpacking OCRD-ZIP to a workspace
+### Unpacking OCRD-ZIP to a workspace
 
 * Unzip OCRD-ZIP `z` to a folder `TMP`
 * Foreach file `f` in `TMP/mets.xml`:
