@@ -43,6 +43,7 @@ URL of parameter file in JSON format
 ### `-l, --log-level LOGLEVEL`
 
 Minimum Log level. One of `OFF`, `ERROR`, `WARN`, `INFO` (default), `DEBUG`, `TRACE`).
+:warning: This specification overwrites all other specifications. For a fine-grained change, please use the parameter file.
 
 Actual mechanism for filtering log messages must not be implemented by
 processors.
