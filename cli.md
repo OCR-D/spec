@@ -1,5 +1,7 @@
 # Command Line Interface (CLI)
 
+:information_source: If a parameter supports multiple values they have to be specified via a comma separated list.
+
 ## CLI executable name
 
 All CLI provided by MP must be standalone executables, installable into `$PATH`.
