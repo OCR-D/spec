@@ -1,6 +1,8 @@
 # Command Line Interface (CLI)
 
-**NOTE:** Command line options cannot be repeated. To specify multiple values, provide a single string with comma-separated items (e.g. -I group1,group2,group3 instead of -I group1 -I group2 -I group3).
+**NOTE:** Command line options cannot be repeated. To specify multiple values,
+provide a single string with comma-separated items (e.g. `-I
+group1,group2,group3` instead of `-I group1 -I group2 -I group3`).
 
 ## CLI executable name
 
@@ -43,10 +45,11 @@ URL of parameter file in JSON format.
 ### `-l, --log-level LOGLEVEL`
 
 Set the global minimum Log level. (One of `OFF`, `ERROR`, `WARN`, `INFO` (default), `DEBUG`, `TRACE`).
-**NOTE:** This specification overwrites all other specifications. For a fine-grained setting, please use either the parameter file (-- parameter) or a configuration file. The configuration file is preferable.
 
-Actual mechanism for filtering log messages must not be implemented by
-processors.
+**NOTE:** Setting the log level via `--log-level` parameter should override any
+other implementation-specific means of logging configuration. For example, with
+`--log-level TRACE` no log messages should be filtered globally, whereas
+`--log-level ERROR`, only errors should be output globally.
 
 ### `-J, --dump-json`
 
@@ -61,9 +64,9 @@ Successful execution should signal `0`. Any non-zero return value is considered 
 
 Data printed to `STDERR` and `STDOUT` is captured linewise and stored as log data.
 
-Processors have to adjust their logging verbosity according to the `--log-level` parameter.
+Processors must adjust logging verbosity according to the [`--log-level` parameter](#-l---log-level-loglevel).
 
-Errors, especially those leading to an exception, has to be printed to `STDERR`.
+Errors, especially those leading to exceptions, must be printed to `STDERR`.
 
 ## URL/file convention
 
