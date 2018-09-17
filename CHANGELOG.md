@@ -8,6 +8,14 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Changed:
+
+  * CLI: filtering by log level required, OCR-D/core#173, #74
+
+Added:
+
+  * CLI: Convention to prefer comma-separated values over repeated flags, #68
+
 ## TODO
 
 ## [2.2.2] - 2018-08-14
