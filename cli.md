@@ -42,8 +42,8 @@ URL of parameter file in JSON format
 
 ### `-l, --log-level LOGLEVEL`
 
-Set the global minimum Log level. One of `OFF`, `ERROR`, `WARN`, `INFO` (default), `DEBUG`, `TRACE`).
-**NOTE:** This specification overwrites all other specifications. For a fine-grained change, please use the parameter file (-- parameter) or a config file instead.
+Set the global minimum Log level. (One of `OFF`, `ERROR`, `WARN`, `INFO` (default), `DEBUG`, `TRACE`).
+**NOTE:** This specification overwrites all other specifications. For a fine-grained setting, please use either the parameter file (-- parameter) or a configuration file. The configuration file is preferable.
 
 Actual mechanism for filtering log messages must not be implemented by
 processors.
@@ -61,7 +61,7 @@ Successful execution should signal `0`. Any non-zero return value is considered 
 
 Data printed to `STDERR` and `STDOUT` is captured linewise and stored as log data.
 
-Processors have to adjust their logging verbosity according to the `--log-level` parameter but they are not required to.
+Processors have to adjust their logging verbosity according to the `--log-level` parameter.
 
 Errors, especially those leading to an exception, has to be printed to `STDERR`.
 
