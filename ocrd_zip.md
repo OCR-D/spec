@@ -94,26 +94,26 @@ be referenced in a `mets:file/mets:Flocat` in the `mets.xml`.
 To pack a workspace to OCRD-ZIP:
 
 * Create a temporary folder `TMP`
-* Copy mets.xml to `TMP/mets.xml`
-* Foreach `mets:file` `f` in `TMP/mets.xml`:
+* Copy mets.xml to `TMP/data/mets.xml`
+* Foreach `mets:file` `f` in `TMP/data/mets.xml`:
   * If it is not a `file://`-URL
     * If `X-Ocrd-Manifestation-Depth` is `partial`
       continue
-  * Download/Copy the file to a location within `TMP`. The structure SHOULD be `<USE>/<ID>` where
+  * Download/Copy the file to a location within `TMP/data`. The structure SHOULD be `<USE>/<ID>` where
     * `<USE>` is the `USE` attribute of the parent `mets:fileGrp`
     * `<ID>` is the `ID` attribute of the `mets:file`
   * Replace the URL of `f` with `file:///data/<USE>/<ID>` in
-    * all `mets:FLocat` of `TMP/mets.xml`
+    * all `mets:FLocat` of `TMP/data/mets.xml`
     * all other files in the workspace, esp. PAGE-XML
 * Package `TMP` as a BagIt bag
 
 ### Unpacking OCRD-ZIP to a workspace
 
 * Unzip OCRD-ZIP `z` to a folder `TMP`
-* Foreach file `f` in `TMP/mets.xml`:
+* Foreach file `f` in `TMP/data/mets.xml`:
   * If it is not a `file://`-URL, continue
   * Replace the URL of `f` with `file://<ABSPATH>`, where `<ABSPATH>` is the absolute path to `f`, in
-    * `TMP/mets.xml`
+    * `TMP/data/mets.xml`
     * all files within `TMP`, esp. PAGE-XML
 
 ## Appendix A - BagIt profile definition
