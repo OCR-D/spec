@@ -44,7 +44,8 @@ URL of parameter file in JSON format.
 
 ### `-l, --log-level LOGLEVEL`
 
-Set the global minimum Log level. (One of `OFF`, `ERROR`, `WARN`, `INFO` (default), `DEBUG`, `TRACE`).
+Set the global maximum verbosity level. More verbose log entries will be
+ignored. (One of `OFF`, `ERROR`, `WARN`, `INFO` (default), `DEBUG`, `TRACE`).
 
 **NOTE:** Setting the log level via `--log-level` parameter should override any
 other implementation-specific means of logging configuration. For example, with
