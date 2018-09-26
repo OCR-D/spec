@@ -8,15 +8,18 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## TODO
+
+## [2.3.0] - 2018-09-26
+
 Changed:
 
   * CLI: filtering by log level required, OCR-D/core#173, #74
+  * CLI: log messages must adhere to uniform pattern, #78
 
 Added:
 
   * CLI: Convention to prefer comma-separated values over repeated flags, #68
-
-## TODO
 
 ## [2.2.2] - 2018-08-14
 
@@ -152,6 +155,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[2.3.0]: ../../compare/v2.3.0...v2.2.2
 [2.2.2]: ../../compare/v2.2.2...v2.2.1
 [2.2.1]: ../../compare/v2.2.1...v2.2.0
 [2.2.0]: ../../compare/v2.2.0...v2.1.2
