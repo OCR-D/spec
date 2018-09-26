@@ -69,6 +69,14 @@ Processors must adjust logging verbosity according to the [`--log-level` paramet
 
 Errors, especially those leading to exceptions, must be printed to `STDERR`.
 
+The log messages must have the format `TIME LEVEL LOGGERNAME - MESSAGE\n`, where
+
+* `TIME` is the current time in the format `HH:MM:ss.mmm`, e.g. `07:05:31.007`
+* `LEVEL` is the log level of the message, in uppercase, e.g. `INFO`
+* `LOGGERNAME` is the name of the logging component, such as the class name. Segments of `LOGGERNAME` should be separated by dot `.`, e.g. `ocrd.fancy_tool.analyze`
+* `MESSAGE` is the message to log, should not contain new lines.
+* `\n` is ASCII char `0x0a` (newline)
+
 ## URL/file convention
 
 Whenever a URL is expected, it should be possible to use a local file path
