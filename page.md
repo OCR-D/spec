@@ -39,3 +39,30 @@ The `comments` attribute of the `<pg:AlternativeImage>` attribute should be used
 For the results of image processing that changes the positions of pixels (e.g. cropping, rotation, dewarping), `AlternativeImage` on page level and polygon of recognized zones is not enough to access the image section a region is based on since coordinates are always relative to the original image.
 
 For such use cases, `<pg:AlternativeImage>` may be used as a child of `<pg:TextRegion>`, `<pg:TextLine>`, `<pg:Word>` or `<pg:Glyph>`.
+
+## Attaching text recognition results to elements
+
+A PAGE document can attach recognized text to different typographical units of
+a page at different levels, such as block (`<pg:TextRegion>`), line
+(`<pg:TextLine>`), word (`<pg:Word>`) or glyph (`<pg:Glyph>`).
+
+To attach recognized text to an element `E`, it must be encoded as
+`UTF-8` in a single `<pg:Unicode>` element `U` within a single `<pg:TextEquiv>`
+element `T` of `E`.
+
+`T` must be the last element of `E`.
+
+Leading and trailing whitespace (`U+0020`, `U+000A`) is not significant and must be removed from the string by processors.
+To encode an actual space character, use a non-breaking space `U+00A0`.
+
+## Consistency of text equivalence on different levels
+
+Since text equivalence can be defined on different levels and those levels can
+be nested, text equivalence information is redundant. To avoid inconsistencies,
+the following assertions must be true:
+
+  * text of `<pg:Word>` must be equal to contained `<pg:Glyph>`'s text, concatenated with empty string
+  * text of `<pg:TextLine>` must be equal to contained `<pg:Word>`'s text, concatenated with a single space (`U+0020`).
+  * text of `<pg:TextRegion>` must be equal to contained `<pg:TextLine>`'s text, concatenated with a newline (`U+000A`).
+
+If any of these assertions fails for a PAGE document, it should be considered invalid and not processed further.
