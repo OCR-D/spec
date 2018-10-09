@@ -101,9 +101,7 @@ $> ocrd-kraken-binarize \
     --mets "file:///path/to/file/mets.xml" \
     --working-dir "file:///path/to/workingDir/" \
     --parameters "file:///path/to/file/parameters.json" \
-    --group-id OCR-D-IMG_0001,OCR-D-IMG_0002 \
-    --group-id OCR-D-IMG_0003 \
-    -input-file-grp OCR-D-IMG \
+    --group-id OCR-D-IMG_0001,OCR-D-IMG_0002,OCR-D-IMG_0003 \
     -output-file-grp OCR-D-IMG-BIN-KRAKEN
 ```
 
@@ -114,8 +112,7 @@ $> ocrd process \
     -m "file:///path/to/file/mets.xml" \
     -w "file:///path/to/workingDir/" \
     -p "file:///path/to/file/parameters.json" \
-    -g OCR-D-IMG_0001,OCR-D-IMG_0002 \
-    -g OCR-D-IMG_0003 \
+    -g OCR-D-IMG_0001,OCR-D-IMG_0002,OCR-D-IMG_0003 \
     -I OCR-D-IMG \
     -O OCR-D-IMG-BIN-KRAKEN
     
