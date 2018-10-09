@@ -8,6 +8,10 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Changed
+
+  * :fire: METS: grouping pages by physical `structMap` not `GROUPID`, #81
+
 ## TODO
 
 ## [2.3.0] - 2018-09-26
