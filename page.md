@@ -65,4 +65,7 @@ the following assertions must be true:
   * text of `<pg:TextLine>` must be equal to contained `<pg:Word>`'s text, concatenated with a single space (`U+0020`).
   * text of `<pg:TextRegion>` must be equal to contained `<pg:TextLine>`'s text, concatenated with a newline (`U+000A`).
 
+**NOTE:** "Concatenation" means joining a list of strings with a separator, no
+separator is added to the start or end of the resulting string.
+
 If any of these assertions fails for a PAGE document, it should be considered invalid and not processed further.
