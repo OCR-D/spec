@@ -102,7 +102,8 @@ $> ocrd-kraken-binarize \
     --working-dir "file:///path/to/workingDir/" \
     --parameters "file:///path/to/file/parameters.json" \
     --group-id OCR-D-IMG_0001,OCR-D-IMG_0002,OCR-D-IMG_0003 \
-    -output-file-grp OCR-D-IMG-BIN-KRAKEN
+    --input-file-grp OCR-D-IMG
+    --output-file-grp OCR-D-IMG-BIN-KRAKEN
 ```
 
 And this is how it will be called with the `ocrd` CLI:
