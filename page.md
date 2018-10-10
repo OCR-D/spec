@@ -47,7 +47,7 @@ a page at different levels, such as block (`<pg:TextRegion>`), line
 (`<pg:TextLine>`), word (`<pg:Word>`) or glyph (`<pg:Glyph>`).
 
 To attach recognized text to an element `E`, it must be encoded as
-`UTF-8` in a single `<pg:Unicode>` element `U` within a single `<pg:TextEquiv>`
+`UTF-8` in a single `<pg:Unicode>` element `U` within a `<pg:TextEquiv>`
 element `T` of `E`.
 
 `T` must be the last element of `E`.
@@ -59,10 +59,10 @@ processors.
 To encode an actual space character at the start or end of the content
 `<pg:Unicode>`, use a non-breaking space `U+00A0`.
 
-## Consistency of text equivalence on different levels
+## Consistency of text results on different levels
 
-Since text equivalence can be defined on different levels and those levels can
-be nested, text equivalence information is redundant. To avoid inconsistencies,
+Since text results can be defined on different levels and those levels can
+be nested, text results information is redundant. To avoid inconsistencies,
 the following assertions must be true:
 
   * text of `<pg:Word>` must be equal to contained `<pg:Glyph>`'s text, concatenated with empty string
