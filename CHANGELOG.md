@@ -8,11 +8,14 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## TODO
+
+## [2.3.1] - 2019-10-10
+
 Fixed
 
   * CLI: Example used repeated options
 
-## TODO
 
 ## [2.3.0] - 2018-09-26
 
@@ -159,6 +162,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[2.3.1]: ../../compare/v2.3.1...v2.3.0
 [2.3.0]: ../../compare/v2.3.0...v2.2.2
 [2.2.2]: ../../compare/v2.2.2...v2.2.1
 [2.2.1]: ../../compare/v2.2.1...v2.2.0
