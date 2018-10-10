@@ -52,8 +52,12 @@ element `T` of `E`.
 
 `T` must be the last element of `E`.
 
-Leading and trailing whitespace (`U+0020`, `U+000A`) is not significant and must be removed from the string by processors.
-To encode an actual space character, use a non-breaking space `U+00A0`.
+Leading and trailing whitespace (`U+0020`, `U+000A`) in the content of a
+`<pg:Unicode>` is not significant and must be removed from the string by
+processors.
+
+To encode an actual space character at the start or end of the content
+`<pg:Unicode>`, use a non-breaking space `U+00A0`.
 
 ## Consistency of text equivalence on different levels
 
