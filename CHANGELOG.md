@@ -8,6 +8,10 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Added:
+
+  * File parameters, #69
+
 ## TODO
 
 ## [2.3.1] - 2019-10-10
