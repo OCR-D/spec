@@ -128,6 +128,7 @@ properties:
                 - preprocessing/optimization/grayscale_normalization
                 - recognition/text-recognition
                 - recognition/font-identification
+                - recognition/post-correction
                 - layout/segmentation
                 - layout/segmentation/region
                 - layout/segmentation/line

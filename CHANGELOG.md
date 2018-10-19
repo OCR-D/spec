@@ -11,6 +11,7 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 Added:
 
   * File parameters, #69
+  * Step for post-correction, #64
 
 ## TODO
 
