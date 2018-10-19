@@ -8,6 +8,8 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [2.4.0] - 2018-10-19
+
 Added:
 
   * File parameters, #69
@@ -167,6 +169,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[2.4.0]: ../../compare/v2.4.0...v2.3.1
 [2.3.1]: ../../compare/v2.3.1...v2.3.0
 [2.3.0]: ../../compare/v2.3.0...v2.2.2
 [2.2.2]: ../../compare/v2.2.2...v2.2.1
