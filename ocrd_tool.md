@@ -92,11 +92,11 @@ properties:
                     description: List the allowed values if a fixed list.
                   content-type:
                     type: string
-                    description: If parameter is reference to file: Media type of the file
-                    pattern: '^[a-z0-9\._-]+/[a-z0-9\._-]$'
+                    description: "If parameter is reference to file: Media type of the file"
+                    pattern: '^[a-z0-9\._-]+/[A-Za-z0-9\._\+-]+$'
                   cacheable:
                     type: boolean
-                    description: If parameter is reference to file: Whether the file should be cached, e.g. because it is large and won't change.
+                    description: "If parameter is reference to file: Whether the file should be cached, e.g. because it is large and won't change."
                     default: false
           description:
             description: Concise description what the tool does
