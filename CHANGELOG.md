@@ -8,14 +8,16 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Changed:
+
+  * Base workspace and workspace serialization mechanics on bagit, #70
+
 ## [2.4.0] - 2018-10-19
 
 Added:
 
   * File parameters, #69
   * Step for post-correction, #64
-
-## TODO
 
 ## [2.3.1] - 2018-10-10
 
