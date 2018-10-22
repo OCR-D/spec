@@ -77,6 +77,15 @@ The confidence of the correctness of the text recognition results in a
 between `0` and `1`, where `0` means "certainly wrong" and `1` means "certainly
 correct".
 
+## Attaching multiple text recognition results to elements
+
+Alternative text recognition results can be expressed by using multiple
+`<pg:TextEquiv>` wherever a single `<pg:TextEquiv>` would be allowed. When
+using mulitple `<pg:TextEquiv>`, they each must have an attribute `@index` with
+an integer number unique per set of `<pg:TextEquiv>` that allows ranking them
+in order of preference. `@index` of the first (preferred) `<pg:TextEquiv>` must be
+the value `1`.
+
 ## Consistency of text results on different levels
 
 Since text results can be defined on different levels and those levels can
