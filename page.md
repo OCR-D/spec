@@ -70,6 +70,13 @@ processors.
 To encode an actual space character at the start or end of the content
 `<pg:Unicode>`, use a non-breaking space `U+00A0`.
 
+## Text recognition confidence
+
+The confidence of the correctness of the text recognition results in a
+`<pg:TextEquiv>` can be expressed in an attribute `@conf` as a float value
+between `0` and `1`, where `0` means "certainly wrong" and `1` means "certainly
+correct".
+
 ## Consistency of text results on different levels
 
 Since text results can be defined on different levels and those levels can
