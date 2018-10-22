@@ -76,15 +76,19 @@ Since text results can be defined on different levels and those levels can
 be nested, text results information is redundant. To avoid inconsistencies,
 the following assertions must be true:
 
-  * text of `<pg:Word>` must be equal to contained `<pg:Glyph>`'s text,
-    concatenateb with empty string
-  * text of `<pg:TextLine>` must be equal to contained `<pg:Word>`'s text,
-    concatenated with a single space (`U+0020`).
-  * text of `<pg:TextRegion>` must be equal to contained `<pg:TextLine>`'s
-    text, concatenated with a newline (`U+000A`).
+  * text of `<pg:Word>` must be equal to the text results of all `<pg:Glyph>`
+    contained within, concatenateb with empty string
+  * text of `<pg:TextLine>` must be equal to the text results of all
+    `<pg:Word>` contained  within, concatenated with a single space (`U+0020`).
+  * text of `<pg:TextRegion>` must be equal to the text results of all
+  * `<pg:TextLine>` contained within, concatenated with a newline (`U+000A`).
 
 **NOTE:** "Concatenation" means joining a list of strings with a separator, no
 separator is added to the start or end of the resulting string.
 
-If any of these assertions fails for a PAGE document, it should be considered
-invalid and not processed further.
+If any of these assertions fails for a PAGE document, a processor must proceed
+with the text results at the lowest level provided.
+
+**Example:** `<pg:Word>` has text `Fool` but contains `<pg:Glyph>` whose
+text results, when concatenated, form the text `Foot`. The processor must proceed as if
+the `<pg:Word` had the text `Foot`.
