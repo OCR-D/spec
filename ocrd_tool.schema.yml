@@ -41,6 +41,7 @@ properties:
                 type: object
                 additionalProperties: false
                 required:
+                  - description
                   - type
                   # also either 'default' or 'required'
                 properties:
@@ -53,6 +54,8 @@ properties:
                       - boolean
                   format:
                     description: Subtype, such as `float` for type `number` or `uri` for type `string`.
+                  description:
+                    description: Concise description of syntax and semantics of this parameter
                   required:
                     type: boolean
                     description: Whether this parameter is required
@@ -61,6 +64,14 @@ properties:
                   enum:
                     type: array
                     description: List the allowed values if a fixed list.
+                  content-type:
+                    type: string
+                    description: "If parameter is reference to file: Media type of the file"
+                    pattern: '^[a-z0-9\._-]+/[A-Za-z0-9\._\+-]+$'
+                  cacheable:
+                    type: boolean
+                    description: "If parameter is reference to file: Whether the file should be cached, e.g. because it is large and won't change."
+                    default: false
           description:
             description: Concise description what the tool does
           categories:
@@ -91,6 +102,7 @@ properties:
                 - preprocessing/optimization/grayscale_normalization
                 - recognition/text-recognition
                 - recognition/font-identification
+                - recognition/post-correction
                 - layout/segmentation
                 - layout/segmentation/region
                 - layout/segmentation/line

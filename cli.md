@@ -1,5 +1,9 @@
 # Command Line Interface (CLI)
 
+**NOTE:** Command line options cannot be repeated. To specify multiple values,
+provide a single string with comma-separated items (e.g. `-I
+group1,group2,group3` instead of `-I group1 -I group2 -I group3`).
+
 ## CLI executable name
 
 All CLI provided by MP must be standalone executables, installable into `$PATH`.
@@ -40,10 +44,13 @@ URL of parameter file in JSON format.
 
 ### `-l, --log-level LOGLEVEL`
 
-Minimum Log level. One of `OFF`, `ERROR`, `WARN`, `INFO` (default), `DEBUG`, `TRACE`).
+Set the global maximum verbosity level. More verbose log entries will be
+ignored. (One of `OFF`, `ERROR`, `WARN`, `INFO` (default), `DEBUG`, `TRACE`).
 
-Actual mechanism for filtering log messages must not be implemented by
-processors.
+**NOTE:** Setting the log level via `--log-level` parameter should override any
+other implementation-specific means of logging configuration. For example, with
+`--log-level TRACE` no log messages should be filtered globally, whereas
+`--log-level ERROR`, only errors should be output globally.
 
 ### `-J, --dump-json`
 
@@ -58,9 +65,17 @@ Successful execution should signal `0`. Any non-zero return value is considered 
 
 Data printed to `STDERR` and `STDOUT` is captured linewise and stored as log data.
 
-Processors can adjust their logging verbosity according to the `--log-level` parameter but they are not required to.
+Processors must adjust logging verbosity according to the [`--log-level` parameter](#-l---log-level-loglevel).
 
-Errors, especially those leading to an exception, should be printed to `STDERR`.
+Errors, especially those leading to exceptions, must be printed to `STDERR`.
+
+The log messages must have the format `TIME LEVEL LOGGERNAME - MESSAGE\n`, where
+
+* `TIME` is the current time in the format `HH:MM:ss.mmm`, e.g. `07:05:31.007`
+* `LEVEL` is the log level of the message, in uppercase, e.g. `INFO`
+* `LOGGERNAME` is the name of the logging component, such as the class name. Segments of `LOGGERNAME` should be separated by dot `.`, e.g. `ocrd.fancy_tool.analyze`
+* `MESSAGE` is the message to log, should not contain new lines.
+* `\n` is ASCII char `0x0a` (newline)
 
 ## URL/file convention
 
@@ -86,10 +101,9 @@ $> ocrd-kraken-binarize \
     --mets "file:///path/to/file/mets.xml" \
     --working-dir "file:///path/to/workingDir/" \
     --parameters "file:///path/to/file/parameters.json" \
-    --group-id OCR-D-IMG_0001,OCR-D-IMG_0002 \
-    --group-id OCR-D-IMG_0003 \
-    -input-file-grp OCR-D-IMG \
-    -output-file-grp OCR-D-IMG-BIN-KRAKEN
+    --group-id OCR-D-IMG_0001,OCR-D-IMG_0002,OCR-D-IMG_0003 \
+    --input-file-grp OCR-D-IMG
+    --output-file-grp OCR-D-IMG-BIN-KRAKEN
 ```
 
 And this is how it will be called with the `ocrd` CLI:
@@ -99,8 +113,7 @@ $> ocrd process \
     -m "file:///path/to/file/mets.xml" \
     -w "file:///path/to/workingDir/" \
     -p "file:///path/to/file/parameters.json" \
-    -g OCR-D-IMG_0001,OCR-D-IMG_0002 \
-    -g OCR-D-IMG_0003 \
+    -g OCR-D-IMG_0001,OCR-D-IMG_0002,OCR-D-IMG_0003 \
     -I OCR-D-IMG \
     -O OCR-D-IMG-BIN-KRAKEN
     

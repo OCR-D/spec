@@ -10,6 +10,15 @@ services](swagger).
 
 To validate a `ocrd-tool.json` file, use `ocrd ocrd-tool /path/to/ocrd-tool.json validate`.
 
+## File parameters
+
+To mark a parameter as expecting the adress of a file, it must declare the
+`content-type` property as a [valid media
+type](https://www.iana.org/assignments/media-types/media-types.xhtml).
+Optionally, workflow processors can be notified that this file is potentially
+large and static (e.g. a fixed dataset or a precomputed model) and should be cached
+indefinitely after download by setting the `cacheable` property to `true`.
+
 ## Definition
 
 <!-- Regenerate with 'shinclude -i ocrd_tool.md'. See https://github.com/kba/shinclude -->
@@ -58,6 +67,7 @@ properties:
                 type: object
                 additionalProperties: false
                 required:
+                  - description
                   - type
                   # also either 'default' or 'required'
                 properties:
@@ -70,6 +80,8 @@ properties:
                       - boolean
                   format:
                     description: Subtype, such as `float` for type `number` or `uri` for type `string`.
+                  description:
+                    description: Concise description of syntax and semantics of this parameter
                   required:
                     type: boolean
                     description: Whether this parameter is required
@@ -78,6 +90,14 @@ properties:
                   enum:
                     type: array
                     description: List the allowed values if a fixed list.
+                  content-type:
+                    type: string
+                    description: "If parameter is reference to file: Media type of the file"
+                    pattern: '^[a-z0-9\._-]+/[A-Za-z0-9\._\+-]+$'
+                  cacheable:
+                    type: boolean
+                    description: "If parameter is reference to file: Whether the file should be cached, e.g. because it is large and won't change."
+                    default: false
           description:
             description: Concise description what the tool does
           categories:
@@ -108,6 +128,7 @@ properties:
                 - preprocessing/optimization/grayscale_normalization
                 - recognition/text-recognition
                 - recognition/font-identification
+                - recognition/post-correction
                 - layout/segmentation
                 - layout/segmentation/region
                 - layout/segmentation/line

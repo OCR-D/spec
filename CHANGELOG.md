@@ -8,7 +8,44 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [2.4.0] - 2018-10-19
+
+Added:
+
+  * File parameters, #69
+  * Step for post-correction, #64
+
 ## TODO
+
+## [2.3.1] - 2018-10-10
+
+Fixed
+
+  * CLI: Example used repeated options
+
+
+## [2.3.0] - 2018-09-26
+
+Changed:
+
+  * CLI: filtering by log level required, OCR-D/core#173, #74
+  * CLI: log messages must adhere to uniform pattern, #78
+
+Added:
+
+  * CLI: Convention to prefer comma-separated values over repeated flags, #68
+
+## [2.2.2] - 2018-08-14
+
+Fixed:
+
+  * Missed `description` for parameters
+
+## [2.2.1] - 2018-07-25
+
+Changed
+
+  * spell out parameter properties in ocrd-tool.json schem
 
 ## [2.2.0] - 2018-07-23
 
@@ -132,6 +169,11 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[2.4.0]: ../../compare/v2.4.0...v2.3.1
+[2.3.1]: ../../compare/v2.3.1...v2.3.0
+[2.3.0]: ../../compare/v2.3.0...v2.2.2
+[2.2.2]: ../../compare/v2.2.2...v2.2.1
+[2.2.1]: ../../compare/v2.2.1...v2.2.0
 [2.2.0]: ../../compare/v2.2.0...v2.1.2
 [2.1.2]: ../../compare/v2.1.2...v2.1.1
 [2.1.1]: ../../compare/v2.1.1...v2.1.0
