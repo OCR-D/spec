@@ -23,5 +23,3 @@ Accept-BagIt-Version:
   - 1.0
   - 0.97
   - 0.96
-Tag-Files-Required:
-  - url-sources.txt

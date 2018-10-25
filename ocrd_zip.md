@@ -39,7 +39,6 @@ the full definition](#appendix-a)):
 * `bagit-info.txt` MAY additionally contain these tags:
   * `X-Ocrd-Mets`: Alternative path to the mets.xml file if its path IS NOT `/data/mets.xml`
   * `X-Ocrd-Manifestation-Depth`: Whether all URL are dereferenced as files or only some
-* A file `url-sources.txt` MUST exist and contain a mapping from local file name to URL
 
 ### `X-Ocrd-Mets`
 
@@ -51,14 +50,6 @@ another name, it must be listed here and implementations MUST check for
 
 Specifiy whether the bag contains the full manifestation of the data referenced in the METS (`full`)
 or only those files that were `file://` URLs before (`partial`). Default: `partial`.
-
-### `url-sources.txt`
-
-Simple text file, mapping Bag-local filenames to the URL of their original location if any.
-
-Every mapping must be on a new line.
-
-Every line should have the format `URL FILENAME`, i.e. a single space character between the two.
 
 ### ZIP
 
@@ -145,8 +136,6 @@ Accept-BagIt-Version:
   - 1.0
   - 0.97
   - 0.96
-Tag-Files-Required:
-  - url-sources.txt
 ```
 
 <!-- END-EVAL -->
