@@ -30,7 +30,7 @@ specs](https://tools.ietf.org/html/draft-kunze-bagit-16), i.e.
 
 * all files in `data/`
 * a file `bagit.txt`
-* a file `bagit-info.txt`
+* a file `bag-info.txt`
 
 In accordance with the BagIt standard, `bagit.txt` MUST consist of exactly
 these two lines:
@@ -44,7 +44,7 @@ In addition, OCRD-ZIP adhere to a [BagIt
 profile](https://github.com/bagit-profiles/bagit-profiles) (see [Appendix A for
 the full definition](#appendix-a)):
 
-* `bagit-info.txt` MAY additionally contain these tags:
+* `bag-info.txt` MAY additionally contain these tags:
   * `X-Ocrd-Mets`: Alternative path to the mets.xml file if its path IS NOT `/data/mets.xml`
   * `X-Ocrd-Manifestation-Depth`: Whether all URL are dereferenced as files or only some
 
