@@ -32,6 +32,14 @@ specs](https://tools.ietf.org/html/draft-kunze-bagit-16), i.e.
 * a file `bagit.txt`
 * a file `bagit-info.txt`
 
+In accordance with the BagIt standard, `bagit.txt` MUST consist of exactly
+these two lines:
+
+```
+BagIt-Version: 1.0
+Tag-File-Character-Encoding: UTF-8
+```
+
 In addition, OCRD-ZIP adhere to a [BagIt
 profile](https://github.com/bagit-profiles/bagit-profiles) (see [Appendix A for
 the full definition](#appendix-a)):
