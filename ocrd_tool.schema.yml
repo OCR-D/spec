@@ -43,8 +43,10 @@ properties:
               pattern: '^OCR-D-[A-Z0-9-]+$'
           output_file_grp:
             description: Output fileGrp@USE this tool produces by default
-            type: string
-            pattern: '^OCR-D-[A-Z0-9-]+$'
+            type: array
+            items:
+              type: string
+              pattern: '^OCR-D-[A-Z0-9-]+$'
           parameters:
             description: Object describing the parameters of a tool. Keys are parameter names, values sub-schemas.
             type: object
