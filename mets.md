@@ -170,3 +170,31 @@ Always use URL. If it's a local file, prefix absolute path with `file://`.
 Every image URL referenced via `imageFileName` or the `filename` attribute of any `pc:AlternativeImage` MUST be represented in the METS file as a `mets:file` with corresponding `mets:FLocat@xlink:href`. 
 
 For every `mets:file` that represents a PAGE document, its `GROUPID` should be equal to the `pcGtsId` attribute of the `page:PcGts`.
+
+## Recording processing information in METS
+
+Processors should add information to the METS metadata header to indicate that
+they changed the METS. This information is mainly for human consumption to get
+an overview of the software agents involved in the METS file's creation. More
+detailed or machine-actionable provenance information is outside the scope of
+the processor.
+
+To add agent information, a processor must:
+
+1) locate the first `mets:metsHdr` `M`.
+2) Add to `M` a new `mets:agent` `A` with these attributes
+  - `TYPE` must be the string `OTHER`
+  - `OTHERTYPE` must be the string `SOFTWARE`
+  - `ROLE` must be the string `OTHER`
+  - `OTHERROLE` must be the processing step this processor provided, from the list in [the ocrd-tool.json spec](ocrd_tool#definition)
+3) Add to `A` a `mets:name` `N` that should include, in free-text form, these data points
+  - Name of the processor, e.g. the name of the executable from `ocrd-tool.json`
+  - Version of the processor, e.g. from `ocrd-tool.json`
+
+**Example:**
+
+```xml
+<mets:agent TYPE="OTHER" OTHERTYPE="SOFTWARE" ROLE="OTHER" OTHERROLE="preprocessing/optimization/binarization">
+  <mets:name>ocrd_tesserocr v0.1.2</mets:name>
+</mets:agent>
+```
