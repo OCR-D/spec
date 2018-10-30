@@ -112,22 +112,33 @@ PROCESSOR := [A-Z0-9\-]{3,}
 `<mets:file ID="OCR-D-IMG_0001">`            | The unmanipulated source image
 `<mets:file ID="OCR-D-IMG-BIN_0001">`        | Black-and-White image
 
-## Grouping files with GROUPID
+## Grouping files by page
 
-Files in multiple `mets:fileGrp` with different `USE` can represent the fact that they encode the same page by using the same `GROUPID`.
+Every METS file MUST have exactly one physical map that contains a single
+`mets:div[@TYPE="physSequence"]` which in turn must contain a
+`mets:div[@TYPE="page"]` for every page in the work.
 
-If used, the `GROUPID` of the page MUST BE the `ID` of the file that represents the original image. In other words: For the file representing the original image, `ID` and `GROUPID` must be identical.
+These `mets:div[@TYPE="page"]` can contain an arbitrary number of `mets:fptr`
+pointers to `mets:file` elements to signify that all the files within a div are
+encodings of the same page.
 
 ### Example
 
 ```xml
 <mets:fileGrp USE="OCR-D-IMG">
-    <mets:file ID="OCR-D-IMG_0001" GROUPID="OCR-D-IMG_0001">...</mets:file>
+    <mets:file ID="OCR-D-IMG_0001">...</mets:file>
 </mets:fileGrp>
 <mets:fileGrp USE="OCR-D-OCR">
-    <mets:file ID="OCR-D-OCR_0001" GROUPID="OCR-D-IMG_0001">...</mets:file>
-
+    <mets:file ID="OCR-D-OCR_0001">...</mets:file>
 </mets:fileGrp>
+<mets:structMap TYPE="PHYSICAL">
+  <mets:div CONTENTIDS="http://url-of-the-page/path/0000" DMDID="DMDPHYS_0000" ID="PHYS_0000" TYPE="physSequence" >
+    <mets:div CONTENTIDS="http://url-of-the-page/path/0001" ID="PHYS_0001" ORDER="1" TYPE="page" >
+      <mets:fptr FILEID="OCR-D-IMG_0001" ></mets:fptr>
+      <mets:fptr FILEID="OCR-D-OCR_0001" ></mets:fptr>
+    </mets:div>
+  </mets:div>
+</mets:structMap>
 ```
 
 ## Images and coordinates
@@ -159,7 +170,7 @@ Always use URL. If it's a local file, prefix absolute path with `file://`.
 
 ```xml
 <mets:fileGrp USE="OCR-D-SEG-BLOCK">
-    <mets:file ID="OCR-D-SEG-PAGE_0001" GROUPID="OCR-D-IMG_0001" MIMETYPE="application/vnd.prima.page+xml">
+    <mets:file ID="OCR-D-SEG-BLOCK_0001" MIMETYPE="application/vnd.prima.page+xml">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="file:///path/to/workingDir/segmentation/block/page_0001.xml" />
     </mets:file>
 </mets:fileGrp>
@@ -170,3 +181,31 @@ Always use URL. If it's a local file, prefix absolute path with `file://`.
 Every image URL referenced via `imageFileName` or the `filename` attribute of any `pc:AlternativeImage` MUST be represented in the METS file as a `mets:file` with corresponding `mets:FLocat@xlink:href`. 
 
 For every `mets:file` that represents a PAGE document, its `GROUPID` should be equal to the `pcGtsId` attribute of the `page:PcGts`.
+
+## Recording processing information in METS
+
+Processors should add information to the METS metadata header to indicate that
+they changed the METS. This information is mainly for human consumption to get
+an overview of the software agents involved in the METS file's creation. More
+detailed or machine-actionable provenance information is outside the scope of
+the processor.
+
+To add agent information, a processor must:
+
+1) locate the first `mets:metsHdr` `M`.
+2) Add to `M` a new `mets:agent` `A` with these attributes
+  - `TYPE` must be the string `OTHER`
+  - `OTHERTYPE` must be the string `SOFTWARE`
+  - `ROLE` must be the string `OTHER`
+  - `OTHERROLE` must be the processing step this processor provided, from the list in [the ocrd-tool.json spec](ocrd_tool#definition)
+3) Add to `A` a `mets:name` `N` that should include, in free-text form, these data points
+  - Name of the processor, e.g. the name of the executable from `ocrd-tool.json`
+  - Version of the processor, e.g. from `ocrd-tool.json`
+
+**Example:**
+
+```xml
+<mets:agent TYPE="OTHER" OTHERTYPE="SOFTWARE" ROLE="OTHER" OTHERROLE="preprocessing/optimization/binarization">
+  <mets:name>ocrd_tesserocr v0.1.2</mets:name>
+</mets:agent>
+```
