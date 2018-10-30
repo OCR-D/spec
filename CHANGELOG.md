@@ -8,6 +8,8 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [2.5.0] - 2018-10-30
+
 Added:
 
   * Recording processing information in METS, #89
@@ -176,6 +178,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[2.5.0]: ../../compare/v2.5.0...v2.4.0
 [2.4.0]: ../../compare/v2.4.0...v2.3.1
 [2.3.1]: ../../compare/v2.3.1...v2.3.0
 [2.3.0]: ../../compare/v2.3.0...v2.2.2
