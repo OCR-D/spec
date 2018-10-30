@@ -36,8 +36,8 @@ File group(s) used as output.
 
 ### `-g, --group-id ID`
 
-The `ID` of the `mets:div[@TYPE='page']` that contains the pointers to files
-representing a page. Effectively, only those files in the [input
+The `mets:div[@TYPE='page']/@ID` that contains the pointers to files
+representing a page. Effectively, only those files in the [input file
 group](#-i---input-file-grp-grp) that are referenced in these
 `mets:div[@TYPE="page"]` will be processed.
 

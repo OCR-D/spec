@@ -170,7 +170,7 @@ Always use URL. If it's a local file, prefix absolute path with `file://`.
 
 ```xml
 <mets:fileGrp USE="OCR-D-SEG-BLOCK">
-    <mets:file ID="OCR-D-SEG-PAGE_0001" MIMETYPE="application/vnd.prima.page+xml">
+    <mets:file ID="OCR-D-SEG-BLOCK_0001" MIMETYPE="application/vnd.prima.page+xml">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="file:///path/to/workingDir/segmentation/block/page_0001.xml" />
     </mets:file>
 </mets:fileGrp>
