@@ -8,6 +8,11 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Added:
+
+  * Recording processing information in METS, #89
+  * Input and output file groups can be provided in ocrd-tool.json, #91
+
 Changed
 
   * :fire: METS: grouping pages by physical `structMap` not `GROUPID`, #81
