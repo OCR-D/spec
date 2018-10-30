@@ -8,6 +8,9 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+* Recording processing information in METS, #89
+* Input and output file groups can be provided in ocrd-tool.json, #91
+
 ## [2.4.0] - 2018-10-19
 
 Added:
