@@ -112,22 +112,33 @@ PROCESSOR := [A-Z0-9\-]{3,}
 `<mets:file ID="OCR-D-IMG_0001">`            | The unmanipulated source image
 `<mets:file ID="OCR-D-IMG-BIN_0001">`        | Black-and-White image
 
-## Grouping files with GROUPID
+## Grouping files by page
 
-Files in multiple `mets:fileGrp` with different `USE` can represent the fact that they encode the same page by using the same `GROUPID`.
+Every METS file MUST have exactly one physical map that contains a single
+`mets:div[@TYPE="physSequence"]` which in turn must contain a
+`mets:div[@TYPE="page"]` for every page in the work.
 
-If used, the `GROUPID` of the page MUST BE the `ID` of the file that represents the original image. In other words: For the file representing the original image, `ID` and `GROUPID` must be identical.
+These `mets:div[@TYPE="page"]` can contain an arbitrary number of `mets:fptr`
+pointers to `mets:file` elements to signify that all the files within a div are
+encodings of the same page.
 
 ### Example
 
 ```xml
 <mets:fileGrp USE="OCR-D-IMG">
-    <mets:file ID="OCR-D-IMG_0001" GROUPID="OCR-D-IMG_0001">...</mets:file>
+    <mets:file ID="OCR-D-IMG_0001">...</mets:file>
 </mets:fileGrp>
 <mets:fileGrp USE="OCR-D-OCR">
-    <mets:file ID="OCR-D-OCR_0001" GROUPID="OCR-D-IMG_0001">...</mets:file>
-
+    <mets:file ID="OCR-D-OCR_0001">...</mets:file>
 </mets:fileGrp>
+<mets:structMap TYPE="PHYSICAL">
+  <mets:div CONTENTIDS="http://url-of-the-page/path/0000" DMDID="DMDPHYS_0000" ID="PHYS_0000" TYPE="physSequence" >
+    <mets:div CONTENTIDS="http://url-of-the-page/path/0001" ID="PHYS_0001" ORDER="1" TYPE="page" >
+      <mets:fptr FILEID="OCR-D-IMG_0001" ></mets:fptr>
+      <mets:fptr FILEID="OCR-D-OCR_0001" ></mets:fptr>
+    </mets:div>
+  </mets:div>
+</mets:structMap>
 ```
 
 ## Images and coordinates
@@ -159,7 +170,7 @@ Always use URL. If it's a local file, prefix absolute path with `file://`.
 
 ```xml
 <mets:fileGrp USE="OCR-D-SEG-BLOCK">
-    <mets:file ID="OCR-D-SEG-PAGE_0001" GROUPID="OCR-D-IMG_0001" MIMETYPE="application/vnd.prima.page+xml">
+    <mets:file ID="OCR-D-SEG-BLOCK_0001" MIMETYPE="application/vnd.prima.page+xml">
         <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="file:///path/to/workingDir/segmentation/block/page_0001.xml" />
     </mets:file>
 </mets:fileGrp>
