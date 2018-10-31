@@ -44,9 +44,12 @@ In addition, OCRD-ZIP adhere to a [BagIt
 profile](https://github.com/bagit-profiles/bagit-profiles) (see [Appendix A for
 the full definition](#appendix-a)):
 
+* `bag-info.txt` MUST additionally contain these tags:
+  * [`Ocrd-Identifier`](#ocrd-identifier): A globally unique identifier for this bag
+  * [`Ocrd-Base-Version-Checksum`](#ocrd-base-version-checksum): Checksum of the version this bag is based on
 * `bag-info.txt` MAY additionally contain these tags:
-  * `Ocrd-Mets`: Alternative path to the mets.xml file if its path IS NOT `/data/mets.xml`
-  * `Ocrd-Manifestation-Depth`: Whether all URL are dereferenced as files or only some
+  * [`Ocrd-Mets`](#ocrd-mets): Alternative path to the mets.xml file if its path IS NOT `/data/mets.xml`
+  * [`Ocrd-Manifestation-Depth`](#ocrd-manifestation-depth): Whether all URL are dereferenced as files or only some
 
 ### `Ocrd-Mets`
 
@@ -59,11 +62,26 @@ another name, it must be listed here and implementations MUST check for
 Specifiy whether the bag contains the full manifestation of the data referenced in the METS (`full`)
 or only those files that were `file://` URLs before (`partial`). Default: `partial`.
 
+### `Ocrd-Identifier`
+
+A globally unique identifier identifying the work/works/parts of works this
+bundle of file represents.
+
+This is to be used for repositories to identify new ingestions of existing works.
+
+To ensure global uniqueness, the identifier should be prefixed with an
+identifier of the organization, e.g. an ISIL or domain name.
+
+### `Ocrd-Base-Version-Checksum`
+
+The SHA512 checksum of the `manifest-sha512.txt` file of the version this bag
+was based on, if any.
+
+## Invariants
+
 ### ZIP
 
 An OCRD-ZIP MUST be a serialized as a ZIP file.
-
-## Invariants
 
 ### `file://`-URLs must be relative
 
@@ -136,6 +154,12 @@ Bag-Info:
     required: false
     default: partial
     values: ["partial", "full"]
+  Ocrd-Identifier:
+    required: true
+  Ocrd-Checksum:
+    required: false
+    # echo -n | sha512sum
+    default: 'cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e'
 Manifests-Required:
   - sha512
 Allow-Fetch.txt: false
