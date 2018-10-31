@@ -83,6 +83,17 @@ was based on, if any.
 
 An OCRD-ZIP MUST be a serialized as a ZIP file.
 
+### `manifest-sha512.txt`
+
+Checksums for the files in `/data` must be calculated with the `SHA512`
+algorithm only and provided as `manifest-sha512.txt`.
+
+Since the checksum of this manifest file can be relevant (see
+[`Ocrd-Base-Version-Checksum`](#ocrd-base-version-checksum)), in addition to the requirements
+of the BagIt spec, the entries MUST be sorted.
+
+**NOTE:** These checksums can be generated with `find data -type f | sort -sf |xargs sha512sum > manifest-sha512.txt`.
+
 ### `file://`-URLs must be relative
 
 All resources referenced in the METS with a `file://`-URL (and consequently all
