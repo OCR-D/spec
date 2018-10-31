@@ -45,16 +45,16 @@ profile](https://github.com/bagit-profiles/bagit-profiles) (see [Appendix A for
 the full definition](#appendix-a)):
 
 * `bag-info.txt` MAY additionally contain these tags:
-  * `X-Ocrd-Mets`: Alternative path to the mets.xml file if its path IS NOT `/data/mets.xml`
-  * `X-Ocrd-Manifestation-Depth`: Whether all URL are dereferenced as files or only some
+  * `Ocrd-Mets`: Alternative path to the mets.xml file if its path IS NOT `/data/mets.xml`
+  * `Ocrd-Manifestation-Depth`: Whether all URL are dereferenced as files or only some
 
-### `X-Ocrd-Mets`
+### `Ocrd-Mets`
 
 By default, the METS file should be at `data/mets.xml`. If this file has
 another name, it must be listed here and implementations MUST check for
-`X-Ocrd-Mets` before assuming `data/mets.xml`.
+`Ocrd-Mets` before assuming `data/mets.xml`.
 
-### `X-Ocrd-Manifestation-Depth`
+### `Ocrd-Manifestation-Depth`
 
 Specifiy whether the bag contains the full manifestation of the data referenced in the METS (`full`)
 or only those files that were `file://` URLs before (`partial`). Default: `partial`.
@@ -96,7 +96,7 @@ To pack a workspace to OCRD-ZIP:
 * Copy mets.xml to `TMP/data/mets.xml`
 * Foreach `mets:file` `f` in `TMP/data/mets.xml`:
   * If it is not a `file://`-URL
-    * If `X-Ocrd-Manifestation-Depth` is `partial`
+    * If `Ocrd-Manifestation-Depth` is `partial`
       continue
   * Download/Copy the file to a location within `TMP/data`. The structure SHOULD be `<USE>/<ID>` where
     * `<USE>` is the `USE` attribute of the parent `mets:fileGrp`
@@ -129,13 +129,14 @@ Bag-Info:
     required: false
   Source-Organization:
     required: false
-  X-Ocrd-Mets:
+  Ocrd-Mets:
+    required: false
     default: 'data/mets.xml'
-  X-Ocrd-Manifestation-Depth:
+  Ocrd-Manifestation-Depth:
+    required: false
     default: partial
     values: ["partial", "full"]
 Manifests-Required:
-  - md5
   - sha512
 Allow-Fetch.txt: false
 Serialization: required

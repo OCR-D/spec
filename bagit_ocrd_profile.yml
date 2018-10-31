@@ -8,13 +8,14 @@ Bag-Info:
     required: false
   Source-Organization:
     required: false
-  X-Ocrd-Mets:
+  Ocrd-Mets:
+    required: false
     default: 'data/mets.xml'
-  X-Ocrd-Manifestation-Depth:
+  Ocrd-Manifestation-Depth:
+    required: false
     default: partial
     values: ["partial", "full"]
 Manifests-Required:
-  - md5
   - sha512
 Allow-Fetch.txt: false
 Serialization: required
