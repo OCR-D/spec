@@ -12,6 +12,17 @@ Changed:
 
   * Base workspace and workspace serialization mechanics on bagit, #70
 
+## [2.5.0] - 2018-10-30
+
+Added:
+
+  * Recording processing information in METS, #89
+  * Input and output file groups can be provided in ocrd-tool.json, #91
+
+Changed
+
+  * :fire: METS: grouping pages by physical `structMap` not `GROUPID`, #81
+
 ## [2.4.0] - 2018-10-19
 
 Added:
@@ -171,6 +182,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[2.5.0]: ../../compare/v2.5.0...v2.4.0
 [2.4.0]: ../../compare/v2.4.0...v2.3.1
 [2.3.1]: ../../compare/v2.3.1...v2.3.0
 [2.3.0]: ../../compare/v2.3.0...v2.2.2

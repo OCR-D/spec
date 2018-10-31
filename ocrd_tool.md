@@ -19,6 +19,18 @@ Optionally, workflow processors can be notified that this file is potentially
 large and static (e.g. a fixed dataset or a precomputed model) and should be cached
 indefinitely after download by setting the `cacheable` property to `true`.
 
+## Input / Output file groups
+
+Tools should define the names of both expected input and produced output file
+groups as a list of `USE` attributes of `mets:fileGrp` elements. If more than
+one file group is expected or produced, this should be explained in the
+description of the tool.
+
+**NOTE:** Both input and output file groups can be [overridden at
+runtime](cli#-i---input-file-grp-grp). Tools must therefore ensure not to
+hardcode file group names. When multiple groups are expected, the order of the
+override reflects the order in which they are defined in the `ocrd-tool.json`.
+
 ## Definition
 
 <!-- Regenerate with 'shinclude -i ocrd_tool.md'. See https://github.com/kba/shinclude -->
@@ -55,10 +67,24 @@ properties:
           - steps
           - executable
           - categories
+          - input_file_grp
+          - output_file_grp
         properties:
           executable:
             description: The name of the CLI executable in $PATH
             type: string
+          input_file_grp:
+            description: Input fileGrp@USE this tool expects by default
+            type: array
+            items:
+              type: string
+              pattern: '^OCR-D-[A-Z0-9-]+$'
+          output_file_grp:
+            description: Output fileGrp@USE this tool produces by default
+            type: array
+            items:
+              type: string
+              pattern: '^OCR-D-[A-Z0-9-]+$'
           parameters:
             description: Object describing the parameters of a tool. Keys are parameter names, values sub-schemas.
             type: object
