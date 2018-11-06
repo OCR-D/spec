@@ -8,6 +8,8 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [2.6.0] - 2018-11-06
+
 Changed:
 
   * Base workspace and workspace serialization mechanics on bagit, #70
@@ -182,6 +184,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[2.6.0]: ../../compare/v2.6.0...v2.5.0
 [2.5.0]: ../../compare/v2.5.0...v2.4.0
 [2.4.0]: ../../compare/v2.4.0...v2.3.1
 [2.3.1]: ../../compare/v2.3.1...v2.3.0
