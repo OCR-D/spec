@@ -5,8 +5,11 @@ All notable changes to the specs will be documented in this file.
 
 Versioned according to [Semantic Versioning](http://semver.org/).
 
-
 ## Unreleased
+
+Fixed:
+
+  * typo in bagit-profile: `Bagit-` --> `BagIt-`
 
 ## [2.6.0] - 2018-11-06
 
