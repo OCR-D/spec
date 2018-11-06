@@ -146,10 +146,10 @@ To pack a workspace to OCRD-ZIP:
 
 ## Appendix A - BagIt profile definition
 
-<!-- BEGIN-EVAL -w '```yaml' '```' -- cat ./bagit_ocrd_profile.yml  -->
+<!-- BEGIN-EVAL -w '```yaml' '```' -- cat ./bagit-profile.yml  -->
 ```yaml
 Bagit-Profile-Info:
-  Bagit-Profile-Identifier: https://ocr-d.github.io/bagit_ocrd.json
+  Bagit-Profile-Identifier: https://ocr-d.github.io/bagit-profile.json
   Source-Organization: OCR-D
   External-Description: BagIt profile for OCR data
   Version: 0.1
@@ -178,8 +178,6 @@ Serialization: required
 Accept-Serialization: application/zip
 Accept-BagIt-Version:
   - 1.0
-  - 0.97
-  - 0.96
 ```
 
 <!-- END-EVAL -->
