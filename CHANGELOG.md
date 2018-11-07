@@ -9,7 +9,8 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 Fixed:
 
-  * typo in bagit-profile: `Bagit-` --> `BagIt-`
+  * OCRD-ZIP: typo in bagit-profile: `Bagit-` --> `BagIt-`
+  * OCRD-ZIP: Require `BagIt-Profile-Identifier`
 
 ## [2.6.0] - 2018-11-06
 
