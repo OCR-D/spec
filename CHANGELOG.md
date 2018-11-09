@@ -7,11 +7,13 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [2.6.1] - 2018-11-06
+
 Fixed:
 
   * OCRD-ZIP: typo in bagit-profile: `Bagit-` --> `BagIt-`
   * OCRD-ZIP: Require `BagIt-Profile-Identifier`
-  * OCRD-ZIP: Version number must be a string, bagit-profile/bagit-profile#13
+  *n OCRD-ZIP: Version number must be a string, bagit-profile/bagit-profile#13
 
 ## [2.6.0] - 2018-11-06
 
@@ -189,6 +191,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[2.6.1]: ../../compare/v2.6.1...v2.6.0
 [2.6.0]: ../../compare/v2.6.0...v2.5.0
 [2.5.0]: ../../compare/v2.5.0...v2.4.0
 [2.4.0]: ../../compare/v2.4.0...v2.3.1
