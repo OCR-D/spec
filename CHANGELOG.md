@@ -5,8 +5,13 @@ All notable changes to the specs will be documented in this file.
 
 Versioned according to [Semantic Versioning](http://semver.org/).
 
-
 ## Unreleased
+
+Fixed:
+
+  * OCRD-ZIP: typo in bagit-profile: `Bagit-` --> `BagIt-`
+  * OCRD-ZIP: Require `BagIt-Profile-Identifier`
+  * OCRD-ZIP: Version number must be a string, bagit-profile/bagit-profile#13
 
 ## [2.6.0] - 2018-11-06
 

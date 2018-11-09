@@ -45,11 +45,16 @@ profile](https://github.com/bagit-profiles/bagit-profiles) (see [Appendix A for
 the full definition](#appendix-a)):
 
 * `bag-info.txt` MUST additionally contain these tags:
+  * [`BagIt-Profile-Identifier`](#bagit-profile-identifier): URL of the OCR-D BagIt profile
   * [`Ocrd-Identifier`](#ocrd-identifier): A globally unique identifier for this bag
   * [`Ocrd-Base-Version-Checksum`](#ocrd-base-version-checksum): Checksum of the version this bag is based on
 * `bag-info.txt` MAY additionally contain these tags:
   * [`Ocrd-Mets`](#ocrd-mets): Alternative path to the mets.xml file if its path IS NOT `/data/mets.xml`
   * [`Ocrd-Manifestation-Depth`](#ocrd-manifestation-depth): Whether all URL are dereferenced as files or only some
+
+### `BagIt-Profile-Identifier`
+
+The `BagIt-Profile-Identifier` must be the string `https://ocr-d.github.io/bagit-profile.json`.
 
 ### `Ocrd-Mets`
 
@@ -148,8 +153,8 @@ To pack a workspace to OCRD-ZIP:
 
 <!-- BEGIN-EVAL -w '```yaml' '```' -- cat ./bagit-profile.yml  -->
 ```yaml
-Bagit-Profile-Info:
-  Bagit-Profile-Identifier: https://ocr-d.github.io/bagit-profile.json
+BagIt-Profile-Info:
+  BagIt-Profile-Identifier: https://ocr-d.github.io/bagit-profile.json
   Source-Organization: OCR-D
   External-Description: BagIt profile for OCR data
   Version: 0.1
@@ -177,7 +182,7 @@ Allow-Fetch.txt: false
 Serialization: required
 Accept-Serialization: application/zip
 Accept-BagIt-Version:
-  - 1.0
+  - '1.0'
 ```
 
 <!-- END-EVAL -->
