@@ -182,7 +182,7 @@ Allow-Fetch.txt: false
 Serialization: required
 Accept-Serialization: application/zip
 Accept-BagIt-Version:
-  - 1.0
+  - '1.0'
 ```
 
 <!-- END-EVAL -->
