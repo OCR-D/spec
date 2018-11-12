@@ -7,13 +7,15 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
-## [2.6.1] - 2018-11-06
+  * OCRD-ZIP: Add empty list requirement for `Tag-Manifest-Required`, LibraryOfCongress/bagit-java#12
+
+## [2.6.1] - 2018-11-09
 
 Fixed:
 
   * OCRD-ZIP: typo in bagit-profile: `Bagit-` --> `BagIt-`
   * OCRD-ZIP: Require `BagIt-Profile-Identifier`
-  *n OCRD-ZIP: Version number must be a string, bagit-profile/bagit-profile#13
+  * OCRD-ZIP: Version number must be a string, bagit-profile/bagit-profile#13
 
 ## [2.6.0] - 2018-11-06
 
