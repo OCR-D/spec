@@ -7,7 +7,8 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
-  * OCRD-ZIP: Add empty list requirement for `Tag-Manifest-Required`, LibraryOfCongress/bagit-java#12
+  * OCRD-ZIP bagit profile: Add empty list requirement for `Tag-Manifest-Required`, `Tag-Files-Required`
+  * OCRD-ZIP bagit profile: Contact info
 
 ## [2.6.1] - 2018-11-09
 
