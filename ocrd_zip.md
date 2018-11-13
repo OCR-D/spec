@@ -128,6 +128,7 @@ are allowed to be present in the root of the bag:
 * `README.md`: An extended, human-readable description of the dataset in the Markdown syntax
 * `Makefile`: A GNU make build file to reproduce the data in `/data`.
 * `build.sh`: A bash script to reproduce the data in `/data`.
+* `sources.csv`: A comma-separated values list to be used in the scripts. For straightforward HTTP downloads, prefer [fetch.txt].
 
 These files are purely for documentation and should not be used by processors in any way.
 
@@ -192,6 +193,11 @@ Bag-Info:
 Manifests-Required: ['sha512']
 Tag-Manifests-Required: []
 Tag-Files-Required: []
+Tag-Files-Allowed:
+  - README.md
+  - Makefile
+  - build.sh
+  - sources.csv
 Allow-Fetch.txt: false
 Serialization: required
 Accept-Serialization: application/zip
@@ -206,3 +212,5 @@ Accept-BagIt-Version:
 Proposed media type of OCRD-ZIP: `application/vnd.ocrd+zip`
 
 Proposed extension: `.ocrd.zip`
+
+[fetch.txt]: https://tools.ietf.org/html/rfc8493#section-2.2.3
