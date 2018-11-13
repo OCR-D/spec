@@ -59,7 +59,7 @@ here an example for *Textline*
 The keyword for this information is textStyle. For the font: fontFamily, for the size: fontSize and for the typographic style the characteristic feature. 
 See: http://www.ocr-d.de/sites/all/gt_guidelines/lyTypographie.html
 
-**The second value**
+**The second value:**
 
 This information is **primarily recorded in the <TextStyle> element**. 
 See: http://www.ocr-d.de/sites/all/gt_guidelines/pagecontent_xsd_Complex_Type_pc_TextStyleType.html?hl=textstyle
