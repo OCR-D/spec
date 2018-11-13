@@ -120,6 +120,17 @@ Wrong:
 All files except `mets.xml` itself that are contained in `data` directory must
 be referenced in a `mets:file/mets:Flocat` in the `mets.xml`.
 
+## Optional metadata about the payload
+
+In addition to the actual data files in `/data`, the following metadata files
+are allowed to be present in the root of the bag:
+
+* `README.md`: An extended, human-readable description of the dataset in the Markdown syntax
+* `Makefile`: A GNU make build file to reproduce the data in `/data`.
+* `build.sh`: A bash script to reproduce the data in `/data`.
+
+These files are purely for documentation and should not be used by processors in any way.
+
 ## Algorithms
 
 ### Packing a workspace as OCRD-ZIP
