@@ -6,6 +6,34 @@ For layout and text recognition results, the primary exchange format is [PAGE](h
 
 This document defines a set of conventions and mechanism for using these formats.
 
+# Media Type
+## Media Type for PAGE XML
+
+Every `<mets:file>` representing a PAGE document MUST have its `MIMETYPE` attribute set to `application/vnd.prima.page+xml`.
+
+
+### Example
+
+```xml
+<mets:fileGrp USE="OCR-D-SEG-BLOCK">
+    <mets:file ID="OCR-D-SEG-BLOCK_0001" MIMETYPE="application/vnd.prima.page+xml">
+        <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="file:///path/to/workingDir/segmentation/block/page_0001.xml" />
+    </mets:file>
+</mets:fileGrp>
+```
+
+# The PAGE in PAGE
+
+## One page in one PAGE
+
+A single PAGE XML file represents one page in the original document.
+
+Every `<pc:Page>` element MUST have an attribute `image` which MUST always be the source image.
+
+The PAGE XML root element `<pc:PcGts>` MUST have exactly one `<pc:Page>`.
+
+
+# Images
 ## Pixel density of images must be explicit and high enough
 
 The pixel density is the ratio of the number of pixels that represent a a unit of measure of the scanned object. It is typically measured in pixels per inch (PPI, a.k.a. DPI).
@@ -28,6 +56,37 @@ $> exiftool output.tif |grep 'X Resolution'
 "150"
 ```
 
+## Images and coordinates
+
+Coordinates are always absolute, i.e. relative to extent defined in the `imageWidth`/`imageHeight` attribute of the nearest `<pc:Page>`.
+
+When a processor wants to access the image of a layout element like a TextRegion or TextLine, the algorithm should be:
+
+- If the element in question has an attribute `imageFilename`, resolve this value
+- If the element has a `<pc:Coords>` subelement, resolve by passing the attribute `imageFilename` of the nearest `<pc:Page>` and the `points` attribute of the `<pc:Coords>` element
+
+
+#Font information
+
+The documentation of these features is also stored in the **METS file**. In this case, this information is extracted from the page file. 
+The information is documented in the ``<dmSec>`` area.
+
+```
+<dmSec ID="dmd001">
+<mdWrap MIMETYPE="text/XML" MDTYPE="PAGEXML" LABEL="PAGE XML">
+<xmlData>
+ <page:TextRegion id="r_1_1" custom="textStyle {fontFamily:Arial:Times:Courier; }">
+    <page:TextStyle id="re_1_1" fontFamily="Arial:Times:Courier"/>
+ <page:TextLine id="l_1_1"custom="textStyle {fontFamily:Arial:Times; }">
+    <page:TextStyle id="li_1_1"fontFamily="Arial:Times"/>
+ <page;Word id="w_1_1"custom="textStyle {fontFamily:Arial; }">
+   <page:TextStyle id="wo_1_1"fontFamily="Arial"/>
+</xmlData>
+</mdWrap>
+</dmSec>
+```
+
+# Identifiers and URNs  
 ## Unique ID for the document processed
 
 METS provided to the MP must be uniquely addressable within the global library community.
@@ -39,7 +98,30 @@ For this purpose, the METS file MUST contain a `mods:identifier` that must conta
 * `handle`
 * `url`
 
+## File ID syntax
 
+Each `mets:file` must have an `ID` attribute. The `ID` attribute of a `mets:file` SHOULD be the `USE` of the containing `mets:fileGrp` combined with a 4-zero-padded number.
+The `ID` MUST be unique inside the METS file.
+
+```
+FILEID := ID + "_" + [0-9]{4}
+ID := "OCR-D-" + WORKFLOW_STEP + ("-" + PROCESSOR)?
+WORKFLOW_STEP := ("IMG" | "SEG" | "OCR" | "COR")
+PROCESSOR := [A-Z0-9\-]{3,}
+```
+### Examples
+
+`<mets:file ID>` | ID of the file for OCR-D
+--               | --
+`<mets:file ID="OCR-D-IMG_0001">`            | The unmanipulated source image
+`<mets:file ID="OCR-D-IMG-BIN_0001">`        | Black-and-White image
+
+## Always use URL everywhere
+
+Always use URL. If it's a local file, prefix absolute path with `file://`.
+
+
+# File Groups
 ## File Group 
 
 All `mets:file` inside a `mets:fileGrp` MUST have the same `MIMETYPE`.
@@ -94,23 +176,7 @@ PROCESSOR := [A-Z0-9\-]{3,}
 `<mets:fileGrp USE="OCR-D-GT-SEG-WORD">`    | Word segmentation ground truth
 `<mets:fileGrp USE="OCR-D-GT-SEG-GLYPH">`   | Glyph segmentation ground truth
 
-## File ID syntax
 
-Each `mets:file` must have an `ID` attribute. The `ID` attribute of a `mets:file` SHOULD be the `USE` of the containing `mets:fileGrp` combined with a 4-zero-padded number.
-The `ID` MUST be unique inside the METS file.
-
-```
-FILEID := ID + "_" + [0-9]{4}
-ID := "OCR-D-" + WORKFLOW_STEP + ("-" + PROCESSOR)?
-WORKFLOW_STEP := ("IMG" | "SEG" | "OCR" | "COR")
-PROCESSOR := [A-Z0-9\-]{3,}
-```
-### Examples
-
-`<mets:file ID>` | ID of the file for OCR-D
---               | --
-`<mets:file ID="OCR-D-IMG_0001">`            | The unmanipulated source image
-`<mets:file ID="OCR-D-IMG-BIN_0001">`        | Black-and-White image
 
 ## Grouping files by page
 
@@ -141,41 +207,7 @@ encodings of the same page.
 </mets:structMap>
 ```
 
-## Images and coordinates
-
-Coordinates are always absolute, i.e. relative to extent defined in the `imageWidth`/`imageHeight` attribute of the nearest `<pc:Page>`.
-
-When a processor wants to access the image of a layout element like a TextRegion or TextLine, the algorithm should be:
-
-- If the element in question has an attribute `imageFilename`, resolve this value
-- If the element has a `<pc:Coords>` subelement, resolve by passing the attribute `imageFilename` of the nearest `<pc:Page>` and the `points` attribute of the `<pc:Coords>` element
-
-## One page in one PAGE
-
-A single PAGE XML file represents one page in the original document.
-
-Every `<pc:Page>` element MUST have an attribute `image` which MUST always be the source image.
-
-The PAGE XML root element `<pc:PcGts>` MUST have exactly one `<pc:Page>`.
-
-## Media Type for PAGE XML
-
-Every `<mets:file>` representing a PAGE document MUST have its `MIMETYPE` attribute set to `application/vnd.prima.page+xml`.
-
-## Always use URL everywhere
-
-Always use URL. If it's a local file, prefix absolute path with `file://`.
-
-### Example
-
-```xml
-<mets:fileGrp USE="OCR-D-SEG-BLOCK">
-    <mets:file ID="OCR-D-SEG-BLOCK_0001" MIMETYPE="application/vnd.prima.page+xml">
-        <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="file:///path/to/workingDir/segmentation/block/page_0001.xml" />
-    </mets:file>
-</mets:fileGrp>
-```
-
+#PAGE and METS
 ## If in PAGE then in METS
 
 Every image URL referenced via `imageFileName` or the `filename` attribute of any `pc:AlternativeImage` MUST be represented in the METS file as a `mets:file` with corresponding `mets:FLocat@xlink:href`. 
