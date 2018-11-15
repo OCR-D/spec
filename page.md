@@ -61,7 +61,7 @@ See: http://www.ocr-d.de/sites/all/gt_guidelines/lyTypographie.html
 
 **The second value:**
 
-This information is **primarily recorded in the <TextStyle> element**. 
+This information is **primarily recorded in the ``<TextStyle>`` element**. 
 See: http://www.ocr-d.de/sites/all/gt_guidelines/pagecontent_xsd_Complex_Type_pc_TextStyleType.html?hl=textstyle
 
 All Information are documented in element ``<TextStyle>``
