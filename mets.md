@@ -66,27 +66,30 @@ When a processor wants to access the image of a layout element like a TextRegion
 - If the element has a `<pc:Coords>` subelement, resolve by passing the attribute `imageFilename` of the nearest `<pc:Page>` and the `points` attribute of the `<pc:Coords>` element
 
 
-#Font information
+# Font information
 
-The documentation of these features is also stored in the **METS file**. In this case, this information is extracted from the page file. 
-The information is documented in the ``<dmSec>`` area.
+The documentation of these features is also stored in the **METS file**. In
+this case, this information is extracted from the page file. 
 
-```
+The information is documented in the `<dmSec>` area.
+
+```xml
 <dmSec ID="dmd001">
-<mdWrap MIMETYPE="text/XML" MDTYPE="PAGEXML" LABEL="PAGE XML">
-<xmlData>
- <page:TextRegion id="r_1_1" custom="textStyle {fontFamily:Arial:Times:Courier; }">
-    <page:TextStyle id="re_1_1" fontFamily="Arial:Times:Courier"/>
- <page:TextLine id="l_1_1"custom="textStyle {fontFamily:Arial:Times; }">
-    <page:TextStyle id="li_1_1"fontFamily="Arial:Times"/>
- <page;Word id="w_1_1"custom="textStyle {fontFamily:Arial; }">
-   <page:TextStyle id="wo_1_1"fontFamily="Arial"/>
-</xmlData>
-</mdWrap>
+  <mdWrap MIMETYPE="text/XML" MDTYPE="PAGEXML" LABEL="PAGE XML">
+    <xmlData>
+      <page:TextRegion id="r_1_1" custom="textStyle {fontFamily:Arial:Times:Courier; }">
+         <page:TextStyle id="re_1_1" fontFamily="Arial:Times:Courier"/>
+      <page:TextLine id="l_1_1"custom="textStyle {fontFamily:Arial:Times; }">
+         <page:TextStyle id="li_1_1"fontFamily="Arial:Times"/>
+      <page;Word id="w_1_1"custom="textStyle {fontFamily:Arial; }">
+        <page:TextStyle id="wo_1_1"fontFamily="Arial"/>
+    </xmlData>
+  </mdWrap>
 </dmSec>
 ```
 
-# Identifiers and URNs  
+# Identifiers and URNs
+
 ## Unique ID for the document processed
 
 METS provided to the MP must be uniquely addressable within the global library community.

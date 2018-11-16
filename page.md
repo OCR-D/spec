@@ -7,6 +7,7 @@ document is `application/vnd.prima.page+xml`, which MUST be used [as the `MIMETY
 representing a PAGE document](https://ocr-d.github.io/mets#media-type-for-page-xml).
 
 # Images
+
 ## URL for imageFilename / filename
 
 The `imageFilename` of the `<pg:Page>` and `filename` of the `<pg:AlternativeImage>` element MUST be a URL. A local filename should be a `file://` URL.
@@ -49,10 +50,10 @@ The font information (type, cut...) are documented in two places in PAGE XML.
 
 **The first value:**
 
-As custom value for the elements: ``<TextLine>``, ``<Word>``, it is also possible  ``<TextRegion>``
+As custom value for the elements: `<TextLine>`, `<Word>`, it is also possible  `<TextRegion>`
 here an example for *Textline*
 
-```
+```xml
 <TextLine custom="textStyle {fontFamily:Arial; fontSize:17.0; bold:true;}">
 ```
 
@@ -61,17 +62,16 @@ See: http://www.ocr-d.de/sites/all/gt_guidelines/lyTypographie.html
 
 **The second value:**
 
-This information is **primarily recorded in the ``<TextStyle>`` element**. 
+This information is **primarily recorded in the `<TextStyle>` element**. 
 See: http://www.ocr-d.de/sites/all/gt_guidelines/pagecontent_xsd_Complex_Type_pc_TextStyleType.html?hl=textstyle
 
-All Information are documented in element ``<TextStyle>``
+All Information are documented in element `<TextStyle>`
 
-```
+```xml
 <TextStyle fontFamily="Arial" fontSize="17.0" bold="true"/>
 ```
 
-
-However, since not all typographic information can be stored in TextStyle, this is in the case of: 
+However, since not all typographic information can be stored in TextStyle, this is in the case of:
 - antiqua
 - fracturswitch
 - doubleunderlined
@@ -79,22 +79,23 @@ to use the custom attribute value.
 
 
 ### Problems:
+
 1. **Different fonts** in the paragraph region:
 - solution: 
-    - ``<TextRegion custom="textStyle {fontFamily:Arial:Times:Courier; }">``
-      -  ``<TextStyle fontFamily="Arial:Times:Courier"/>``
-    - ``<TextLine custom="textStyle {fontFamily:Arial:Times; }">``
-      -  ``<TextStyle fontFamily="Arial:Times"/>``
-    - ``<Word custom="textStyle {fontFamily:Arial; }">``
-      -  ``<TextStyle fontFamily="Arial"/>``
+    - `<TextRegion custom="textStyle {fontFamily:Arial:Times:Courier; }">`
+      -  `<TextStyle fontFamily="Arial:Times:Courier"/>`
+    - `<TextLine custom="textStyle {fontFamily:Arial:Times; }">`
+      -  `<TextStyle fontFamily="Arial:Times"/>`
+    - `<Word custom="textStyle {fontFamily:Arial; }">`
+      -  `<TextStyle fontFamily="Arial"/>`
 
 The **attribute fontFamily** must also be used for the documentation **of font clusters**.
 
 
 2. **Different fonts** in typographic style 
-  - ``<TextRegion custom="textStyle {bold="true"}">``
-  -  ``<TextStyle bold="true"/>`` only the whole TextRegion
-- ``<TextLine custom="textStyle {bold="true"}">``
-  -  ``<TextStyle bold="true"/>`` only the whole TextLine
-- ``<Word custom="textStyle {bold="true"}">``
-  -  ``<TextStyle bold="true">`` only the whole Word
+  - `<TextRegion custom="textStyle {bold="true"}">`
+  -  `<TextStyle bold="true"/>` only the whole TextRegion
+- `<TextLine custom="textStyle {bold="true"}">`
+  -  `<TextStyle bold="true"/>` only the whole TextLine
+- `<Word custom="textStyle {bold="true"}">`
+  -  `<TextStyle bold="true">` only the whole Word
