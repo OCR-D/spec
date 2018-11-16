@@ -1,7 +1,7 @@
 # Provenance
 [See issues](https://github.com/OCR-D/spec/issues/11)
 All provenance have to be stored in files. 
-There's provenance at the page level, but there's also provenance at the manuscript level.
+There's provenance at the page level, but there's also provenance at the document level.
 Because these files can become very large, they are also stored as references in the fileGrp section.
 
 ## Format
@@ -15,10 +15,10 @@ Output should be the generated files referenced via FileIDs.
 The linking of inputs and outputs should be done via the FileID as long as the files are not archived. 
 If the files are in repository, the FileIDs should be replaced by the unique URL.
 When exporting a workspace, the references should be reset to the FileID again.
-During the ingest, the entire provenance must be stored in a large graph to make the provenance searchable.
+During the ingest, the entire provenance must be stored in a graph to make the provenance searchable.
 
 ## METS
 ### File Group
-File group holding provenance have to start with prefix "PROV-"
+File groups holding provenance have to start with prefix "PROV-"
 
 

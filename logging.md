@@ -4,7 +4,7 @@ All logging may be stored in files.
 If so, they must be given in Provenance as a result. 
 
 ## Log Levels
-(Is there any definition we could link to)
+A more detailed description will be found [here](https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels/5278006#5278006)
 ### TRACE / ALL
 This is the most verbose logging level to trace the path of the algorithm.
 E.g.: Start/End/Duration of a method, even loops may be logged. 
@@ -17,11 +17,11 @@ Log information about used settings on application level.
 This level is used to log information about missing/wrong configurations which may lead to errors.
 ### ERROR
 Log all events that produce no or a wrong result. 
-It is useful to provide so much information that could provide information about the cause.
+It is useful to output all the information that helps to determine the cause without the need for further investigation.
 
 
 ## Format
-The format of the logging output have to formatted like this:
+The format of the logging output has to be formatted like this:
 TIMESTAMP LEVEL LOGGERNAME - MESSAGE
 ***Example:***
 08:03:40.017 WARN edu.kit.ocrd.MyTestClass - A warn message
@@ -30,5 +30,5 @@ Since only the time stamp is logged, the log should be written to files that cha
 
 ## METS
 ### File Group
-File group holding logging have to start with prefix "LOG-"
+File groups holding logging have to start with prefix "LOG-"
 
