@@ -49,7 +49,7 @@ the full definition](#appendix-a)):
   * [`Ocrd-Identifier`](#ocrd-identifier): A globally unique identifier for this bag
   * [`Ocrd-Base-Version-Checksum`](#ocrd-base-version-checksum): Checksum of the version this bag is based on
 * `bag-info.txt` MAY additionally contain these tags:
-  * [`Ocrd-Mets`](#ocrd-mets): Alternative path to the mets.xml file if its path IS NOT `/data/mets.xml`
+  * [`Ocrd-Mets`](#ocrd-mets): Alternative path to the mets.xml file, relative to `/data`, if its path IS NOT `mets.xml`
   * [`Ocrd-Manifestation-Depth`](#ocrd-manifestation-depth): Whether all URL are dereferenced as files or only some
 
 ### `BagIt-Profile-Identifier`
@@ -58,9 +58,12 @@ The `BagIt-Profile-Identifier` must be the string `https://ocr-d.github.io/bagit
 
 ### `Ocrd-Mets`
 
-By default, the METS file should be at `data/mets.xml`. If this file has
-another name, it must be listed here and implementations MUST check for
-`Ocrd-Mets` before assuming `data/mets.xml`.
+`Ocrd-Mets` can be provided to declare that the METS file will not be the
+standard `mets.xml` but another path relative to `/data/`.
+
+Implementations MUST check for the `Ocrd-Mets` tag: If it has a value, look for the
+METS file at that location, relative to `/data`. Otherwise, assume the default
+`mets.xml`.
 
 ### `Ocrd-Manifestation-Depth`
 
@@ -127,25 +130,26 @@ be referenced in a `mets:file/mets:Flocat` in the `mets.xml`.
 To pack a workspace to OCRD-ZIP:
 
 * Create a temporary folder `TMP`
-* Copy mets.xml to `TMP/data/mets.xml`
-* Foreach `mets:file` `f` in `TMP/data/mets.xml`:
-  * If it is not a `file://`-URL
-    * If `Ocrd-Manifestation-Depth` is `partial`
+* Foreach `mets:file` `f` in the source METS:
+  * If it is not a `file://`-URL and not a file path
+    * If `Ocrd-Manifestation-Depth` is `partial`,
       continue
   * Download/Copy the file to a location within `TMP/data`. The structure SHOULD be `<USE>/<ID>` where
     * `<USE>` is the `USE` attribute of the parent `mets:fileGrp`
     * `<ID>` is the `ID` attribute of the `mets:file`
-  * Replace the URL of `f` with `file:///data/<USE>/<ID>` in
-    * all `mets:FLocat` of `TMP/data/mets.xml`
+  * Replace the URL of `f` with the path relative to `/data` (SHOULD be `<USE>/<ID>`) in
+    * all `mets:FLocat` of the METS
     * all other files in the workspace, esp. PAGE-XML
+* Write out the changed METS to `TMP/data/mets.xml` (or another location in `TMP/data/`, specified by [`Ocrd-Mets`](#ocrd-mets)
 * Package `TMP` as a BagIt bag
 
 ### Unpacking OCRD-ZIP to a workspace
 
 * Unzip OCRD-ZIP `z` to a folder `TMP`
 * Foreach file `f` in `TMP/data/mets.xml`:
-  * If it is not a `file://`-URL, continue
-  * Replace the URL of `f` with `file://<ABSPATH>`, where `<ABSPATH>` is the absolute path to `f`, in
+  * If it is not a `file://`-URL and not a file path,
+    continue
+  * Replace the URL of `f` with `<ABSPATH>`, where `<ABSPATH>` is the absolute path to `f`, in
     * `TMP/data/mets.xml`
     * all files within `TMP`, esp. PAGE-XML
 

@@ -7,8 +7,11 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
-  * OCRD-ZIP bagit profile: Add empty list requirement for `Tag-Manifest-Required`, `Tag-Files-Required`
-  * OCRD-ZIP bagit profile: Contact info
+Changed:
+
+  * OCRD-ZIP: bagit profile: Add empty list requirement for `Tag-Manifest-Required`, `Tag-Files-Required`
+  * OCRD-ZIP: bagit profile: Contact info
+  * OCRD-ZIP: `Ocrd-Mets` and `mets:FLocat` URI/paths must be relative to `/data`
 
 ## [2.6.1] - 2018-11-09
 
