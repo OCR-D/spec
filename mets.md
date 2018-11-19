@@ -162,19 +162,28 @@ The PAGE XML root element `<pc:PcGts>` MUST have exactly one `<pc:Page>`.
 
 Every `<mets:file>` representing a PAGE document MUST have its `MIMETYPE` attribute set to `application/vnd.prima.page+xml`.
 
-## Always use URL everywhere
+## Always use URL or relative filenames
 
-Always use URL. If it's a local file, prefix absolute path with `file://`.
+Always use URL, except for files located in the directory or any subdirectories of the METS file.
 
 ### Example
 
-```xml
-<mets:fileGrp USE="OCR-D-SEG-BLOCK">
-    <mets:file ID="OCR-D-SEG-BLOCK_0001" MIMETYPE="application/vnd.prima.page+xml">
-        <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="file:///path/to/workingDir/segmentation/block/page_0001.xml" />
-    </mets:file>
-</mets:fileGrp>
+```sh
+/tmp/foo/ws1
+├── mets.xml
+├── foo.tif
+└── foo.xml
 ```
+
+Valid `mets:FLocat/@xlink:href` in `/tmp/foo/ws1/mets.xml`:
+* `foo.xml`
+* `foo.tif`
+* `file://foo.tif`
+
+Invalid `mets:FLocat/@xlink:href` in `/tmp/foo/ws1/mets.xml`:
+* `/tmp/foo/ws1/foo.xml` (absolute path)
+* `file:///tmp/foo/ws1/foo.tif` (file URL scheme with absolute path)
+* `file:///foo.tif` (relative path written as absolute path)
 
 ## If in PAGE then in METS
 

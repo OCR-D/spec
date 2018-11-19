@@ -13,6 +13,7 @@ Changed:
   * OCRD-ZIP: bagit profile: Contact info
   * OCRD-ZIP: `Ocrd-Mets` and `mets:FLocat` URI/paths must be relative to `/data`
   * OCRD-ZIP: Filenames MUST be relative to mets.xml
+  * METS: Filenames MAY/SHOULD be relative to mets.xml
 
 ## [2.6.1] - 2018-11-09
 
