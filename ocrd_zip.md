@@ -102,21 +102,31 @@ of the BagIt spec, the entries MUST be sorted.
 
 **NOTE:** These checksums can be generated with `find data -type f | sort -sf |xargs sha512sum > manifest-sha512.txt`.
 
-### `file://`-URLs must be relative
+### File names must be relative to METS
 
-All resources referenced in the METS with a `file://`-URL (and consequently all
-those referenced in other files within the workspace -- see rule "When in PAGE
-then in METS") must be referenced by `file://`-URL that is absolute with root
-being the root location of the workspace, i.e. they MUST begin with
-`file:///data`
+Within an OCRD-ZIP, all local file resources referenced in the METS (and
+consequently all those referenced in other files within the workspace -- see
+rule ["If in PAGE then in METS"](mets#if-in-page-then-in-mets) must be
+relative to the [location of the METS file](#ocrd-mets).
 
-Right:
-* `file:///data/foo.xml`
-* `file:///data/foo.tif`
-* `http:///data/server/foo.tif`
+#### Example
 
-Wrong:
-* `file:///absolute/path/somewhere/foo.tif`
+```sh
+/tmp/foo/ws1/data
+├── mets.xml
+├── foo.tif
+└── foo.xml
+```
+
+Valid `mets:FLocat/@xlink:href` in `/tmp/foo/ws1/data/mets.xml`:
+* `foo.xml`
+* `foo.tif`
+* `file://foo.tif`
+
+Invalid `mets:FLocat/@xlink:href` in `/tmp/foo/ws1/data/mets.xml`:
+* `/tmp/foo/ws1/data/foo.xml` (absolute path)
+* `file:///tmp/foo/ws1/data/foo.tif` (file URL scheme with absolute path)
+* `file:///foo.tif` (relative path written as absolute path)
 
 ### When in data then in METS
 
@@ -131,7 +141,8 @@ To pack a workspace to OCRD-ZIP:
 
 * Create a temporary folder `TMP`
 * Foreach `mets:file` `f` in the source METS:
-  * If it is not a `file://`-URL and not a file path
+  * Strip `file://` from the beginning of the `xlink:href` of `f`
+  * If it is not a file path (begins with `http://` or `https://`):
     * If `Ocrd-Manifestation-Depth` is `partial`,
       continue
   * Download/Copy the file to a location within `TMP/data`. The structure SHOULD be `<USE>/<ID>` where
@@ -148,11 +159,9 @@ To pack a workspace to OCRD-ZIP:
 * Unzip OCRD-ZIP `z` to a folder `TMP`
 * Let `M` be `TMP/data/mets.xml` (or another location in `TMP/data/`, specified by [`Ocrd-Mets`](#ocrd-mets))
 * Foreach file `f` in `M`:
-  * If it is not a `file://`-URL and not a file path,
+  * Strip `file://` from the beginning of the `xlink:href` of `f`
+  * If it is not a file path (begins with `http://` or `https://`):
     continue
-  * Replace the URL of `f` with `<ABSPATH>`, where `<ABSPATH>` is the absolute path to `f`, in
-    * `M`
-    * all files within `TMP`, esp. PAGE-XML
 
 ## Appendix A - BagIt profile definition
 
