@@ -140,17 +140,18 @@ To pack a workspace to OCRD-ZIP:
   * Replace the URL of `f` with the path relative to `/data` (SHOULD be `<USE>/<ID>`) in
     * all `mets:FLocat` of the METS
     * all other files in the workspace, esp. PAGE-XML
-* Write out the changed METS to `TMP/data/mets.xml` (or another location in `TMP/data/`, specified by [`Ocrd-Mets`](#ocrd-mets)
+* Write out the changed METS to `TMP/data/mets.xml` (or another location in `TMP/data/`, specified by [`Ocrd-Mets`](#ocrd-mets))
 * Package `TMP` as a BagIt bag
 
 ### Unpacking OCRD-ZIP to a workspace
 
 * Unzip OCRD-ZIP `z` to a folder `TMP`
-* Foreach file `f` in `TMP/data/mets.xml`:
+* Let `M` be `TMP/data/mets.xml` (or another location in `TMP/data/`, specified by [`Ocrd-Mets`](#ocrd-mets))
+* Foreach file `f` in `M`:
   * If it is not a `file://`-URL and not a file path,
     continue
   * Replace the URL of `f` with `<ABSPATH>`, where `<ABSPATH>` is the absolute path to `f`, in
-    * `TMP/data/mets.xml`
+    * `M`
     * all files within `TMP`, esp. PAGE-XML
 
 ## Appendix A - BagIt profile definition
