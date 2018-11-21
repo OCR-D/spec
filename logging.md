@@ -1,7 +1,18 @@
 # Conventions for LOGGING
-[See issues](https://github.com/OCR-D/spec/issues/11)
-All logging may be stored in files. 
-If so, they must be given in Provenance as a result. 
+This section specifies how the output of the digitization workflow is logged.
+## Target Audience
+Users and developers of digitization workflows in libraries and/or digitization centers.
+## Introduction
+Logging is essential for developers and users to debug applications.
+You always have to choose between two contradictory goals: 
+- Runtime 
+- Information 
+
+Many issues make troubleshooting easier but have a negative effect on the runtime.
+Therefore, log levels have been introduced to customize the output to suit your needs.
+
+When a workflow is executed, the output of the applications should be stored in files.
+All log outputs should be listed in the provenance.
 
 ## Log Levels
 A more detailed description will be found [here](https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels/5278006#5278006)
@@ -31,4 +42,17 @@ Since only the time stamp is logged, the log should be written to files that cha
 ## METS
 ### File Group
 File groups holding logging have to start with prefix "LOG-"
+
+## Use Cases
+### Log during the Workflow
+All applications executed during workflow have to write there logging to STDERR and STDOUT.
+Since both outputs are also stored in the provenance, only information that is important 
+for later analysis should be provided.
+STDERR only contains error messages that cause the program to terminate (see [Loglevel ERROR](#ERROR)).
+STDOUT should only contain outputs that are maximum of the log level INFO (see [Loglevel INFO](#INFO)).
+### Analyze applications
+All applications executed during workflow have to write there logging to STDERR and STDOUT.
+Since both outputs are used to analyze the program flow and possible errors and the performance 
+is not important, all information should be output here.
+
 
