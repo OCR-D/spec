@@ -52,11 +52,16 @@ For such use cases, `<pg:AlternativeImage>` may be used as a child of `<pg:TextR
 
 ### Font family and typographic style plus characteristics
 
-The font information (type, cut...) are documented in two places in PAGE XML.
+The font information (type, cut...) can be documented in PAGE XML in two places. Once as `custom` attribute value and another time using the `<TextStyle>` element. Both options can be used together.
 
-**The first value:**
+| characterisation |goal  |
+|--|--|
+| The use of the `custom` attribute is only a reference to Transkribus. |*is optional*  |
+| The use of the `<page:TextStyle>` element is the recommended solution for an OCR-D compliant file. |**is  required**  | 
 
-As custom value for the elements: `<TextLine>`, `<Word>`, it is also possible  `<TextRegion>`
+#### The first value, the use of ``custom`` attribute
+
+As `custom` attribute value for the elements: `<TextLine>`, `<Word>`, it is also possible  `<TextRegion>`
 here an example for *Textline*
 
 ```xml
@@ -66,7 +71,7 @@ here an example for *Textline*
 The keyword for this information is textStyle. For the font: fontFamily, for the size: fontSize and for the typographic style the characteristic feature. 
 See: http://www.ocr-d.de/sites/all/gt_guidelines/lyTypographie.html
 
-**The second value:**
+#### The second value, the use of the `<page:TextStyle>`
 
 This information is **primarily recorded in the `<TextStyle>` element**. 
 See: http://www.ocr-d.de/sites/all/gt_guidelines/pagecontent_xsd_Complex_Type_pc_TextStyleType.html?hl=textstyle
@@ -88,10 +93,10 @@ to use the custom attribute value.
 
 1. **Different fonts** in the paragraph region:
 - solution: 
-    - `<TextRegion custom="textStyle {fontFamily:Arial:Times:Courier; }">`
-      -  `<TextStyle fontFamily="Arial:Times:Courier"/>`
-    - `<TextLine custom="textStyle {fontFamily:Arial:Times; }">`
-      -  `<TextStyle fontFamily="Arial:Times"/>`
+    - `<TextRegion custom="textStyle {fontFamily:Arial, Times, Courier; }">`
+      -  `<TextStyle fontFamily="Arial, Times, Courier"/>`
+    - `<TextLine custom="textStyle {fontFamily:Arial, Times; }">`
+      -  `<TextStyle fontFamily="Arial, Times"/>`
     - `<Word custom="textStyle {fontFamily:Arial; }">`
       -  `<TextStyle fontFamily="Arial"/>`
 
