@@ -6,6 +6,12 @@ The [preliminary media type](https://github.com/OCR-D/spec/issues/33) of a PAGE
 document is `application/vnd.prima.page+xml`, which MUST be used [as the `MIMETYPE` of a `<mets:file>`
 representing a PAGE document](https://ocr-d.github.io/mets#media-type-for-page-xml).
 
+## One page in one PAGE
+
+A single PAGE XML file represents one page in the original document.
+Every `<pc:Page>` element MUST have an attribute `image` which MUST always be the source image.
+The PAGE XML root element `<pc:PcGts>` MUST have exactly one `<pc:Page>`.
+
 ## URL for imageFilename / filename
 
 The `imageFilename` of the `<pg:Page>` and `filename` of the `<pg:AlternativeImage>` element MUST be a URL. A local filename should be a `file://` URL.
