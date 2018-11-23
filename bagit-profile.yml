@@ -31,7 +31,7 @@ Tag-Files-Allowed:
   - Makefile
   - build.sh
   - sources.csv
-Allow-Fetch.txt: false
+Allow-Fetch.txt: true
 Serialization: required
 Accept-Serialization: application/zip
 Accept-BagIt-Version:
