@@ -33,8 +33,20 @@ $> exiftool output.tif |grep 'X Resolution'
 
 ## Font information
 
-The documentation of these features is also stored in the **METS file**. In
-this case, this information is extracted from the page file. 
+The documentation of Font information is also stored in the **METS file**.
+
+
+| characterisation |goal  |
+|--|--|
+| The use of the ``custom`` attribute is only a reference to Transkribus. |*is optional*  |
+| The use of the ``<page:TextStyle>`` element is the recommended solution for an OCR-D compliant file. |**is  required**  | 
+
+The font information can be extracted from the <page:textStyle> element of the PAGE file. See: 
+
+
+- http://www.ocr-d.de/sites/all/gt_guidelines/pagecontent_xsd_Complex_Type_pc_TextStyleType.html#TextStyleType
+- http://www.ocr-d.de/sites/all/gt_guidelines/pagecontent_xsd_Complex_Type_pc_TextStyleType.html#TextStyleTypeType_fontFamily
+ 
 
 The information is documented in the `<dmSec>` area.
 
@@ -42,12 +54,15 @@ The information is documented in the `<dmSec>` area.
 <dmSec ID="dmd001">
   <mdWrap MIMETYPE="text/XML" MDTYPE="PAGEXML" LABEL="PAGE XML">
     <xmlData>
-      <page:TextRegion id="r_1_1" custom="textStyle {fontFamily:Arial:Times:Courier; }">
-         <page:TextStyle id="re_1_1" fontFamily="Arial:Times:Courier"/>
-      <page:TextLine id="l_1_1"custom="textStyle {fontFamily:Arial:Times; }">
-         <page:TextStyle id="li_1_1"fontFamily="Arial:Times"/>
-      <page;Word id="w_1_1"custom="textStyle {fontFamily:Arial; }">
-        <page:TextStyle id="wo_1_1"fontFamily="Arial"/>
+      <page:TextRegion id="r_1_1" custom="textStyle{fontFamily:Arial, Times, Courier;}">
+      <page:TextStyle fontFamily="Arial, Times, Courier"/>
+      </page:Region>
+      <page:TextLine id="l_1_1" custom="textStyle{fontFamily:Arial, Times;}">
+      <page:TextStyle fontFamily="Arial, Times"/>
+      </page:TextLine>
+      <page:Word id="w_1_1" custom="textStyle{fontFamily:Arial;}">
+      <page:TextStyle fontFamily="Arial"/>
+      </page:Word>      
     </xmlData>
   </mdWrap>
 </dmSec>
@@ -175,13 +190,7 @@ When a processor wants to access the image of a layout element like a TextRegion
 - If the element in question has an attribute `imageFilename`, resolve this value
 - If the element has a `<pc:Coords>` subelement, resolve by passing the attribute `imageFilename` of the nearest `<pc:Page>` and the `points` attribute of the `<pc:Coords>` element
 
-## One page in one PAGE
 
-A single PAGE XML file represents one page in the original document.
-
-Every `<pc:Page>` element MUST have an attribute `image` which MUST always be the source image.
-
-The PAGE XML root element `<pc:PcGts>` MUST have exactly one `<pc:Page>`.
 
 ## Media Type for PAGE XML
 
