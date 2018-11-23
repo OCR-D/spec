@@ -1,12 +1,10 @@
 # Conventions for PAGE
 
-# Media Type
+## Media Type
 
 The [preliminary media type](https://github.com/OCR-D/spec/issues/33) of a PAGE
 document is `application/vnd.prima.page+xml`, which MUST be used [as the `MIMETYPE` of a `<mets:file>`
 representing a PAGE document](https://ocr-d.github.io/mets#media-type-for-page-xml).
-
-# Images
 
 ## URL for imageFilename / filename
 
