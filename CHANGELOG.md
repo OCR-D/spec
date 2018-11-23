@@ -7,6 +7,8 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [2.6.3] - 2018-11-23
+
 Changed:
 
   * OCRD-ZIP: `Ocrd-Mets` and `mets:FLocat` URI/paths must be relative to `/data`, #99
@@ -207,6 +209,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[2.6.3]: ../../compare/v2.6.3...v2.6.2
 [2.6.2]: ../../compare/v2.6.2...v2.6.1
 [2.6.1]: ../../compare/v2.6.1...v2.6.0
 [2.6.0]: ../../compare/v2.6.0...v2.5.0
