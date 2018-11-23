@@ -133,6 +133,18 @@ Invalid `mets:FLocat/@xlink:href` in `/tmp/foo/ws1/data/mets.xml`:
 All files except `mets.xml` itself that are contained in `data` directory must
 be referenced in a `mets:file/mets:Flocat` in the `mets.xml`.
 
+## Optional metadata about the payload
+
+In addition to the actual data files in `/data`, the following metadata files
+are allowed to be present in the root of the bag:
+
+* `README.md`: An extended, human-readable description of the dataset in the Markdown syntax
+* `Makefile`: A GNU make build file to reproduce the data in `/data`.
+* `build.sh`: A bash script to reproduce the data in `/data`.
+* `sources.csv`: A comma-separated values list to be used in the scripts. For straightforward HTTP downloads, prefer [fetch.txt].
+
+These files are purely for documentation and should not be used by processors in any way.
+
 ## Algorithms
 
 ### Packing a workspace as OCRD-ZIP
@@ -193,6 +205,11 @@ Bag-Info:
 Manifests-Required: ['sha512']
 Tag-Manifests-Required: []
 Tag-Files-Required: []
+Tag-Files-Allowed:
+  - README.md
+  - Makefile
+  - build.sh
+  - sources.csv
 Allow-Fetch.txt: true
 Serialization: required
 Accept-Serialization: application/zip
@@ -208,4 +225,5 @@ Proposed media type of OCRD-ZIP: `application/vnd.ocrd+zip`
 
 Proposed extension: `.ocrd.zip`
 
+[fetch.txt]: https://tools.ietf.org/html/rfc8493#section-2.2.3
 [`Ocrd-Mets`]: #ocrd-mets
