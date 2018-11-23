@@ -50,6 +50,27 @@ The font information can be extracted from the <page:textStyle> element of the P
 
 The information is documented in the `<dmSec>` area.
 
+### Example 1, the recommending notation for font information in METS
+```xml
+<dmSec ID="dmd001">
+  <mdWrap MIMETYPE="text/XML" MDTYPE="PAGEXML" LABEL="PAGE XML">
+    <xmlData>
+      <page:TextRegion id="r_1_1">
+      <page:TextStyle fontFamily="Arial, Times, Courier"/>
+      </page:Region>
+      <page:TextLine id="l_1_1">
+      <page:TextStyle fontFamily="Arial, Times"/>
+      </page:TextLine>
+      <page:Word id="w_1_1">
+      <page:TextStyle fontFamily="Arial"/>
+      </page:Word>      
+    </xmlData>
+  </mdWrap>
+</dmSec>
+```
+
+
+### Example 2 with ``custom`` attribute from Transkribus
 ```xml
 <dmSec ID="dmd001">
   <mdWrap MIMETYPE="text/XML" MDTYPE="PAGEXML" LABEL="PAGE XML">
