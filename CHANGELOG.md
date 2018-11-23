@@ -9,10 +9,11 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 Changed:
 
-  * OCRD-ZIP: `Ocrd-Mets` and `mets:FLocat` URI/paths must be relative to `/data`
+  * OCRD-ZIP: `Ocrd-Mets` and `mets:FLocat` URI/paths must be relative to `/data`, #99
   * OCRD-ZIP: `Ocrd-Mets` only relevant for extraction
   * OCRD-ZIP: Filenames MUST be relative to mets.xml
   * METS: Filenames MAY/SHOULD be relative to mets.xml
+  * OCRD-ZIP: Allow a limited set of files in the bag basedir (readme, build files), #97
 
 ## [2.6.2] - 2018-11-22
 
