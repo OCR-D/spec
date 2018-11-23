@@ -7,7 +7,16 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Changed:
+
+  * OCRD-ZIP: `Ocrd-Mets` and `mets:FLocat` URI/paths must be relative to `/data`
+  * OCRD-ZIP: `Ocrd-Mets` only relevant for extraction
+  * OCRD-ZIP: Filenames MUST be relative to mets.xml
+  * METS: Filenames MAY/SHOULD be relative to mets.xml
+
 ## [2.6.2] - 2018-11-22
+
+Changed:
 
   * OCRD-ZIP bagit profile: Add empty list requirement for `Tag-Manifest-Required`, `Tag-Files-Required`
   * OCRD-ZIP bagit profile: Contact info
