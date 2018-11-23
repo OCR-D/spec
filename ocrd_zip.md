@@ -49,7 +49,7 @@ the full definition](#appendix-a)):
   * [`Ocrd-Identifier`](#ocrd-identifier): A globally unique identifier for this bag
   * [`Ocrd-Base-Version-Checksum`](#ocrd-base-version-checksum): Checksum of the version this bag is based on
 * `bag-info.txt` MAY additionally contain these tags:
-  * [`Ocrd-Mets`](#ocrd-mets): Alternative path to the mets.xml file, relative to `/data`, if its path IS NOT `mets.xml`
+  * [`Ocrd-Mets`]: Alternative path to the mets.xml file, relative to `/data`, if its path IS NOT `mets.xml`
   * [`Ocrd-Manifestation-Depth`](#ocrd-manifestation-depth): Whether all URL are dereferenced as files or only some
 
 ### `BagIt-Profile-Identifier`
@@ -151,17 +151,15 @@ To pack a workspace to OCRD-ZIP:
   * Replace the URL of `f` with the path relative to `/data` (SHOULD be `<USE>/<ID>`) in
     * all `mets:FLocat` of the METS
     * all other files in the workspace, esp. PAGE-XML
-* Write out the changed METS to `TMP/data/mets.xml` (or another location in `TMP/data/`, specified by [`Ocrd-Mets`](#ocrd-mets))
+* Write out the changed METS to `TMP/data/mets.xml`
 * Package `TMP` as a BagIt bag
 
 ### Unpacking OCRD-ZIP to a workspace
 
 * Unzip OCRD-ZIP `z` to a folder `TMP`
-* Let `M` be `TMP/data/mets.xml` (or another location in `TMP/data/`, specified by [`Ocrd-Mets`](#ocrd-mets))
-* Foreach file `f` in `M`:
-  * Strip `file://` from the beginning of the `xlink:href` of `f`
-  * If it is not a file path (begins with `http://` or `https://`):
-    continue
+* If the value `M` of [`Ocrd-Mets`] is different from `mets.xml`:
+  * Rename `TMP/data/mets.xml` to `TMP/data/` + `M`
+* Move `TMP/data` to an appropriate location to use as a workspace
 
 ## Appendix A - BagIt profile definition
 
@@ -209,3 +207,5 @@ Accept-BagIt-Version:
 Proposed media type of OCRD-ZIP: `application/vnd.ocrd+zip`
 
 Proposed extension: `.ocrd.zip`
+
+[`Ocrd-Mets`]: #ocrd-mets
