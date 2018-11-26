@@ -56,22 +56,11 @@ The font information (type, cut...) can be documented in PAGE XML in two places.
 
 | characterisation |goal  |
 |--|--|
+| The use of the `<page:TextStyle>` element is the recommended solution for an OCR-D compliant file. |**is  required**  |
 | The use of the `custom` attribute is only a reference to Transkribus. |*is optional*  |
-| The use of the `<page:TextStyle>` element is the recommended solution for an OCR-D compliant file. |**is  required**  | 
 
-#### The first value, the use of ``custom`` attribute
 
-As `custom` attribute value for the elements: `<TextLine>`, `<Word>`, it is also possible  `<TextRegion>`
-here an example for *Textline*
-
-```xml
-<TextLine custom="textStyle {fontFamily:Arial; fontSize:17.0; bold:true;}">
-```
-
-The keyword for this information is textStyle. For the font: fontFamily, for the size: fontSize and for the typographic style the characteristic feature. 
-See: http://www.ocr-d.de/sites/all/gt_guidelines/lyTypographie.html
-
-#### The second value, the use of the `<page:TextStyle>`
+#### The first value, the use of the `<page:TextStyle>`
 
 This information is **primarily recorded in the `<TextStyle>` element**. 
 See: http://www.ocr-d.de/sites/all/gt_guidelines/pagecontent_xsd_Complex_Type_pc_TextStyleType.html?hl=textstyle
@@ -88,8 +77,21 @@ However, since not all typographic information can be stored in TextStyle, this 
 - doubleunderlined
 to use the custom attribute value.
 
+#### The  second value, the use of ``custom`` attribute
 
-#### Problems:
+As `custom` attribute value for the elements: `<TextLine>`, `<Word>`, it is also possible  `<TextRegion>`
+here an example for *Textline*
+
+```xml
+<TextLine custom="textStyle {fontFamily:Arial; fontSize:17.0; bold:true;}">
+```
+
+The keyword for this information is textStyle. For the font: fontFamily, for the size: fontSize and for the typographic style the characteristic feature. 
+See: http://www.ocr-d.de/sites/all/gt_guidelines/lyTypographie.html
+
+
+
+#### Problems
 
 1. **Different fonts** in the paragraph region:
 - solution: 
