@@ -91,9 +91,21 @@ here an example for *Textline*
 The keyword for this information is textStyle. For the font: fontFamily, for the size: fontSize and for the typographic style the characteristic feature. 
 See: http://www.ocr-d.de/sites/all/gt_guidelines/lyTypographie.html
 
+### Font Informationen and her confidence
 
+The degree of confidence of the font information can be specified as follows.
+*Font or font group name*: [colon] *Confidence value*
 
-#### Problems
+Example
+
+```xml
+<TextStyle fontFamily="Arial:0.8, Times:0.7, Courier:0.4"/>`
+<TextStyle fontFamily="Arial:0.8, Times:0.5"/>
+<TextStyle fontFamily="Arial:0.7"/>
+
+```
+
+### Problems
 Note: The fontFamily attribute should also be used for font cluster documentation.
 
 1. **Different fonts** in the paragraph region:
@@ -116,23 +128,11 @@ Note: The fontFamily attribute should also be used for font cluster documentatio
        - `<TextLine custom="textStyle {bold="true"}">`
        - `<Word custom="textStyle {bold="true"}">`
        
-## Font Informationen and her confidence
-
-The degree of confidence of the font information can be specified as follows.
-*Font or font group name*: [colon] *Confidence value*
-
-Example
-
-```xml
-<TextStyle fontFamily="Arial:0.8, Times:0.7, Courier:0.4"/>`
-<TextStyle fontFamily="Arial:0.8, Times:0.5"/>
-<TextStyle fontFamily="Arial:0.7"/>
-
-```
 
 
 
-#### FAQ
+
+### FAQ
 
 1. **Question:** What If information in `<TextStyle>` is provided and clashes with information in custom?
    - **Answer:** The font information from Element `<TextStyle>` should be used primarily.
