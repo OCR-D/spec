@@ -60,6 +60,7 @@ The font information (type, cut...) can be documented in PAGE XML in two places.
 | The use of the `custom` attribute is only a reference to Transkribus. |*is optional*  |
 
 
+
 #### The first value, the use of the `<page:TextStyle>`
 
 This information is **primarily recorded in the `<TextStyle>` element**. 
@@ -114,3 +115,32 @@ Note: The fontFamily attribute should also be used for font cluster documentatio
        - `<TextRegion custom="textStyle {bold="true"}">`
        - `<TextLine custom="textStyle {bold="true"}">`
        - `<Word custom="textStyle {bold="true"}">`
+       
+## Font Informationen and her confidence
+
+The degree of confidence of the font information can be specified as follows.
+*Font or font group name*: [colon] *Confidence value*
+
+Example
+```xml
+<TextRegion custom="textStyle {fontFamily:Arial:0.1, Times:0.9, Courier:0.1; }
+<TextStyle fontFamily="Arial:0.8, Times:0.5;"/>
+<TextStyle fontFamily="Arial:0.7;"/>
+```
+
+
+#### FAQ
+
+1. **Question:** What If information in `<TextStyle>` is provided and clashes with information in custom?
+   - **Answer:** The font information from Element `<TextStyle>` should be used primarily.
+2. Question: Won't data consumers be required to parse custom anyway, if it can be redundant?
+   - **Answer:** Only in the case of the following custom attribute values is the custom information to be extracted or stored as a value in this attribute.
+      - antiqua,
+      - fracturswitch and
+      - double-underlined.
+3. Question: Can TextStyle be used whereever we need it or do we need to change PAGE XML?
+   - **Answer:** Yes, the `<TextStyle>` element is available for all necessary and important elements: 
+      -  `<TextRegion>`, 
+      -  `<TextLine>`, 
+      -  `<Word>` and 
+      -  `<Glyph>`.
