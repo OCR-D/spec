@@ -124,9 +124,9 @@ The degree of confidence of the font information can be specified as follows.
 Example
 
 ```xml
-<TextRegion custom="textStyle {fontFamily:Arial:0.1, Times:0.9, Courier:0.1; }"/>
-<TextStyle fontFamily="Arial:0.8, Times:0.5;"/>
-<TextStyle fontFamily="Arial:0.7;"/>
+<TextStyle fontFamily="Arial:0.8, Times:0.7, Courier:0.4"/>`
+<TextStyle fontFamily="Arial:0.8, Times:0.5"/>
+<TextStyle fontFamily="Arial:0.7"/>
 
 ```
 
