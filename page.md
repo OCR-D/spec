@@ -72,8 +72,8 @@ All Information are documented in element `<TextStyle>`
 ```
 
 However, since not all typographic information can be stored in TextStyle, this is in the case of:
-- antiqua
-- fracturswitch
+- antiqua,
+- fracturswitch and
 - doubleunderlined
 to use the custom attribute value.
 
