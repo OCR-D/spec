@@ -56,7 +56,7 @@ The font information (type, cut...) can be documented in PAGE XML in two places.
 
 | characterisation |goal  |
 |--|--|
-| The use of the `<page:TextStyle>` element is the recommended solution for an OCR-D compliant file. |**is  required**  |
+| The use of the `<page:TextStyle>` element **is the recommended solution** for an OCR-D compliant file. |**is  required**  |
 | The use of the `custom` attribute is only a reference to Transkribus. |*is optional*  |
 
 
