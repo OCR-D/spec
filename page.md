@@ -56,7 +56,7 @@ The font information (type, cut...) can be documented in PAGE XML in two places.
 
 | characterisation |goal  |
 |--|--|
-| The use of the `<page:TextStyle>` element **is the recommended solution** for an OCR-D compliant file. |**is  required**  |
+| The use of the `<page:TextStyle>` element is **the recommended solution** for an OCR-D compliant file. |**is  required**  |
 | The use of the `custom` attribute is only a reference to Transkribus. |*is optional*  |
 
 
@@ -93,23 +93,24 @@ See: http://www.ocr-d.de/sites/all/gt_guidelines/lyTypographie.html
 
 
 #### Problems
+Note: The fontFamily attribute should also be used for font cluster documentation.
 
 1. **Different fonts** in the paragraph region:
-- solution: 
-    - `<TextRegion custom="textStyle {fontFamily:Arial, Times, Courier; }">`
+  - **the recommended solution**
       -  `<TextStyle fontFamily="Arial, Times, Courier"/>`
-    - `<TextLine custom="textStyle {fontFamily:Arial, Times; }">`
       -  `<TextStyle fontFamily="Arial, Times"/>`
-    - `<Word custom="textStyle {fontFamily:Arial; }">`
       -  `<TextStyle fontFamily="Arial"/>`
-
-The **attribute fontFamily** must also be used for the documentation **of font clusters**.
-
+  - **the optional solution**
+      - `<TextRegion custom="textStyle {fontFamily:Arial, Times, Courier; }">`
+      -  `<TextLine custom="textStyle {fontFamily:Arial, Times; }">`
+      -  `<Word custom="textStyle {fontFamily:Arial; }">`
 
 2. **Different fonts** in typographic style 
-  - `<TextRegion custom="textStyle {bold="true"}">`
-  -  `<TextStyle bold="true"/>` only the whole TextRegion
-- `<TextLine custom="textStyle {bold="true"}">`
-  -  `<TextStyle bold="true"/>` only the whole TextLine
-- `<Word custom="textStyle {bold="true"}">`
-  -  `<TextStyle bold="true">` only the whole Word
+  - **the recommended solution**  
+       -  `<TextStyle bold="true"/>` only the whole TextRegion
+       -  `<TextStyle bold="true"/>` only the whole TextLine
+       -  `<TextStyle bold="true">` only the whole Word
+  - **the optional solution**
+       - `<TextRegion custom="textStyle {bold="true"}">`
+       - `<TextLine custom="textStyle {bold="true"}">`
+       - `<Word custom="textStyle {bold="true"}">`
