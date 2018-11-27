@@ -73,11 +73,6 @@ All Information are documented in element `<TextStyle>`
 <TextStyle fontFamily="Arial" fontSize="17.0" bold="true"/>
 ```
 
-However, since not all typographic information can be stored in TextStyle, this is in the case of:
-- antiqua,
-- fracturswitch and
-- doubleunderlined
-to use the custom attribute value.
 
 #### The  second value, the use of ``custom`` attribute
 
@@ -136,12 +131,9 @@ Note: The fontFamily attribute should also be used for font cluster documentatio
 
 1. **Question:** What If information in `<TextStyle>` is provided and clashes with information in custom?
    - **Answer:** The font information from Element `<TextStyle>` should be used primarily.
-2. Question: Won't data consumers be required to parse custom anyway, if it can be redundant?
-   - **Answer:** Only in the case of the following custom attribute values is the custom information to be extracted or stored as a value in this attribute.
-      - antiqua,
-      - fracturswitch and
-      - double-underlined.
-3. Question: Can TextStyle be used whereever we need it or do we need to change PAGE XML?
+2. **Question:** Won't data consumers be required to parse custom anyway, if it can be redundant?
+   - **Answer:** No, because all relevant information are present in TextStyle and this information must be extracted with priority, it is not necessary to parse the custom attribute.
+3. **Question:** Can TextStyle be used whereever we need it or do we need to change PAGE XML?
    - **Answer:** Yes, the `<TextStyle>` element is available for all necessary and important elements: 
       -  `<TextRegion>`, 
       -  `<TextLine>`, 
