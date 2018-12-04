@@ -48,11 +48,11 @@ The font information can be extracted from the <page:textStyle> element of the P
 - http://www.ocr-d.de/sites/all/gt_guidelines/pagecontent_xsd_Complex_Type_pc_TextStyleType.html#TextStyleTypeType_fontFamily
  
 
-The information is documented in the `<dmSec>` area.
+The information is documented in the `<dmdSec>` area.
 
 ### Example 1, the recommending notation for font information in METS
 ```xml
-<dmSec ID="dmd001">
+<dmdSec ID="dmd001">
   <mdWrap MIMETYPE="text/XML" MDTYPE="PAGEXML" LABEL="PAGE XML">
     <xmlData>
       <page:TextRegion id="r_1_1">
@@ -66,13 +66,13 @@ The information is documented in the `<dmSec>` area.
       </page:Word>      
     </xmlData>
   </mdWrap>
-</dmSec>
+</dmdSec>
 ```
 
 
 ### Example 2 with ``custom`` attribute from Transkribus
 ```xml
-<dmSec ID="dmd001">
+<dmdSec ID="dmd001">
   <mdWrap MIMETYPE="text/XML" MDTYPE="PAGEXML" LABEL="PAGE XML">
     <xmlData>
       <page:TextRegion id="r_1_1" custom="textStyle{fontFamily:Arial, Times, Courier;}">
@@ -86,7 +86,7 @@ The information is documented in the `<dmSec>` area.
       </page:Word>      
     </xmlData>
   </mdWrap>
-</dmSec>
+</dmdSec>
 ```
 
 ## Unique ID for the document processed
