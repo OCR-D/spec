@@ -53,7 +53,7 @@ The `comments` attribute of the `<pg:AlternativeImage>` attribute should be used
 
 For the results of image processing that changes the positions of pixels (e.g.
 cropping, rotation, dewarping), `AlternativeImage` on page level and polygon of
-recognized zones is not enough to access the image section a region is based on
+recognized zones is not sufficient for accessing the section of the image that a region is based on
 since coordinates are always relative to the original image.
 
 For such use cases, `<pg:AlternativeImage>` may be used as a child of
@@ -61,7 +61,7 @@ For such use cases, `<pg:AlternativeImage>` may be used as a child of
 
 ## Attaching text recognition results to elements
 
-A PAGE document can attach recognized text to different typographical units of
+A PAGE document can attach recognized text to typographical units of
 a page at different levels, such as block (`<pg:TextRegion>`), line
 (`<pg:TextLine>`), word (`<pg:Word>`) or glyph (`<pg:Glyph>`).
 
@@ -80,7 +80,7 @@ To encode an actual space character at the start or end of the content
 
 ## Text recognition confidence
 
-The confidence of the correctness of the text recognition results in a
+The confidence score describing the assumed correctness of the text recognition results in a
 `<pg:TextEquiv>` can be expressed in an attribute `@conf` as a float value
 between `0` and `1`, where `0` means "certainly wrong" and `1` means "certainly
 correct".
@@ -89,7 +89,7 @@ correct".
 
 Alternative text recognition results can be expressed by using multiple
 `<pg:TextEquiv>` wherever a single `<pg:TextEquiv>` would be allowed. When
-using mulitple `<pg:TextEquiv>`, they each must have an attribute `@index` with
+using multiple `<pg:TextEquiv>`, they each must have an attribute `@index` with
 an integer number unique per set of `<pg:TextEquiv>` that allows ranking them
 in order of preference. `@index` of the first (preferred) `<pg:TextEquiv>` must be
 the value `1`.
