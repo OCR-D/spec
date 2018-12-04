@@ -17,6 +17,10 @@ Changed:
   * METS: Filenames MAY/SHOULD be relative to mets.xml
   * OCRD-ZIP: Allow a limited set of files in the bag basedir (readme, build files), #97
 
+Added:
+
+  * Font information, #76, #96
+
 ## [2.6.2] - 2018-11-22
 
 Changed:

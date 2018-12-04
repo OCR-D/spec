@@ -4,7 +4,9 @@ OCR-D has decided to base its data exchange format on top of [METS](http://www.l
 
 For layout and text recognition results, the primary exchange format is [PAGE](https://github.com/OCR-D/PAGE-XML)
 
-This document defines a set of conventions and mechanism for using these formats.
+This document defines a set of conventions and mechanism for using METS.
+
+Conventions for PAGE are outlined in [a separate document](page)
 
 ## Pixel density of images must be explicit and high enough
 
@@ -150,13 +152,7 @@ When a processor wants to access the image of a layout element like a TextRegion
 - If the element in question has an attribute `imageFilename`, resolve this value
 - If the element has a `<pc:Coords>` subelement, resolve by passing the attribute `imageFilename` of the nearest `<pc:Page>` and the `points` attribute of the `<pc:Coords>` element
 
-## One page in one PAGE
 
-A single PAGE XML file represents one page in the original document.
-
-Every `<pc:Page>` element MUST have an attribute `image` which MUST always be the source image.
-
-The PAGE XML root element `<pc:PcGts>` MUST have exactly one `<pc:Page>`.
 
 ## Media Type for PAGE XML
 
