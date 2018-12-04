@@ -86,7 +86,7 @@ here an example for *Textline*
 The keyword for this information is textStyle. For the font: fontFamily, for the size: fontSize and for the typographic style the characteristic feature. 
 See: http://www.ocr-d.de/sites/all/gt_guidelines/lyTypographie.html
 
-### Font Informationen and her confidence
+### Font information and confidence
 
 The degree of confidence of the font information can be specified as follows.
 *Font or font group name*: [colon] *Confidence value*
@@ -117,20 +117,17 @@ Note: The fontFamily attribute should also be used for font cluster documentatio
   - **the recommended solution**  
        -  `<TextStyle bold="true"/>` only the whole TextRegion
        -  `<TextStyle bold="true"/>` only the whole TextLine
-       -  `<TextStyle bold="true">` only the whole Word
+       -  `<TextStyle bold="true"/>` only the whole Word
   - **the optional solution**
        - `<TextRegion custom="textStyle {bold="true"}">`
        - `<TextLine custom="textStyle {bold="true"}">`
        - `<Word custom="textStyle {bold="true"}">`
-       
-
-
 
 
 ### FAQ
 
 1. **Question:** What If information in `<TextStyle>` is provided and clashes with information in custom?
-   - **Answer:** The font information from Element `<TextStyle>` should be used primarily.
+   - **Answer:** The font information from `<TextStyle>` should be used primarily.
 2. **Question:** Won't data consumers be required to parse custom anyway, if it can be redundant?
    - **Answer:** No, because all relevant information are present in TextStyle and this information must be extracted with priority, it is not necessary to parse the custom attribute.
 3. **Question:** Can TextStyle be used whereever we need it or do we need to change PAGE XML?

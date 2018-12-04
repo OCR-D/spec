@@ -33,7 +33,7 @@ $> exiftool output.tif |grep 'X Resolution'
 
 ## Font information
 
-The documentation of Font information is also stored in the **METS file**.
+The documentation of font information is also stored in the **METS file**.
 
 
 | characterisation |goal  |
@@ -50,7 +50,7 @@ The font information can be extracted from the <page:textStyle> element of the P
 
 The information is documented in the `<dmdSec>` area.
 
-### Example 1, the recommending notation for font information in METS
+### Example 1, the recommended notation for font information in METS
 ```xml
 <dmdSec ID="dmd001">
   <mdWrap MIMETYPE="text/XML" MDTYPE="PAGEXML" LABEL="PAGE XML">
