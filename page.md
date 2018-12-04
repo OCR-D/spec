@@ -67,17 +67,20 @@ Syntactically, the `pg:TextStyle/@fontFamily` attribute can list multiple font
 families, separated by comma (`,`).
 
 ```
-font-families := font-family ("," font-family)*
-font-family   := family-name (":" confidence)?
-confidence := ("0" | "1")? "." ("0" "1" "2" "3" "4" "5" "6" "7" "8" "9")+
+font-families    := font-family ("," font-family)*
+font-family      := font-family-name (":" confidence)?
+font-family-name := ["A" - "Z" | "a" - "z" | "0" - "9"]+ | '"' ["A" - "Z" | "a" - "z" | "0" - "9" | " "]+ '"'
+confidence       := ("0" | "1")? "." ["0" - "9"]+
 ```
 
-Semantically, this means that the element in question is set in **one of the
-font families listed**.
+Font family names that contain a space must be quoted with double quotes (`"`).
 
-It is not currently possible to declare that **multiple font families are used
-in an element**. Instead, data producers are advised to increase output
-granularity until every element is set in a single font family.
+Semantically, providing multiple font families means that the element in
+question is set in **one of the font families listed**.
+
+It is not possible to declare that **multiple font families are used in an
+element**. Instead, data producers are advised to increase output granularity
+until every element is set in a single font family.
 
 The degree of confidence in the font family can be expressed by concatenating
 font family names with colon (`:`) followed by a float between `0` (information
