@@ -30,65 +30,6 @@ $> exiftool output.tif |grep 'X Resolution'
 "150"
 ```
 
-
-## Font information
-
-The documentation of font information is also stored in the **METS file**.
-
-
-| characterisation |goal  |
-|--|--|
-| The use of the ``custom`` attribute is only a reference to Transkribus. |*is optional*  |
-| The use of the ``<page:TextStyle>`` element is the recommended solution for an OCR-D compliant file. |**is  required**  | 
-
-The font information can be extracted from the `<page:textStyle>` element of the PAGE file. See: 
-
-
-- http://www.ocr-d.de/sites/all/gt_guidelines/pagecontent_xsd_Complex_Type_pc_TextStyleType.html#TextStyleType
-- http://www.ocr-d.de/sites/all/gt_guidelines/pagecontent_xsd_Complex_Type_pc_TextStyleType.html#TextStyleTypeType_fontFamily
- 
-
-The information is documented in the `<dmdSec>` area.
-
-### Example 1, the recommended notation for font information in METS
-```xml
-<dmdSec ID="dmd001">
-  <mdWrap MIMETYPE="text/XML" MDTYPE="PAGEXML" LABEL="PAGE XML">
-    <xmlData>
-      <page:TextRegion id="r_1_1">
-      <page:TextStyle fontFamily="Arial, Times, Courier"/>
-      </page:Region>
-      <page:TextLine id="l_1_1">
-      <page:TextStyle fontFamily="Arial, Times"/>
-      </page:TextLine>
-      <page:Word id="w_1_1">
-      <page:TextStyle fontFamily="Arial"/>
-      </page:Word>      
-    </xmlData>
-  </mdWrap>
-</dmdSec>
-```
-
-
-### Example 2 with ``custom`` attribute from Transkribus
-```xml
-<dmdSec ID="dmd001">
-  <mdWrap MIMETYPE="text/XML" MDTYPE="PAGEXML" LABEL="PAGE XML">
-    <xmlData>
-      <page:TextRegion id="r_1_1" custom="textStyle{fontFamily:Arial, Times, Courier;}">
-      <page:TextStyle fontFamily="Arial, Times, Courier"/>
-      </page:Region>
-      <page:TextLine id="l_1_1" custom="textStyle{fontFamily:Arial, Times;}">
-      <page:TextStyle fontFamily="Arial, Times"/>
-      </page:TextLine>
-      <page:Word id="w_1_1" custom="textStyle{fontFamily:Arial;}">
-      <page:TextStyle fontFamily="Arial"/>
-      </page:Word>      
-    </xmlData>
-  </mdWrap>
-</dmdSec>
-```
-
 ## Unique ID for the document processed
 
 METS provided to the MP must be uniquely addressable within the global library community.
