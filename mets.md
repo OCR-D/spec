@@ -41,7 +41,7 @@ The documentation of font information is also stored in the **METS file**.
 | The use of the ``custom`` attribute is only a reference to Transkribus. |*is optional*  |
 | The use of the ``<page:TextStyle>`` element is the recommended solution for an OCR-D compliant file. |**is  required**  | 
 
-The font information can be extracted from the <page:textStyle> element of the PAGE file. See: 
+The font information can be extracted from the `<page:textStyle>` element of the PAGE file. See: 
 
 
 - http://www.ocr-d.de/sites/all/gt_guidelines/pagecontent_xsd_Complex_Type_pc_TextStyleType.html#TextStyleType
