@@ -5,8 +5,56 @@ All notable changes to the specs will be documented in this file.
 
 Versioned according to [Semantic Versioning](http://semver.org/).
 
-
 ## Unreleased
+
+## [2.7.0] - 2018-12-04
+
+Added:
+
+  * Font information, #76, #96
+
+## [2.6.3] - 2018-11-23
+
+Changed:
+
+  * OCRD-ZIP: `Ocrd-Mets` and `mets:FLocat` URI/paths must be relative to `/data`, #99
+  * OCRD-ZIP: `Ocrd-Mets` only relevant for extraction
+  * OCRD-ZIP: Filenames MUST be relative to mets.xml
+  * METS: Filenames MAY/SHOULD be relative to mets.xml
+  * OCRD-ZIP: Allow a limited set of files in the bag basedir (readme, build files), #97
+
+## [2.6.2] - 2018-11-22
+
+Changed:
+
+  * OCRD-ZIP bagit profile: Add empty list requirement for `Tag-Manifest-Required`, `Tag-Files-Required`
+  * OCRD-ZIP bagit profile: Contact info
+  * OCRD-ZIP allow `fetch.txt`, #98
+
+## [2.6.1] - 2018-11-09
+
+Fixed:
+
+  * OCRD-ZIP: typo in bagit-profile: `Bagit-` --> `BagIt-`
+  * OCRD-ZIP: Require `BagIt-Profile-Identifier`
+  * OCRD-ZIP: Version number must be a string, bagit-profile/bagit-profile#13
+
+## [2.6.0] - 2018-11-06
+
+Changed:
+
+  * Base workspace and workspace serialization mechanics on bagit, #70
+
+## [2.5.0] - 2018-10-30
+
+Added:
+
+  * Recording processing information in METS, #89
+  * Input and output file groups can be provided in ocrd-tool.json, #91
+
+Changed
+
+  * :fire: METS: grouping pages by physical `structMap` not `GROUPID`, #81
 
 ## [2.4.0] - 2018-10-19
 
@@ -14,8 +62,6 @@ Added:
 
   * File parameters, #69
   * Step for post-correction, #64
-
-## TODO
 
 ## [2.3.1] - 2018-10-10
 
@@ -169,6 +215,12 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[2.7.0]: ../../compare/v2.7.0...v2.6.3
+[2.6.3]: ../../compare/v2.6.3...v2.6.2
+[2.6.2]: ../../compare/v2.6.2...v2.6.1
+[2.6.1]: ../../compare/v2.6.1...v2.6.0
+[2.6.0]: ../../compare/v2.6.0...v2.5.0
+[2.5.0]: ../../compare/v2.5.0...v2.4.0
 [2.4.0]: ../../compare/v2.4.0...v2.3.1
 [2.3.1]: ../../compare/v2.3.1...v2.3.0
 [2.3.0]: ../../compare/v2.3.0...v2.2.2
