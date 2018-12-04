@@ -48,22 +48,32 @@ For the results of image processing that changes the positions of pixels (e.g. c
 
 For such use cases, `<pg:AlternativeImage>` may be used as a child of `<pg:TextRegion>`, `<pg:TextLine>`, `<pg:Word>` or `<pg:Glyph>`.
 
-## Font Information
+## `TextStyle`
 
-Font information (type, cut etc.) must be documented in PAGE XML using the
+Typographical information (type, cut etc.) must be documented in PAGE XML using the
 `<TextStyle>` element.
 
-See [the PAGE documentation on TextStyle](http://www.ocr-d.de/sites/all/gt_guidelines/pagecontent_xsd_Complex_Type_pc_TextStyleType.html?hl=textstyle)
+See [the PAGE documentation on TextStyle](http://www.ocr-d.de/sites/all/gt_guidelines/pagecontent_xsd_Complex_Type_pc_TextStyleType.html?hl=textstyle) for all possible values.
+
+The `<TextStyle>` element can be used in all relevant elements: 
+
+  * `<TextRegion>`
+  * `<TextLine>`
+  * `<Word>`
+  * `<Glyph>`
 
 Example:
 
 ```xml
-<TextStyle fontFamily="Arial" fontSize="17.0" bold="true"/>
+<Word>
+  <TextStyle fontFamily="Arial" fontSize="17.0" bold="true"/>
+  <!-- [...] -->
+</Word>
 ```
 
-### Font families and confidence
+### Font families
 
-Syntactically, the `pg:TextStyle/@fontFamily` attribute can list multiple font
+The `pg:TextStyle/@fontFamily` attribute can list one or more font
 families, separated by comma (`,`).
 
 ```
@@ -75,7 +85,29 @@ confidence       := ("0" | "1")? "." ["0" - "9"]+
 
 Font family names that contain a space must be quoted with double quotes (`"`).
 
-Semantically, providing multiple font families means that the element in
+### Clusters of typesets
+
+Sometimes it is necessary to not express that an element is typeset in a
+specific **font family** but in font family from **a cluster of related font groups**.
+
+For such typeset clusters, the `pg:TextStyle/@fontFamily` attribute should be re-used.
+
+This specification doesn't restrict the naming of font families.
+However, we recommend to choose one of the following list of type groups names if
+applicable:
+
+  * `textura`
+  * `rotura`
+  * `bastarda`
+  * `antiqua`
+  * `greek`
+  * `hebrew`
+  * `italic`
+  * `fraktur`
+
+### Font families and confidence
+
+Providing multiple font families means that the element in
 question is set in **one of the font families listed**.
 
 It is not possible to declare that **multiple font families are used in an
@@ -97,40 +129,3 @@ Examples
 <TextStyle fontFamily="Arial:1"/>
 <TextStyle fontFamily="Arial"/>
 ```
-
-### Problems
-Note: The fontFamily attribute should also be used for font cluster documentation.
-
-1. **Different fonts** in the paragraph region:
-  - **the recommended solution**
-      -  `<TextStyle fontFamily="Arial, Times, Courier"/>`
-      -  `<TextStyle fontFamily="Arial, Times"/>`
-      -  `<TextStyle fontFamily="Arial"/>`
-  - **the optional solution**
-      - `<TextRegion custom="textStyle {fontFamily:Arial, Times, Courier; }">`
-      -  `<TextLine custom="textStyle {fontFamily:Arial, Times; }">`
-      -  `<Word custom="textStyle {fontFamily:Arial; }">`
-
-2. **Different fonts** in typographic style 
-  - **the recommended solution**  
-       -  `<TextStyle bold="true"/>` only the whole TextRegion
-       -  `<TextStyle bold="true"/>` only the whole TextLine
-       -  `<TextStyle bold="true"/>` only the whole Word
-  - **the optional solution**
-       - `<TextRegion custom="textStyle {bold="true"}">`
-       - `<TextLine custom="textStyle {bold="true"}">`
-       - `<Word custom="textStyle {bold="true"}">`
-
-
-### FAQ
-
-1. **Question:** What If information in `<TextStyle>` is provided and clashes with information in custom?
-   - **Answer:** The font information from `<TextStyle>` should be used primarily.
-2. **Question:** Won't data consumers be required to parse custom anyway, if it can be redundant?
-   - **Answer:** No, because all relevant information are present in TextStyle and this information must be extracted with priority, it is not necessary to parse the custom attribute.
-3. **Question:** Can TextStyle be used whereever we need it or do we need to change PAGE XML?
-   - **Answer:** Yes, the `<TextStyle>` element is available for all necessary and important elements: 
-      -  `<TextRegion>`, 
-      -  `<TextLine>`, 
-      -  `<Word>` and 
-      -  `<Glyph>`.
