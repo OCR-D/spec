@@ -7,6 +7,12 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [2.7.0] - 2018-12-04
+
+Added:
+
+  * Font information, #76, #96
+
 ## [2.6.3] - 2018-11-23
 
 Changed:
@@ -16,10 +22,6 @@ Changed:
   * OCRD-ZIP: Filenames MUST be relative to mets.xml
   * METS: Filenames MAY/SHOULD be relative to mets.xml
   * OCRD-ZIP: Allow a limited set of files in the bag basedir (readme, build files), #97
-
-Added:
-
-  * Font information, #76, #96
 
 ## [2.6.2] - 2018-11-22
 
@@ -213,6 +215,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[2.7.0]: ../../compare/v2.7.0...v2.6.3
 [2.6.3]: ../../compare/v2.6.3...v2.6.2
 [2.6.2]: ../../compare/v2.6.2...v2.6.1
 [2.6.1]: ../../compare/v2.6.1...v2.6.0
