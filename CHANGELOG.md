@@ -7,6 +7,10 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Added:
+
+  * PAGE text result and consistency checks, #82, OCR-D/assets#16
+
 ## [2.7.0] - 2018-12-04
 
 Added:

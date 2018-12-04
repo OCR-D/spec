@@ -85,6 +85,7 @@ The confidence score describing the assumed correctness of the text recognition 
 between `0` and `1`, where `0` means "certainly wrong" and `1` means "certainly
 correct".
 
+<a name="multiple-textequivs"/>
 ## Attaching multiple text recognition results to elements
 
 Alternative text recognition results can be expressed by using multiple
@@ -100,34 +101,53 @@ Since text results can be defined on different levels and those levels can
 be nested, text results information is redundant. To avoid inconsistencies,
 the following assertions must be true:
 
-  1. text of `<pg:Word>` must be equal to the text results of all `<pg:Glyph>`
+  1. text of `<pg:Word>` must be equal to the text of all `<pg:Glyph>`
     contained within, concatenated with empty string
-  2. text of `<pg:TextLine>` must be equal to the text results of all
+  2. text of `<pg:TextLine>` must be equal to the text of all
     `<pg:Word>` contained  within, concatenated with a single space (`U+0020`).
-  3. text of `<pg:TextRegion>` must be equal to the text results of all
+  3. text of `<pg:TextRegion>` must be equal to the text of all
     `<pg:TextLine>` contained within, concatenated with a newline (`U+000A`).
-  4. The cardinality of trailing `<pg:TextEquiv>` elements must be consistent on
-    all levels
 
 **NOTE:** "Concatenation" means joining a list of strings with a separator, no
 separator is added to the start or end of the resulting string.
 
-**NOTE:** Rule 4 implies for an element `E` that
-  - if `E` contains `n` text results, then all ancestors of `E` must contain
-    exactly `n` text results.
-  - if `E` contains `n` elements and has descendant elements, these descendant
-    elements must contain exactly `n` elements
-  - rules 1-3 above apply to multiple results by first grouping individual results
-    by the `@index` property of resp. `<pg:TextEquiv>`.
-
-**Example:** `<pg:Word>` has text `Fool` but contains `<pg:Glyph>` whose
-text results, when concatenated, form the text `Foot`. The processor must proceed as if
-the `<pg:Word>` had the text `Foot`.
+These assertions are only to be enforced for the first `<pg:TextEquiv>` of both
+containing and contained elements, i.e. the only `<pg:TextEquiv>` of an element
+or the `<pg:TextEquiv>` with `@index = 1` if [multiple text
+results](#multiple-textequivs) are attached.
 
 If any of these assertions fails for a PAGE document, a processor must proceed
 with the text results at the lowest level provided.
 
-For such use cases, `<pg:AlternativeImage>` may be used as a child of `<pg:TextRegion>`, `<pg:TextLine>`, `<pg:Word>` or `<pg:Glyph>`.
+### Example
+
+<a name="inconsistency-example"/>
+```xml
+<Word>
+  <Glyph>
+    <TextEquiv index="1"><Unicode>f</Unicode></TextEquiv>
+    <TextEquiv index="2"><Unicode>t</Unicode></TextEquiv>
+  </Glyph>
+  <Glyph>
+    <TextEquiv index="1"><Unicode>o</Unicode></TextEquiv>
+  </Glyph>
+  <Glyph>
+    <TextEquiv><Unicode>o</Unicode></TextEquiv>
+  </Glyph>
+  <Glyph>
+    <TextEquiv><Unicode>t</Unicode></TextEquiv>
+  </Glyph>
+  <TextEquiv index="1"><Unicode>foof</Unicode></TextEquiv>
+  <TextEquiv index="2"><Unicode>toot</Unicode></TextEquiv>
+</Word>
+```
+
+In this [example](#inconsistency-example), the `<pg:Word>` has text `foof` but
+the concatenation of the first text results of the contained `<pg:Glyphs>`
+spells `foot`. As a result:
+
+  * Validation should raise an exception for inconsistency.
+  * Data consumers should assume the text result to be `foot`.
 
 ## `TextStyle`
 
