@@ -11,8 +11,11 @@ You always have to choose between two contradictory goals:
 Many issues make troubleshooting easier but have a negative effect on the runtime.
 Therefore, log levels have been introduced to customize the output to suit your needs.
 
-When a workflow is executed, the output of the applications should be stored in files.
-All log outputs should be listed in the provenance.
+When a workflow is executed, the output of the applications MAY be stored in files.
+All log files were stored in a subfolder 'metadata/log'.
+The file name SHOULD contain the ID of the activity in the provenance and the name of the stream.
+FILENAME := ACTIVITY_ID + "_" + OUTPUT_STREAM + ".log"
+'''Example:''' ocrd-kraken-bin_0001_stdout.log
 
 ## Log Levels
 A more detailed description will be found [here](https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels/5278006#5278006)
@@ -36,12 +39,13 @@ The format of the logging output has to be formatted like this:
 TIMESTAMP LEVEL LOGGERNAME - MESSAGE
 ***Example:***
 08:03:40.017 WARN edu.kit.ocrd.MyTestClass - A warn message
-:warning: 
-Since only the time stamp is logged, the log should be written to files that change daily.
 
 ## METS
-### File Group
-File groups holding logging have to start with prefix "LOG-"
+The log files are not referenced inside METS.
+If they are listed in the provenance, their content must be included in the provenance.
+
+## Ingest Workspace to OCR-D Repositorium
+No log files will be stored in repository
 
 ## Use Cases
 ### Log during the Workflow
@@ -50,6 +54,8 @@ Since both outputs are also stored in the provenance, only information that is i
 for later analysis should be provided.
 STDERR only contains error messages that cause the program to terminate (see [Loglevel ERROR](#ERROR)).
 STDOUT should only contain outputs that are maximum of the log level INFO (see [Loglevel INFO](#INFO)).
+For automated workflows it is recommended to save STDERR only.
+
 ### Analyze applications
 All applications executed during workflow have to write there logging to STDERR and STDOUT.
 Since both outputs are used to analyze the program flow and possible errors and the performance 
