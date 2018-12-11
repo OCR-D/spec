@@ -7,6 +7,12 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+* :fire: Drop recommendation on reusing source file ID for page grouping
+* :fire: Drop GROUPID and replace with mets:structMap[@TYPE="PHYSICAL"] throughout
+* :fire: CLI: Replace `-g/-group-id` with `-P/--page-id`
+* CLI: Mark possible comma-separated multi-value parameters as such
+* CLI: Update `ocrd process` example
+
 ## [2.7.0] - 2018-12-04
 
 Added:
