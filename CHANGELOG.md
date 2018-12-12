@@ -12,6 +12,7 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 * :fire: CLI: Replace `-g/-group-id` with `-P/--page-id`
 * CLI: Mark possible comma-separated multi-value parameters as such
 * CLI: Update `ocrd process` example
+* OCRD-ZIP: Set BagIt-Profile-Version to 1.2
 
 ## [2.7.0] - 2018-12-04
 
