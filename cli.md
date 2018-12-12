@@ -39,7 +39,7 @@ File group(s) used as output.
 
 ## Optional parameters
 
-### `-P, --page-id ID`
+### `-g, --page-id ID`
 
 **MULTI-VALUE**
 
@@ -122,7 +122,7 @@ And this is how it will be called with the `ocrd process` CLI:
 $> ocrd process \
     'kraken-binarize -I OCR-D-IMG -O OCR-D-IMG-BIN-KRAKEN -p /path/to/file/parameters.json'
     -m "file:///path/to/file/mets.xml" \
-    -P PHYS_0001,PHYS_0002,PHYS_0003
+    -g PHYS_0001,PHYS_0002,PHYS_0003
 
     preprocessing/binarization/kraken-binarize
 ```
@@ -133,7 +133,7 @@ $> ocrd process \
 <mets:mets>
     <!-- ... -->
   <mets:structMap TYPE="PHYSICAL">
-    <mets:div DMDID="DMDPHYS_0000" ID="PHYS_0000" TYPE="physSequence">
+    <mets:div ID="PHYS_0000" TYPE="physSequence">
       <mets:div TYPE="page" ID="PHYS_0001">
         <mets:fptr FILEID="OCR-D-IMG_0001"/>
       </mets:div>
