@@ -7,6 +7,8 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [3.0.0] - 2018-12-13
+
 Added:
 
   * PAGE text result and consistency checks, #82, OCR-D/assets#16
@@ -14,7 +16,7 @@ Added:
 Changed:
   * :fire: Drop recommendation on reusing source file ID for page grouping
   * :fire: Drop GROUPID and replace with mets:structMap[@TYPE="PHYSICAL"] throughout
-  * :fire: CLI: Replace `-g/-group-id` with `-P/--page-id`
+  * :fire: CLI: Replace `-g/-group-id` with `-g/--page-id`
   * CLI: Mark possible comma-separated multi-value parameters as such
   * CLI: Update `ocrd process` example
   * OCRD-ZIP: Set BagIt-Profile-Version to 1.2
@@ -227,6 +229,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[3.0.0]: ../../compare/v3.0.0...v2.7.0
 [2.7.0]: ../../compare/v2.7.0...v2.6.3
 [2.6.3]: ../../compare/v2.6.3...v2.6.2
 [2.6.2]: ../../compare/v2.6.2...v2.6.1
