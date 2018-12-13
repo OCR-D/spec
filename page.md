@@ -97,8 +97,8 @@ the value `1`.
 
 ## Consistency of text results on different levels
 
-Since text results can be defined on different levels and those levels can
-be nested, text results information is redundant. To avoid inconsistencies,
+Since text results can be defined on different levels and those levels can be
+nested, text results information can be redundant. To avoid inconsistencies,
 the following assertions must be true:
 
   1. text of `<pg:Word>` must be equal to the text of all `<pg:Glyph>`
@@ -116,8 +116,29 @@ containing and contained elements, i.e. the only `<pg:TextEquiv>` of an element
 or the `<pg:TextEquiv>` with `@index = 1` if [multiple text
 results](#multiple-textequivs) are attached.
 
-If any of these assertions fails for a PAGE document, a processor must proceed
-with the text results at the lowest level provided.
+### Consistency strictness
+
+A consistency checker must support three levels of strictness:
+
+#### `strict`
+If any of the assertions fail for a PAGE document, an exception
+should be raised and the document no further processed
+
+#### `fix`
+
+If any of the assertions fail for a specific element in PAGE document, the text
+results of this element must be recreated, by concatenating the text results of
+its children elements. This algorithm needs to be recursive, i.e. if any of the
+children elements is itself inconsistent, its text results must be recreated in
+the same way before concatenation.
+
+#### `off`
+
+These consistency checks are so restrictive to spot data that cannot be
+unambigiously processed. However, there are valid use cases where the
+"index-1-consistency" is too narrow, esp. in post-correction with language
+models. For such use cases, it must be possible to disable the consistency
+validation altogether in the workflow.
 
 ### Example
 
