@@ -134,10 +134,10 @@ encodings of the same page.
     <mets:file ID="OCR-D-OCR_0001">...</mets:file>
 </mets:fileGrp>
 <mets:structMap TYPE="PHYSICAL">
-  <mets:div CONTENTIDS="http://url-of-the-page/path/0000" DMDID="DMDPHYS_0000" ID="PHYS_0000" TYPE="physSequence" >
-    <mets:div CONTENTIDS="http://url-of-the-page/path/0001" ID="PHYS_0001" ORDER="1" TYPE="page" >
-      <mets:fptr FILEID="OCR-D-IMG_0001" ></mets:fptr>
-      <mets:fptr FILEID="OCR-D-OCR_0001" ></mets:fptr>
+  <mets:div ID="PHYS_0000" TYPE="physSequence">
+    <mets:div ID="PHYS_0001" TYPE="page">
+      <mets:fptr FILEID="OCR-D-IMG_0001"/>
+      <mets:fptr FILEID="OCR-D-OCR_0001"/>
     </mets:div>
   </mets:div>
 </mets:structMap>
@@ -184,8 +184,6 @@ Invalid `mets:FLocat/@xlink:href` in `/tmp/foo/ws1/mets.xml`:
 ## If in PAGE then in METS
 
 Every image URL referenced via `imageFileName` or the `filename` attribute of any `pc:AlternativeImage` MUST be represented in the METS file as a `mets:file` with corresponding `mets:FLocat@xlink:href`. 
-
-For every `mets:file` that represents a PAGE document, its `GROUPID` should be equal to the `pcGtsId` attribute of the `page:PcGts`.
 
 ## Recording processing information in METS
 
