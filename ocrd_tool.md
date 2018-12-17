@@ -167,7 +167,7 @@ properties:
 
 ## Example
 
-This is from the [ocrd_tesserocr sample project](https://github.com/OCR-D/ocrd_tesserocr):
+This is from the [ocrd_kraken sample project](https://github.com/OCR-D/ocrd_kraken):
 
 <!-- BEGIN-EVAL -w '```json' '```' -- cat ../ocrd_kraken/ocrd-tool.json -->
 ```json

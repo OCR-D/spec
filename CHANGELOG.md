@@ -7,6 +7,10 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Fixed:
+
+  * Example in ocrd_tool.md is from ocrd_kraken, not ocrd_tesserocr
+
 ## [3.0.0] - 2018-12-13
 
 Added:
