@@ -118,10 +118,17 @@ results](#multiple-textequivs) are attached.
 
 ### Consistency strictness
 
-A consistency checker must support three levels of strictness:
+A consistency checker must support four levels of strictness:
 
 #### `strict`
+
 If any of the assertions fail for a PAGE document, an exception
+should be raised and the document no further processed
+
+#### `lax`
+
+If any of the assertions fail for a PAGE document, another comparison
+disregarding all whitespace shall be made. If this still fails, an exception
 should be raised and the document no further processed
 
 #### `fix`

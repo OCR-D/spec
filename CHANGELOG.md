@@ -7,6 +7,10 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Added:
+
+  * Consistency check level 'lax'
+
 Fixed:
 
   * Example in ocrd_tool.md is from ocrd_kraken, not ocrd_tesserocr
