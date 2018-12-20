@@ -7,6 +7,8 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [3.1.0] - 2018-12-20
+
 Added:
 
   * Consistency check level 'lax'
@@ -237,6 +239,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[3.1.0]: ../../compare/v3.1.0...v3.0.0
 [3.0.0]: ../../compare/v3.0.0...v2.7.0
 [2.7.0]: ../../compare/v2.7.0...v2.6.3
 [2.6.3]: ../../compare/v2.6.3...v2.6.2
