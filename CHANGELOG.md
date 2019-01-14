@@ -7,6 +7,10 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Fixed:
+
+  PAGE: link to the page xml docs
+
 ## [3.1.0] - 2018-12-20
 
 Added:

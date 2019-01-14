@@ -1,5 +1,9 @@
 # Conventions for PAGE
 
+In addition to these conventions, refer to the [PAGE API
+docs](https://ocr-d.github.io/gt/trans_documentation/trPage.html) for extensive
+documentation on the PAGE XML format itself.
+
 ## Media Type
 
 The [preliminary media type](https://github.com/OCR-D/spec/issues/33) of a PAGE
