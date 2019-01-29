@@ -1,5 +1,6 @@
 BagIt-Profile-Info:
   BagIt-Profile-Identifier: https://ocr-d.github.io/bagit-profile.json
+  BagIt-Profile-Version: '1.2.0'
   Source-Organization: OCR-D
   External-Description: BagIt profile for OCR data
   Contact-Name: Konstantin Baierer
@@ -26,7 +27,12 @@ Bag-Info:
 Manifests-Required: ['sha512']
 Tag-Manifests-Required: []
 Tag-Files-Required: []
-Allow-Fetch.txt: false
+Tag-Files-Allowed:
+  - README.md
+  - Makefile
+  - build.sh
+  - sources.csv
+Allow-Fetch.txt: true
 Serialization: required
 Accept-Serialization: application/zip
 Accept-BagIt-Version:

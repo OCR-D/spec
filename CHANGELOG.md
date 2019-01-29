@@ -7,8 +7,57 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Fixed:
+
+  PAGE: link to the page xml docs
+
+## [3.1.0] - 2018-12-20
+
+Added:
+
+  * Consistency check level 'lax'
+
+Fixed:
+
+  * Example in ocrd_tool.md is from ocrd_kraken, not ocrd_tesserocr
+
+## [3.0.0] - 2018-12-13
+
+Added:
+
+  * PAGE text result and consistency checks, #82, OCR-D/assets#16
+
+Changed:
+  * :fire: Drop recommendation on reusing source file ID for page grouping
+  * :fire: Drop GROUPID and replace with mets:structMap[@TYPE="PHYSICAL"] throughout
+  * :fire: CLI: Replace `-g/-group-id` with `-g/--page-id`
+  * CLI: Mark possible comma-separated multi-value parameters as such
+  * CLI: Update `ocrd process` example
+  * OCRD-ZIP: Set BagIt-Profile-Version to 1.2
+
+## [2.7.0] - 2018-12-04
+
+Added:
+
+  * Font information, #76, #96
+
+## [2.6.3] - 2018-11-23
+
+Changed:
+
+  * OCRD-ZIP: `Ocrd-Mets` and `mets:FLocat` URI/paths must be relative to `/data`, #99
+  * OCRD-ZIP: `Ocrd-Mets` only relevant for extraction
+  * OCRD-ZIP: Filenames MUST be relative to mets.xml
+  * METS: Filenames MAY/SHOULD be relative to mets.xml
+  * OCRD-ZIP: Allow a limited set of files in the bag basedir (readme, build files), #97
+
+## [2.6.2] - 2018-11-22
+
+Changed:
+
   * OCRD-ZIP bagit profile: Add empty list requirement for `Tag-Manifest-Required`, `Tag-Files-Required`
   * OCRD-ZIP bagit profile: Contact info
+  * OCRD-ZIP allow `fetch.txt`, #98
 
 ## [2.6.1] - 2018-11-09
 
@@ -194,6 +243,11 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[3.1.0]: ../../compare/v3.1.0...v3.0.0
+[3.0.0]: ../../compare/v3.0.0...v2.7.0
+[2.7.0]: ../../compare/v2.7.0...v2.6.3
+[2.6.3]: ../../compare/v2.6.3...v2.6.2
+[2.6.2]: ../../compare/v2.6.2...v2.6.1
 [2.6.1]: ../../compare/v2.6.1...v2.6.0
 [2.6.0]: ../../compare/v2.6.0...v2.5.0
 [2.5.0]: ../../compare/v2.5.0...v2.4.0

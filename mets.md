@@ -4,7 +4,9 @@ OCR-D has decided to base its data exchange format on top of [METS](http://www.l
 
 For layout and text recognition results, the primary exchange format is [PAGE](https://github.com/OCR-D/PAGE-XML)
 
-This document defines a set of conventions and mechanism for using these formats.
+This document defines a set of conventions and mechanism for using METS.
+
+Conventions for PAGE are outlined in [a separate document](page)
 
 ## Pixel density of images must be explicit and high enough
 
@@ -132,10 +134,10 @@ encodings of the same page.
     <mets:file ID="OCR-D-OCR_0001">...</mets:file>
 </mets:fileGrp>
 <mets:structMap TYPE="PHYSICAL">
-  <mets:div CONTENTIDS="http://url-of-the-page/path/0000" DMDID="DMDPHYS_0000" ID="PHYS_0000" TYPE="physSequence" >
-    <mets:div CONTENTIDS="http://url-of-the-page/path/0001" ID="PHYS_0001" ORDER="1" TYPE="page" >
-      <mets:fptr FILEID="OCR-D-IMG_0001" ></mets:fptr>
-      <mets:fptr FILEID="OCR-D-OCR_0001" ></mets:fptr>
+  <mets:div ID="PHYS_0000" TYPE="physSequence">
+    <mets:div ID="PHYS_0001" TYPE="page">
+      <mets:fptr FILEID="OCR-D-IMG_0001"/>
+      <mets:fptr FILEID="OCR-D-OCR_0001"/>
     </mets:div>
   </mets:div>
 </mets:structMap>
@@ -150,37 +152,38 @@ When a processor wants to access the image of a layout element like a TextRegion
 - If the element in question has an attribute `imageFilename`, resolve this value
 - If the element has a `<pc:Coords>` subelement, resolve by passing the attribute `imageFilename` of the nearest `<pc:Page>` and the `points` attribute of the `<pc:Coords>` element
 
-## One page in one PAGE
 
-A single PAGE XML file represents one page in the original document.
-
-Every `<pc:Page>` element MUST have an attribute `image` which MUST always be the source image.
-
-The PAGE XML root element `<pc:PcGts>` MUST have exactly one `<pc:Page>`.
 
 ## Media Type for PAGE XML
 
 Every `<mets:file>` representing a PAGE document MUST have its `MIMETYPE` attribute set to `application/vnd.prima.page+xml`.
 
-## Always use URL everywhere
+## Always use URL or relative filenames
 
-Always use URL. If it's a local file, prefix absolute path with `file://`.
+Always use URL, except for files located in the directory or any subdirectories of the METS file.
 
 ### Example
 
-```xml
-<mets:fileGrp USE="OCR-D-SEG-BLOCK">
-    <mets:file ID="OCR-D-SEG-BLOCK_0001" MIMETYPE="application/vnd.prima.page+xml">
-        <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL" xlink:href="file:///path/to/workingDir/segmentation/block/page_0001.xml" />
-    </mets:file>
-</mets:fileGrp>
+```sh
+/tmp/foo/ws1
+├── mets.xml
+├── foo.tif
+└── foo.xml
 ```
+
+Valid `mets:FLocat/@xlink:href` in `/tmp/foo/ws1/mets.xml`:
+* `foo.xml`
+* `foo.tif`
+* `file://foo.tif`
+
+Invalid `mets:FLocat/@xlink:href` in `/tmp/foo/ws1/mets.xml`:
+* `/tmp/foo/ws1/foo.xml` (absolute path)
+* `file:///tmp/foo/ws1/foo.tif` (file URL scheme with absolute path)
+* `file:///foo.tif` (relative path written as absolute path)
 
 ## If in PAGE then in METS
 
 Every image URL referenced via `imageFileName` or the `filename` attribute of any `pc:AlternativeImage` MUST be represented in the METS file as a `mets:file` with corresponding `mets:FLocat@xlink:href`. 
-
-For every `mets:file` that represents a PAGE document, its `GROUPID` should be equal to the `pcGtsId` attribute of the `page:PcGts`.
 
 ## Recording processing information in METS
 
