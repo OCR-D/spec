@@ -178,6 +178,9 @@ properties:
   lineId:
     description: ID of the line within the PAGE-XML doc
     type: string
+  teiUrl:
+    description: URL of the TEI document that contains the page
+    type: string
   xpath:
     description: XPath to the line if no `fileId` was provided
     type: string
