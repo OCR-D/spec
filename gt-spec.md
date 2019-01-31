@@ -67,7 +67,12 @@ Name of the subfolder containing transcriptions if [`Gt-Directory-Structure`] is
 
 ### Gt-Transcription-Normalization
 
-Unicode normalization level. One of `NFC`, `NFKC`, `NFD` or `NFKC`. Default: `NFKC`.
+**Required**
+
+All transcriptions MUST be UTF-8 encoded Unicode. This property defines the
+unicode normalization level.
+
+One of `NFC`, `NFKC`, `NFD` or `NFKC` or `non-normalized`.
 
 ![Illustration unicode normalization](http://unicode.org/reports/tr15/images/UAX15-NormFig6.jpg)
 
