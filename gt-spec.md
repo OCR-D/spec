@@ -31,7 +31,7 @@
 ## Rationale
 
 Recent OCR (optical character recognition) engines are not actually
-character-based anymore but on neural networks that operate on lines. These
+character-based anymore but use neural networks that operate on lines. These
 engines can be trained with images of text lines and their transcription
 ("ground truth"), plus engine-specific configurations.
 
@@ -145,7 +145,7 @@ can be saved per line to preserve the provenance of every single line.
 Line metadata can be encoded in JSON or YAML (depending on
 [`Gt-Line-Metadata-Extension`] and [`Gt-Line-Metadata-Media-Type`]).
 
-Line metadata mustt adhere to this JSON schema:
+Line metadata MUST adhere to this JSON schema:
 
 <!-- BEGIN-EVAL -w '```yaml' '```' -- cat single-line.yml -->
 ```yaml
