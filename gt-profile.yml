@@ -98,6 +98,7 @@ Tag-Manifests-Required: []
 Tag-Files-Required: []
 Tag-Files-Allowed:
   - README.md
+  - build.sh
 Allow-Fetch.txt: false
 Serialization: allowed
 Accept-Serialization: application/zip
