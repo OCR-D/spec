@@ -152,7 +152,6 @@ Line metadata MUST adhere to this JSON schema:
 description: Schema for provenance of single lines
 type: object
 required:
-  - coords
   - imageUrl
 properties:
   coords:
