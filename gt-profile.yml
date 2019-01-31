@@ -21,13 +21,13 @@ Bag-Info:
     required: false
     default: 'text'
   Gt-Transcription-Normalization:
-    required: false
-    default: 'NFKC'
+    required: true
     values:
       - NFD
       - NFKD
       - NFC
       - NFKC
+      - non-normalized
   Gt-Color-Image-Extension:
     required: false
     default: '.color.png'
