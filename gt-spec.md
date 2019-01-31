@@ -78,7 +78,7 @@ One of `NFC`, `NFKC`, `NFD` or `NFKC` or `non-normalized`.
 
 ### Gt-Grayscale-Image-Extension
 
-Extension of the grayscale image files. Default: `.png`.
+Extension of the grayscale image files. Default: `.nrm.png`.
 
 ### Gt-Grayscale-Image-Media-Type
 
@@ -90,7 +90,7 @@ Name of the subfolder containing grayscale images if [`Gt-Directory-Structure`] 
 
 ### Gt-Color-Image-Extension
 
-Extension of the color image files. Default: `.png`.
+Extension of the color image files. Default: `.color.png`.
 
 ### Gt-Color-Image-Media-Type
 
@@ -102,7 +102,7 @@ Name of the subfolder containing color images if [`Gt-Directory-Structure`] is `
 
 ### Gt-Bitonal-Image-Extension
 
-Extension of the bitonal image files. Default: `.png`.
+Extension of the bitonal image files. Default: `.bin..png`.
 
 ### Gt-Bitonal-Image-Media-Type
 
