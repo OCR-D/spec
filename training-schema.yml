@@ -34,6 +34,7 @@ properties:
       - application/vnd.ocrd.coreml # kraken >= 1.0
       - application/vnd.ocrd.pyrnn  # ocropy-rpred
       - application/vnd.ocrd.tf+zip # calamari, zipped tensorflow data
+      - application/vnd.ocrd.tesseract4  # tesseract >= 4.0.beta1
   evalRatio:
     description: Ratio of evaluation vs. training data to divide up ground truth
     type: number
