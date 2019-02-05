@@ -17,6 +17,15 @@ Bag-Info:
   Gt-Transcription-Media-Type:
     required: false
     default: 'text/plain'
+  Gt-Prediction-Directory:
+    required: false
+    default: 'pred'
+  Gt-Prediction-Extension:
+    required: false
+    default: '.pred.txt'
+  Gt-Prediction-Media-Type:
+    required: false
+    default: 'text/plain'
   Gt-Transcription-Directory:
     required: false
     default: 'text'

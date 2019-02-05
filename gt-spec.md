@@ -10,6 +10,9 @@
 	* [Gt-Transcription-Media-Type](#gt-transcription-media-type)
 	* [Gt-Transcription-Directory](#gt-transcription-directory)
 	* [Gt-Transcription-Normalization](#gt-transcription-normalization)
+	* [Gt-Prediction-Extension](#gt-prediction-extension)
+	* [Gt-Prediction-Media-Type](#gt-prediction-media-type)
+	* [Gt-Prediction-Directory](#gt-prediction-directory)
 	* [Gt-Grayscale-Image-Extension](#gt-grayscale-image-extension)
 	* [Gt-Grayscale-Image-Media-Type](#gt-grayscale-image-media-type)
 	* [Gt-Grayscale-Image-Directory](#gt-grayscale-image-directory)
@@ -75,6 +78,18 @@ unicode normalization level.
 One of `NFC`, `NFKC`, `NFD` or `NFKC` or `non-normalized`.
 
 ![Illustration unicode normalization](http://unicode.org/reports/tr15/images/UAX15-NormFig6.jpg)
+
+### Gt-Prediction-Extension
+
+Extension of the prediction files. Used for evaluation. Default: `.pred.txt`.
+
+### Gt-Prediction-Media-Type
+
+Media type of the prediction files. Default: `text/plain`.
+
+### Gt-Prediction-Directory
+
+Name of the subfolder containing predictions if [`Gt-Directory-Structure`] is `subfolders` or `subfolders-nested`. Default: `pred`.
 
 ### Gt-Grayscale-Image-Extension
 
