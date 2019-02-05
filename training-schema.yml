@@ -26,7 +26,7 @@ properties:
   groundTruthBag:
     description: A bag of line ground truth adhering to https://ocr-d.github.io/gt-profile.json
     type: string
-  groundTruthGlob:
+  trainingGlob:
     description: Wildcard for matching only a subset of the ground truth files for training. Make sure to exclude extensions and end in '*'.
     type: 'string'
     default: '*'
@@ -34,12 +34,14 @@ properties:
     # default: ['*']
     # items:
       # type: string
-  # validationGlob:
-  #   description: Wildcard for matching only a subset of the ground truth files for validation. Make sure to exclude extensions and end in '*'.
-  #   type: array
-  #   default: ['*']
-  #   items:
-  #     type: string
+  evaluationGlob:
+    description: Wildcard for matching only a subset of the ground truth files for evaluationi. Make sure to exclude extensions and end in '*'.
+    type: 'string'
+    default: '*'
+    # type: array
+    # default: ['*']
+    # items:
+      # type: string
   outputModelFormat:
     description: The output format of the model. Note that individual engines only support a single one or a subset of formats.
     enum:
@@ -49,11 +51,11 @@ properties:
       - application/vnd.ocrd.pyrnn  # ocropy-rpred
       - application/vnd.ocrd.tf+zip # calamari, zipped tensorflow data
       - application/vnd.ocrd.tesseract4  # tesseract >= 4.0.beta1
-  evalRatio:
-    description: Ratio of evaluation vs. training data to divide up ground truth
+  validationRatio:
+    description: Ratio of training vs. validation data to divide up ground truth
     type: number
     default: 0.9
   randomSeed:
-    description: Seed for the random number generator shuffling the ground truth before dividing it into evaluation vs. training data
+    description: Seed for the random number generator shuffling the ground truth before dividing it into training vs. validation data
     type: integer
     default: 0
