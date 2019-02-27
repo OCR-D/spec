@@ -177,6 +177,8 @@ This is from the [ocrd_kraken sample project](https://github.com/OCR-D/ocrd_krak
   "tools": {
     "ocrd-kraken-binarize": {
       "executable": "ocrd-kraken-binarize",
+      "input_file_grp": "OCR-D-IMG",
+      "output_file_grp": "OCR-D-IMG-BIN",
       "categories": [
         "Image preprocessing"
       ],
