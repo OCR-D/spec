@@ -262,3 +262,32 @@ Examples
 <TextStyle fontFamily="Arial:1"/>
 <TextStyle fontFamily="Arial"/>
 ```
+
+## Columns
+
+To model columns, use constructs in the `<pg:ReadingOrder>` of the PAGE
+document.
+
+A grid layout must be wrapped in a `<pg:OrderedGroup>` with a
+`@caption` that has the form `column_<horizontal>_<vertical>` where
+`<vertical>` is the number of columns and `<horizontal>` is the number of rows.
+
+```xml
+<OrderedGroup caption="column_1_1"> <!-- the default: single column layout -->
+<OrderedGroup caption="column_1_2"> <!-- two-column layout -->
+<OrderedGroup caption="column_1_3"> <!-- three-column layout -->
+<OrderedGroup caption="column_2_3"> <!-- three-column layout split in top and bottom -->
+```
+
+Regions that belong to the same column must be grouped within
+`<pg:OrderedGroupIndexed>` with a caption that begins with `column_<y>_<x>`
+where `<y>` is the row position and `<x>` is the column position (counting starts at `1`):
+
+```xml
+<OrderedGroup caption="column_2_2"> <!-- two-column two-row layout -->
+    <OrderedGroupIndexed caption="column_1_1">...</OrderedGroupIndexed> <!-- upper-left column -->
+    <OrderedGroupIndexed caption="column_1_2">...</OrderedGroupIndexed> <!-- upper-right column -->
+    <OrderedGroupIndexed caption="column_2_1">...</OrderedGroupIndexed> <!-- lower-left column -->
+    <OrderedGroupIndexed caption="column_2_2">...</OrderedGroupIndexed> <!-- lower-right column -->
+</OrderedGroup>
+```
