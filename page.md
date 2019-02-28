@@ -230,7 +230,7 @@ However, we recommend to choose one of the following list of type groups names i
 applicable:
 
   * `textura`
-  * `rotura`
+  * `rotunda`
   * `bastarda`
   * `antiqua`
   * `greek`
