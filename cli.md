@@ -50,7 +50,8 @@ group](#-i---input-file-grp-grp) that are referenced in these
 
 ### `-p, --parameter PARAM_JSON`
 
-URL of parameter file in JSON format.
+URL of parameter file in JSON format. If that file is not readable, try to parse `PARAM_JSON`
+as JSON. If that also fails, throw an exception.
 
 ### `-l, --log-level LOGLEVEL`
 
