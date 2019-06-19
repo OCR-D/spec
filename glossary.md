@@ -175,6 +175,12 @@ Controlled term:
 - `SEG-LINE` (`USE`)
 - `layout/segmentation/line` (step)
 
+### MP
+
+Module Project, a software project producing one or more tools to OCR-D. There
+are [currently eight MP](https://ocr-d.github.io/projects) active in the OCR-D
+community.
+
 ### OCR
 
 Map pixel areas to [glyphs](#glyph) and [words](#words).
