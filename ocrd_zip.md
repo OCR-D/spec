@@ -192,7 +192,7 @@ Bag-Info:
     required: false
   Ocrd-Mets:
     required: false
-    default: 'data/mets.xml'
+    default: 'mets.xml'
   Ocrd-Manifestation-Depth:
     required: false
     default: partial
