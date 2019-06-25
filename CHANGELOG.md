@@ -7,6 +7,19 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [3.2.1] - 2019-06-25
+
+Added:
+
+  * glossary: "MP", #112
+  * glossary: "font family", #100 #109
+  * cli: allow JSON strings for -p, OCR-D/core#239 #110
+
+Fixed:
+
+  * bagit: path of OcrdMets must be relative to /data, fix #107, #113
+
+
 ## [3.2.0] - 2019-02-27
 
 Added:
@@ -249,6 +262,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[3.2.1]: ../../compare/v3.2.1...v3.2.0
 [3.2.0]: ../../compare/v3.2.0...v3.1.0
 [3.1.0]: ../../compare/v3.1.0...v3.0.0
 [3.0.0]: ../../compare/v3.0.0...v2.7.0
