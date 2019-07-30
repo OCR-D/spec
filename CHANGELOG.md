@@ -7,6 +7,10 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Added:
+
+  * ocrd-tool: layout/segmentation/text-image
+
 ## [3.2.1] - 2019-06-25
 
 Added:
