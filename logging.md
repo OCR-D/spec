@@ -1,3 +1,5 @@
+# THIS IS JUST A FIRST DRAFT!
+
 # Conventions for LOGGING
 This section specifies how the output of the digitization workflow is logged.
 ## Target Audience
