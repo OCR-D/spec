@@ -1,3 +1,5 @@
+# THIS IS JUST A FIRST DRAFT!
+
 # Provenance
 Provenance is information about entities, activities, and people involved in producing a piece of data or thing, which can be used to form assessments about its quality, reliability or trustworthiness. (Source: [The PROV Data Model (PROV-DM)](https://www.w3.org/TR/prov-dm/))
 
