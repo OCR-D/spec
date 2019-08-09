@@ -14,7 +14,7 @@ Added:
 
 Changed:
 
-  * Additional categories for segmentation/classification
+  * ocrd-tool: Additional additional category layout/segmentation/text-image
 
 ## [3.2.1] - 2019-06-25
 

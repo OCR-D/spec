@@ -156,6 +156,7 @@ properties:
                 - recognition/font-identification
                 - recognition/post-correction
                 - layout/segmentation
+                - layout/segmentation/text-nontext
                 - layout/segmentation/region
                 - layout/segmentation/line
                 - layout/segmentation/word
