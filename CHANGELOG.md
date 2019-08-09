@@ -7,6 +7,15 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Added:
+
+  * Draft spec for logging
+  * Draft spec for provenance
+
+Changed:
+
+  * Additional categories for segmentation/classification
+
 ## [3.2.1] - 2019-06-25
 
 Added:
