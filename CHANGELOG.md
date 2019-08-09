@@ -9,7 +9,12 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 Added:
 
-  * ocrd-tool: layout/segmentation/text-image
+  * Draft spec for logging
+  * Draft spec for provenance
+
+Changed:
+
+  * ocrd-tool: Additional additional category layout/segmentation/text-image
 
 ## [3.2.1] - 2019-06-25
 
