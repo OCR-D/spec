@@ -10,6 +10,25 @@ All files regarding provenance were stored in a subfolder '**metadata**'.
 ## Format
 The workflow provenance is stored in [PROV-XML](https://www.w3.org/TR/prov-xml/). 
 
+### Types
+All Activities, Entities belonging to the OCR-D workflow have the same namespace.
+#### Namespace
+<dl>
+  <dt><strong>Prefix</strong></dt>
+  <dd>ocrd</dd>
+  <dt><strong>Namespace</strong></dt>
+  <dd>http://www.ocr-d.de</dd>
+</dl>
+
+Type | Data Type | Description
+-------- | -------- | --------
+Entity   | ocrd:mets | Filename  of METS file
+Entity   | ocrd:mets_referencedFile | ID of the file referenced inside METS. 
+Entity   | ocrd:parameter_file   | Content of the parameter file.
+Activity   | ocrd:module | Module that was executed 
+Activity   | ocrd:workflow | Workflow that was executed
+
+
 ## Content 
 Only the following information is stored for provenance:
 (a) General data
@@ -88,3 +107,4 @@ E.g.:
                 +-- ocrd_provenance.xml
 
 ```
+
