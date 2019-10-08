@@ -31,19 +31,22 @@ Activity   | ocrd:workflow | Workflow that was executed
 
 ## Content 
 Only the following information is stored for provenance:
-(a) General data
-1. Workflow engine (including version)
-2. METS file
-(b) Module Projects
-1. METS file before executing module
-2. ID of the input file(s)
-3. Content of parameter.json (optional)
-4. Module 
-  i) label (e.g.: ocrd-kraken-binarize_Version 0.1.0, ocrd/core 1.0.0)
-  ii) start date
-  iii) end date
-5. ID of output files
-6. METS file after executing module
+(a) **General data**
+1. Workflow engine 
+  - Label including version
+  - Start date
+  - End date
+
+(b) **Module Projects**
+2. Module 
+  - Label (e.g.: ocrd-kraken-binarize_Version 0.1.0, ocrd/core 1.0.0)
+  - Start date
+  - End date
+3. METS file before executing module
+4. METS file after executing module
+5. ID of the input file(s)
+6. ID of output file(s)
+7. Content of parameter.json (optional)
 
 ### Input/Output
 All files listed in METS should be referenced in provenance via their file ID.
