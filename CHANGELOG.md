@@ -15,6 +15,7 @@ Added:
 Changed:
 
   * ocrd-tool: Additional additional category layout/segmentation/text-image
+  * CLI: `--mets` and `--working-dir` are optional not required
 
 ## [3.2.1] - 2019-06-25
 
