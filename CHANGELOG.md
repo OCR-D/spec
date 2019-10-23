@@ -15,6 +15,8 @@ Added:
 Changed:
 
   * ocrd-tool: Additional additional category layout/segmentation/text-image
+  * ocrd-tool: Remove syntactical restriction for content-type
+  * ocrd-tool: `output_file_grp` no longer required
 
 ## [3.2.1] - 2019-06-25
 
