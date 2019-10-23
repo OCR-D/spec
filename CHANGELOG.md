@@ -15,6 +15,8 @@ Added:
 Changed:
 
   * ocrd-tool: Additional additional category layout/segmentation/text-image
+  * ocrd-tool: Remove syntactical restriction for content-type
+  * ocrd-tool: `output_file_grp` no longer required
   * CLI: `--mets` and `--working-dir` are optional not required
   * CLI: `--output-file-grp` is optional, OCR-D/core#296
 
