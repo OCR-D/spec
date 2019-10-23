@@ -119,7 +119,6 @@ properties:
                   content-type:
                     type: string
                     description: "If parameter is reference to file: Media type of the file"
-                    pattern: '^[a-z0-9\._-]+/[A-Za-z0-9\._\+-]+$'
                   cacheable:
                     type: boolean
                     description: "If parameter is reference to file: Whether the file should be cached, e.g. because it is large and won't change."
@@ -217,7 +216,7 @@ This is from the [ocrd_kraken sample project](https://github.com/OCR-D/ocrd_krak
           "default": false
         },
         "maxcolseps": {"type": "number", "format": "integer", "default": 2},
-        "scale": {"type": "number", "format": "float", "default": null},
+        "scale": {"type": "number", "format": "float", "default": 0},
         "black_colseps": {"type": "boolean", "default": false},
         "white_colseps": {"type": "boolean", "default": false}
       }

@@ -81,7 +81,6 @@ properties:
                   content-type:
                     type: string
                     description: "If parameter is reference to file: Media type of the file"
-                    pattern: '^[a-z0-9\._-]+/[A-Za-z0-9\._\+-]+$'
                   cacheable:
                     type: boolean
                     description: "If parameter is reference to file: Whether the file should be cached, e.g. because it is large and won't change."
