@@ -23,13 +23,15 @@ Examples:
 
 File group(s) used as input.
 
+## Optional parameters
+
 ### `-O, --output-file-grp GRP`
 
 **MULTI-VALUE**
 
 File group(s) used as output.
 
-## Optional parameters
+Omit to resort to default output file groups of the processor or for processors that do not produce output files.
 
 ### `-m, --mets METS_IN`
 
