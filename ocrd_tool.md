@@ -68,7 +68,8 @@ properties:
           - executable
           - categories
           - input_file_grp
-          - output_file_grp
+          # Not required because not all processors produce output files
+          # - output_file_grp
         properties:
           executable:
             description: The name of the CLI executable in $PATH
