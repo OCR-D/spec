@@ -17,14 +17,6 @@ Examples:
 
 ## Mandatory parameters
 
-### `-m, --mets METS_IN`
-
-Input METS URL
-
-### `-w, --working-dir DIR`
-
-Working Directory.
-
 ### `-I, --input-file-grp GRP`
 
 **MULTI-VALUE**
@@ -38,6 +30,15 @@ File group(s) used as input.
 File group(s) used as output.
 
 ## Optional parameters
+
+### `-m, --mets METS_IN`
+
+Input METS URL. Default: `mets.xml`
+
+### `-w, --working-dir DIR`
+
+Working Directory. Default: current working directory.
+
 
 ### `-g, --page-id ID`
 
