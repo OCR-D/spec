@@ -7,6 +7,10 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Fixed
+
+  * Various typos, #128
+
 ## [3.3.0] - 2019-10-23
 
 Added:
