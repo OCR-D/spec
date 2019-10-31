@@ -12,7 +12,7 @@ To validate a `ocrd-tool.json` file, use `ocrd ocrd-tool /path/to/ocrd-tool.json
 
 ## File parameters
 
-To mark a parameter as expecting the adress of a file, it must declare the
+To mark a parameter as expecting the address of a file, it must declare the
 `content-type` property as a [valid media
 type](https://www.iana.org/assignments/media-types/media-types.xhtml).
 Optionally, workflow processors can be notified that this file is potentially

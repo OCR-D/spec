@@ -41,7 +41,7 @@ Files not listed in METS should be linked to their content in provenance.
 
 ### Ingest Workspace to OCR-D Repositorium
 During the ingest into repository/LTA, the entire provenance must be stored in a graph to make the provenance searchable.
-Therfore all the provenance files are merged into one big file.
+Therefore all the provenance files are merged into one big file.
 This file replaces all files stored in subfolder 'metadata/provenance'
 
 ## METS
