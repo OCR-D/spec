@@ -119,7 +119,7 @@
     </mets:digiprovMD>
   </mets:amdSec>
   <mets:fileSec>
-    <!-- The follwing fileGrps are predefined (in the order in which they may appear):
+    <!-- The following fileGrps are predefined (in the order in which they may appear):
                &#8221;OCR-D-IMG&#8221;           The unmanipulated source images.
                &#8221;OCR-D-IMG-DESKEW&#8221;,   Deskewed images. (Module 1, submodule B: image optimization)
                &#8221;OCR-D-IMG-DESPECK&#8221;,  Despeckled images. (Module 1, submodule B: image optimization)

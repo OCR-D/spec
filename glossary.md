@@ -115,7 +115,7 @@ Rotate an image so that all text lines are horizontal.
 
 Controlled term: `preprocessing/optimization/deskewing`
 
-### Font indentification
+### Font identification
 
 Detect the font type(s) used in the document, either before or after an OCR run.
 
