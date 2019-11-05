@@ -14,6 +14,7 @@ Fixed
 Changed:
 
   * Dockerfile: no CMD, no ENTRYPOINT, #130
+  * Processors should assume 300 dpi if image metadata cannot be trusted, #129
 
 Added:
 
