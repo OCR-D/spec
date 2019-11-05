@@ -7,6 +7,8 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [3.4.0] - 2019-11-05
+
 Fixed
 
   * Various typos, #128
@@ -290,6 +292,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[3.4.0]: ../../compare/v3.4.0...v3.3.0
 [3.3.0]: ../../compare/v3.3.0...v3.2.1
 [3.2.1]: ../../compare/v3.2.1...v3.2.0
 [3.2.0]: ../../compare/v3.2.0...v3.1.0
