@@ -30,6 +30,10 @@ $> exiftool output.tif |grep 'X Resolution'
 "150"
 ```
 
+However, since technical metadata about pixel density is so often lost in
+conversion or inaccurate, processors should assume **300 ppi** for images with
+missing or suspiciously low pixel density metadata.
+
 ## Unique ID for the document processed
 
 METS provided to the MP must be uniquely addressable within the global library community.
