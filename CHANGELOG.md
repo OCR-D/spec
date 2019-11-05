@@ -11,6 +11,14 @@ Fixed
 
   * Various typos, #128
 
+Changed:
+
+  * Dockerfile: no CMD, no ENTRYPOINT, #130
+
+Added:
+
+  * Spec for provenance, #126
+
 ## [3.3.0] - 2019-10-23
 
 Added:
