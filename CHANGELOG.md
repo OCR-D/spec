@@ -7,6 +7,12 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Fixed
+
+  * Various typos, #128
+
+## [3.3.0] - 2019-10-23
+
 Added:
 
   * Draft spec for logging
@@ -14,7 +20,11 @@ Added:
 
 Changed:
 
-  * ocrd-tool: Additional additional category layout/segmentation/text-image
+  * ocrd-tool: Additional additional category `layout/segmentation/text-image`
+  * ocrd-tool: Remove syntactical restriction for content-type
+  * ocrd-tool: `output_file_grp` no longer required
+  * CLI: `--mets` and `--working-dir` are optional not required
+  * CLI: `--output-file-grp` is optional, OCR-D/core#296
 
 ## [3.2.1] - 2019-06-25
 
@@ -271,6 +281,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[3.3.0]: ../../compare/v3.3.0...v3.2.1
 [3.2.1]: ../../compare/v3.2.1...v3.2.0
 [3.2.0]: ../../compare/v3.2.0...v3.1.0
 [3.1.0]: ../../compare/v3.1.0...v3.0.0

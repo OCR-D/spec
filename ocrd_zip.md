@@ -13,7 +13,7 @@ long-term preservation, reproducible tests etc.) it is desirable to have a
 self-contained representation of a [workspace](/mets).
 
 With such a representation, data producers are not forced to provide
-dereferencable HTTP-URL for the files they produce and data consumers are not
+dereferenceable HTTP-URL for the files they produce and data consumers are not
 forced to dereference all HTTP-URL.
 
 While METS does have mechanisms for embedding XML data and even base64-encoded
@@ -67,7 +67,7 @@ METS file at that location, relative to `/data`. Otherwise, assume the default
 
 ### `Ocrd-Manifestation-Depth`
 
-Specifiy whether the bag contains the full manifestation of the data referenced in the METS (`full`)
+Specify whether the bag contains the full manifestation of the data referenced in the METS (`full`)
 or only those files that were `file://` URLs before (`partial`). Default: `partial`.
 
 ### `Ocrd-Identifier`
