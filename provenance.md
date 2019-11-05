@@ -31,6 +31,7 @@ Activity   | ocrd:workflow | Workflow that was executed
 
 ## Content 
 Only the following information is stored for provenance:
+
 (a) **General data**
 1. Workflow engine 
   - Label including version
