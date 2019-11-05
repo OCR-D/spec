@@ -15,8 +15,11 @@ in a spec-conformant way. Besides, it locally installed and containerized
 
 ## Shell entrypoint
 
-The `ENTRYPOINT` should a be a shell call not the tool provided. A non-shell
-entrypoint would restrict MP to just one tool.
+No `CMD` should be provided.
+
+No `ENTRYPOINT` should be provided.
+
+If `CMD` or `ENTRYPOINT` are provided, they should be empty arrays.
 
 ## `/data` as volume
 
@@ -30,6 +33,8 @@ FROM ocrd:core
 VOLUME ["/data"]
 
 # RUN-commands to install requirements, build and install
+# e.g.
+# apt-get install -y curl
 
-ENTRYPOINT ["/bin/sh", "-c"]
+ENTRYPOINT []
 ```
