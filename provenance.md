@@ -5,7 +5,7 @@ Provenance is information about entities, activities, and people involved in pro
 [The PROV Data Model (PROV-DM)](https://www.w3.org/TR/prov-dm/) is used to store all provenance metadata.
 All provenance have to be stored in files. 
 There's provenance at the page level, but there's also provenance at the document level.
-All files regarding provenance were stored in a subfolder '**metadata**'.
+All files regarding provenance are stored in a subfolder **`metadata`**.
 
 ## Format
 The workflow provenance is stored in [PROV-XML](https://www.w3.org/TR/prov-xml/). 
@@ -25,7 +25,7 @@ Type | Data Type | Description
 Entity   | ocrd:mets | Filename  of METS file
 Entity   | ocrd:mets_referencedFile | ID of the file referenced inside METS. 
 Entity   | ocrd:parameter_file   | Content of the parameter file.
-Activity   | ocrd:module | Module that was executed 
+Activity   | ocrd:processor | Processor that was executed 
 Activity   | ocrd:workflow | Workflow that was executed
 
 
@@ -39,24 +39,26 @@ Only the following information is stored for provenance:
   - Start date
   - End date
 
-(b) **Module Projects**
-2. Module 
-  - Label (e.g.: ocrd-kraken-binarize_Version 0.1.0, ocrd/core 1.0.0)
+(b) **Processor data**
+
+2. Processor
+  - Label including version, conforming to [OCR-D `mets:agent/mets:name`](https://ocr-d.github.io/mets#recording-processing-information-in-mets) (e.g.: `ocrd-kraken-binarize_Version 0.1.0`, `ocrd/core 1.0.0`)
   - Start date
   - End date
-3. METS file before executing module
-4. METS file after executing module
+3. Content of METS file before executing the processor
+4. Content of METS file after executing processor
 5. ID of the input file(s)
 6. ID of output file(s)
 7. Content of parameter.json (optional)
 
 ### Input/Output
-All files listed in METS should be referenced in provenance via their file ID.
-File ID MAY be linked to its location. The location may be replaced due to 
+All files referenced in METS must also be referenced in provenance by their `mets:file/@ID`.
+A file _may_ be linked to its location (URL). The location may be replaced due to 
 different uses:
 1. local files
 2. external files
-Files not listed in METS should be linked to their content in provenance. (e.g.: parameter.json)
+
+All files not referenced in METS must be linked to their content in provenance. (e.g.: parameter.json)
 
 ### Ingest Workspace to OCR-D Repositorium
 At least before ingesting into repository/LTA, the entire provenance must be stored in one file (metadata/ocrd_provenance.xml) to make the provenance searchable.
