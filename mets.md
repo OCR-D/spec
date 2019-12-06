@@ -34,6 +34,14 @@ However, since technical metadata about pixel density is so often lost in
 conversion or inaccurate, processors should assume **300 ppi** for images with
 missing or suspiciously low pixel density metadata.
 
+## No multi-page images
+
+Image formats like TIFF support encoding multiple images in a single file.
+
+Data providers SHOULD provide single-image TIFF.
+
+OCR-D processors MUST ignore any additional images beyond the first.
+
 ## Unique ID for the document processed
 
 METS provided to the MP must be uniquely addressable within the global library community.

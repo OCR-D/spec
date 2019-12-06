@@ -7,6 +7,10 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Added:
+
+  * No multi-page TIFF, #132
+
 ## [3.4.0] - 2019-11-05
 
 Fixed
