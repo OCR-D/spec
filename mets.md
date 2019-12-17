@@ -38,9 +38,9 @@ missing or suspiciously low pixel density metadata.
 
 Image formats like TIFF support encoding multiple images in a single file.
 
-Data providers SHOULD provide single-image TIFF.
+Data providers MUST provide single-image TIFF files.
 
-OCR-D processors MUST ignore any additional images beyond the first.
+OCR-D processors MUST raise an exception if they encounter multi-image TIFF files.
 
 ## Unique ID for the document processed
 
