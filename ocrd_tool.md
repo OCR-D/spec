@@ -20,20 +20,6 @@ Custom DPI to assume for pixel density of images.
 
 MUST default to 300.
 
-### `input-level`
-
-On what level of typography should input images be processed?
-
-Processors MAY define a `default` value.
-
-`enum` MUST be a list of one or more of:
-
-* `page`
-* `block`
-* `line`
-* `word`
-* `glyph`
-
 ### `output-level`
 
 On what level of typography should output images be produced?
@@ -48,9 +34,14 @@ Processors MAY define a `default` value.
 * `word`
 * `glyph`
 
-Whether `input-level` and `output-level` match semantically is up to the
-processor. I.e. if `input-level` and `output-level` are inconsistent according
+Whether the provided data and `output-level` match semantically is up to the
+processor. I.e. if the input data and `output-level` are inconsistent according
 to its semantics, processors MUST refuse further processing.
+
+For example, the user provides an `output-level` of `word`. For this, the
+processor expects text lines in the input. If there are no text lines in the
+input for whatever reason (it might be an empty page or it might not have been
+processed down to line level yet), the processor MUST raise an exception.
 
 ### Sample for standard parameters
 
