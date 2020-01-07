@@ -60,7 +60,9 @@ All `mets:file` inside a `mets:fileGrp` MUST have the same `MIMETYPE`.
 
 ## File Group USE syntax
 
-All `mets:fileGrp` MUST have a **unique** `USE` attribute that hints at the provenance of the files. It MUST have the structure
+All `mets:fileGrp` MUST have a **unique** `USE` attribute that hints at the provenance of the files.
+
+It SHOULD have the structure
 
 ```
 ID := "OCR-D-" + PREFIX? + WORKFLOW_STEP + ("-" + PROCESSOR)?
@@ -78,7 +80,10 @@ PROCESSOR := [A-Z0-9\-]{3,}
 - `OCR`: OCR produced from image
 - `COR`: Post-correction
 
-`PROCESSOR` should be a mnemonic of the processor or result type in a terse, all-caps form, such as the name of the tool (`KRAKEN`) or the organisation `CIS` or the type of manipulation (`CROP`) or a combination of both starting with the type of manipulation (`BIN-KRAKEN`).
+`PROCESSOR` should be a mnemonic of the processor or result type in a terse,
+all-caps form, such as the name of the tool (`KRAKEN`) or the organisation
+`CIS` or the type of manipulation (`CROP`) or a combination of both starting
+with the type of manipulation (`BIN-KRAKEN`).
 
 ### Examples
 
