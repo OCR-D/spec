@@ -7,6 +7,8 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [3.4.2] - 2020-01-08
+
 Changed:
 
   * bagit-profile accepts `metadata` as non-payload dir, #133
@@ -303,6 +305,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[3.4.2]: ../../compare/v3.4.2...v3.4.1
 [3.4.1]: ../../compare/v3.4.1...v3.4.0
 [3.4.0]: ../../compare/v3.4.0...v3.3.0
 [3.3.0]: ../../compare/v3.3.0...v3.2.1
