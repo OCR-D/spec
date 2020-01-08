@@ -10,6 +10,7 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 Changed:
 
   * bagit-profile accepts `metadata` as non-payload dir, #133
+  * Relaxed the requirement for the `mets:fileGrp/@USE` syntax, #138
 
 ## [3.4.1] - 2020-01-03
 
