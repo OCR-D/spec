@@ -7,6 +7,10 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Changed:
+
+  * bagit-profile accepts `metadata` as non-payload dir, #133
+
 ## [3.4.1] - 2020-01-03
 
 Added:
