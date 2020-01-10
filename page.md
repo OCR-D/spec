@@ -21,8 +21,7 @@ The PAGE XML root element `<pc:PcGts>` MUST have exactly one `<pc:Page>`.
 ### URL for imageFilename / filename
 
 The `imageFilename` of the `<pg:Page>` and `filename` of the
-`<pg:AlternativeImage>` element MUST be a URL. A local filename should be a
-`file://` URL.
+`<pg:AlternativeImage>` element MUST be a filename relative to the `mets.xml`.
 
 All URL used in `imageFilename` and `filename` [MUST be referenced in a fileGrp
 in METS](https://ocr-d.github.io/mets#if-in-page-then-in-mets).
@@ -38,8 +37,7 @@ To encode images derived from the original image, the `<pc:AlternativeImage>`
 should be used. Its `filename` attribute should reference the URL of the
 derived image.
 
-The `comments` attribute should be one or more (separated by comma) terms of
-the following list:
+The `comments` attribute SHOULD be used according to the [AlternativeImage classification](#alternativeimage-classification).
 
 ### AlternativeImage: classification
 
