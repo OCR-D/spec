@@ -7,6 +7,10 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Added:
+
+  * ocrd-tool: Allow definition of "sample-calls"
+
 ## [3.4.2] - 2020-01-08
 
 Changed:

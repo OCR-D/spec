@@ -124,3 +124,19 @@ properties:
                 - layout/segmentation/word
                 - layout/segmentation/classification
                 - layout/analysis
+            sample-calls:
+              description: "Sample calls of the CLI to illustrate typical usage"
+              type: array
+              items:
+                type: object
+                additionalProperties: false
+                required:
+                  - call
+                  - description
+                properties:
+                  call:
+                    type: string
+                    pattern: '^ocrd-'
+                  description:
+                    type: string
+
