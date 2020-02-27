@@ -172,11 +172,25 @@ properties:
                   - call
                   - description
                 properties:
+                  description:
+                    description: What this command call does
+                    type: string
                   call:
+                    description: The command line call
                     type: string
                     pattern: '^ocrd-'
-                  description:
+                  ocrd_zip:
+                    description: OCRD-ZIP fitting the command line call
                     type: string
+                    format: uri
+                  input-image:
+                    description: A visual representation of an input image/document before processing
+                    type: string
+                    format: uri
+                  output-image:
+                    description: A visual representation of an output image/document after processing
+                    type: string
+                    format: uri
 ```
 
 <!-- END-EVAL -->
