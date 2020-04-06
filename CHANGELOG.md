@@ -7,6 +7,10 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Changed:
+
+  * CLI tools must implement `-h/--help`, #115
+
 ## [3.4.2] - 2020-01-08
 
 Changed:
