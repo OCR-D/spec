@@ -7,6 +7,10 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Changed:
+
+  * Use `region` instead of `block` for areas on the page, #135
+
 ## [3.4.2] - 2020-01-08
 
 Changed:

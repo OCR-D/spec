@@ -128,9 +128,9 @@
                                      (Cropped to whole page or only text region?)
                &#8221;OCR-D-IMG-BIN&#8221;       Binarized images. (Module 1, submodule B: image optimization)
                &#8221;OCR-D-SEG-PAGE&#8221;      Page segmentation. (Module 2, submodule A: page segmentation)
-               &#8221;OCR-D-SEG-BLOCK&#8221;     Block segmentation. (Module 2, submodule A: page segmentation)
+               &#8221;OCR-D-SEG-REGION&#8221;     Region segmentation. (Module 2, submodule A: page segmentation)
                &#8221;OCR-D-SEG-LINE&#8221;      Line segmentation. (Module 2, submodule B: line segmentation)
-               &#8221;OCR-D-SEG-CLASS&#8221;     Block classification. (Module 2, submodule C: segment classification)
+               &#8221;OCR-D-SEG-CLASS&#8221;     Region classification. (Module 2, submodule C: segment classification)
                &#8221;OCR-D-SEG-DOC&#8221;       Document analysis. (Module 2, submodule D: document analysis)
                "OCR-D-OCR-..."       OCR with any algorithm. Examples: Tesseract, anyOCR (Module 3, submodule A: OCR)
                "OCR-D-COR-..."       Post correction with any algorithm. Examples: CIS, ASV (Module 3, submodule B: OCR)
@@ -226,14 +226,14 @@
       </mets:file>
     </mets:fileGrp>
     <!-- 
-               &#8221;OCR-D-SEG-BLOCK&#8221;     Block segmentation. (Module 2, submodule A: page segmentation)
+               &#8221;OCR-D-SEG-REGION&#8221;     Region segmentation. (Module 2, submodule A: page segmentation)
     -->
-    <mets:fileGrp USE="OCR-D-SEG-BLOCK">
-      <mets:file ID="FILE_0001_SEG_BLOCK" MIMETYPE="application/vnd.prima.page+xml">
-        <mets:FLocat LOCTYPE="URL" xlink:href="https://github.com/OCR-D/assets/raw/master/data/SBB0000F29300010000/00000001_SEG_BLOCK.xml"/>
+    <mets:fileGrp USE="OCR-D-SEG-REGION">
+      <mets:file ID="FILE_0001_SEG_REGION" MIMETYPE="application/vnd.prima.page+xml">
+        <mets:FLocat LOCTYPE="URL" xlink:href="https://github.com/OCR-D/assets/raw/master/data/SBB0000F29300010000/00000001_SEG_REGION.xml"/>
       </mets:file>
-      <mets:file ID="FILE_0002_SEG_BLOCK" MIMETYPE="application/vnd.prima.page+xml">
-        <mets:FLocat LOCTYPE="URL" xlink:href="https://github.com/OCR-D/assets/raw/master/data/SBB0000F29300010000/00000002_SEG_BLOCK.xml"/>
+      <mets:file ID="FILE_0002_SEG_REGION" MIMETYPE="application/vnd.prima.page+xml">
+        <mets:FLocat LOCTYPE="URL" xlink:href="https://github.com/OCR-D/assets/raw/master/data/SBB0000F29300010000/00000002_SEG_REGION.xml"/>
       </mets:file>
     </mets:fileGrp>
     <!-- 
@@ -248,7 +248,7 @@
       </mets:file>
     </mets:fileGrp>
     <!-- 
-               &#8221;OCR-D-SEG-CLASS&#8221;     Block classification. (Module 2, submodule C: segment classification)
+               &#8221;OCR-D-SEG-CLASS&#8221;     Region classification. (Module 2, submodule C: segment classification)
     -->
     <mets:fileGrp USE="OCR-D-SEG-CLASS">
       <mets:file ID="FILE_0001_SEG_CLASS" MIMETYPE="application/vnd.prima.page+xml">
@@ -348,7 +348,7 @@
         <mets:fptr FILEID="FILE_0001_IMAGE_CROP"/>
         <mets:fptr FILEID="FILE_0001_IMAGE_BIN"/>
         <mets:fptr FILEID="FILE_0001_SEG_PAGE"/>
-        <mets:fptr FILEID="FILE_0001_SEG_BLOCK"/>
+        <mets:fptr FILEID="FILE_0001_SEG_REGION"/>
         <mets:fptr FILEID="FILE_0001_SEG_LINE"/>
         <mets:fptr FILEID="FILE_0001_SEG_CLASS"/>
         <mets:fptr FILEID="FILE_0001_SEG_DOC"/>
@@ -367,7 +367,7 @@
         <mets:fptr FILEID="FILE_0002_IMAGE_CROP"/>
         <mets:fptr FILEID="FILE_0002_IMAGE_BIN"/>
         <mets:fptr FILEID="FILE_0002_SEG_PAGE"/>
-        <mets:fptr FILEID="FILE_0002_SEG_BLOCK"/>
+        <mets:fptr FILEID="FILE_0002_SEG_REGION"/>
         <mets:fptr FILEID="FILE_0002_SEG_LINE"/>
         <mets:fptr FILEID="FILE_0002_SEG_CLASS"/>
         <mets:fptr FILEID="FILE_0002_SEG_DOC"/>
