@@ -1,0 +1,39 @@
+$id: https://ocr-d.github.io/schemas/v1/model-evaluation-schema.json
+type: object
+required:
+  - engineName
+  - engineVersion
+  - groundTruthBag
+  - model
+properties:
+  engineName:
+    type: string
+    enum:
+      - ocropus
+      - kraken
+      - tesseract
+      - calamari
+  engineVersion:
+    type: string
+  recognizerArguments:
+    description: Command line arguments passed to the CLI recognition tool
+    type: array
+    default: []
+  groundTruthBag:
+    description: A bag of line ground truth adhering to https://ocr-d.github.io/gt-profile.json
+    type: string
+  model:
+    description: URL/path to model to use
+    type: string
+  measures:
+    description: which evaluation measures to produce
+    type: array
+    items:
+      type: string
+      enum:
+        - cer-per-line
+        - cer-total
+        - ler
+        - wer-per-line
+        - wer-total
+        - confusion-matrix

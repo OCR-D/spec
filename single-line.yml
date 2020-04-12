@@ -1,0 +1,35 @@
+description: Schema for provenance of single lines
+type: object
+required:
+  - imageUrl
+properties:
+  coords:
+    description: Coordinates as array of x-y-pairs
+    type: array
+    items:
+      type: array
+      length: 2
+      items:
+        type: number
+  pageUrl:
+    description: URL of the page (resp. URL the PAGE-XML file)
+    type: string
+  imageUrl:
+    description: URL of the image (resp. the `pg:imageFilename` in the PAGE-XML file)
+    type: string
+  bagUrl:
+    description: URL of the bag that contains the page
+    type: string
+  metsUrl:
+    description: URL of the METS document that contains the page
+    type: string
+  lineId:
+    description: ID of the line within the PAGE-XML doc
+    type: string
+  teiUrl:
+    description: URL of the TEI document that contains the page
+    type: string
+  xpath:
+    description: XPath to the line if no `fileId` was provided
+    type: string
+
