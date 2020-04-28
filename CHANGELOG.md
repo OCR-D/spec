@@ -12,6 +12,10 @@ Changed:
   * CLI: clarify requirements on processors, ht @bertsky, #148
   * Use `region` instead of `block` for areas on the page, #135
 
+Added:
+
+  * docker: instructions on naming and labelling images, #139
+
 ## [3.4.2] - 2020-01-08
 
 Changed:
