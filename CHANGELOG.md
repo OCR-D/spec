@@ -11,6 +11,7 @@ Changed:
 
   * CLI: clarify requirements on processors, ht @bertsky, #148
   * Use `region` instead of `block` for areas on the page, #135
+  * PAGE: `imageFilename` must NOT be a URL but a relative filename, #140
 
 Added:
 
