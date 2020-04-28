@@ -66,7 +66,7 @@ For such use cases, `<pg:AlternativeImage>` may be used as a child of
 ## Attaching text recognition results to elements
 
 A PAGE document can attach recognized text to typographical units of
-a page at different levels, such as block (`<pg:TextRegion>`), line
+a page at different levels, such as region (`<pg:TextRegion>`), line
 (`<pg:TextLine>`), word (`<pg:Word>`) or glyph (`<pg:Glyph>`).
 
 To attach recognized text to an element `E`, it must be encoded as

@@ -10,6 +10,7 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 Changed:
 
   * CLI: clarify requirements on processors, ht @bertsky, #148
+  * Use `region` instead of `block` for areas on the page, #135
 
 ## [3.4.2] - 2020-01-08
 
