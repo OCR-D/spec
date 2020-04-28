@@ -7,11 +7,14 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [3.5.0] - 2020-04-20
+
 Changed:
 
   * CLI: clarify requirements on processors, ht @bertsky, #148
   * Use `region` instead of `block` for areas on the page, #135
   * PAGE: `imageFilename` must NOT be a URL but a relative filename, #140
+  * Updated URLs to point to https://ocr-d.de instead of https://ocr-d.github.io, #149
 
 Added:
 
@@ -316,6 +319,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[3.5.0]: ../../compare/v3.5.0...v3.4.2
 [3.4.2]: ../../compare/v3.4.2...v3.4.1
 [3.4.1]: ../../compare/v3.4.1...v3.4.0
 [3.4.0]: ../../compare/v3.4.0...v3.3.0
