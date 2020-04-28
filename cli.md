@@ -46,7 +46,6 @@ Input [METS](mets) URL. Default: `mets.xml`
 
 Working Directory. Default: current working directory.
 
-
 ### `-g, --page-id ID`
 
 **MULTI-VALUE**
@@ -80,6 +79,12 @@ other implementation-specific means of logging configuration. For example, with
 
 Instead of processing METS, output the [ocrd-tool](ocrd_tool) description for
 this executable, in particular its parameters.
+
+### `-h, --help`
+
+Print a concise description of the tool, the command line options and
+parameters it accepts as well as the input/output groups. This information should
+be generated from [`ocrd-tool.json`](ocrd_tool) as much as possible.
 
 ## Return value
 
