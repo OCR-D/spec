@@ -183,7 +183,7 @@ Controlled term:
 ### MP
 
 Module Project, a software project producing one or more tools to OCR-D. There
-are [currently eight MP](https://ocr-d.github.io/projects) active in the OCR-D
+are [currently eight MP](https://ocr-d.de/en/module-projects) active in the OCR-D
 community.
 
 ### OCR
