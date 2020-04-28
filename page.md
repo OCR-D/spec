@@ -1,14 +1,14 @@
 # Conventions for PAGE
 
 In addition to these conventions, refer to the [PAGE API
-docs](https://ocr-d.github.io/gt/trans_documentation/trPage.html) for extensive
+docs](https://ocr-d.de/en/gt-guidelines/trans/trPage.html) for extensive
 documentation on the PAGE XML format itself.
 
 ## Media Type
 
 The [preliminary media type](https://github.com/OCR-D/spec/issues/33) of a PAGE
 document is `application/vnd.prima.page+xml`, which MUST be used [as the `MIMETYPE` of a `<mets:file>`
-representing a PAGE document](https://ocr-d.github.io/mets#media-type-for-page-xml).
+representing a PAGE document](https://ocr-d.de/en/spec/mets#media-type-for-page-xml).
 
 ## One page in one PAGE
 
@@ -24,7 +24,7 @@ The `imageFilename` of the `<pg:Page>` and `filename` of the
 `<pg:AlternativeImage>` element MUST be a filename relative to the `mets.xml`.
 
 All URL used in `imageFilename` and `filename` [MUST be referenced in a fileGrp
-in METS](https://ocr-d.github.io/mets#if-in-page-then-in-mets).
+in METS](https://ocr-d.de/en/spec/mets#if-in-page-then-in-mets).
 
 ### Original image as imageFilename
 
