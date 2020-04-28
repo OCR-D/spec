@@ -7,6 +7,10 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Changed:
+
+  * CLI: clarify requirements on processors, ht @bertsky, #148
+
 ## [3.4.2] - 2020-01-08
 
 Changed:
