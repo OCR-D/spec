@@ -7,6 +7,12 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [3.6.0] - 2020-04-30
+
+Added:
+
+  * CLI: `--overwrite` flag to delete existing output files before processing, #151
+
 ## [3.5.0] - 2020-04-20
 
 Changed:
@@ -319,6 +325,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[3.6.0]: ../../compare/v3.6.0...v3.5.0
 [3.5.0]: ../../compare/v3.5.0...v3.4.2
 [3.4.2]: ../../compare/v3.4.2...v3.4.1
 [3.4.1]: ../../compare/v3.4.1...v3.4.0
