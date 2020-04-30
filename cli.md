@@ -38,14 +38,6 @@ Input file groups must not be modified.
 
 Omit to resort to default output file groups of the processor, or for processors that inherently do not produce output files.
 
-### `-m, --mets METS_IN`
-
-Input [METS](mets) URL. Default: `mets.xml`
-
-### `-w, --working-dir DIR`
-
-Working Directory. Default: current working directory.
-
 ### `-g, --page-id ID`
 
 **MULTI-VALUE**
@@ -56,14 +48,6 @@ group](#-i---input-file-grp-grp) that are referenced in these
 `mets:div[@TYPE="page"]` will be processed.
 
 Omit to process all pages.
-
-### `-p, --parameter PARAM_JSON`
-
-URL of parameter file in [JSON format](https://json.org/) corresponding to the `parameters` section of the processor's [ocrd-tool metadata](ocrd_tool).
-If that file is not readable and `PARAM_JSON` begins with `{` (opening brace), try to parse `PARAM_JSON` as JSON.
-If that also fails, throw an exception.
-
-Omit to use default parameters only, or for processors without any parameters.
 
 ### `--overwrite`
 
@@ -86,6 +70,22 @@ file groups set with
 "Group deletion" in the context of `--overwrite` means deletion of the
 `mets:fileGrp` element from METS, and deletion of all files that belong to this
 `mets:fileGrp` element.
+
+### `-p, --parameter PARAM_JSON`
+
+URL of parameter file in [JSON format](https://json.org/) corresponding to the `parameters` section of the processor's [ocrd-tool metadata](ocrd_tool).
+If that file is not readable and `PARAM_JSON` begins with `{` (opening brace), try to parse `PARAM_JSON` as JSON.
+If that also fails, throw an exception.
+
+Omit to use default parameters only, or for processors without any parameters.
+
+### `-m, --mets METS_IN`
+
+Input [METS](mets) URL. Default: `mets.xml`
+
+### `-w, --working-dir DIR`
+
+Working Directory. Default: current working directory.
 
 ### `-l, --log-level LOGLEVEL`
 
