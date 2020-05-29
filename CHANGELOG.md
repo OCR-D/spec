@@ -7,6 +7,10 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Added:
+
+  * ocrx-tool.json: Parameter values may be objects, #143
+
 ## [3.6.0] - 2020-04-30
 
 Added:
