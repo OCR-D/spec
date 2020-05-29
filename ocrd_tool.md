@@ -105,6 +105,7 @@ properties:
                       - string
                       - number
                       - boolean
+                      - object
                   format:
                     description: Subtype, such as `float` for type `number` or `uri` for type `string`.
                   description:
