@@ -1,4 +1,5 @@
-# Requirements on handling METS/PAGE
+# Requirements on handling METS
+
 
 OCR-D has decided to base its data exchange format on top of [METS](http://www.loc.gov/standards/mets/).
 
@@ -8,57 +9,11 @@ This document defines a set of conventions and mechanism for using METS.
 
 Conventions for PAGE are outlined in [a separate document](page)
 
-## Pixel density of images must be explicit and high enough
-
-The pixel density is the ratio of the number of pixels that represent a a unit of measure of the scanned object. It is typically measured in pixels per inch (PPI, a.k.a. DPI).
-
-The original input images MUST have >= 150 ppi.
-
-Every processing step that generates new images and changes their dimensions MUST make sure to adapt the density explicitly when serialising the image.
-
-```sh
-$> exiftool input.tif |grep 'X Resolution'
-"300"
-
-# WRONG (ppi unchanged)
-$> convert input.tif -resize 50% output.tif
-
-# RIGHT:
-$> convert input.tif -resize 50% -density 150 -unit inches output.tif
-
-$> exiftool output.tif |grep 'X Resolution'
-"150"
-```
-
-However, since technical metadata about pixel density is so often lost in
-conversion or inaccurate, processors should assume **300 ppi** for images with
-missing or suspiciously low pixel density metadata.
-
-## No multi-page images
-
-Image formats like TIFF support encoding multiple images in a single file.
-
-Data providers MUST provide single-image TIFF files.
-
-OCR-D processors MUST raise an exception if they encounter multi-image TIFF files.
-
-## Unique ID for the document processed
-
-METS provided to the MP must be uniquely addressable within the global library community.
-
-For this purpose, the METS file MUST contain a `mods:identifier` that must contain a globally unique identifier for the document and have a `type` attribute with a value of, in order of preference:
-
-* `purl`
-* `urn`
-* `handle`
-* `url`
-
-
 ## File Group 
 
 All `mets:file` inside a `mets:fileGrp` MUST have the same `MIMETYPE`.
 
-## File Group USE syntax
+### File Group USE syntax
 
 All `mets:fileGrp` MUST have a **unique** `USE` attribute that hints at the provenance of the files.
 
@@ -85,7 +40,7 @@ all-caps form, such as the name of the tool (`KRAKEN`) or the organisation
 `CIS` or the type of manipulation (`CROP`) or a combination of both starting
 with the type of manipulation (`BIN-KRAKEN`).
 
-### Examples
+#### Examples
 
 `<mets:fileGrp USE>` | Type of use for OCR-D
 --                                          | --
@@ -113,7 +68,7 @@ with the type of manipulation (`BIN-KRAKEN`).
 `<mets:fileGrp USE="OCR-D-GT-SEG-WORD">`    | Word segmentation ground truth
 `<mets:fileGrp USE="OCR-D-GT-SEG-GLYPH">`   | Glyph segmentation ground truth
 
-## File ID syntax
+### File ID syntax
 
 Each `mets:file` must have an `ID` attribute. The `ID` attribute of a `mets:file` SHOULD be the `USE` of the containing `mets:fileGrp` combined with a 4-zero-padded number.
 The `ID` MUST be unique inside the METS file.
@@ -124,14 +79,14 @@ ID := "OCR-D-" + WORKFLOW_STEP + ("-" + PROCESSOR)?
 WORKFLOW_STEP := ("IMG" | "SEG" | "OCR" | "COR")
 PROCESSOR := [A-Z0-9\-]{3,}
 ```
-### Examples
+#### Examples
 
 `<mets:file ID>` | ID of the file for OCR-D
 --               | --
 `<mets:file ID="OCR-D-IMG_0001">`            | The unmanipulated source image
 `<mets:file ID="OCR-D-IMG-BIN_0001">`        | Black-and-White image
 
-## Grouping files by page
+### Grouping files by page
 
 Every METS file MUST have exactly one physical map that contains a single
 `mets:div[@TYPE="physSequence"]` which in turn must contain a
@@ -141,7 +96,7 @@ These `mets:div[@TYPE="page"]` can contain an arbitrary number of `mets:fptr`
 pointers to `mets:file` elements to signify that all the files within a div are
 encodings of the same page.
 
-### Example
+#### Example
 
 ```xml
 <mets:fileGrp USE="OCR-D-IMG">
@@ -159,6 +114,56 @@ encodings of the same page.
   </mets:div>
 </mets:structMap>
 ```
+
+## Images
+
+### Pixel density of images must be explicit and high enough
+
+The pixel density is the ratio of the number of pixels that represent a a unit of measure of the scanned object. It is typically measured in pixels per inch (PPI, a.k.a. DPI).
+
+The original input images MUST have >= 150 ppi.
+
+Every processing step that generates new images and changes their dimensions MUST make sure to adapt the density explicitly when serialising the image.
+
+```sh
+$> exiftool input.tif |grep 'X Resolution'
+"300"
+
+# WRONG (ppi unchanged)
+$> convert input.tif -resize 50% output.tif
+
+# RIGHT:
+$> convert input.tif -resize 50% -density 150 -unit inches output.tif
+
+$> exiftool output.tif |grep 'X Resolution'
+"150"
+```
+
+However, since technical metadata about pixel density is so often lost in
+conversion or inaccurate, processors should assume **300 ppi** for images with
+missing or suspiciously low pixel density metadata.
+
+### No multi-page images
+
+Image formats like TIFF support encoding multiple images in a single file.
+
+Data providers MUST provide single-image TIFF files.
+
+OCR-D processors MUST raise an exception if they encounter multi-image TIFF files.
+
+### Unique ID for the document processed
+
+METS provided to the MP must be uniquely addressable within the global library community.
+
+For this purpose, the METS file MUST contain a `mods:identifier` that must contain a globally unique identifier for the document and have a `type` attribute with a value of, in order of preference:
+
+* `purl`
+* `urn`
+* `handle`
+* `url`
+
+
+
 
 ## Images and coordinates
 
@@ -222,7 +227,7 @@ To add agent information, a processor must:
   - Name of the processor, e.g. the name of the executable from `ocrd-tool.json`
   - Version of the processor, e.g. from `ocrd-tool.json`
 
-**Example:**
+### Example
 
 ```xml
 <mets:agent TYPE="OTHER" OTHERTYPE="SOFTWARE" ROLE="OTHER" OTHERROLE="preprocessing/optimization/binarization">
