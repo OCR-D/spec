@@ -95,12 +95,18 @@ with the type of manipulation (`BIN-KRAKEN`).
 `<mets:fileGrp USE="OCR-D-IMG-DESKEW">`     | Deskewed images
 `<mets:fileGrp USE="OCR-D-IMG-DESPECK">`    | Despeckled images
 `<mets:fileGrp USE="OCR-D-IMG-DEWARP">`     | Dewarped images
-`<mets:fileGrp USE="OCR-D-SEG-REGION">`      | Region segmentation
+`<mets:fileGrp USE="OCR-D-SEG-REGION">`     | Region segmentation
 `<mets:fileGrp USE="OCR-D-SEG-LINE">`       | Line segmentation
 `<mets:fileGrp USE="OCR-D-SEG-WORD">`       | Word segmentation
 `<mets:fileGrp USE="OCR-D-SEG-GLYPH">`      | Glyph segmentation
 `<mets:fileGrp USE="OCR-D-OCR-TESS">`       | Tesseract OCR
 `<mets:fileGrp USE="OCR-D-OCR-ANY">`        | AnyOCR
+`<mets:fileGrp USE="OCR-D-TEI">`            | TEI
+`<mets:fileGrp USE="OCR-D-ALTO">`           | ALTO
+`<mets:fileGrp USE="OCR-D-hOCR">`           | hOCR
+`<mets:fileGrp USE="OCR-D-HTML">`           | HTML
+`<mets:fileGrp USE="OCR-D-TXT">`            | Text
+`<mets:fileGrp USE="OCR-D-PDF">`            | PDF
 `<mets:fileGrp USE="OCR-D-COR-CIS">`        | CIS post-correction
 `<mets:fileGrp USE="OCR-D-COR-ASV">`        | ASV post-correction
 `<mets:fileGrp USE="OCR-D-GT-IMG-BIN">`     | Black-and-White images ground truth
@@ -130,6 +136,39 @@ PROCESSOR := [A-Z0-9\-]{3,}
 --               | --
 `<mets:file ID="OCR-D-IMG_0001">`            | The unmanipulated source image
 `<mets:file ID="OCR-D-IMG-BIN_0001">`        | Black-and-White image
+
+#### Fulldownload
+
+The `ID` attribute prefix `FULLDOWNLOAD` followed by the file format (TEI, ALTO, hOCR, HTML, TXT, PDF) must be used for a requested file, their are the hole publication or digital book.
+
+##### Examples
+`<mets:file ID>` | ID of the file for OCR-D
+--               | --
+`<mets:file ID="FULLDOWNLOAD_TEI"  MIMETYPE="application/tei+xml">`            | The digitised publication or book in TEI format.
+`<mets:file ID="FULLDOWNLOAD_TEI_01"  MIMETYPE="application/pdf">`            | The digitised publication or book in TEI format. Version one.
+`<mets:file ID="FULLDOWNLOAD_TEI_02"  MIMETYPE="application/tei+xml">`            | The digitised publication or book in TEI format, a second Version.
+
+##### Examples with `fileGrp`
+
+```xml
+<mets:fileGrp USE="DOWNLOAD">
+    <mets:file ID="FULLDOWNLOAD_TEI" MIMETYPE="application/tei+xml">...</mets:file>
+    <mets:file ID="FULLDOWNLOAD_PDF" MIMETYPE="application/pdf">...</mets:file>
+</mets:fileGrp>
+
+<mets:fileGrp USE="OCR-D-IMG">
+    <mets:file ID="OCR-D-IMG_0001">...</mets:file>
+</mets:fileGrp>
+<mets:structMap TYPE="PHYSICAL">
+  <mets:div ID="PHYS_0000" TYPE="physSequence">
+    <mets:fptr FILEID="FULLDOWNLOAD_TEI"/>
+    <mets:fptr FILEID="FULLDOWNLOAD_PDF"/>
+    <mets:div ID="PHYS_0001" TYPE="page">
+      <mets:fptr FILEID="OCR-D-IMG_0001"/>
+    </mets:div>
+  </mets:div>
+</mets:structMap>
+```
 
 ## Grouping files by page
 
