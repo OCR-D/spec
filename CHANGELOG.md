@@ -9,7 +9,8 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 Added:
 
-  * ocrx-tool.json: Parameter values may be objects, #143
+  * ocrd-tool.json: Parameter values may be objects, #143
+  * glossary: definitions of "print space" and "border", #114
 
 ## [3.6.0] - 2020-04-30
 
