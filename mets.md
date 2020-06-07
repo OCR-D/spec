@@ -199,6 +199,61 @@ encodings of the same page.
 </mets:structMap>
 ```
 
+## OCR-D structMap
+
+A METS can contain different `structMap`. These are defined by the `TYPE` attribute (e.g. `LOGICAL`, `PHYSICAL`>) described in more detail.	
+A document structure determined by OCR-D is described by `TYPE="OCR-D-LOGICAL"`.
+
+attributes in `structMap` | description
+--                        | --
+`LABEL`                   | contains the character recognition result  e.g. the title of the chapter
+`TYPE`                    | contains a standardized description of structur (see.: [DFG-Viewer: structural data set](https://dfg-viewer.de/strukturdatenset/))
+
+### `mets:structLink`
+
+The `mets:structLink`describes the range of pages in part of document.
+
+
+### Example
+
+```xml
+<mets:fileGrp USE="OCR-D-IMG">
+    <mets:file ID="OCR-D-IMG_0001" >...</mets:file>
+</mets:fileGrp>
+<mets:fileGrp USE="OCR-D-OCR">
+    <mets:file ID="OCR-D-OCR_0001" >...</mets:file>
+</mets:fileGrp>
+<mets:structMap TYPE="OCR-D-LOGICAL">
+  <mets:div DMDID="dmdSec_0001" ADMID="amdSec_0001" ID="loc_0001">
+    <mets:div ID="loc_d1e410" TYPE="chapter" LABEL="Kapidel 1"/>
+    <mets:div ID="loc_d1e451" TYPE="chapter" LABEL="Rapütel 2"/>
+   </mets:div>
+</mets:structMap>
+<mets:structMap TYPE="LOGICAL">
+   <mets:div TYPE="Monograph" DMDID="dmdSec_0001" ADMID="amdSec_0001" ID="loc_0001">
+    <mets:div ID="loc_d1e410" TYPE="chapter" LABEL="Kapitel 1"/>
+    <mets:div ID="loc_d1e451" TYPE="chapter" LABEL="Kapitel 2"/>
+   </mets:div>
+</mets:structMap>
+<mets:structMap TYPE="PHYSICAL">
+  <mets:div ID="PHYS_0000" TYPE="physSequence">
+    <mets:div ID="PHYS_0001" TYPE="page">
+      <mets:fptr FILEID="OCR-D-IMG_0001"/>
+      <mets:fptr FILEID="OCR-D-OCR_0001"/>
+    </mets:div>
+  </mets:div>
+</mets:structMap>
+<mets:structLink>
+<mets:smLink xlink:from="loc_0001" xlink:to="PHYS_0000"/>
+<mets:smLink xlink:from="loc_d1e410" xlink:to="PHYS_0001"/>
+<mets:smLink xlink:from="loc_d1e410" xlink:to="PHYS_0002"/>
+<mets:smLink xlink:from="loc_d1e410" xlink:to="PHYS_0003"/>
+<mets:smLink xlink:from="loc_d1e410" xlink:to="PHYS_0004"/>
+<mets:smLink xlink:from="loc_d1e451" xlink:to="PHYS_0005"/>
+<mets:smLink xlink:from="loc_d1e451" xlink:to="PHYS_0006"/>
+</mets:structLink>
+```
+
 ## Images and coordinates
 
 Coordinates are always absolute, i.e. relative to extent defined in the `imageWidth`/`imageHeight` attribute of the nearest `<pc:Page>`.
