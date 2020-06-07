@@ -7,6 +7,10 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Added:
+
+  * glossary: definitions of "print space" and "border", #114
+
 ## [3.6.0] - 2020-04-30
 
 Added:
