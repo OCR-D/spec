@@ -224,9 +224,11 @@ The `mets:structLink`describes the range of pages in part of document.
     <mets:file ID="OCR-D-OCR_0001" >...</mets:file>
 </mets:fileGrp>
 <mets:structMap TYPE="OCR-D-LOGICAL">
-  <mets:div DMDID="dmdSec_0001" ADMID="amdSec_0001" ID="loc_0001">
-    <mets:div ID="loc_d1e410" TYPE="chapter" LABEL="Kapidel 1"/>
-    <mets:div ID="loc_d1e451" TYPE="chapter" LABEL="Rapütel 2"/>
+  <mets:div DMDID="dmdSec_0001" ADMID="amdSec_0001" ID="OCR-D-loc_0001">
+    <mets:div ID="OCR-D-loc_d5e320" TYPE="chapter" LABEL="Kapidel 1">
+    <mets:div ID="OCR-D-loc_d7e560" TYPE="chapter" LABEL="Unterkapitel"/>
+    </mets:div>
+    <mets:div ID="OCR-D-loc_d9e376" TYPE="chapter" LABEL="Kapidel 2"/>
    </mets:div>
 </mets:structMap>
 <mets:structMap TYPE="LOGICAL">
@@ -244,6 +246,8 @@ The `mets:structLink`describes the range of pages in part of document.
   </mets:div>
 </mets:structMap>
 <mets:structLink>
+
+<!-- Library-Part-->   
 <mets:smLink xlink:from="loc_0001" xlink:to="PHYS_0000"/>
 <mets:smLink xlink:from="loc_d1e410" xlink:to="PHYS_0001"/>
 <mets:smLink xlink:from="loc_d1e410" xlink:to="PHYS_0002"/>
@@ -251,6 +255,24 @@ The `mets:structLink`describes the range of pages in part of document.
 <mets:smLink xlink:from="loc_d1e410" xlink:to="PHYS_0004"/>
 <mets:smLink xlink:from="loc_d1e451" xlink:to="PHYS_0005"/>
 <mets:smLink xlink:from="loc_d1e451" xlink:to="PHYS_0006"/>
+
+ <!-- OCR-D-Part-->   
+<mets:smLink xlink:from="OCR-D-loc_0001" xlink:to="PHYS_0000"/>
+<!-- Kapitel 1-->
+<mets:smLink xlink:from="OCR-D-loc_d5e320" xlink:to="PHYS_0001"/>
+<mets:smLink xlink:from="OCR-D-loc_d5e320" xlink:to="PHYS_0002"/>
+<mets:smLink xlink:from="OCR-D-loc_d5e320" xlink:to="PHYS_0003"/>
+<mets:smLink xlink:from="OCR-D-loc_d5e320" xlink:to="PHYS_0004"/>
+
+<!-- Unter-Kapitel zu 1-->
+<mets:smLink xlink:from="OCR-D-loc_d7e560" xlink:to="PHYS_0002"/>
+<mets:smLink xlink:from="OCR-D-loc_d7e560" xlink:to="PHYS_0003"/>
+<mets:smLink xlink:from="OCR-D-loc_d7e560" xlink:to="PHYS_0004"/>
+
+<!-- Kapitel 2-->    
+<mets:smLink xlink:from="OCR-D-loc_d7e560" xlink:to="PHYS_0005"/>
+<mets:smLink xlink:from="OCR-D-loc_d7e560" xlink:to="PHYS_0006"/>
+
 </mets:structLink>
 ```
 
