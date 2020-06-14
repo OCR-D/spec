@@ -5,10 +5,13 @@ All tools provided by MP must be standalone executables, installable into `$PATH
 Those tools intended for run-time data processing (but not necessarily tools for training or deployment) are called **processors**.
 Processors must adhere to the following uniform interface, including mandatory and optional parameters (i.e. no more or fewer are permissible).
 
-**NOTE:** Command line options cannot be repeated. Parameters marked
-**MULTI-VALUE** specify multiple values, formatted as a single string with
-comma-separated items (e.g. `-I group1,group2,group3` instead of `-I group1 -I
-group2 -I group3`).
+**NOTE:** Command line options cannot be repeated, except those explicitly
+marked as **REPEATABLE** (e.g. `-p params.json -p '{"val": 1}'` is allowed
+because [`-p` is repeatable](#-p---parameter-param_json).
+
+**NOTE**: Parameters marked **MULTI-VALUE** cannot be repeated but can specify
+multiple values, formatted as a single string with comma-separated items (e.g.
+`-I group1,group2,group3` instead of `-I group1 -I group2 -I group3`).
 
 ## CLI executable name
 
@@ -73,11 +76,22 @@ file groups set with
 
 ### `-p, --parameter PARAM_JSON`
 
-URL of parameter file in [JSON format](https://json.org/) corresponding to the `parameters` section of the processor's [ocrd-tool metadata](ocrd_tool).
-If that file is not readable and `PARAM_JSON` begins with `{` (opening brace), try to parse `PARAM_JSON` as JSON.
-If that also fails, throw an exception.
+**REPEATABLE**
 
-Omit to use default parameters only, or for processors without any parameters.
+URL of parameter file in [JSON format](https://json.org/) corresponding to the
+`parameters` section of the processor's [ocrd-tool metadata](ocrd_tool). If
+that file is not readable and `PARAM_JSON` begins with `{` (opening brace), try
+to parse `PARAM_JSON` as JSON. If that also fails, throw an exception.
+
+When parsing JSON, all lines matching the regular expression `^\s*#.*`, i.e.
+linews whose first non-whitespace character is `#`, are to be disregarded as
+comments.
+
+When `-p` is repeated, the parsed values should be shallowly merged from right
+to left.
+
+`-p` can be omitted to use default parameters only, or for processors without
+any parameters.
 
 ### `-m, --mets METS_IN`
 
