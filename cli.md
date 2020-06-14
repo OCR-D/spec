@@ -102,6 +102,14 @@ other implementation-specific means of logging configuration. For example, with
 Instead of processing METS, output the [ocrd-tool](ocrd_tool) description for
 this executable, in particular its parameters.
 
+### `-C, --preset PRESET_NAME`
+
+Print the contents of preset `PRESENT_NAME`. Look up the resp. JSON file according to [preset lookup path](#presets)
+
+### `-L, --presets`
+
+List the names of [presets](#presets).
+
 ### `-h, --help`
 
 Print a concise description of the tool, the command line options and
@@ -127,6 +135,23 @@ The log messages must have the format `TIME LEVEL LOGGERNAME - MESSAGE\n`, where
 * `LOGGERNAME` is the name of the logging component, such as the class name. Segments of `LOGGERNAME` should be separated by dot `.`, e.g. `ocrd.fancy_tool.analyze`
 * `MESSAGE` is the message to log, should not contain new lines.
 * `\n` is ASCII char `0x0a` (newline)
+
+## Presets
+
+Processors can be bundled with pre-defined sets of [parameter JSON
+files](#-p---parameter-param_json), called *presets*. A preset can be used in
+calling a processor by using the *preset name* instead of a JSON
+string/filename. Preset names can be listed by calling a processor with the
+[`--presets`](#-L---presets). In addittion to the presets bundled with a processor `ocrd-xyz`, presets
+must also be looked iertain file system locations. The lookup should be in the following priority:
+
+* `$PWD/.ocrd-xyz/<preset name>.json`
+* `$VIRTUAL_ENV/share/ocrd-xyz/<preset name>.json`
+* `$HOME/.local/share/ocrd-xyz/<preset name>.json`
+* `/etc/ocrd-xyz/<preset name>.json`
+* `/usr/local/share/ocrd-xyz/<preset name>.json`
+* `/usr/share/ocrd-xyz/<preset name>.json`
+* (bundled preset named `<preset name`)
 
 ## URL/file convention
 
