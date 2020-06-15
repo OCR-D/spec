@@ -37,8 +37,7 @@ should be resolved in the following way:
   * `$XDG_DATA_HOME/<name-of-processor>/<fpath>` (by default, `$XDG_DATA_HOME == $HOME/.local/share`)
   * `$XDG_CONFIG_HOME/<name-of-processor>/<fpath>` (by default, `$XDG_CONFIG_HOME == $HOME/.config`)
   * `/usr/local/share/<name-of-processor>/<fpath>`
-  * If it is a Python implementation: Replace `/` with `.` in `<fpath>` and try to
-    resolve wirth `pkg_resources.resource_filename`
+  * If it is a Python implementation: try to resolve with `pkg_resources.resource_filename(__name__, "<fpath>")`
 
 ## Input / Output file groups
 
