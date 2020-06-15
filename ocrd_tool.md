@@ -26,16 +26,16 @@ should be resolved in the following way:
   `cacheable==False`) or a semi-temporary cache directory (if `cacheable==True`)
 * If `<fpath>` is an absolute path: Use as-is.
 * If `<fpath>` is a relative path, try resolving the following paths and return
-  the first one found if any, raise a `FileNotFoundError` otherwise:
+  the first one found if any, otherwise abort with an error message stating so:
   * `$CWD/<fpath>`
   * If an environment variable is defined that has the name of the processor in
     upper-case and with `-` replaced with `-` and followed by `_PATH` (e.g. for a processor
     `ocrd-dummy`, the variable would need to be called `OCRD_DUMMY_PATH`):
-    * Split the variable value at `:` and try to resolve by prepending each token
-      with `<fname>`
+    * Split the variable value at `:` and try to resolve by appending `<fpath>`
+      to each token and return the first found file if any
   * `$VIRTUAL_ENV/share/<name-of-processor>/<fpath>`
-  * `$HOME/.local/share/<name-of-processor>/<fpath>`
-  * `$HOME/.config/<name-of-processor>/<fpath>`
+  * `$XDG_DATA_HOME/<name-of-processor>/<fpath>` (by default, `$XDG_DATA_HOME == $HOME/.local/share`)
+  * `$XDG_CONFIG_HOME/<name-of-processor>/<fpath>` (by default, `$XDG_CONFIG_HOME == $HOME/.config`)
   * `/usr/local/share/<name-of-processor>/<fpath>`
   * If it is a Python implementation: Replace `/` with `.` in `<fpath>` and try to
     resolve wirth `pkg_resources.resource_filename`
