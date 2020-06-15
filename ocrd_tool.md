@@ -34,8 +34,8 @@ should be resolved in the following way:
     * Split the variable value at `:` and try to resolve by appending `<fpath>`
       to each token and return the first found file if any
   * `$VIRTUAL_ENV/share/<name-of-processor>/<fpath>`
-  * `$XDG_DATA_HOME/<name-of-processor>/<fpath>` (by default, `$XDG_DATA_HOME == $HOME/.local/share`)
-  * `$XDG_CONFIG_HOME/<name-of-processor>/<fpath>` (by default, `$XDG_CONFIG_HOME == $HOME/.config`)
+  * `$XDG_DATA_HOME/<name-of-processor>/<fpath>` (with `$HOME/.local/share` instead of `$XDG_DATA_HOME` if unset)
+  * `$XDG_CONFIG_HOME/<name-of-processor>/<fpath>` (with `$HOME/.config` instead of `$XDG_CONFIG_HOME` if unset)
   * `/usr/local/share/<name-of-processor>/<fpath>`
   * If it is a Python implementation: try to resolve with `pkg_resources.resource_filename(__name__, "<fpath>")`
 
