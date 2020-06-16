@@ -54,10 +54,6 @@ For this purpose, the METS file MUST contain a `mods:identifier` that must conta
 * `url`
 
 
-## File Group 
-
-All `mets:file` inside a `mets:fileGrp` MUST have the same `MIMETYPE`.
-
 ## File Group USE syntax
 
 All `mets:fileGrp` MUST have a **unique** `USE` attribute that hints at the provenance of the files.
