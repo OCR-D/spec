@@ -225,7 +225,7 @@ The `mets:structLink`describes the range of pages in part of document.
 </mets:fileGrp>
 <mets:structMap TYPE="OCR-D-LOGICAL">
   <mets:div DMDID="dmdSec_0001" ADMID="amdSec_0001" ID="OCR-D-loc_0001">
-    <mets:div ID="OCR-D-loc_d5e320" TYPE="chapter" LABEL="Kapidel 1">
+    <mets:div ID="OCR-D-loc_d5e320" TYPE="chapter" LABEL="KapıteI 1">
     <mets:div ID="OCR-D-loc_d7e560" TYPE="chapter" LABEL="Unterkapitel"/>
     </mets:div>
     <mets:div ID="OCR-D-loc_d9e376" TYPE="chapter" LABEL="Kapidel 2"/>
