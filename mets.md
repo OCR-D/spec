@@ -106,6 +106,7 @@ with the type of manipulation (`BIN-KRAKEN`).
 `<mets:fileGrp USE="OCR-D-hOCR">`           | hOCR
 `<mets:fileGrp USE="OCR-D-HTML">`           | HTML
 `<mets:fileGrp USE="OCR-D-TXT">`            | Text
+`<mets:fileGrp USE="OCR-D-COCO">`            | COCO JSON
 `<mets:fileGrp USE="OCR-D-PDF">`            | PDF
 `<mets:fileGrp USE="OCR-D-COR-CIS">`        | CIS post-correction
 `<mets:fileGrp USE="OCR-D-COR-ASV">`        | ASV post-correction
