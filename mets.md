@@ -212,7 +212,7 @@ A document structure determined by OCR-D is described by `TYPE="OCR-D-LOGICAL"`.
 
 attributes in `structMap` | description
 --                        | --
-`LABEL`                   | contains the character recognition result  e.g. the title of the chapter
+`LABEL` | contains the recognized text of a structuring component, e.g. the title of a chapter
 `TYPE`                    | contains a standardized description of structur (see.: [DFG-Viewer: structural data set](https://dfg-viewer.de/strukturdatenset/))
 
 ### `mets:structLink`
