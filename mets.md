@@ -140,7 +140,9 @@ PROCESSOR := [A-Z0-9\-]{3,}
 
 #### Fulldownload
 
-The `ID` attribute prefix `FULLDOWNLOAD` followed by the file format (TEI, ALTO, hOCR, HTML, TXT, PDF) must be used for a requested file, their are the hole publication or digital book.
+For `mets:file` entries representative of the publication **as a whole**, the `ID` attribute MUST have  prefix `FULLDOWNLOAD_`, followed by the file format (`TEI`, `ALTO`, `hOCR`, `HTML`, `TXT`, `COCO`, `PDF`).
+
+These entries SHOULD be referenced in the [structMap](#ocr-d-structmap) under `/mets:mets/mets:structMap[@TYPE="PHYSICAL"]/mets:fptr`.
 
 ##### Examples
 `<mets:file ID>` | ID of the file for OCR-D
