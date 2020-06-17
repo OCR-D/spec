@@ -204,7 +204,10 @@ encodings of the same page.
 
 ## OCR-D structMap
 
-A METS can contain different `structMap`. These are defined by the `TYPE` attribute (e.g. `LOGICAL`, `PHYSICAL`>) described in more detail.	
+A METS may contain different `mets:structMap` entries, differentiated by their `TYPE` attribute (e.g. `LOGICAL`, `PHYSICAL, ...`). 
+* A `mets:structMap` with `TYPE="PHYSICAL"` is mandatory.
+* The _logical_ document structure detected by _library or archive_ MUST be described by `TYPE="LOGICAL"`.
+* The _logical_ document structure detected by _OCR-D software_ MUST be described by `TYPE="OCR-D-LOGICAL"`.
 A document structure determined by OCR-D is described by `TYPE="OCR-D-LOGICAL"`.
 
 attributes in `structMap` | description
