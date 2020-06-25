@@ -186,7 +186,13 @@ Invalid `mets:FLocat/@xlink:href` in `/tmp/foo/ws1/mets.xml`:
 
 ## If in PAGE then in METS
 
-Every image URL referenced via `imageFileName` or the `filename` attribute of any `pc:AlternativeImage` MUST be represented in the METS file as a `mets:file` with corresponding `mets:FLocat@xlink:href`. 
+All URL used in `imageFilename` and `filename` attributes of
+`<pc:Page>`/`<pc:AlternativeImage>` MUST be referenced in a `mets:fileGrp` as the
+`@xlink:href` attribute of a `mets:file`. This MUST be the same file group as
+the PAGE-XML that was the result of the processing step that produced the
+`<pg:AlternativeImage>`. In other words: `<pg:AlternativeImage>` should be
+written to the same `mets:fileGrp` as its source PAGE-XML, which in most
+implementations will mean the same folder.
 
 ## Recording processing information in METS
 
