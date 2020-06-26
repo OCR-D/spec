@@ -91,7 +91,7 @@ with the type of manipulation (`BIN-KRAKEN`).
 `<mets:fileGrp USE="OCR-D-SEG-WORD">`       | Word segmentation
 `<mets:fileGrp USE="OCR-D-SEG-GLYPH">`      | Glyph segmentation
 `<mets:fileGrp USE="OCR-D-OCR-TESS">`       | [Tesseract OCR](https://github.com/OCR-D/ocrd_tesserocr)
-`<mets:fileGrp USE="OCR-D-OCR-ANY">`        | [AnyOCR](https://github.com/OCR-D/ocrd_anybaseocr)
+`<mets:fileGrp USE="OCR-D-OCR-OCRO">`        | [Ocropus OCR](https://github.com/OCR-D/ocrd_cis)
 `<mets:fileGrp USE="OCR-D-COR-CIS">`        | [CIS post-correction](https://github.com/cisocrgroup/ocrd_cis)
 `<mets:fileGrp USE="OCR-D-COR-ASV">`        | [ASV post-correction](https://github.com/ASVLeipzig/cor-asv-ann)
 `<mets:fileGrp USE="OCR-D-GT-SEG-REGION">`   | Region segmentation ground truth
