@@ -79,6 +79,24 @@ If that also fails, throw an exception.
 
 Omit to use default parameters only, or for processors without any parameters.
 
+### `-P, --parameter-override KEY VAL`
+
+**REPEATABLE**
+
+Companion to [`-p, --parameter PARAM_JSON`](#-p--parameter-PARAM_JSON) that allows overriding `KEY` in the parameter JSON object with `VAL`. All `P` key-value-pairs are applied to the parameter JSON in the order they are given on the command line.
+
+Syntactically, `VAL` SHOULD be a valid JSON datatype:
+  * `"a string"` - a string should be enclosed with double quotes, contained double quotes backslash-escaped
+  * `123` - an int
+  * `123.45` - a float
+  * `true`, `false` - a boolean
+  * `[1, "two", 3.33]` - an array
+  * `{"foo": 42}` - an object
+
+As a convenience, if `VAL` fails to parse as a valid JSON type, it is
+interpreted as a string (`a string` is equivalent to `"a string"`, but `true`
+will be parsed as the boolean value `true`, not the string `"true"`).
+
 ### `-m, --mets METS_IN`
 
 Input [METS](mets) URL. Default: `mets.xml`
