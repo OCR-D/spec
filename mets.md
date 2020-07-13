@@ -106,10 +106,7 @@ The `ID` MUST be unique inside the METS file.
 
 ```
 FILEID := ID + "_" + [0-9]{4}
-ID := "OCR-D-" + WORKFLOW_STEP + ("-" + FEATURE)* + ("-" + PROCESSOR)?
-FEATURE := ("BIN" | "CROP" | "DESKEW" | DESPECK" | "DEWARP" )
-WORKFLOW_STEP := ("IMG" | "SEG" | "OCR" | "COR")
-PROCESSOR := [A-Z0-9\-]{3,}
+ID := FILEGRP + (".IMG")?
 ```
 ### Examples
 
