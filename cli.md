@@ -179,8 +179,8 @@ option and individual *processor assets* can be retrieved with the
 `-C/--show-asset` option. Since *processor assets* use the same mechanism
 as file parameters, they can be used
 
-  * as the argument to the `-p/--parameter` option, and
-  * as the value of a file parameter
+  * as the argument to the `-p/--parameter` option (i.e. a **preset** file), and
+  * as the value of a file-type parameter (e.g. a **model** file)
 
 and the processor must resolve them to absolute paths [according to the rules
 for file parameters](ocrd_tool#file-parameters).
