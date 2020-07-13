@@ -11,6 +11,7 @@ Added:
 
   * Parameter JSON files may contain `#`-prefixed comments, #161
   * Mechanism for resolving file parameter values to actual filenames, #163
+  * CLI: `-P/--parameter-override` to override single key-value pairs of parameter JSON, #166
 
 Changed:
 
