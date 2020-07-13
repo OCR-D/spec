@@ -7,6 +7,24 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Added:
+
+  * Parameter JSON files may contain `#`-prefixed comments, #161
+  * Mechanism for resolving file parameter values to actual filenames, #163
+  * CLI: `-P/--parameter-override` to override single key-value pairs of parameter JSON, #166
+
+Changed:
+
+  * `mets:file` representing `page:AlternativeImage` should **not** be added to separate `mets:fileGrp` but rather to the PAGE-XML whence they originate, #164
+  * Recommendation how file IDs should be derived from existing `mets:file`, #164
+  * CLI: `-p/--parameter` option repeatable, results are merged right to left, #161
+  * METS: Simplify the convention for `mets:file/@ID` for derived images, #164
+  * `mets:fileGrp` for prerprocessing steps should use the qualifier `PRE` instead of `IMG`, #164
+
+Removed:
+
+  * Recommendations on `fileGrp/@USE` for images, #164
+
 ## [3.7.0] - 2020-06-07
 
 Added:
