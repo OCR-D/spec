@@ -7,10 +7,15 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Added:
+
+  * Parameter JSON files may contain `#`-prefixed comments, #161
+
 Changed:
 
   * `mets:file` representing `page:AlternativeImage` should **not** be added to separate `mets:fileGrp` but rather to the PAGE-XML whence they originate, #164
   * Recommendation how file IDs should be derived from existing `mets:file`, #164
+  * CLI: `-p/--parameter` option repeatable, results are merged right to left, #161
 
 Removed:
 
