@@ -7,6 +7,15 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Changed:
+
+  * `mets:file` representing `page:AlternativeImage` should **not** be added to separate `mets:fileGrp` but rather to the PAGE-XML whence they originate, #164
+  * Recommendation how file IDs should be derived from existing `mets:file`, #164
+
+Removed:
+
+  * Recommendations on `fileGrp/@USE` for images, #164
+
 ## [3.7.0] - 2020-06-07
 
 Added:
