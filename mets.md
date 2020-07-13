@@ -83,21 +83,26 @@ with the type of manipulation (`BIN-KRAKEN`).
 
 ### Examples
 
-`<mets:fileGrp USE>` | Type of use for OCR-D
---                                          | --
-`<mets:fileGrp USE="OCR-D-IMG">`            | The unmanipulated source images
-`<mets:fileGrp USE="OCR-D-SEG-REGION">`      | Region segmentation
-`<mets:fileGrp USE="OCR-D-SEG-LINE">`       | Line segmentation
-`<mets:fileGrp USE="OCR-D-SEG-WORD">`       | Word segmentation
-`<mets:fileGrp USE="OCR-D-SEG-GLYPH">`      | Glyph segmentation
-`<mets:fileGrp USE="OCR-D-OCR-TESS">`       | [Tesseract OCR](https://github.com/OCR-D/ocrd_tesserocr)
-`<mets:fileGrp USE="OCR-D-OCR-OCRO">`        | [Ocropus OCR](https://github.com/OCR-D/ocrd_cis)
-`<mets:fileGrp USE="OCR-D-COR-CIS">`        | [CIS post-correction](https://github.com/cisocrgroup/ocrd_cis)
-`<mets:fileGrp USE="OCR-D-COR-ASV">`        | [ASV post-correction](https://github.com/ASVLeipzig/cor-asv-ann)
-`<mets:fileGrp USE="OCR-D-GT-SEG-REGION">`   | Region segmentation ground truth
-`<mets:fileGrp USE="OCR-D-GT-SEG-LINE">`    | Line segmentation ground truth
-`<mets:fileGrp USE="OCR-D-GT-SEG-WORD">`    | Word segmentation ground truth
-`<mets:fileGrp USE="OCR-D-GT-SEG-GLYPH">`   | Glyph segmentation ground truth
+`<mets:fileGrp USE>`                       | Type of use for OCR-D
+--                                         | --
+`<mets:fileGrp USE="OCR-D-IMG">`           | The unmanipulated source images
+`<mets:fileGrp USE="OCR-D-PRE-BIN">`       | Binarization preprocessing
+`<mets:fileGrp USE="OCR-D-PRE-CROP">`      | Cropping preprocessing
+`<mets:fileGrp USE="OCR-D-PRE-DESKEW">`    | Deskewing preprocessing
+`<mets:fileGrp USE="OCR-D-PRE-DESPECK">`   | Despeckling preprocessing
+`<mets:fileGrp USE="OCR-D-PRE-DEWARP">`    | Dewarping preprocessing
+`<mets:fileGrp USE="OCR-D-SEG-REGION">`    | Region segmentation
+`<mets:fileGrp USE="OCR-D-SEG-LINE">`      | Line segmentation
+`<mets:fileGrp USE="OCR-D-SEG-WORD">`      | Word segmentation
+`<mets:fileGrp USE="OCR-D-SEG-GLYPH">`     | Glyph segmentation
+`<mets:fileGrp USE="OCR-D-OCR-TESS">`      | [Tesseract OCR](https://github.com/OCR-D/ocrd_tesserocr)
+`<mets:fileGrp USE="OCR-D-OCR-OCRO">`      | [Ocropus OCR](https://github.com/OCR-D/ocrd_cis)
+`<mets:fileGrp USE="OCR-D-COR-CIS">`       | [CIS post-correction](https://github.com/cisocrgroup/ocrd_cis)
+`<mets:fileGrp USE="OCR-D-COR-ASV">`       | [ASV post-correction](https://github.com/ASVLeipzig/cor-asv-ann)
+`<mets:fileGrp USE="OCR-D-GT-SEG-REGION">` | Region segmentation ground truth
+`<mets:fileGrp USE="OCR-D-GT-SEG-LINE">`   | Line segmentation ground truth
+`<mets:fileGrp USE="OCR-D-GT-SEG-WORD">`   | Word segmentation ground truth
+`<mets:fileGrp USE="OCR-D-GT-SEG-GLYPH">`  | Glyph segmentation ground truth
 
 ## File ID syntax
 
