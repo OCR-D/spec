@@ -136,7 +136,7 @@ this executable, in particular its parameters.
 
 ### `-C, --preset PRESET_NAME`
 
-Print the contents of preset `PRESENT_NAME`. Look up the resp. JSON file according to [preset lookup path](#presets)
+Print the contents of preset `PRESET_NAME`. Look up the resp. JSON file according to [file parameter lookup rules](ocrd_tool#file-parameter)
 
 ### `-L, --presets`
 
@@ -171,19 +171,11 @@ The log messages must have the format `TIME LEVEL LOGGERNAME - MESSAGE\n`, where
 ## Presets
 
 Processors can be bundled with pre-defined sets of [parameter JSON
-files](#-p---parameter-param_json), called *presets*. A preset can be used in
+files](#-p--parameter-param_json), called *presets*. A preset can be used in
 calling a processor by using the *preset name* instead of a JSON
 string/filename. Preset names can be listed by calling a processor with the
-[`--presets`](#-L---presets). In addittion to the presets bundled with a processor `ocrd-xyz`, presets
-must also be looked iertain file system locations. The lookup should be in the following priority:
-
-* `$PWD/.ocrd-xyz/<preset name>.json`
-* `$VIRTUAL_ENV/share/ocrd-xyz/<preset name>.json`
-* `$HOME/.local/share/ocrd-xyz/<preset name>.json`
-* `/etc/ocrd-xyz/<preset name>.json`
-* `/usr/local/share/ocrd-xyz/<preset name>.json`
-* `/usr/share/ocrd-xyz/<preset name>.json`
-* (bundled preset named `<preset name`)
+[`--presets`](#-L---presets) option. Presets must be resolved with the same
+[rules for looking up file parameter values](ocrd_tool#file-parameters).
 
 ## URL/file convention
 
