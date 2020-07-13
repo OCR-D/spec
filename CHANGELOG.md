@@ -10,6 +10,7 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 Added:
 
   * Parameter JSON files may contain `#`-prefixed comments, #161
+  * Mechanism for resolving file parameter values to actual filenames, #163
 
 Changed:
 
@@ -17,6 +18,7 @@ Changed:
   * Recommendation how file IDs should be derived from existing `mets:file`, #164
   * CLI: `-p/--parameter` option repeatable, results are merged right to left, #161
   * METS: Simplify the convention for `mets:file/@ID` for derived images, #164
+  * `mets:fileGrp` for prerprocessing steps should use the qualifier `PRE` instead of `IMG`, #164
 
 Removed:
 
