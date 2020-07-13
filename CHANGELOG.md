@@ -10,6 +10,7 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 Added:
 
   * Parameter JSON files may contain `#`-prefixed comments, #161
+  * *Processor resources*, encompassing bundled/user-provided parameter JSON files and file parameter values like models, #158, #162
   * Mechanism for resolving file parameter values to actual filenames, #163
   * CLI: `-P/--parameter-override` to override single key-value pairs of parameter JSON, #166
 
