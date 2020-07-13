@@ -134,13 +134,13 @@ other implementation-specific means of logging configuration. For example, with
 Instead of processing METS, output the [ocrd-tool](ocrd_tool) description for
 this executable, in particular its parameters.
 
-### `-C, --preset PRESET_NAME`
+### `-C, --show-asset FILENAME`
 
-Print the contents of preset `PRESET_NAME`. Look up the resp. JSON file according to [file parameter lookup rules](ocrd_tool#file-parameter)
+Print the contents of processor asset `FILENAME`. Look up the resp. absolute filename according to the [file parameter lookup rules](ocrd_tool#file-parameter).
 
-### `-L, --presets`
+### `-L, --list-assets`
 
-List the names of [presets](#presets).
+List the names of [processor-assets](#processor-assets) in all of the paths defined by.the [file parameter lookup rules](ocrd_tool#file-parameter), one name per line.
 
 ### `-h, --help`
 
@@ -168,14 +168,22 @@ The log messages must have the format `TIME LEVEL LOGGERNAME - MESSAGE\n`, where
 * `MESSAGE` is the message to log, should not contain new lines.
 * `\n` is ASCII char `0x0a` (newline)
 
-## Presets
+## Processor assets
 
-Processors can be bundled with pre-defined sets of [parameter JSON
-files](#-p--parameter-param_json), called *presets*. A preset can be used in
-calling a processor by using the *preset name* instead of a JSON
-string/filename. Preset names can be listed by calling a processor with the
-[`--presets`](#-L---presets) option. Presets must be resolved with the same
-[rules for looking up file parameter values](ocrd_tool#file-parameters).
+Parameters that reference files can be resolved from relative to absolute
+filename by following the [conventions laid out in the `ocrd_tool`
+spec](ocrd_tool#file-parameters). These files, either bundled by the processor
+developer or put in place by the user, are called *processor assets*. The
+*processor assets* of a processor can be listed with the `-L/--list-assets`
+option and individual *processor assets* can be retrieved with the
+`-C/--show-asset` option. Since *processor assets* use the same mechanism
+as file parameters, they can be used
+
+  * as the argument to the `-p/--parameter` option, and
+  * as the value of a file parameter
+
+and the processor must resolve them to absolute paths [according to the rules
+for file parameters](ocrd_tool#file-parameters).
 
 ## URL/file convention
 
