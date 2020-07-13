@@ -7,6 +7,8 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [3.8.0] - 2020-07-13
+
 Added:
 
   * Parameter JSON files may contain `#`-prefixed comments, #161
@@ -351,6 +353,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[3.8.0]: ../../compare/v3.8.0...v3.7.0
 [3.7.0]: ../../compare/v3.7.0...v3.6.0
 [3.6.0]: ../../compare/v3.6.0...v3.5.0
 [3.5.0]: ../../compare/v3.5.0...v3.4.2
