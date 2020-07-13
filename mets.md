@@ -113,8 +113,10 @@ ID := FILEGRP + (".IMG")?
 `<mets:file ID>` | ID of the file for OCR-D
 --               | --
 `<mets:file ID="OCR-D-IMG_0001">`            | The unmanipulated source image
-`<mets:file ID="OCR-D-IMG-BIN_0001">`        | Black-and-White image
-`<mets:file ID="OCR-D-IMG-BIN-CROP_0001">`   | Cropped Black-and-White image
+`<mets:file ID="OCR-D-PRE-BIN_0001">`        | PAGE encapsulating the result from binarization
+`<mets:file ID="OCR-D-PRE-BIN.IMG_0001">`    | Black-and-white image
+`<mets:file ID="OCR-D-PRE-CROP_0001">`       | PAGE encapsulating the result from (binarization and) cropping
+`<mets:file ID="OCR-D-PRE-CROP.IMG_0001">`   | Cropped black-and-white image
 
 ## Grouping files by page
 
