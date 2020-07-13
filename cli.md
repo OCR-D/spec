@@ -84,7 +84,7 @@ that file is not readable and `PARAM_JSON` begins with `{` (opening brace), try
 to parse `PARAM_JSON` as JSON. If that also fails, throw an exception.
 
 When parsing JSON, all lines matching the regular expression `^\s*#.*`, i.e.
-linews whose first non-whitespace character is `#`, are to be disregarded as
+lines whose first non-whitespace character is `#`, are to be disregarded as
 comments.
 
 When `-p` is repeated, the parsed values should be shallowly merged from right
