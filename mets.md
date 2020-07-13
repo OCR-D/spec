@@ -91,7 +91,7 @@ with the type of manipulation (`BIN-KRAKEN`).
 `<mets:fileGrp USE="OCR-D-SEG-WORD">`       | Word segmentation
 `<mets:fileGrp USE="OCR-D-SEG-GLYPH">`      | Glyph segmentation
 `<mets:fileGrp USE="OCR-D-OCR-TESS">`       | [Tesseract OCR](https://github.com/OCR-D/ocrd_tesserocr)
-`<mets:fileGrp USE="OCR-D-OCR-ANY">`        | [AnyOCR](https://github.com/OCR-D/ocrd_anybaseocr)
+`<mets:fileGrp USE="OCR-D-OCR-OCRO">`        | [Ocropus OCR](https://github.com/OCR-D/ocrd_cis)
 `<mets:fileGrp USE="OCR-D-COR-CIS">`        | [CIS post-correction](https://github.com/cisocrgroup/ocrd_cis)
 `<mets:fileGrp USE="OCR-D-COR-ASV">`        | [ASV post-correction](https://github.com/ASVLeipzig/cor-asv-ann)
 `<mets:fileGrp USE="OCR-D-GT-SEG-REGION">`   | Region segmentation ground truth
@@ -106,18 +106,17 @@ The `ID` MUST be unique inside the METS file.
 
 ```
 FILEID := ID + "_" + [0-9]{4}
-ID := "OCR-D-" + WORKFLOW_STEP + ("-" + FEATURE)* + ("-" + PROCESSOR)?
-FEATURE := ("BIN" | "CROP" | "DESKEW" | DESPECK" | "DEWARP" )
-WORKFLOW_STEP := ("IMG" | "SEG" | "OCR" | "COR")
-PROCESSOR := [A-Z0-9\-]{3,}
+ID := FILEGRP + (".IMG")?
 ```
 ### Examples
 
 `<mets:file ID>` | ID of the file for OCR-D
 --               | --
 `<mets:file ID="OCR-D-IMG_0001">`            | The unmanipulated source image
-`<mets:file ID="OCR-D-IMG-BIN_0001">`        | Black-and-White image
-`<mets:file ID="OCR-D-IMG-BIN-CROP_0001">`   | Cropped Black-and-White image
+`<mets:file ID="OCR-D-PRE-BIN_0001">`        | PAGE encapsulating the result from binarization
+`<mets:file ID="OCR-D-PRE-BIN.IMG_0001">`    | Black-and-white image
+`<mets:file ID="OCR-D-PRE-CROP_0001">`       | PAGE encapsulating the result from (binarization and) cropping
+`<mets:file ID="OCR-D-PRE-CROP.IMG_0001">`   | Cropped black-and-white image
 
 ## Grouping files by page
 
