@@ -134,6 +134,14 @@ other implementation-specific means of logging configuration. For example, with
 Instead of processing METS, output the [ocrd-tool](ocrd_tool) description for
 this executable, in particular its parameters.
 
+### `-C, --show-resource FILENAME`
+
+Print the contents of processor resource `FILENAME`. Look up the resp. absolute filename according to the [file parameter lookup rules](ocrd_tool#file-parameter).
+
+### `-L, --list-resources`
+
+List the names of [processor resources](#processor-resources) in all of the paths defined by.the [file parameter lookup rules](ocrd_tool#file-parameter), one name per line.
+
 ### `-h, --help`
 
 Print a concise description of the tool, the command line options and
@@ -159,6 +167,23 @@ The log messages must have the format `TIME LEVEL LOGGERNAME - MESSAGE\n`, where
 * `LOGGERNAME` is the name of the logging component, such as the class name. Segments of `LOGGERNAME` should be separated by dot `.`, e.g. `ocrd.fancy_tool.analyze`
 * `MESSAGE` is the message to log, should not contain new lines.
 * `\n` is ASCII char `0x0a` (newline)
+
+## Processor resources
+
+Parameters that reference files can be resolved from relative to absolute
+filename by following the [conventions laid out in the `ocrd_tool`
+spec](ocrd_tool#file-parameters). These files, either bundled by the processor
+developer or put in place by the user, are called *processor resources*. The
+*processor resources* of a processor can be listed with the `-L/--list-resources`
+option and individual *processor resources* can be retrieved with the
+`-C/--show-resource` option. Since *processor resources* use the same mechanism
+as file parameters, they can be used
+
+  * as the argument to the `-p/--parameter` option (i.e. a **preset** file), and
+  * as the value of a file-type parameter (e.g. a **model** file)
+
+and the processor must resolve them to absolute paths [according to the rules
+for file parameters](ocrd_tool#file-parameters).
 
 ## URL/file convention
 
