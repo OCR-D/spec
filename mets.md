@@ -210,7 +210,6 @@ A METS may contain different `mets:structMap` entries, differentiated by their `
 * A `mets:structMap` with `TYPE="PHYSICAL"` is mandatory.
 * The _logical_ document structure detected by _library or archive_ MUST be described by `TYPE="LOGICAL"`.
 * The _logical_ document structure detected by _OCR-D software_ MUST be described by `TYPE="OCR-D-LOGICAL"`.
-The _logical_ document structure detected by OCR-D software MUST be described by `TYPE="OCR-D-LOGICAL"`.
 
 attributes in `structMap` | description
 --                        | --
