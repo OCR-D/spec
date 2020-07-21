@@ -7,6 +7,10 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Changed:
+
+  * CLI: Processors being called without valid METS file -> show help, #156
+
 ## [3.8.0] - 2020-07-13
 
 Added:
