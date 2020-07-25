@@ -29,7 +29,8 @@ properties:
           - steps
           - executable
           - categories
-          - input_file_grp
+          # Not required because not all processors take input from a file group
+          # - input_file_grp
           # Not required because not all processors produce output files
           # - output_file_grp
         properties:
@@ -39,15 +40,18 @@ properties:
           input_file_grp:
             description: Input fileGrp@USE this tool expects by default
             type: array
-            items:
-              type: string
-              pattern: '^OCR-D-[A-Z0-9-]+$'
+            default: ['PLACEHOLDER']
+            # Naming convention is obsolete
+            #items:
+            #  type: string
+            #  pattern: '^OCR-D-[A-Z0-9-]+$'
           output_file_grp:
             description: Output fileGrp@USE this tool produces by default
             type: array
-            items:
-              type: string
-              pattern: '^OCR-D-[A-Z0-9-]+$'
+            # Naming convention is obsolete
+            #items:
+            #  type: string
+            #  pattern: '^OCR-D-[A-Z0-9-]+$'
           parameters:
             description: Object describing the parameters of a tool. Keys are parameter names, values sub-schemas.
             type: object
