@@ -49,10 +49,11 @@ properties:
           output_file_grp:
             description: Output fileGrp@USE examples for this tool
             type: array
+            items:
+              type: string
             # Naming convention is obsolete
-            #items:
-            #  type: string
             #  pattern: '^OCR-D-[A-Z0-9-]+$'
+            default: ['OUTPUT']
           parameters:
             description: Object describing the parameters of a tool. Keys are parameter names, values sub-schemas.
             type: object
