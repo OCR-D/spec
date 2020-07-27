@@ -38,7 +38,7 @@ properties:
             description: The name of the CLI executable in $PATH
             type: string
           input_file_grp:
-            description: Input fileGrp@USE this tool expects by default
+            description: Input fileGrp@USE examples for this tool
             type: array
             items:
                 type: string
