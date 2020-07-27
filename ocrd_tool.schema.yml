@@ -47,7 +47,7 @@ properties:
             default: ['INPUT']
             #  pattern: '^OCR-D-[A-Z0-9-]+$'
           output_file_grp:
-            description: Output fileGrp@USE this tool produces by default
+            description: Output fileGrp@USE examples for this tool
             type: array
             # Naming convention is obsolete
             #items:
