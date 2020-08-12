@@ -7,6 +7,10 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Changed:
+
+  * CLI: Processors being called without any arguments -> show help, #156
+
 ## [3.9.0] - 2020-07-21
 
 Changed:
