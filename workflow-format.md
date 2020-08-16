@@ -59,7 +59,7 @@ An OCRD-WF can contain variable assignments of the form `name=value\n`. `name` m
 a valid `sh` identifier, everything `=` is parsed as a string.
 
 <!-- TODO define behavior? -->
-**NOTE** The semantics of assigning `value` to `name` are implementation-dependant
+**NOTE** The semantics of assigning `value` to `name` are implementation-dependent
 
 ## Parsing Algorithm
 
