@@ -44,8 +44,8 @@ should begin with `#!/usr/bin/env ocrd-wf-v1`.
 
 ### Comments
 
-Everyline that begins with any whitespace followed by the character "#" (*pound
-sign*, `\x23`).
+Any line that begins with a number of whitespace (tab `\x09` or space `\x20`) characters
+(including zero) followed by the character "#" (*pound sign*, `\x23`).
 
 ### Line continuation
 
