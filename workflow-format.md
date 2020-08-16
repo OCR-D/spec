@@ -64,7 +64,7 @@ a valid `sh` identifier. Everything to the right of `=` is parsed as a string af
 ## Parsing Algorithm
 
 The parsing algorithm consists of a set of passes. It should inform
-implementers but does not require require an exact implementation, as long as
+implementers, but does not require require an exact implementation, as long as
 the result is the same.
 
 **NOTE** Unlike in POSIX shell, comments are removed before line continuations are
