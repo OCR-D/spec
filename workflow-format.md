@@ -51,7 +51,7 @@ Any line that begins with a number of whitespace (tab `\x09` or space `\x20`) ch
 
 If a line ends with "\" (*backslash*, `\x5c`), backslash and newline are
 removed and the next line, without leading whitespace, is appended. This is
-repeated while the joined ends with a backslash.
+repeated as long as the next line ends with a backslash.
 
 ### Variable Assignments
 
