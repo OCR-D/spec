@@ -56,7 +56,7 @@ repeated as long as the next line ends with a backslash.
 ### Variable Assignments
 
 An OCRD-WF can contain variable assignments of the form `name=value\n`. `name` must be
-a valid `sh` identifier, everything `=` is parsed as a string.
+a valid `sh` identifier. Everything to the right of `=` is parsed as a string after expanding quotation (i.e. removing enclosing pairs of double `"` or single `'` quotes, or backslash `\` to _escape_ the special meaning of the following character, with `\\`, `\"`, and `\'` for literal backslash, double quote, and single quote, respectively). Note: whitespace is not allowed anywhere, except as quoted part of `value`.
 
 <!-- TODO define behavior? -->
 **NOTE** The semantics of assigning `value` to `name` are implementation-dependent
