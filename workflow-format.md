@@ -44,27 +44,27 @@ should begin with `#!/usr/bin/env ocrd-wf-v1`.
 
 ### Comments
 
-Everyline that begins with any whitespace followed by the character "#" (*pound
-sign*, `\x23`).
+Any line that begins with a number of whitespace (tab `\x09` or space `\x20`) characters
+(including zero) followed by the character "#" (*pound sign*, `\x23`).
 
 ### Line continuation
 
 If a line ends with "\" (*backslash*, `\x5c`), backslash and newline are
 removed and the next line, without leading whitespace, is appended. This is
-repeated while the joined ends with a backslash.
+repeated as long as the next line ends with a backslash.
 
 ### Variable Assignments
 
 An OCRD-WF can contain variable assignments of the form `name=value\n`. `name` must be
-a valid `sh` identifier, everything `=` is parsed as a string.
+a valid `sh` identifier. Everything to the right of `=` is parsed as a string after expanding quotation (i.e. removing enclosing pairs of double `"` or single `'` quotes, or backslash `\` to _escape_ the special meaning of the following character, with `\\`, `\"`, and `\'` for literal backslash, double quote, and single quote, respectively). Note: whitespace is not allowed anywhere, except as quoted part of `value`.
 
 <!-- TODO define behavior? -->
-**NOTE** The semantics of assigning `value` to `name` are implementation-dependant
+**NOTE** The semantics of assigning `value` to `name` are implementation-dependent
 
 ## Parsing Algorithm
 
 The parsing algorithm consists of a set of passes. It should inform
-implementers but does not require require an exact implementation, as long as
+implementers, but does not require require an exact implementation, as long as
 the result is the same.
 
 **NOTE** Unlike in POSIX shell, comments are removed before line continuations are
