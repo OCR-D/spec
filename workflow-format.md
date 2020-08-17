@@ -7,7 +7,7 @@ Revision: 1
 
 OCR consists of many [steps](glossary#activities) that need to be run in
 sequence ([*workflow*](glossary#workflow)). In OCR-D, these steps are
-implemented in [*procesors*](https://ocr-d.de/en/workflows), executables that
+implemented in [*processors*](https://ocr-d.de/en/workflows), executables that
 read and write files to one or more `mets:fileGrp` in a METS document. While it
 is possible to define such a workflow as a sequence of commands in a shell
 script, that approach has many drawbacks (no checks for correct input/output
@@ -218,6 +218,7 @@ File extension:
 ### Examples
 
 ```sh
+    first command
 ocrd-olena-binarize           -I OCR-D-IMG                   -O OCR-D-BIN                 -P impl sauvola
 ocrd-anybaseocr-crop          -I OCR-D-BIN                   -O OCR-D-CROP
 ocrd-olena-binarize           -I OCR-D-CROP                  -O OCR-D-BIN2                -P impl kim
