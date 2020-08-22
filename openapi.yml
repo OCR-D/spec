@@ -182,6 +182,30 @@ paths:
           content:
             application/json: {schema: {$ref: '#/components/schemas/WorkflowJob'}}
 
+  '/workflow/{workflow-id}/{job-id}':
+    get:
+      tags: ['processing']
+      parameters:
+        - name: workflow-id
+          in: path
+          description: ID of the Workflow
+          schema: {type: string}
+          required: true
+        - name: job-id
+          in: path
+          description: ID of the ProcessorJob
+          schema: {type: string}
+          required: true
+      operationId: getWorkflowJob
+      responses:
+        '200':
+          description: Found WorkflowJob
+          content:
+            application/json: {schema: {$ref: '#/components/schemas/WorkflowJob'}}
+        '404':
+          description: WorkflowJob not found
+          content: {}
+
   '/workspace':
     get:
       tags: ['workspace']
