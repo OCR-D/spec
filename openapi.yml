@@ -7,6 +7,13 @@ info:
     > This document defines the [data model](#/components/schemas) and
     various HTTP APIs related to OCR-D
 
+    ## OCR-D API compatibility
+
+    An implementation may claim compatibility with a `OCR-D ${N} API v{$V}` iff
+
+      * it implements all the methods tagged `${N}`
+      * at major version `${V}` of this API definition
+
     ## Media types
 
     ### `application/json`
@@ -48,6 +55,7 @@ paths:
   '/processor':
     get:
       tags: ['processing', 'discovery']
+      operationId: listProcessors
       responses:
         '200':
           description: List all processors
@@ -57,6 +65,7 @@ paths:
   '/processor/{executable}':
     get:
       tags: ['processing', 'discovery']
+      operationId: gettProcessor
       parameters:
         - name: executable
           in: path
@@ -65,14 +74,13 @@ paths:
           required: true
       responses:
         '200':
-          description: List all processors
+          description: Get this processor
           content:
             application/json: {schema: {$ref: '#/components/schemas/Processor'}}
-        '404':
-            description: Processor not available
-            content: {}
+        '404': {content: {}, description: 'Processor not available'}
     post:
       tags: ['processing']
+      operationId: runProcessor
       parameters:
         - name: executable
           in: path
@@ -92,6 +100,7 @@ paths:
   '/processor/{executable}/{job-id}':
     get:
       tags: ['processing']
+      operationId: getProcessorJob
       parameters:
         - name: executable
           in: path
@@ -112,6 +121,7 @@ paths:
   '/workflow':
     post:
       tags: ['processing']
+      operationId: postWorkflow
       requestBody:
         description: 'Register a new workflow'
         content:
@@ -125,6 +135,7 @@ paths:
   '/workflow/{workflow-id}':
     put:
       tags: ['processing']
+      operationId: putWorkflow
       parameters:
         - name: workflow-id
           in: path
@@ -142,6 +153,7 @@ paths:
           content: {application/json: {schema: {$ref: '#/components/schemas/Workflow'}}}
     get:
       tags: ['processing']
+      operationId: getWorkflow
       parameters:
         - name: workflow-id
           in: path
@@ -155,10 +167,25 @@ paths:
             application/json: {schema: {$ref: '#/components/schemas/Workflow'}}
             'text/vnd.ocrd+sh': {}
         '404': {content: {}, description: 'Workflow not available'}
+    post:
+      tags: ['processing']
+      operationId: runWorkflow
+      parameters:
+        - name: workflow-id
+          in: path
+          description: ID of the Workflow
+          schema: {type: string}
+          required: true
+      responses:
+        '200':
+          description: Return WorkflowJob
+          content:
+            application/json: {schema: {$ref: '#/components/schemas/WorkflowJob'}}
 
   '/workspace':
     get:
       tags: ['workspace']
+      operationId: getWorkspaces
       responses:
         '200':
           description: successful operation
@@ -272,9 +299,7 @@ components:
           description: Full representation of a CLI call of a processor
           required: ['executable']
           properties:
-            executable:
-              type: string
-              pattern: '^ocrd-.*'
+            executable: {$ref: '#/components/schemas/OcrdExecutable'}
     ProcessorJob:
       allOf:
         - {$ref: '#/components/schemas/Job'}
@@ -285,3 +310,10 @@ components:
     Workflow:
       allOf:
         - {$ref: '#/components/schemas/Resource'}
+    WorkflowJob:
+      allOf:
+        - {$ref: '#/components/schemas/Job'}
+        - type: object
+          properties:
+            workflow: {$ref: '#/components/schemas/Workflow'}
+            workspace: {$ref: '#/components/schemas/Workspace'}
