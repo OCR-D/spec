@@ -90,7 +90,7 @@ paths:
       requestBody:
         description: Execute this ProcessorCall
         content:
-          application/json: {schema: {$ref: '#/components/schemas/ProcessorCall'}}
+          application/json: {schema: {$ref: '#/components/schemas/ProcessorArgs'}}
         required: true
       responses:
         '200':
@@ -234,6 +234,16 @@ paths:
           content: 
             application/json: {schema: {$ref: '#/components/schemas/Workspace'}}
 
+  '/discovery':
+    get:
+      tags: ['discovery']
+      operationId: discover
+      responses:
+        '200':
+          description: Return DiscoveryResponse
+          content:
+            application/json: {schema: {$ref: '#/components/schemas/DiscoveryResponse'}}
+
 components:
   schemas:
     Resource:
@@ -317,3 +327,22 @@ components:
           properties:
             workflow: {$ref: '#/components/schemas/Workflow'}
             workspace: {$ref: '#/components/schemas/Workspace'}
+    DiscoveryResponse:
+      type: object
+      properties:
+        ram:
+          description: All available RAM in bytes
+          type: number
+        cpu_cores:
+          description: Number of available CPU cores
+          type: number
+        has_ocrd_all:
+          description: Whether deployment is based on ocrd_all
+          type: boolean
+        has_cuda:
+          description: Whether deployment supports NVIDIA's CUDA
+          type: boolean
+        ocrd_all_version:
+          description: Git tag of the ocrd_all repo
+          type: string
+
