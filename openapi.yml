@@ -41,10 +41,12 @@ servers:
 tags:
   - name: discovery
     description: Discovery of capabilities of a server
-  - name: workspace
-    description: mets.xml-indexed BagIt container
   - name: processing
     description: OCR-D processing and processors
+  - name: workflow
+    description: Processing of OCRD-WF
+  - name: workspace
+    description: mets.xml-indexed BagIt container
   - name: training
     description: Training of OCR engines
   - name: acl
@@ -116,11 +118,53 @@ paths:
         '200':
           description: Return ProcessorJob
           content: {application/json: {schema: {$ref: '#/components/schemas/ProcessorJob'}}}
-        '404': {content: {}, description: 'Processor not available'}
+        '404': {content: {}, description: 'ProcessorJob not found'}
+
+  '/processor/{executable}/{job-id}/log':
+    get:
+      tags: ['processing']
+      operationId: getProcessorLog
+      parameters:
+        - name: executable
+          in: path
+          description: Name of the executable
+          schema: {$ref: '#/components/schemas/OcrdExecutable'}
+          required: true
+        - name: job-id
+          in: path
+          description: ID of the ProcessorJob
+          schema: {type: string}
+          required: true
+      responses:
+        '200':
+          description: Return Log
+          content:
+            'text/plain': {}
+        '404': {content: {}, description: 'ProcessorJob not found'}
+    post:
+      tags: ['processing']
+      operationId: logProcessor
+      parameters:
+        - name: executable
+          in: path
+          description: LogEntry to log
+          schema: {$ref: '#/components/schemas/LogEntry'}
+          required: true
+        - name: job-id
+          in: path
+          description: ID of the ProcessorJob
+          schema: {type: string}
+          required: true
+      responses:
+        '200':
+          description: Return Log
+          content:
+            'text/plain': {}
+        '404': {content: {}, description: 'ProcessorJob not found'}
 
   '/workflow':
     post:
-      tags: ['processing']
+      tags: ['workflow', 'discovery']
       operationId: postWorkflow
       requestBody:
         description: 'Register a new workflow'
@@ -134,7 +178,7 @@ paths:
 
   '/workflow/{workflow-id}':
     put:
-      tags: ['processing']
+      tags: ['workflow']
       operationId: putWorkflow
       parameters:
         - name: workflow-id
@@ -152,7 +196,7 @@ paths:
           description: Created a new OCR-D workflow
           content: {application/json: {schema: {$ref: '#/components/schemas/Workflow'}}}
     get:
-      tags: ['processing']
+      tags: ['workflow', 'discovery']
       operationId: getWorkflow
       parameters:
         - name: workflow-id
@@ -165,10 +209,10 @@ paths:
           description: Return ProcessorJob
           content:
             application/json: {schema: {$ref: '#/components/schemas/Workflow'}}
-            'text/vnd.ocrd+sh': {}
+            application/vnd.ocrd+zip: {}
         '404': {content: {}, description: 'Workflow not available'}
     post:
-      tags: ['processing']
+      tags: ['workflow']
       operationId: runWorkflow
       parameters:
         - name: workflow-id
@@ -184,7 +228,7 @@ paths:
 
   '/workflow/{workflow-id}/{job-id}':
     get:
-      tags: ['processing']
+      tags: ['workflow']
       parameters:
         - name: workflow-id
           in: path
@@ -219,15 +263,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Workspace'
-        '400':
-          description: Invalid ID supplied
-          content: {}
-        '404':
-          description: Workspace not found
-          content: {}
-        '410':
-          description: Workspace deleted
-          content: {}
     post:
       tags: ['workspace']
       summary: Replace an existing workspace
@@ -235,7 +270,7 @@ paths:
       requestBody:
         description: OCRD-ZIP of the updated new workspace
         content:
-          application/vnd.ocrd+zip: {}
+          'application/vnd.ocrd+zip': {}
         required: true
       responses:
         201:
@@ -257,6 +292,47 @@ paths:
           description: Successfully replaced workspace
           content: 
             application/json: {schema: {$ref: '#/components/schemas/Workspace'}}
+
+  '/workspace/{workspace-id}':
+    get:
+      tags: ['workspace']
+      operationId: getWorkspace
+      parameters:
+        - name: workspace-id
+          in: path
+          description: ID of the workspace
+          schema: {type: string}
+          required: true
+      responses:
+        '200':
+          description: Workspace found
+          content:
+            application/json: {schema: {$ref: '#/components/schemas/Workspace'}}
+        '404':
+          description: Workspace not found
+          content: {}
+        '410':
+          description: Workspace deleted
+          content: {}
+    delete:
+      operationId: deleteWorkspace
+      parameters:
+        - name: workspace-id
+          in: path
+          description: ID of the workspace
+          schema: {type: string}
+          required: true
+      responses:
+        '200':
+          description: Workspace deleted
+          content:
+            application/json: {schema: {$ref: '#/components/schemas/Workspace'}}
+        '404':
+          description: Workspace not found
+          content: {}
+        '410':
+          description: Workspace deleted
+          content: {}
 
   '/discovery':
     get:
@@ -283,7 +359,7 @@ components:
     JobState:
       type: string
       pattern: '^(QUEUED|RUNNING|STOPPED)'
-    JobLog:
+    Log:
       allOf:
         - {$ref: '#/components/schemas/Resource'}
     Workspace:
@@ -304,8 +380,6 @@ components:
           properties:
             state:
               $ref: '#/components/schemas/JobState'
-            log:
-              $ref: '#/components/schemas/JobLog'
     OcrdExecutable:
       type: string
       pattern: '^ocrd-.*'
@@ -313,11 +387,12 @@ components:
       description: The ocrd-tool.json for a specific tool
       x-$ref: 'https://ocr-d.de/ocrd_tool.schema.json#/properties/tools/patternProperties/ocrd-.*'
     ProcessorList:
-      description: Maps OCR-D executables to their resp. ocrd-tool.json
+      description: List all available processors
       type: array
       items:
-        type: object
-        items: {$ref: '#/components/schemas/Processor'}
+        type: array
+        items:
+          $ref: '#/components/schemas/Processor'
     ProcessorArgs:
       description: The CLI arguments passed to an OCR-D processor
       type: object
@@ -360,13 +435,34 @@ components:
         cpu_cores:
           description: Number of available CPU cores
           type: number
-        has_ocrd_all:
-          description: Whether deployment is based on ocrd_all
-          type: boolean
         has_cuda:
           description: Whether deployment supports NVIDIA's CUDA
           type: boolean
+        cuda_version:
+          description: Major/minor version of CUDA
+          type: string
+        has_ocrd_all:
+          description: Whether deployment is based on ocrd_all
+          type: boolean
         ocrd_all_version:
           description: Git tag of the ocrd_all repo
+          type: string
+        has_docker:
+          description: Whether the OCR-D executables run in a docker container
+          type: boolean
+    LogEntry:
+      type: object
+      required:
+        - level
+        - message
+      properties:
+        level:
+          description: Log level
+          type: string
+        message:
+          description: Log message
+          type: string
+        time:
+          description: Log UTC time
           type: string
 
