@@ -126,6 +126,7 @@ properties:
                       - number
                       - boolean
                       - object
+                      - array
                   format:
                     description: Subtype, such as `float` for type `number` or `uri` for type `string`.
                   description:
