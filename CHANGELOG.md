@@ -7,6 +7,14 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [3.11.0] - 2021-01-20
+
+Changed:
+
+  * Resource lookup in an intermediary `ocrd-resources` directory
+  * Drop python-specific resource locations
+  * Drop `/usr/local/share` resource location
+
 ## [3.10.0] - 2020-12-02
 
 Changed:
@@ -371,6 +379,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[3.11.0]: ../../compare/v3.11.0...v3.10.0
 [3.10.0]: ../../compare/v3.10.0...v3.9.1
 [3.9.1]: ../../compare/v3.9.1...v3.9.0
 [3.9.0]: ../../compare/v3.9.0...v3.8.0
