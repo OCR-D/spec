@@ -33,9 +33,10 @@ should be resolved in the following way:
     `ocrd-dummy`, the variable would need to be called `OCRD_DUMMY_PATH`):
     * Split the variable value at `:` and try to resolve by appending `<fpath>`
       to each token and return the first found file if any
-  * `$VIRTUAL_ENV/share/ocrd-resources/<name-of-processor>/<fpath>`
   * `$XDG_DATA_HOME/ocrd-resources/<name-of-processor>/<fpath>` (with `$HOME/.local/share` instead of `$XDG_DATA_HOME` if unset)
   * `$XDG_CONFIG_HOME/ocrd-resources/<name-of-processor>/<fpath>` (with `$HOME/.config` instead of `$XDG_CONFIG_HOME` if unset)
+  * `$XDG_CACHE_HOME/ocrd-resources/<name-of-processor>/<fpath>` (with `$HOME/.cache` instead of `$XDG_CACHE_HOME` if unset)
+  * `/usr/local/share/ocrd-resources/<name-of-processor>/<fpath>`
 
 ## Input / Output file groups
 
