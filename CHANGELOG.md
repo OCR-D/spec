@@ -7,6 +7,13 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [3.12.0] - 2021-01-26
+
+Changed:
+
+  * Resource lookup: Remove XDG_CONFIG_HOME and XDG_CACHE_HOME
+  * Resource lookup: Add `/usr/local/share/ocrd-resources`
+
 ## [3.11.0] - 2021-01-20
 
 Changed:
@@ -379,6 +386,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[3.12.0]: ../../compare/v3.12.0...v3.11.0
 [3.11.0]: ../../compare/v3.11.0...v3.10.0
 [3.10.0]: ../../compare/v3.10.0...v3.9.1
 [3.9.1]: ../../compare/v3.9.1...v3.9.0
