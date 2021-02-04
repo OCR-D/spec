@@ -7,6 +7,10 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Changed:
+
+  * CLI: Processors being called without any arguments -> show help, #156
+
 ## [3.12.0] - 2021-01-26
 
 Changed:
@@ -33,6 +37,7 @@ Changed:
 Changed:
 
   * processor parameter values can be arrays, #174
+
 
 ## [3.9.0] - 2020-07-21
 
