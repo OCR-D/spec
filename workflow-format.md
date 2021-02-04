@@ -7,7 +7,7 @@ Revision: 1
 
 OCR consists of many [steps](glossary#activities) that need to be run in
 sequence ([*workflow*](glossary#workflow)). In OCR-D, these steps are
-implemented in [*processors*](https://ocr-d.de/en/workflows), executables that
+implemented in [*processors*](glossary#ocr-d-processor), executables that
 read and write files to one or more `mets:fileGrp` in a METS document. While it
 is possible to define such a workflow as a sequence of commands in a shell
 script, that approach has many drawbacks (no checks for correct input/output
@@ -28,7 +28,7 @@ supports only a small subset of shell script syntax and functionality.
 
 ## File structure and syntax
 
-A OCRD-WF script has two logical sections: preamble and steps.
+An OCRD-WF script has two logical sections: preamble and steps.
 
 The preamble contains the shebang and any variable
 assignments while the steps contain the processor calls. Both preamble and steps can
@@ -146,7 +146,7 @@ OCRD-WF is *well-formed* if it can be parsed.
 
 OCRD-WF is *resolveable* if it is well-formed and
   * all executables are available (either as an executable in `$PATH` or some abstraction of it)
-  * all exceutbales can be resolved to their resp. [`ocrd-tool.json`](ocrd_tool) (e.g. [`--dump-json`](cli#--J--dump-json))
+  * all executables can be resolved to their resp. [`ocrd-tool.json`](ocrd_tool) (e.g. [`--dump-json`](cli#--J--dump-json))
   * the parameters in all steps are valid according to their JSON-Schema definition.
 
 Resolveability can only be determined in the context of a deployment.
@@ -155,7 +155,7 @@ Resolveability can only be determined in the context of a deployment.
 
 OCRD-WF is *consistent* if it is resolveable and all input file groups
   * are either output file groups of previous steps or
-  * exist in the METS file this workflow is executed on
+  * are present in the METS file this workflow is executed on
 
 ### EBNF
 
