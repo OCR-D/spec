@@ -11,6 +11,34 @@ Changed:
 
   * CLI: Processors being called without any arguments -> show help, #156
 
+## [3.12.0] - 2021-01-26
+
+Changed:
+
+  * Resource lookup: Remove XDG_CONFIG_HOME and XDG_CACHE_HOME
+  * Resource lookup: Add `/usr/local/share/ocrd-resources`
+
+## [3.11.0] - 2021-01-20
+
+Changed:
+
+  * Resource lookup in an intermediary `ocrd-resources` directory
+  * Drop python-specific resource locations
+  * Drop `/usr/local/share` resource location
+
+## [3.10.0] - 2020-12-02
+
+Changed:
+
+  * Revise glossary, mostly by @bertsky
+
+## [3.9.1] - 2020-10-12
+
+Changed:
+
+  * processor parameter values can be arrays, #174
+
+
 ## [3.9.0] - 2020-07-21
 
 Changed:
@@ -363,6 +391,10 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[3.12.0]: ../../compare/v3.12.0...v3.11.0
+[3.11.0]: ../../compare/v3.11.0...v3.10.0
+[3.10.0]: ../../compare/v3.10.0...v3.9.1
+[3.9.1]: ../../compare/v3.9.1...v3.9.0
 [3.9.0]: ../../compare/v3.9.0...v3.8.0
 [3.8.0]: ../../compare/v3.8.0...v3.7.0
 [3.7.0]: ../../compare/v3.7.0...v3.6.0
