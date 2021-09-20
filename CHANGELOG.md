@@ -7,9 +7,11 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [3.13.0] - 2021-09-20
+
 Changed:
 
-  * CLI: Processors being called without any arguments -> show help, #156
+  * CLI: Logging should go to `STDERR`, parseable output to `STDOUT`, #183, OCR-D/core#713
 
 ## [3.12.0] - 2021-01-26
 
@@ -391,6 +393,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[3.13.0]: ../../compare/v3.13.0...v3.12.0
 [3.12.0]: ../../compare/v3.12.0...v3.11.0
 [3.11.0]: ../../compare/v3.11.0...v3.10.0
 [3.10.0]: ../../compare/v3.10.0...v3.9.1
