@@ -7,6 +7,10 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Changed:
+
+  * Resource lookup: for `--location cwd` look directly in $CWD, no subdirectory, OCR-D/core#727
+
 ## [3.13.0] - 2021-09-20
 
 Changed:

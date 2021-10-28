@@ -27,7 +27,7 @@ should be resolved in the following way:
 * If `<fpath>` is an absolute path: Use as-is.
 * If `<fpath>` is a relative path, try resolving the following paths and return
   the first one found if any, otherwise abort with an error message stating so:
-  * `$CWD/ocrd-resources/<fpath>`
+  * `$CWD/<fpath>` (**Note** that the file is expected to be directly be in `$CWD`, not in a subdirectory)
   * If an environment variable is defined that has the name of the processor in
     upper-case and with `-` replaced with `-` and followed by `_PATH` (e.g. for a processor
     `ocrd-dummy`, the variable would need to be called `OCRD_DUMMY_PATH`):
