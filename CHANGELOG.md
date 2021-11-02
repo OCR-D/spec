@@ -9,7 +9,7 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 Changed:
 
-  * Resource lookup: for `--location cwd` look directly in $PWD, no subdirectory, OCR-D/core#727
+  * Resource lookup: for `--location cwd` look directly in `<cwd>`, no subdirectory, OCR-D/core#727
 
 ## [3.13.0] - 2021-09-20
 
