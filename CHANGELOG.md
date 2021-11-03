@@ -7,6 +7,8 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [3.14.0] - 2021-11-03
+
 Changed:
 
   * Resource lookup: for `--location cwd` look directly in `<cwd>`, no subdirectory, OCR-D/core#727
@@ -397,6 +399,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[3.14.0]: ../../compare/v3.14.0...v3.12.0
 [3.13.0]: ../../compare/v3.13.0...v3.12.0
 [3.12.0]: ../../compare/v3.12.0...v3.11.0
 [3.11.0]: ../../compare/v3.11.0...v3.10.0
