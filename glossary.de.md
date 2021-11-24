@@ -1,11 +1,4 @@
----
-layout: page
-lang: de
-lang-ref: glossary.md
-toc: true
----
-
-# OCR-D Glossary
+# OCR-D Glossar
 
 > Glossary of terms from the domain of image processing/OCR and how they are used within the OCR-D framework
 
