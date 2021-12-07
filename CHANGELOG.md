@@ -1,5 +1,4 @@
-Change Log
-==========
+# Change Log
 
 All notable changes to the specs will be documented in this file.
 
