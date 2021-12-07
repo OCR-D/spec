@@ -6,6 +6,8 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [3.15.0] - 2021-12-07
+
 Changed:
 
   * `mets:fileGrp/@USE` must be valid `xs:ID`, #185
@@ -402,7 +404,8 @@ Removed
 Initial Release
 
 <!-- link-labels -->
-[3.14.0]: ../../compare/v3.14.0...v3.12.0
+[3.15.0]: ../../compare/v3.15.0...v3.14.0
+[3.14.0]: ../../compare/v3.14.0...v3.13.0
 [3.13.0]: ../../compare/v3.13.0...v3.12.0
 [3.12.0]: ../../compare/v3.12.0...v3.11.0
 [3.11.0]: ../../compare/v3.11.0...v3.10.0
