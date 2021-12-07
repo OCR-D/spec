@@ -7,6 +7,10 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Changed:
+
+  * `mets:fileGrp/@USE` must be valid `xs:ID`, #185
+
 ## [3.14.0] - 2021-11-03
 
 Changed:
