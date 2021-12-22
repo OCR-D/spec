@@ -126,3 +126,15 @@ properties:
                 - layout/segmentation/word
                 - layout/segmentation/classification
                 - layout/analysis
+          resource-content-type:
+            type: string
+            default: application/octet-stream
+            enum: ['text/directory', 'application/octet-stream']
+            description: >
+              The format of resources this processor expects. Most processors
+              use files for resources (e.g. `*.traineddata` for
+              `ocrd-tesserocr-recognize`) while others use directories of files
+              (e.g. `default` for `ocrd-eynollah-segment`).  If a processor
+              requires directories, it must set `resource-content-type` to
+              `text/directory`.
+
