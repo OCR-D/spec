@@ -6,6 +6,17 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [3.16.0] - 2022-01-30
+
+Changed:
+
+  * `--page-id` can accept the `..` numerical range operator, #172, OCR-D/core#672
+  * `ocrd-tool.json`: Parameters that accept a directory must have `content-type == "text/dirctory"`, #189, OCR-D/core#750, OCR-D/core#691
+
+Added:
+
+  * German translation of the glossary, OCR-D/ocrd-website#290
+
 ## [3.15.0] - 2021-12-07
 
 Changed:
@@ -404,6 +415,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[3.16.0]: ../../compare/v3.16.0...v3.15.0
 [3.15.0]: ../../compare/v3.15.0...v3.14.0
 [3.14.0]: ../../compare/v3.14.0...v3.13.0
 [3.13.0]: ../../compare/v3.13.0...v3.12.0
