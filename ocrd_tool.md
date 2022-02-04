@@ -12,22 +12,24 @@ To validate a `ocrd-tool.json` file, use `ocrd ocrd-tool /path/to/ocrd-tool.json
 
 ## File parameters
 
-To mark a parameter as expecting the address of a file, it must declare the
+To mark a parameter as expecting the address of a file, it MUST declare the
 `content-type` property as a [valid media
 type](https://www.iana.org/assignments/media-types/media-types.xhtml).
 Optionally, workflow processors can be notified that this file is potentially
 large and static (e.g. a fixed dataset or a precomputed model) and should be cached
 indefinitely after download by setting the `cacheable` property to `true`.
 
-The filename itself, i.e. the concrete value `<fpath>` of a file parameter
-should be resolved in the following way (`<cwd>` representing the current working directory):
+The filename itself, i.e. the concrete value `<fpath>` of a file parameter,
+should be resolved in the following way (with `<cwd>` representing the current 
+working directory, and `<mod>` representing the distribution directory of the module):
 
 * If `<fpath>` is an `http`/`https` URL: Download to a temporary directory (if
   `cacheable==False`) or a semi-temporary cache directory (if `cacheable==True`)
 * If `<fpath>` is an absolute path: Use as-is.
-* If `<fpath>` is a relative path, try resolving the following paths and return
-  the first one found if any, otherwise abort with an error message stating so:
-  * `<cwd>/<fpath>` (**Note** that the file is expected to be directly be in `<cwd>`, not in a subdirectory)
+* If `<fpath>` is a relative path (with or without directory components):
+  Try resolving via the following directories, and return the first one found if any,
+  otherwise abort with an error message stating so:
+  * `<cwd>/<fpath>` (**Note** that the file is expected to be directly under `<cwd>`, not in a subdirectory)
   * If an environment variable is defined that has the name of the processor in
     upper-case and with `-` replaced with `-` and followed by `_PATH` (e.g. for a processor
     `ocrd-dummy`, the variable would need to be called `OCRD_DUMMY_PATH`):
@@ -35,6 +37,11 @@ should be resolved in the following way (`<cwd>` representing the current workin
       to each token and return the first found file if any
   * `$XDG_DATA_HOME/ocrd-resources/<name-of-processor>/<fpath>` (with `$HOME/.local/share` instead of `$XDG_DATA_HOME` if unset)
   * `/usr/local/share/ocrd-resources/<name-of-processor>/<fpath>`
+  * `<mod>/<fpath>` (**Note** that the file is expected to be directly under `<mod>`, not in a subdirectory)
+
+The path of the `<mod>` directory is implementation specific and allows modules
+to distribute small resources along with the code, i.e. pre-installed files like
+[presets](cli#processor-resources).
 
 ## Input / Output file groups
 
