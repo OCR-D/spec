@@ -129,10 +129,10 @@ properties:
           resource_locations:
             type: array
             description: The locations in the filesystem this processor supports for resource lookup
-            default: ['data', 'cwd', 'system']
+            default: ['data', 'cwd', 'system', 'module']
             items:
               type: string
-              enum: ['data', 'cwd', 'system']
+              enum: ['data', 'cwd', 'system', 'module']
           resources:
             type: array
             description: Resources for this processor
