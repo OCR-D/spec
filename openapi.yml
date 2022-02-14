@@ -265,10 +265,10 @@ paths:
                   $ref: '#/components/schemas/Workspace'
     post:
       tags: ['workspace']
-      summary: Replace an existing workspace
+      summary: Post a new workspace
       operationId: createWorkspace
       requestBody:
-        description: OCRD-ZIP of the updated new workspace
+        description: OCRD-ZIP of the new workspace
         content:
           'application/vnd.ocrd+zip': {}
         required: true
@@ -289,7 +289,7 @@ paths:
         required: true
       responses:
         200:
-          description: Successfully replaced workspace
+          description: Workspace replaced
           content: 
             application/json: {schema: {$ref: '#/components/schemas/Workspace'}}
 
