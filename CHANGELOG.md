@@ -1,5 +1,4 @@
-Change Log
-==========
+# Change Log
 
 All notable changes to the specs will be documented in this file.
 
@@ -7,9 +6,34 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [3.16.0] - 2022-01-30
+
 Changed:
 
-  * CLI: Processors being called without any arguments -> show help, #156
+  * `--page-id` can accept the `..` numerical range operator, #172, OCR-D/core#672
+  * `ocrd-tool.json`: Parameters that accept a directory must have `content-type == "text/dirctory"`, #189, OCR-D/core#750, OCR-D/core#691
+
+Added:
+
+  * German translation of the glossary, OCR-D/ocrd-website#290
+
+## [3.15.0] - 2021-12-07
+
+Changed:
+
+  * `mets:fileGrp/@USE` must be valid `xs:ID`, #185
+
+## [3.14.0] - 2021-11-03
+
+Changed:
+
+  * Resource lookup: for `--location cwd` look directly in `<cwd>`, no subdirectory, OCR-D/core#727
+
+## [3.13.0] - 2021-09-20
+
+Changed:
+
+  * CLI: Logging should go to `STDERR`, parseable output to `STDOUT`, #183, OCR-D/core#713
 
 ## [3.12.0] - 2021-01-26
 
@@ -391,6 +415,10 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[3.16.0]: ../../compare/v3.16.0...v3.15.0
+[3.15.0]: ../../compare/v3.15.0...v3.14.0
+[3.14.0]: ../../compare/v3.14.0...v3.13.0
+[3.13.0]: ../../compare/v3.13.0...v3.12.0
 [3.12.0]: ../../compare/v3.12.0...v3.11.0
 [3.11.0]: ../../compare/v3.11.0...v3.10.0
 [3.10.0]: ../../compare/v3.10.0...v3.9.1
