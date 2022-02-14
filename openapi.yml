@@ -277,10 +277,18 @@ paths:
           description: Workspace created
           content:
             application/json: {schema: {$ref: '/components/schemas/Workspace'}}
+
+  '/workspace/{workspace-id}':
     put:
       tags: ['workspace']
       summary: Replace an existing workspace
       operationId: replaceWorkspace
+      parameters:
+        - name: workspace-id
+          in: path
+          description: ID of the workspace
+          schema: {type: string}
+          required: true
       requestBody:
         description: OCRD-ZIP of the updated workspace
         content:
@@ -292,8 +300,6 @@ paths:
           description: Workspace replaced
           content: 
             application/json: {schema: {$ref: '#/components/schemas/Workspace'}}
-
-  '/workspace/{workspace-id}':
     get:
       tags: ['workspace']
       operationId: getWorkspace
