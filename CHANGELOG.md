@@ -6,6 +6,12 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [3.17.0] - 2022-02-14
+
+Added:
+
+  * `ocrd-tool.json`: Support processors listing their own `resources` and restrict `resource_locations`, OCR-D/spec#181, OCR-D/spec#190
+
 ## [3.16.0] - 2022-01-30
 
 Changed:
@@ -415,6 +421,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[3.17.0]: ../../compare/v3.17.0...v3.16.0
 [3.16.0]: ../../compare/v3.16.0...v3.15.0
 [3.15.0]: ../../compare/v3.15.0...v3.14.0
 [3.14.0]: ../../compare/v3.14.0...v3.13.0
