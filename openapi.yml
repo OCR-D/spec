@@ -67,7 +67,7 @@ paths:
   '/processor/{executable}':
     get:
       tags: ['processing', 'discovery']
-      operationId: gettProcessor
+      operationId: getProcessor
       parameters:
         - name: executable
           in: path
