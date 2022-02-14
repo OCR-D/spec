@@ -465,6 +465,7 @@ components:
         level:
           description: Log level
           type: string
+          enum: ['debug', 'info', 'warning', 'error']
         message:
           description: Log message
           type: string
