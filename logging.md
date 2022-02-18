@@ -1,6 +1,6 @@
-# Communication Processor State with Logging and Exceptions
+# Communicate Processor State with Logging and Exceptions
 
-This section specifies how the output of the digitization workflow is logged.
+This section specifies how the output of the digitization workflow is handled.
 
 ## Target Audience
 
