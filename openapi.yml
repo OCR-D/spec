@@ -2,7 +2,7 @@ openapi: 3.0.1
 info:
   title: OCR-D Web API
   description: >
-    # <h1>HTTP API for offering OCR-D processing</h1>
+    # HTTP API for offering OCR-D processing
 
     > This document defines the [data model](#/components/schemas) and
     various HTTP APIs related to OCR-D
@@ -22,7 +22,7 @@ info:
 
     ### `application/vnd.ocrd+zip`
 
-    Defined in https://ocr-d.de/en/spec/ocrd_zip
+    Defined in [https://ocr-d.de/en/spec/ocrd_zip](https://ocr-d.de/en/spec/ocrd_zip)
 
     ### `text/vnd.ocrd+sh`
 
@@ -38,6 +38,7 @@ externalDocs:
   url: 'http://ocr-d.de'
 servers:
   - url: 'https://example.org/ocrd/v1'
+    description: The URL of your server offering the OCR-D API.
 tags:
   - name: discovery
     description: Discovery of capabilities of a server
@@ -60,7 +61,7 @@ paths:
       operationId: listProcessors
       responses:
         '200':
-          description: List all processors
+          description: A list of all processors
           content:
             application/json: {schema: {$ref: '#/components/schemas/ProcessorList'}}
 
@@ -123,7 +124,7 @@ paths:
   '/processor/{executable}/{job-id}/log':
     get:
       tags: ['processing']
-      operationId: getProcessorLog
+      operationId: getProcessorJobLog
       parameters:
         - name: executable
           in: path
@@ -137,7 +138,7 @@ paths:
           required: true
       responses:
         '200':
-          description: Return Log
+          description: Return log
           content:
             'text/plain': {}
         '404': {content: {}, description: 'ProcessorJob not found'}
@@ -147,7 +148,7 @@ paths:
       parameters:
         - name: executable
           in: path
-          description: LogEntry to log
+          description: LogEntry to be logged
           schema: {$ref: '#/components/schemas/LogEntry'}
           required: true
         - name: job-id
@@ -193,7 +194,7 @@ paths:
         required: true
       responses:
         '200':
-          description: Created a new OCR-D workflow
+          description: Created/updated a new OCR-D workflow
           content: {application/json: {schema: {$ref: '#/components/schemas/Workflow'}}}
     get:
       tags: ['workflow', 'discovery']
@@ -256,7 +257,7 @@ paths:
       operationId: getWorkspaces
       responses:
         '200':
-          description: successful operation
+          description: Successful operation
           content:
             application/json:
               schema:
@@ -274,9 +275,9 @@ paths:
         required: true
       responses:
         201:
-          description: Workspace created
+          description: Created Workspace
           content:
-            application/json: {schema: {$ref: '/components/schemas/Workspace'}}
+            application/json: {schema: {$ref: '#/components/schemas/Workspace'}}
 
   '/workspace/{workspace-id}':
     put:
@@ -361,7 +362,7 @@ components:
           description: URL of this thing
         description:
           type: string
-          description: description of the thing
+          description: Description of the thing
     JobState:
       type: string
       pattern: '^(QUEUED|RUNNING|STOPPED)'
@@ -451,10 +452,10 @@ components:
           description: Whether deployment is based on ocrd_all
           type: boolean
         ocrd_all_version:
-          description: Git tag of the ocrd_all repo
+          description: Git tag of the ocrd_all version implemented
           type: string
         has_docker:
-          description: Whether the OCR-D executables run in a docker container
+          description: Whether the OCR-D executables run in a Docker container
           type: boolean
     LogEntry:
       type: object
