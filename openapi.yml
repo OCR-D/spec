@@ -79,7 +79,8 @@ paths:
           description: Get this processor
           content:
             application/json: {schema: {$ref: '#/components/schemas/Processor'}}
-        '404': {content: {}, description: 'Processor not available'}
+        '404':
+          description: 'Processor not available'
     post:
       tags: ['processing']
       operationId: runProcessor
@@ -118,7 +119,8 @@ paths:
         '200':
           description: Return ProcessorJob
           content: {application/json: {schema: {$ref: '#/components/schemas/ProcessorJob'}}}
-        '404': {content: {}, description: 'ProcessorJob not found'}
+        '404':
+          description: 'ProcessorJob not found'
 
   '/processor/{executable}/{job-id}/log':
     get:
@@ -140,7 +142,8 @@ paths:
           description: Return Log
           content:
             'text/plain': {}
-        '404': {content: {}, description: 'ProcessorJob not found'}
+        '404':
+          description: 'ProcessorJobLog not found'
     post:
       tags: ['processing']
       operationId: logProcessor
@@ -160,7 +163,8 @@ paths:
           description: Return Log
           content:
             'text/plain': {}
-        '404': {content: {}, description: 'ProcessorJob not found'}
+        '404': 
+          description: 'ProcessorJob not found'
 
   '/workflow':
     post:
@@ -210,7 +214,8 @@ paths:
           content:
             application/json: {schema: {$ref: '#/components/schemas/Workflow'}}
             application/vnd.ocrd+zip: {}
-        '404': {content: {}, description: 'Workflow not available'}
+        '404':
+          description: 'Workflow not available'
     post:
       tags: ['workflow']
       operationId: runWorkflow
@@ -248,7 +253,6 @@ paths:
             application/json: {schema: {$ref: '#/components/schemas/WorkflowJob'}}
         '404':
           description: WorkflowJob not found
-          content: {}
 
   '/workspace':
     get:
