@@ -147,7 +147,7 @@ paths:
           description: 'ProcessorJobLog not found'
     post:
       tags: ['processing']
-      operationId: logProcessor
+      operationId: postProcessorJobLogEntry
       parameters:
         - name: executable
           in: path
