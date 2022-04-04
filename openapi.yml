@@ -342,7 +342,7 @@ paths:
           description: Workspace not found
           content: {}
         '410':
-          description: Workspace deleted
+          description: Workspace deleted before
           content: {}
 
   '/discovery':
