@@ -24,9 +24,10 @@ info:
 
     Defined in [https://ocr-d.de/en/spec/ocrd_zip](https://ocr-d.de/en/spec/ocrd_zip)
 
-    ### `text/vnd.ocrd+sh`
+    ### `text/vnd.ocrd.workflow`
 
-    Defined in https://ocr-d.de/en/spec/ocrdwf
+    Workflow format, currently (April 2022) still to be determined.
+
   contact:
     email: info@ocr-d.de
   license:
@@ -45,7 +46,7 @@ tags:
   - name: processing
     description: OCR-D processing and processors
   - name: workflow
-    description: Processing of OCRD-WF
+    description: Processing of workflows
   - name: workspace
     description: mets.xml-indexed BagIt container
   - name: training
@@ -174,7 +175,7 @@ paths:
       requestBody:
         description: 'Register a new workflow'
         content:
-          'text/vnd.ocrd+sh': {}
+          'text/vnd.ocrd.workflow': {}
         required: true
       responses:
         '200':
@@ -194,7 +195,7 @@ paths:
       requestBody:
         description: 'Replace existing or create new workflow'
         content:
-          'text/vnd.ocrd+sh': {}
+          'text/vnd.ocrd.workflow': {}
         required: true
       responses:
         '200':
@@ -211,7 +212,7 @@ paths:
           required: true
       responses:
         '200':
-          description: Return ProcessorJob
+          description: Return Workflow
           content:
             application/json: {schema: {$ref: '#/components/schemas/Workflow'}}
             application/vnd.ocrd+zip: {}
