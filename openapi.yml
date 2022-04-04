@@ -454,7 +454,8 @@ components:
       properties:
         ram:
           description: All available RAM in bytes
-          type: number
+          type: integer
+          format: int64
         cpu_cores:
           description: Number of available CPU cores
           type: number
