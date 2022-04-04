@@ -491,4 +491,5 @@ components:
         time:
           description: Log UTC time
           type: string
+          format: date-time
 
