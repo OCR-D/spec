@@ -311,7 +311,7 @@ paths:
         required: true
       responses:
         '200':
-          description: Workspace replaced
+          description: Workspace replaced or created
           content: 
             application/json: {schema: {$ref: '#/components/schemas/Workspace'}}
         '400':
