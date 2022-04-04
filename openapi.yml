@@ -424,6 +424,9 @@ components:
         input_file_grps: {type: string}
         output_file_grps: {type: string}
         page_id: {type: string}
+        parameters:
+          type: object
+          default: {}
     ProcessorCall:
       allOf:
         - {$ref: '#/components/schemas/ProcessorArgs'}
