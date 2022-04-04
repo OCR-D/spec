@@ -240,6 +240,7 @@ paths:
   '/workflow/{workflow-id}/{job-id}':
     get:
       tags: ['workflow']
+      operationId: getWorkflowJob
       parameters:
         - name: workflow-id
           in: path
@@ -251,7 +252,6 @@ paths:
           description: ID of the ProcessorJob
           schema: {type: string}
           required: true
-      operationId: getWorkflowJob
       responses:
         '200':
           description: Return WorkflowJob
@@ -277,8 +277,8 @@ paths:
                   $ref: '#/components/schemas/Workspace'
     post:
       tags: ['workspace']
-      summary: Post a new workspace
       operationId: createWorkspace
+      summary: Post a new workspace
       requestBody:
         description: OCRD-ZIP of the new workspace
         content:
@@ -295,8 +295,8 @@ paths:
   '/workspace/{workspace-id}':
     put:
       tags: ['workspace']
-      summary: Replace an existing workspace
       operationId: replaceWorkspace
+      summary: Replace an existing workspace
       parameters:
         - name: workspace-id
           in: path
@@ -337,6 +337,7 @@ paths:
           description: Workspace deleted before
           content: {}
     delete:
+      tags: ['workspace']
       operationId: deleteWorkspace
       parameters:
         - name: workspace-id
