@@ -181,6 +181,8 @@ paths:
         '200':
           description: Created a new OCR-D workflow
           content: {application/json: {schema: {$ref: '#/components/schemas/Workflow'}}}
+        '400':
+          description: Invalid workflow
 
   '/workflow/{workflow-id}':
     put:
@@ -201,6 +203,8 @@ paths:
         '200':
           description: Created/updated a new OCR-D workflow
           content: {application/json: {schema: {$ref: '#/components/schemas/Workflow'}}}
+        '400':
+          description: Invalid workflow
     get:
       tags: ['workflow', 'discovery']
       operationId: getWorkflow
@@ -253,6 +257,8 @@ paths:
           description: Return WorkflowJob
           content:
             application/json: {schema: {$ref: '#/components/schemas/WorkflowJob'}}
+        '400':
+          description: Workflow failed
         '404':
           description: WorkflowJob not found
 
@@ -279,10 +285,12 @@ paths:
           'application/vnd.ocrd+zip': {}
         required: true
       responses:
-        201:
+        '201':
           description: Created Workspace
           content:
             application/json: {schema: {$ref: '#/components/schemas/Workspace'}}
+        '400':
+          description: Invalid workspace
 
   '/workspace/{workspace-id}':
     put:
@@ -302,10 +310,12 @@ paths:
             schema: {$ref: '#/components/schemas/WorkspaceRequest'}
         required: true
       responses:
-        200:
+        '200':
           description: Workspace replaced
           content: 
             application/json: {schema: {$ref: '#/components/schemas/Workspace'}}
+        '400':
+          description: Workspace invalid
     get:
       tags: ['workspace']
       operationId: getWorkspace
@@ -324,7 +334,7 @@ paths:
           description: Workspace not found
           content: {}
         '410':
-          description: Workspace deleted
+          description: Workspace deleted before
           content: {}
     delete:
       operationId: deleteWorkspace
