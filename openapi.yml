@@ -458,7 +458,8 @@ components:
           format: int64
         cpu_cores:
           description: Number of available CPU cores
-          type: number
+          type: integer
+          format: int64
         has_cuda:
           description: Whether deployment supports NVIDIA's CUDA
           type: boolean
