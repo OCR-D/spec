@@ -6,6 +6,12 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [3.18.0] - 2022-04-06
+
+Added:
+
+  * Initial version of the OCR-D Web API, #173
+
 ## [3.17.0] - 2022-02-14
 
 Added:
@@ -421,6 +427,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[3.18.0]: ../../compare/v3.18.0...v3.17.0
 [3.17.0]: ../../compare/v3.17.0...v3.16.0
 [3.16.0]: ../../compare/v3.16.0...v3.15.0
 [3.15.0]: ../../compare/v3.15.0...v3.14.0
