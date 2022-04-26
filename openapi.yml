@@ -32,11 +32,11 @@ info:
     email: info@ocr-d.de
   license:
     name: Apache 2.0
-    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+    url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
   version: 0.0.1
 externalDocs:
   description: OCR-D Website
-  url: 'http://ocr-d.de'
+  url: 'https://ocr-d.de'
 servers:
   - url: 'https://example.org/ocrd/v1'
     description: The URL of your server offering the OCR-D API.
