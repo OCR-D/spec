@@ -9,7 +9,7 @@ info:
 
     ## OCR-D API compatibility
 
-    An implementation may claim compatibility with a `OCR-D ${N} API v{$V}` iff
+    An implementation may claim compatibility with a `OCR-D ${N} API v{$V}` if
 
       * it implements all the methods tagged `${N}`
       * at major version `${V}` of this API definition
