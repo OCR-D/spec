@@ -475,9 +475,6 @@ components:
         ocrd_all_version:
           description: Git tag of the ocrd_all version implemented
           type: string
-        has_docker:
-          description: Whether the OCR-D executables run in a Docker container
-          type: boolean
     LogEntry:
       type: object
       required:
