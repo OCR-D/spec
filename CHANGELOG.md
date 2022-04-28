@@ -6,6 +6,15 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Fixed:
+
+  * typos in the web OCR-D Web API, #199
+
+Changed:
+
+  * Drop `Ocrd-Manifestation-Depth` and disallow `fetch.txt` bagit mechanism, #182
+
+
 ## [3.18.0] - 2022-04-06
 
 Added:
