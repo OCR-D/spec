@@ -9,10 +9,12 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 Fixed:
 
   * typos in the web OCR-D Web API, #199
+  * typo in the OCRD-ZIP spec, #203
 
 Changed:
 
   * Drop `Ocrd-Manifestation-Depth` and disallow `fetch.txt` bagit mechanism, #182
+  * Drop unclear `has_docker` attribute in discovery response in OCR-D Web API, #201
 
 
 ## [3.18.0] - 2022-04-06
