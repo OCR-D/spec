@@ -1,5 +1,4 @@
-Change Log
-==========
+# Change Log
 
 All notable changes to the specs will be documented in this file.
 
@@ -10,6 +9,141 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 Added:
 
   * ocrd-tool: Allow definition of "sample-calls"
+
+Fixed:
+
+  * typos in the web OCR-D Web API, #199
+  * typo in the OCRD-ZIP spec, #203
+
+Changed:
+
+  * Drop `Ocrd-Manifestation-Depth` and disallow `fetch.txt` bagit mechanism, #182
+  * Drop unclear `has_docker` attribute in discovery response in OCR-D Web API, #201
+
+
+## [3.18.0] - 2022-04-06
+
+Added:
+
+  * Initial version of the OCR-D Web API, #173
+
+## [3.17.0] - 2022-02-14
+
+Added:
+
+  * `ocrd-tool.json`: Support processors listing their own `resources` and restrict `resource_locations`, OCR-D/spec#181, OCR-D/spec#190
+
+## [3.16.0] - 2022-01-30
+
+Changed:
+
+  * `--page-id` can accept the `..` numerical range operator, #172, OCR-D/core#672
+  * `ocrd-tool.json`: Parameters that accept a directory must have `content-type == "text/dirctory"`, #189, OCR-D/core#750, OCR-D/core#691
+
+Added:
+
+  * German translation of the glossary, OCR-D/ocrd-website#290
+
+## [3.15.0] - 2021-12-07
+
+Changed:
+
+  * `mets:fileGrp/@USE` must be valid `xs:ID`, #185
+
+## [3.14.0] - 2021-11-03
+
+Changed:
+
+  * Resource lookup: for `--location cwd` look directly in `<cwd>`, no subdirectory, OCR-D/core#727
+
+## [3.13.0] - 2021-09-20
+
+Changed:
+
+  * CLI: Logging should go to `STDERR`, parseable output to `STDOUT`, #183, OCR-D/core#713
+
+## [3.12.0] - 2021-01-26
+
+Changed:
+
+  * Resource lookup: Remove XDG_CONFIG_HOME and XDG_CACHE_HOME
+  * Resource lookup: Add `/usr/local/share/ocrd-resources`
+
+## [3.11.0] - 2021-01-20
+
+Changed:
+
+  * Resource lookup in an intermediary `ocrd-resources` directory
+  * Drop python-specific resource locations
+  * Drop `/usr/local/share` resource location
+
+## [3.10.0] - 2020-12-02
+
+Changed:
+
+  * Revise glossary, mostly by @bertsky
+
+## [3.9.1] - 2020-10-12
+
+Changed:
+
+  * processor parameter values can be arrays, #174
+
+
+## [3.9.0] - 2020-07-21
+
+Changed:
+
+  * CLI: Processors being called without valid METS file -> show help, #156
+
+## [3.8.0] - 2020-07-13
+
+Added:
+
+  * Parameter JSON files may contain `#`-prefixed comments, #161
+  * *Processor resources*, encompassing bundled/user-provided parameter JSON files and file parameter values like models, #158, #162
+  * Mechanism for resolving file parameter values to actual filenames, #163
+  * CLI: `-P/--parameter-override` to override single key-value pairs of parameter JSON, #166
+
+Changed:
+
+  * `mets:file` representing `page:AlternativeImage` should **not** be added to separate `mets:fileGrp` but rather to the PAGE-XML whence they originate, #164
+  * Recommendation how file IDs should be derived from existing `mets:file`, #164
+  * CLI: `-p/--parameter` option repeatable, results are merged right to left, #161
+  * METS: Simplify the convention for `mets:file/@ID` for derived images, #164
+  * `mets:fileGrp` for prerprocessing steps should use the qualifier `PRE` instead of `IMG`, #164
+
+Removed:
+
+  * Recommendations on `fileGrp/@USE` for images, #164
+
+## [3.7.0] - 2020-06-07
+
+Added:
+
+  * ocrd-tool.json: Parameter values may be objects, #143
+  * glossary: definitions of "print space" and "border", #114
+
+## [3.6.0] - 2020-04-30
+
+Added:
+
+  * CLI: `--overwrite` flag to delete existing output files before processing, #151
+
+## [3.5.0] - 2020-04-20
+
+Changed:
+
+  * CLI: clarify requirements on processors, ht @bertsky, #148
+  * Use `region` instead of `block` for areas on the page, #135
+  * PAGE: `imageFilename` must NOT be a URL but a relative filename, #140
+  * Updated URLs to point to https://ocr-d.de instead of https://ocr-d.github.io, #149
+
+Added:
+
+  * docker: instructions on naming and labelling images, #139
+  * CLI tools must implement `-h/--help`, #115
+>>>>>>> master
 
 ## [3.4.2] - 2020-01-08
 
@@ -309,6 +443,21 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[3.18.0]: ../../compare/v3.18.0...v3.17.0
+[3.17.0]: ../../compare/v3.17.0...v3.16.0
+[3.16.0]: ../../compare/v3.16.0...v3.15.0
+[3.15.0]: ../../compare/v3.15.0...v3.14.0
+[3.14.0]: ../../compare/v3.14.0...v3.13.0
+[3.13.0]: ../../compare/v3.13.0...v3.12.0
+[3.12.0]: ../../compare/v3.12.0...v3.11.0
+[3.11.0]: ../../compare/v3.11.0...v3.10.0
+[3.10.0]: ../../compare/v3.10.0...v3.9.1
+[3.9.1]: ../../compare/v3.9.1...v3.9.0
+[3.9.0]: ../../compare/v3.9.0...v3.8.0
+[3.8.0]: ../../compare/v3.8.0...v3.7.0
+[3.7.0]: ../../compare/v3.7.0...v3.6.0
+[3.6.0]: ../../compare/v3.6.0...v3.5.0
+[3.5.0]: ../../compare/v3.5.0...v3.4.2
 [3.4.2]: ../../compare/v3.4.2...v3.4.1
 [3.4.1]: ../../compare/v3.4.1...v3.4.0
 [3.4.0]: ../../compare/v3.4.0...v3.3.0
