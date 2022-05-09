@@ -10,6 +10,7 @@ Fixed:
 
   * typos in the web OCR-D Web API, #199
   * typo in the OCRD-ZIP spec, #203
+  * fix bagit-profile URL, #205
 
 Changed:
 
