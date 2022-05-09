@@ -53,7 +53,7 @@ the full definition](#appendix-a)):
 
 ### `BagIt-Profile-Identifier`
 
-The `BagIt-Profile-Identifier` must be the string `https://ocr-d.de/bagit-profile.json`.
+The `BagIt-Profile-Identifier` must be the string `https://ocr-d.de/en/spec/bagit-profile.json`.
 
 ### `Ocrd-Mets`
 
