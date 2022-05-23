@@ -18,7 +18,30 @@ For this purpose, the METS file MUST contain a `mods:identifier` that must conta
 * `handle`
 * `url`
 
-### 1.2 Recording processing information in METS
+### 1.2 Always use URL or relative filenames
+
+Always use URL, except for files located in the directory or any subdirectories of the METS file.
+
+#### Example
+
+```sh
+/tmp/foo/ws1
+├── mets.xml
+├── foo.tif
+└── foo.xml
+```
+
+Valid `mets:FLocat/@xlink:href` in `/tmp/foo/ws1/mets.xml`:
+* `foo.xml`
+* `foo.tif`
+* `file://foo.tif`
+
+Invalid `mets:FLocat/@xlink:href` in `/tmp/foo/ws1/mets.xml`:
+* `/tmp/foo/ws1/foo.xml` (absolute path)
+* `file:///tmp/foo/ws1/foo.tif` (file URL scheme with absolute path)
+* `file:///foo.tif` (relative path written as absolute path)
+
+### 1.3 Recording processing information in METS
 
 Processors should add information to the METS metadata header to indicate that
 they changed the METS. This information is mainly for human consumption to get
@@ -46,32 +69,19 @@ To add agent information, a processor must:
 </mets:agent>
 ```
 
-### 1.3 Always use URL or relative filenames
-
-Always use URL, except for files located in the directory or any subdirectories of the METS file.
-
-#### Example
-
-```sh
-/tmp/foo/ws1
-├── mets.xml
-├── foo.tif
-└── foo.xml
-```
-
-Valid `mets:FLocat/@xlink:href` in `/tmp/foo/ws1/mets.xml`:
-* `foo.xml`
-* `foo.tif`
-* `file://foo.tif`
-
-Invalid `mets:FLocat/@xlink:href` in `/tmp/foo/ws1/mets.xml`:
-* `/tmp/foo/ws1/foo.xml` (absolute path)
-* `file:///tmp/foo/ws1/foo.tif` (file URL scheme with absolute path)
-* `file:///foo.tif` (relative path written as absolute path)
-
 ## 2) Images
 
-### 2.1 Pixel density of images must be explicit and high enough
+### 2.1 If in PAGE then in METS
+
+All URL used in `imageFilename` and `filename` attributes of
+`<pc:Page>`/`<pc:AlternativeImage>` MUST be referenced in a `mets:fileGrp` as the
+`@xlink:href` attribute of a `mets:file`. This MUST be the same file group as
+the PAGE-XML that was the result of the processing step that produced the
+`<pg:AlternativeImage>`. In other words: `<pg:AlternativeImage>` should be
+written to the same `mets:fileGrp` as its source PAGE-XML, which in most
+implementations will mean the same folder.
+
+### 2.2 Pixel density of images must be explicit and high enough
 
 The pixel density is the ratio of the number of pixels that represent a a unit of measure of the scanned object. It is typically measured in pixels per inch (PPI, a.k.a. DPI).
 
@@ -96,16 +106,6 @@ $> exiftool output.tif |grep 'X Resolution'
 However, since technical metadata about pixel density is so often lost in
 conversion or inaccurate, processors should assume **300 ppi** for images with
 missing or suspiciously low pixel density metadata.
-
-### 2.2 If in PAGE then in METS
-
-All URL used in `imageFilename` and `filename` attributes of
-`<pc:Page>`/`<pc:AlternativeImage>` MUST be referenced in a `mets:fileGrp` as the
-`@xlink:href` attribute of a `mets:file`. This MUST be the same file group as
-the PAGE-XML that was the result of the processing step that produced the
-`<pg:AlternativeImage>`. In other words: `<pg:AlternativeImage>` should be
-written to the same `mets:fileGrp` as its source PAGE-XML, which in most
-implementations will mean the same folder.
 
 ### 2.3 No multi-page images
 
