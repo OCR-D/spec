@@ -46,11 +46,7 @@ To add agent information, a processor must:
 </mets:agent>
 ```
 
-### 1.3 Media Type for PAGE XML
-
-Every `<mets:file>` representing a PAGE document MUST have its `MIMETYPE` attribute set to `application/vnd.prima.page+xml`.
-
-### 1.4 Always use URL or relative filenames
+### 1.3 Always use URL or relative filenames
 
 Always use URL, except for files located in the directory or any subdirectories of the METS file.
 
@@ -215,6 +211,10 @@ ID := FILEGRP + (".IMG")?
 `<mets:file ID="OCR-D-PRE-CROP_0001">`       | PAGE encapsulating the result from (binarization and) cropping
 `<mets:file ID="OCR-D-PRE-CROP.IMG_0001">`   | Cropped black-and-white image
 
+### 4.2 `@MIMETYPE` syntax
+
+Every `<mets:file>` representing a PAGE document MUST have its `MIMETYPE` attribute set to `application/vnd.prima.page+xml`.
+
 ## 5) Grouping files by page `mets:structMap`
 
 ### 5.1 Grouping files by page
@@ -260,7 +260,7 @@ attributes in `structMap` | description
 
 ## 6) Ranges of pages `mets:structLink`
 
-The `mets:structLink`describes the range of pages in part of document.
+The `mets:structLink` describes the ranges of pages in part of a document.
 
 #### Example
 
