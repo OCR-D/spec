@@ -5,9 +5,9 @@ for digitised media by the [DFG-Viewer](http://dfg-viewer.de/) (current version:
 
 For layout and text recognition results, the primary exchange format in OCR-D is [PAGE](https://github.com/OCR-D/PAGE-XML). Conventions for PAGE are outlined in [a separate document](page).
 
-# 1) Metadata
+## 1) Metadata
 
-## 1.1 Unique ID for the document processed
+### 1.1 Unique ID for the document processed
 
 METS provided to the MP must be uniquely addressable within the global library community.
 
@@ -18,7 +18,7 @@ For this purpose, the METS file MUST contain a `mods:identifier` that must conta
 * `handle`
 * `url`
 
-## 1.2 Recording processing information in METS
+### 1.2 Recording processing information in METS
 
 Processors should add information to the METS metadata header to indicate that
 they changed the METS. This information is mainly for human consumption to get
@@ -38,7 +38,7 @@ To add agent information, a processor must:
   - Name of the processor, e.g. the name of the executable from `ocrd-tool.json`
   - Version of the processor, e.g. from `ocrd-tool.json`
 
-**Example:**
+#### Example
 
 ```xml
 <mets:agent TYPE="OTHER" OTHERTYPE="SOFTWARE" ROLE="OTHER" OTHERROLE="preprocessing/optimization/binarization">
@@ -46,15 +46,15 @@ To add agent information, a processor must:
 </mets:agent>
 ```
 
-## 1.3 Media Type for PAGE XML
+### 1.3 Media Type for PAGE XML
 
 Every `<mets:file>` representing a PAGE document MUST have its `MIMETYPE` attribute set to `application/vnd.prima.page+xml`.
 
-## 1.4 Always use URL or relative filenames
+### 1.4 Always use URL or relative filenames
 
 Always use URL, except for files located in the directory or any subdirectories of the METS file.
 
-### Example
+#### Example
 
 ```sh
 /tmp/foo/ws1
@@ -73,9 +73,9 @@ Invalid `mets:FLocat/@xlink:href` in `/tmp/foo/ws1/mets.xml`:
 * `file:///tmp/foo/ws1/foo.tif` (file URL scheme with absolute path)
 * `file:///foo.tif` (relative path written as absolute path)
 
-# 2) Images
+## 2) Images
 
-## 2.1 Pixel density of images must be explicit and high enough
+### 2.1 Pixel density of images must be explicit and high enough
 
 The pixel density is the ratio of the number of pixels that represent a a unit of measure of the scanned object. It is typically measured in pixels per inch (PPI, a.k.a. DPI).
 
@@ -101,7 +101,7 @@ However, since technical metadata about pixel density is so often lost in
 conversion or inaccurate, processors should assume **300 ppi** for images with
 missing or suspiciously low pixel density metadata.
 
-## 2.2 If in PAGE then in METS
+### 2.2 If in PAGE then in METS
 
 All URL used in `imageFilename` and `filename` attributes of
 `<pc:Page>`/`<pc:AlternativeImage>` MUST be referenced in a `mets:fileGrp` as the
@@ -111,7 +111,7 @@ the PAGE-XML that was the result of the processing step that produced the
 written to the same `mets:fileGrp` as its source PAGE-XML, which in most
 implementations will mean the same folder.
 
-## 2.3 No multi-page images
+### 2.3 No multi-page images
 
 Image formats like TIFF support encoding multiple images in a single file.
 
@@ -119,7 +119,7 @@ Data providers MUST provide single-image TIFF files.
 
 OCR-D processors MUST raise an exception if they encounter multi-image TIFF files.
 
-## 2.4 Images and coordinates
+### 2.4 Images and coordinates
 
 Coordinates are always absolute, i.e. relative to extent defined in the `imageWidth`/`imageHeight` attribute of the nearest `<pc:Page>`.
 
@@ -128,9 +128,9 @@ When a processor wants to access the image of a layout element like a TextRegion
 - If the element in question has an attribute `imageFilename`, resolve this value
 - If the element has a `<pc:Coords>` subelement, resolve by passing the attribute `imageFilename` of the nearest `<pc:Page>` and the `points` attribute of the `<pc:Coords>` element
 
-# 3) File group `mets:fileGrp`
+## 3) File group `mets:fileGrp`
 
-## 3.1 File Group `@USE` syntax
+### 3.1 File Group `@USE` syntax
 
 All `mets:fileGrp` MUST have a **unique** `USE` attribute that hints at the provenance of the files and must be a valid [`xsd:ID`](https://www.w3.org/TR/xmlschema11-2/#ID).
 
@@ -157,7 +157,7 @@ all-caps form, such as the name of the tool (`KRAKEN`) or the organisation
 `CIS` or the type of manipulation (`CROP`) or a combination of both starting
 with the type of manipulation (`BIN-KRAKEN`).
 
-### Examples
+#### Example
 
 `<mets:fileGrp USE>`                       | Type of use for OCR-D
 --                                         | --
@@ -180,24 +180,22 @@ with the type of manipulation (`BIN-KRAKEN`).
 `<mets:fileGrp USE="OCR-D-GT-SEG-WORD">`   | Word segmentation ground truth
 `<mets:fileGrp USE="OCR-D-GT-SEG-GLYPH">`  | Glyph segmentation ground truth
 
-## 3.2 File Group `@USE="FULLDOWNLOAD_..."`
-
-#### Fulldownload
+### 3.2 File Group `@USE="FULLDOWNLOAD_..."`
 
 For `mets:file` entries representative of the publication **as a whole**, the `ID` attribute MUST have  prefix `FULLDOWNLOAD_`, followed by the file format (`TEI`, `ALTO`, `hOCR`, `HTML`, `TXT`, `COCO`, `PDF`).
 
 These entries SHOULD be referenced in the [structMap](#ocr-d-structmap) under `/mets:mets/mets:structMap[@TYPE="PHYSICAL"]/mets:fptr`.
 
-##### Examples
+#### Example
 `<mets:file ID>` | ID of the file for OCR-D
 --               | --
 `<mets:file ID="FULLDOWNLOAD_TEI"  MIMETYPE="application/tei+xml">`            | The digitised publication or book in TEI format.
 `<mets:file ID="FULLDOWNLOAD_TEI_01"  MIMETYPE="application/pdf">`            | The digitised publication or book in TEI format. Version one.
 `<mets:file ID="FULLDOWNLOAD_TEI_02"  MIMETYPE="application/tei+xml">`            | The digitised publication or book in TEI format, a second Version.
 
-# 4) File `mets:file` 
+## 4) File `mets:file` 
 
-## File ID syntax
+### 4.1 File ID syntax
 
 Each `mets:file` must have an `ID` attribute. The `ID` attribute of a `mets:file` SHOULD be the `USE` of the containing `mets:fileGrp` combined with a 4-zero-padded number.
 The `ID` MUST be unique inside the METS file.
@@ -206,7 +204,8 @@ The `ID` MUST be unique inside the METS file.
 FILEID := ID + "_" + [0-9]{4}
 ID := FILEGRP + (".IMG")?
 ```
-### Examples
+
+#### Example
 
 `<mets:file ID>` | ID of the file for OCR-D
 --               | --
@@ -216,9 +215,9 @@ ID := FILEGRP + (".IMG")?
 `<mets:file ID="OCR-D-PRE-CROP_0001">`       | PAGE encapsulating the result from (binarization and) cropping
 `<mets:file ID="OCR-D-PRE-CROP.IMG_0001">`   | Cropped black-and-white image
 
-# 5) Grouping files by page `mets:structMap`
+## 5) Grouping files by page `mets:structMap`
 
-## 5.1 Grouping files by page
+### 5.1 Grouping files by page
 
 Every METS file MUST have exactly one physical map that contains a single
 `mets:div[@TYPE="physSequence"]` which in turn must contain a
@@ -228,7 +227,7 @@ These `mets:div[@TYPE="page"]` can contain an arbitrary number of `mets:fptr`
 pointers to `mets:file` elements to signify that all the files within a div are
 encodings of the same page.
 
-### Example
+#### Example
 
 ```xml
 <mets:fileGrp USE="OCR-D-IMG">
@@ -247,7 +246,7 @@ encodings of the same page.
 </mets:structMap>
 ```
 
-## 5.2 OCR-D `mets:structMap`
+### 5.2 OCR-D `mets:structMap`
 
 A METS may contain different `mets:structMap` entries, differentiated by their `TYPE` attribute (e.g. `LOGICAL`, `PHYSICAL, ...`). 
 * A `mets:structMap` with `TYPE="PHYSICAL"` is mandatory.
@@ -259,14 +258,11 @@ attributes in `structMap` | description
 `LABEL` | contains the recognized text of a structuring component, e.g. the title of a chapter
 `TYPE` | contains the type of a structuring component according to some standardized, controlled vocabulary (see [DFG-Viewer: structural data set](https://dfg-viewer.de/strukturdatenset/)), e.g. `chapter`
 
-# 6) Ranges of pages `mets:structLink`
-
-### `mets:structLink`
+## 6) Ranges of pages `mets:structLink`
 
 The `mets:structLink`describes the range of pages in part of document.
 
-
-### Example
+#### Example
 
 ```xml
 <mets:fileGrp USE="OCR-D-IMG">
@@ -327,5 +323,3 @@ The `mets:structLink`describes the range of pages in part of document.
 
 </mets:structLink>
 ```
-
-
