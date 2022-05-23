@@ -26,7 +26,7 @@ info:
 
     ### `text/vnd.ocrd.workflow`
 
-    Workflow format, currently (April 2022) still to be determined.
+    Workflows in OCR-D are written as [Nextflow scripts](https://www.nextflow.io/docs/latest/script.html).
 
   contact:
     email: info@ocr-d.de
