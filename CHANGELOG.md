@@ -17,6 +17,10 @@ Changed:
   * Drop `Ocrd-Manifestation-Depth` and disallow `fetch.txt` bagit mechanism, #182
   * Drop unclear `has_docker` attribute in discovery response in OCR-D Web API, #201
 
+Added:
+
+  * Parameters can now be described with most JSON-Schema constructs, #206, OCR-D/core#848
+
 
 ## [3.18.0] - 2022-04-06
 
