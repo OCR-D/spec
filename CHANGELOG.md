@@ -6,6 +6,8 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [3.19.0] - 2022-05-23
+
 Fixed:
 
   * typos in the web OCR-D Web API, #199
@@ -443,6 +445,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[3.19.0]: ../../compare/v3.19.0...v3.18.0
 [3.18.0]: ../../compare/v3.18.0...v3.17.0
 [3.17.0]: ../../compare/v3.17.0...v3.16.0
 [3.16.0]: ../../compare/v3.16.0...v3.15.0
