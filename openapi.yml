@@ -165,7 +165,7 @@ paths:
           description: Return Log
           content:
             'text/plain': {}
-        '404': 
+        '404':
           description: 'ProcessorJob not found'
 
   '/workflow':
@@ -282,7 +282,8 @@ paths:
       requestBody:
         description: OCRD-ZIP of the new workspace
         content:
-          'application/vnd.ocrd+zip': {}
+          'application/vnd.ocrd+zip':
+            schema: {$ref: '#/components/schemas/WorkspaceRequest'}
         required: true
       responses:
         '201':
@@ -306,13 +307,13 @@ paths:
       requestBody:
         description: OCRD-ZIP of the updated workspace
         content:
-          multipart/form-data:
+          'application/vnd.ocrd+zip':
             schema: {$ref: '#/components/schemas/WorkspaceRequest'}
         required: true
       responses:
         '200':
           description: Workspace replaced or created
-          content: 
+          content:
             application/json: {schema: {$ref: '#/components/schemas/Workspace'}}
         '400':
           description: Workspace invalid
@@ -391,8 +392,6 @@ components:
     WorkspaceRequest:
       type: object
       properties:
-        json:
-          $ref: '#/components/schemas/Workspace'
         workspace:
           type: string
           format: binary
