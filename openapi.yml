@@ -314,7 +314,6 @@ paths:
           description: Workspace replaced or created
           content: 
             application/json: {schema: {$ref: '#/components/schemas/Workspace'}}
-            application/vnd.ocrd+zip: {}
         '400':
           description: Workspace invalid
     get:
@@ -328,7 +327,7 @@ paths:
           required: true
       responses:
         '200':
-          description: Workspace found
+          description: Return workspace or OCRD-ZIP
           content:
             application/json: {schema: {$ref: '#/components/schemas/Workspace'}}
             application/vnd.ocrd+zip: {}
@@ -352,7 +351,6 @@ paths:
           description: Workspace deleted
           content:
             application/json: {schema: {$ref: '#/components/schemas/Workspace'}}
-            application/vnd.ocrd+zip: {}
         '404':
           description: Workspace not found
           content: {}
