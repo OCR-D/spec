@@ -283,7 +283,9 @@ paths:
         description: OCRD-ZIP of the new workspace
         content:
           'application/vnd.ocrd+zip':
-            schema: {$ref: '#/components/schemas/WorkspaceRequest'}
+            schema:
+              type: string
+              format: binary
         required: true
       responses:
         '201':
@@ -308,7 +310,9 @@ paths:
         description: OCRD-ZIP of the updated workspace
         content:
           'application/vnd.ocrd+zip':
-            schema: {$ref: '#/components/schemas/WorkspaceRequest'}
+            schema:
+              type: string
+              format: binary
         required: true
       responses:
         '200':
@@ -389,12 +393,6 @@ components:
     Workspace:
       allOf:
         - {$ref: '#/components/schemas/Resource'}
-    WorkspaceRequest:
-      type: object
-      properties:
-        workspace:
-          type: string
-          format: binary
     Job:
       allOf:
         - {$ref: '#/components/schemas/Resource'}
