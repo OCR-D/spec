@@ -7,6 +7,7 @@ For layout and text recognition results, the primary exchange format in OCR-D is
 
 ## 1) Metadata
 
+<a id="unique-id-for-the-document-processed"/>
 ### 1.1 Unique ID for the document processed
 
 METS provided to the MP must be uniquely addressable within the global library community.
@@ -18,6 +19,7 @@ For this purpose, the METS file MUST contain a `mods:identifier` that must conta
 * `handle`
 * `url`
 
+<a id="always-use-url-or-relative-filenames"/>
 ### 1.2 Always use URL or relative filenames
 
 Always use URL, except for files located in the directory or any subdirectories of the METS file.
@@ -41,6 +43,7 @@ Invalid `mets:FLocat/@xlink:href` in `/tmp/foo/ws1/mets.xml`:
 * `file:///tmp/foo/ws1/foo.tif` (file URL scheme with absolute path)
 * `file:///foo.tif` (relative path written as absolute path)
 
+<a id="recording-processing-information-in-mets"/>
 ### 1.3 Recording processing information in METS
 
 Processors should add information to the METS metadata header to indicate that
@@ -71,6 +74,7 @@ To add agent information, a processor must:
 
 ## 2) Images
 
+<a id="if-in-page-then-in-mets"/>
 ### 2.1 If in PAGE then in METS
 
 All URL used in `imageFilename` and `filename` attributes of
@@ -81,6 +85,7 @@ the PAGE-XML that was the result of the processing step that produced the
 written to the same `mets:fileGrp` as its source PAGE-XML, which in most
 implementations will mean the same folder.
 
+<a id="pixel-density-of-images-must-be-explicit-and-high-enough"/>
 ### 2.2 Pixel density of images must be explicit and high enough
 
 The pixel density is the ratio of the number of pixels that represent a a unit of measure of the scanned object. It is typically measured in pixels per inch (PPI, a.k.a. DPI).
@@ -107,6 +112,7 @@ However, since technical metadata about pixel density is so often lost in
 conversion or inaccurate, processors should assume **300 ppi** for images with
 missing or suspiciously low pixel density metadata.
 
+<a id="no-multi-page-images"/>
 ### 2.3 No multi-page images
 
 Image formats like TIFF support encoding multiple images in a single file.
@@ -115,6 +121,7 @@ Data providers MUST provide single-image TIFF files.
 
 OCR-D processors MUST raise an exception if they encounter multi-image TIFF files.
 
+<a id="images-and-coordinates"/>
 ### 2.4 Images and coordinates
 
 Coordinates are always absolute, i.e. relative to extent defined in the `imageWidth`/`imageHeight` attribute of the nearest `<pc:Page>`.
@@ -126,6 +133,7 @@ When a processor wants to access the image of a layout element like a TextRegion
 
 ## 3) File group `mets:fileGrp`
 
+<a id="file-group-use-syntax"/>
 ### 3.1 File Group `@USE` syntax
 
 All `mets:fileGrp` MUST have a **unique** `USE` attribute that hints at the provenance of the files and must be a valid [`xsd:ID`](https://www.w3.org/TR/xmlschema11-2/#ID).
@@ -191,6 +199,7 @@ These entries SHOULD be referenced in the [structMap](#ocr-d-structmap) under `/
 
 ## 4) File `mets:file` 
 
+<a id="file-id-syntax"/>
 ### 4.1 File ID syntax
 
 Each `mets:file` must have an `ID` attribute. The `ID` attribute of a `mets:file` SHOULD be the `USE` of the containing `mets:fileGrp` combined with a 4-zero-padded number.
@@ -217,6 +226,7 @@ Every `<mets:file>` representing a PAGE document MUST have its `MIMETYPE` attrib
 
 ## 5) Grouping files by page `mets:structMap`
 
+<a id="grouping-files-by-page"/>
 ### 5.1 Grouping files by page
 
 Every METS file MUST have exactly one physical map that contains a single
