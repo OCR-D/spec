@@ -1,3 +1,11 @@
+---
+layout: page
+lang-ref: decisions
+lang: en
+toc: true
+title: Decision Log
+---
+
 # Decisions in OCR-D
 
 In a (software project we have to make several decisions ...
