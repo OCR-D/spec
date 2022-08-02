@@ -56,5 +56,5 @@ The tool will probably be a part of the OCR-D software in the future when it is 
 Depends on the use case. Detailed instructions for local executions and example Nextflow workflow scripts can be found here: [Nextflow](https://github.com/MehmedGIT/OPERANDI_TestRepo/tree/master/ExampleWorkflows/Nextflow)
 
 ## What conventions do we encourage, naming, structure, documentation, etc.?
-Try to stick to the structure provided in point 2 when writing Nextflow scripts. You can also check the Nextflow examples provided in point 8. The naming conventions for variables, function names, process names, and workflow names are encouraged to follow the snake case. I will provide further answers to any following questions related to this main question.
+Try to stick to the structure provided in point 2 when writing Nextflow scripts. You can also check the Nextflow examples provided in point 8. The naming conventions for variables, function names, process names, and workflow names are encouraged to follow the snake case.
 
