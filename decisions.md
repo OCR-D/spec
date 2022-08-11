@@ -1,14 +1,9 @@
----
-layout: page
-lang-ref: decisions
-lang: en
-toc: true
-title: Decision Log
----
 
 # Decisions in OCR-D
 
-In a (software project we have to make several decisions ...
+In a software project, especially a highly distributed one like OCR-D, decisions need to be made on the technology used, how interfaces should interoperate and how the software as a whole is designed.
+
+In this document, such decisions on key aspects of OCR-D are discussed for the benefit of all OCR-D stakeholders.
 
 ## Web API
 
@@ -25,11 +20,13 @@ interfaces on a common API definition, so that the different implementations are
 
 ### What is NF and why did we choose it?
 
-Nextflow is a workflow framework that allows the integration of various scripting languages into a single cohesive pipeline. Nextflow also has its own Domain Specific Language (DSL) that extends Groovy (extension of Java).
+Nextflow (NF) is a workflow framework that allows the integration of various scripting languages into a single cohesive pipeline. Nextflow also has its own Domain Specific Language (DSL) that extends Groovy (extension of Java).
+
 
 We choose it due to its rich set of features:
 - Stream oriented: Promotes programming approach extending Unix pipes model.
-- Fast Prototyping: Let’s you write a computational pipeline from smaller tasks.
+- Fast Prototyping: Lets you write a computational pipeline from smaller tasks.
+
 - Reproducibility: Supports Docker, Singularity, and 3 other types of containers.
 - Portable: Can run locally, Slurm, SGE, PBS, and cloud (Google, Kubernetes, and AWS).
 - Continuous checkpoints: Each process in the workflow is checkpointed. It is possible to retry 
@@ -63,10 +60,14 @@ Check this source code example: [seq_ocrd_wf_many.nf](https://github.com/MehmedG
 TODO: I will provide more parallelization details here based on the example above.
 
 ## How does the NF script interact with the processing server?
-There is still no running processing server. More details will be announced once there is more to talk about. The interaction will most probably happen with curl through a bash script inside the Nextflow process. Of course, if it is integrated inside the OCR-D core, then no direct interactions will be needed from inside the Nextflow script.
+As of Aug 2022 the processing server implementation in OCR-D/core is not yet finished, cf. https://github.com/OCR-D/core/pull/884 and https://github.com/OCR-D/core/pull/652. 
+
+The interaction will most probably happen with curl through a bash script inside the Nextflow process. Of course, if it is integrated inside the OCR-D core, then no direct interactions will be needed from inside the Nextflow script.
 
 ## How does the NF script interact with the METS server?
-There is still no running METS server. More details will be announced once there is more to talk about. The interaction will most probably happen with curl through a bash script inside the Nextflow process. Of course, if it is integrated inside the OCR-D core, then no direct interactions will be needed from inside the Nextflow script.
+As of August, 2022, the METS server implementation is still unfinished.
+
+The interaction will most probably happen with curl through a bash script inside the Nextflow process. Of course, if it is integrated inside the OCR-D core, then no direct interactions will be needed from inside the Nextflow script.
 
 ## How to convert the existing OCR-D process workflows we reference to NF?
 I have written an OtoN (OCR-D to Nextflow) converter which converts basic OCR-D process workflows to Nextflow workflow scripts. Check here: [OtoN](https://github.com/MehmedGIT/OtoN_Converter)
@@ -84,7 +85,7 @@ Depends on the use case. Detailed instructions for local executions and example 
 I will provide further answers to any following questions related to this main question.
 
 ## What conventions do we encourage, naming, structure, documentation, etc.?
-Try to stick to the structure provided in point 2 when writing Nextflow scripts. You can also check the Nextflow examples provided in point 8. The naming conventions for variables, function names, process names, and workflow names are encouraged to follow the snake case. I will provide further answers to any following questions related to this main question.
+Try to stick to the structure provided in section [How is the NF script structured](#how-is-the-nf-script-structured) when writing Nextflow scripts. You can also check the Nextflow examples provided in section [Main workflow](#main-workflow). The naming conventions for variables, function names, process names, and workflow names are encouraged to follow the snake case.I will provide further answers to any following questions related to this main question.
 
 
 
