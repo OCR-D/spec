@@ -6,6 +6,14 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Changed:
+
+  * web api: `POST/PUT /workspace`: support content-negotiation for either OcrdZIP or JSON description, #210
+
+Removed:
+
+  * `logging`: obsolete docs better described in `cli`, #219
+
 ## [3.19.0] - 2022-05-23
 
 Fixed:
