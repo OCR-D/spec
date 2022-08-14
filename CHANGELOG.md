@@ -6,6 +6,8 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [3.20.0] - 2022-08-14
+
 Changed:
 
   * web api: `/workspace`: support content-negotiation for either OcrdZip or JSON description, #210
@@ -455,6 +457,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[3.20.0]: ../../compare/v3.20.0...v3.19.0
 [3.19.0]: ../../compare/v3.19.0...v3.18.0
 [3.18.0]: ../../compare/v3.18.0...v3.17.0
 [3.17.0]: ../../compare/v3.17.0...v3.16.0
