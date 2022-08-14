@@ -327,9 +327,10 @@ paths:
           required: true
       responses:
         '200':
-          description: Workspace found
+          description: Return workspace or OCRD-ZIP
           content:
             application/json: {schema: {$ref: '#/components/schemas/Workspace'}}
+            application/vnd.ocrd+zip: {}
         '404':
           description: Workspace not found
           content: {}
