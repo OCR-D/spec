@@ -8,7 +8,9 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 Changed:
 
-  * web api: `POST/PUT /workspace`: support content-negotiation for either OcrdZIP or JSON description, #210
+  * web api: `/workspace`: support content-negotiation for either OcrdZip or JSON description, #210
+  * web api: `POST/PUT /workspace`: return OcrdZip, #209
+  * ocrd-tool.json schema: default for `parameters` is an empty object `{}`
 
 Removed:
 
