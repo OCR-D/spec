@@ -208,7 +208,7 @@ They MAY reside in the same `mets:fileGrp` as per-page files of the same type, o
 `<mets:file ID>` | ID of the file for OCR-D
 --               | --
 `<mets:file ID="FULLDOWNLOAD_TEI"  MIMETYPE="application/tei+xml">`            | The digitised publication or book in TEI format.
-`<mets:file ID="FULLDOWNLOAD_TEI_01"  MIMETYPE="application/pdf">`            | The digitised publication or book in TEI format. Version one.
+`<mets:file ID="FULLDOWNLOAD_TEI_01"  MIMETYPE="application/tei+xml">`            | The digitised publication or book in TEI format. Version one.
 `<mets:file ID="FULLDOWNLOAD_TEI_02"  MIMETYPE="application/tei+xml">`            | The digitised publication or book in TEI format, a second Version.
 
 ## 4) Files `mets:file` 
