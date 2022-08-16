@@ -454,7 +454,10 @@ components:
       required: ['workspace_id']
       properties:
         workspace_id: {type: string}
-        parameters:
+        workflow_parameters:
+          description: >-
+            Possibility to add additional parameters for the workflow. The parameters that can/must
+            be specified here depend on the respective implementation of the workflow.
           type: object
           default: {}
     WorkflowJob:
