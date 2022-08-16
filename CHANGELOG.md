@@ -9,10 +9,12 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 Changed:
 
   * web api: `POST /workflow/{workflow-id}` accepts a `WorkflowArgs` object with workspace ID and workflow parameters, #220
+  * `mets`: Reorganize structure of the document, add numbered section headings, #155, #207
 
 Added:
 
   * `cli`: `--page-id`/`-g` option accepts regular expressions as well, #221, OCR-D/core#856
+  * `mets`: conventions for providing document-wide files (`FULLDOWNLOAD_...`), #154, #207
 
 
 ## [3.20.0] - 2022-08-14
