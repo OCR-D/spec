@@ -211,7 +211,7 @@ They MAY reside in the same `mets:fileGrp` as per-page files of the same type, o
 `<mets:file ID="FULLDOWNLOAD_TEI_01"  MIMETYPE="application/pdf">`            | The digitised publication or book in TEI format. Version one.
 `<mets:file ID="FULLDOWNLOAD_TEI_02"  MIMETYPE="application/tei+xml">`            | The digitised publication or book in TEI format, a second Version.
 
-## 4) File `mets:file` 
+## 4) Files `mets:file` 
 
 <a id="file-id-syntax"/>
 ### 4.1 File ID syntax
