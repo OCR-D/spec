@@ -196,21 +196,6 @@ with the type of manipulation (`BIN-KRAKEN`).
 `<mets:fileGrp USE="OCR-D-GT-SEG-WORD">`   | Word segmentation ground truth
 `<mets:fileGrp USE="OCR-D-GT-SEG-GLYPH">`  | Glyph segmentation ground truth
 
-### 3.2 File Group `@USE="FULLDOWNLOAD_..."`
-
-For `mets:file` entries representative of the publication **as a whole**, the `ID` attribute MUST have  prefix `FULLDOWNLOAD_`, followed by the file format (`TEI`, `ALTO`, `hOCR`, `HTML`, `TXT`, `COCO`, `PDF`).
-
-These entries SHOULD be referenced in the [structMap](#ocr-d-structmap) under `/mets:mets/mets:structMap[@TYPE="PHYSICAL"]/mets:div/mets:fptr` (i.e. the top-level `mets:div` element).
-
-They MAY reside in the same `mets:fileGrp` as per-page files of the same type, or in a separate one.
-
-#### Example
-`<mets:file ID>` | ID of the file for OCR-D
---               | --
-`<mets:file ID="FULLDOWNLOAD_TEI"  MIMETYPE="application/tei+xml">`            | The digitised publication or book in TEI format.
-`<mets:file ID="FULLDOWNLOAD_TEI_01"  MIMETYPE="application/tei+xml">`            | The digitised publication or book in TEI format. Version one.
-`<mets:file ID="FULLDOWNLOAD_TEI_02"  MIMETYPE="application/tei+xml">`            | The digitised publication or book in TEI format, a second Version.
-
 ## 4) Files `mets:file` 
 
 <a id="file-id-syntax"/>
@@ -238,6 +223,21 @@ ID := FILEGRP + (".IMG")?
 ### 4.2 `@MIMETYPE` syntax
 
 Every `mets:file` element representing a PAGE file MUST have its `MIMETYPE` attribute set to `application/vnd.prima.page+xml`.
+
+### 4.3 File Group `@USE="FULLDOWNLOAD_..."`
+
+For `mets:file` entries representative of the publication **as a whole**, the `ID` attribute MUST have  prefix `FULLDOWNLOAD_`, followed by the file format (`TEI`, `ALTO`, `hOCR`, `HTML`, `TXT`, `COCO`, `PDF`).
+
+These entries SHOULD be referenced in the [structMap](#ocr-d-structmap) under `/mets:mets/mets:structMap[@TYPE="PHYSICAL"]/mets:div/mets:fptr` (i.e. the top-level `mets:div` element).
+
+They MAY reside in the same `mets:fileGrp` as per-page files of the same type, or in a separate one.
+
+#### Example
+`<mets:file ID>` | ID of the file for OCR-D
+--               | --
+`<mets:file ID="FULLDOWNLOAD_TEI"  MIMETYPE="application/tei+xml">`            | The digitised publication or book in TEI format.
+`<mets:file ID="FULLDOWNLOAD_TEI_01"  MIMETYPE="application/tei+xml">`            | The digitised publication or book in TEI format. Version one.
+`<mets:file ID="FULLDOWNLOAD_TEI_02"  MIMETYPE="application/tei+xml">`            | The digitised publication or book in TEI format, a second Version.
 
 ## 5) Grouping files by page `mets:structMap`
 
