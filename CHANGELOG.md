@@ -10,6 +10,10 @@ Changed:
 
   * web api: `POST /workflow/{workflow-id}` accepts a `WorkflowArgs` object with workspace ID and workflow parameters, #220
 
+Added:
+
+  * `cli`: `--page-id`/`-g` option accepts regular expressions as well, #221, OCR-D/core#856
+
 
 ## [3.20.0] - 2022-08-14
 
