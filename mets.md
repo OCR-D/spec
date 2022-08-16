@@ -131,7 +131,8 @@ OCR-D processors MUST raise an exception if they encounter multi-image TIFF file
 
 Coordinates in a PAGE-XML are always absolute, i.e. relative to extent defined in the `imageWidth` / `imageHeight` attributes of the top-level `pc:Page`.
 
-When a processor wants to access the image of a layout element like a TextRegion or TextLine, the algorithm should be:
+
+When a processor wants to access the image of a layout element like a `pc:TextRegion` or `pc:TextLine`, the algorithm should be:
 
 - If the element in question has an attribute `imageFilename`, resolve this value
 - Else if the element in question has a subelement `pc:AlternativeImage` with attribute `filename`, resolve this value
