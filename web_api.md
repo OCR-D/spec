@@ -46,6 +46,32 @@ When a system implemented this Web API, it can be used as following:
    header `Accept: application/vnd.ocrd+zip`. Without that header, only the metadata of the specified workspace is
    returned.
 
+## Suggested Architecture for the Implementers
+
+### Centralized approach
+
+There are different ways to build a system which implements this Web API. The simplest way is having everything
+implemented and installed in one server, as shown in Figure 1.
+
+<figure>
+  <img src="images/web-api-simple.jpg" alt="A simple architecture of a system with Web API"/>
+  <figcaption align="center">
+    <b>Fig. 1:</b> The simplest architecture, where a server implements all endpoints and has all processors as well as Nextflow installed locally.
+  </figcaption>
+</figure>
+
+In this case, the Web API Server implements all endpoints from this specification. On the same machine, there are also
+all processors and Nextflow installed, either natively or using Docker. Whenever a request arrives, the Web API Server
+just calls the appropriate command, e.g. `ocrd-[processor]` or Nextflow related command, and returns results to the
+users.
+
+A database is needed to store necessary information, such as users requests, the job status, path to workspace, etc. We
+recommend to use [MongoDB](https://www.mongodb.com/) since it is used by the [Processor API](#rest-api-for-processors),
+but other kind of storage will work fine as well.
+
+The Web API Server requires access to the file system so that it can manage the workspace. In this simple setup, the
+file system can just be the local file system on the machine, where the Web API Server is deployed.
+
 ## REST API for Processors
 
 ### Why do we need this?
