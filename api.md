@@ -25,6 +25,27 @@ use it in OCR-D is documented [here](nextflow.md).
 **Workspace**: [workspaces](https://ocr-d.de/en/user_guide#preparing-a-workspace) are managed via these endpoints. Users
 always need to refer to an existing workspace when they want to trigger a processor or a workflow.
 
+## Usage
+
+When a system implemented this Web API, it can be used as following:
+
+1. User gets information about the system via endpoints in the `Discovery` section.
+2. User creates a workspace via the `POST /workspace` endpoint and gets back a workspace ID.
+3. User creates a workflow by uploading a Nextflow script to the system via the `POST /workflow` endpoint and get back a
+   workflow ID.
+4. User can either:
+    * Trigger a single processor on a workspace by calling the `POST /processor/{executable}` endpoint with the chosen
+      processor name and workspace ID, or
+    * Start a workflow on a workspace by calling the `POST /workflow/{workflow-id}` endpoint with the chosen workflow ID
+      and workspace ID.
+    * In both case, a job ID is returned to the user.
+5. With the given job ID, user can check the job status by calling:
+    * `GET /processor/{executable}/{job-id}` for a single processor, or
+    * `GET /workflow/{workflow-id}/{job-id}` for the workflow.
+6. The result can be downloaded by calling the `GET /workspace/{workspace-id}` endpoint with the
+   header `Accept: application/vnd.ocrd+zip`. Without that header, only the metadata of the specified workspace is
+   returned.
+
 ## REST API for Processors
 
 ### Why do we need this?
