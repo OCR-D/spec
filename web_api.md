@@ -48,10 +48,16 @@ When a system implemented this Web API, it can be used as following:
 
 ## Suggested Architecture for the Implementers
 
+There are different ways to build a system which implements this Web API. In this section, we suggest 3 types of
+architecture, starting from the simplest setup. The implementers do not have to strictly follow one of them, but free to
+choose the approach which fits their situation best.
+
 ### Centralized approach
 
-There are different ways to build a system which implements this Web API. The simplest way is having everything
-implemented and installed in one server, as shown in Figure 1.
+The simplest way is having everything implemented and installed in one server, as shown in Figure 1. In this case, the
+Web API Server implements all endpoints from this specification. On the same machine, there are also all processors and
+Nextflow installed, either natively or using Docker. Whenever a request arrives, the Web API Server just calls the
+appropriate command, e.g. `ocrd-[processor]` or Nextflow related command, and returns results to the users.
 
 <figure>
   <img src="images/web-api-simple.jpg" alt="A simple architecture of a system with Web API"/>
@@ -60,17 +66,37 @@ implemented and installed in one server, as shown in Figure 1.
   </figcaption>
 </figure>
 
-In this case, the Web API Server implements all endpoints from this specification. On the same machine, there are also
-all processors and Nextflow installed, either natively or using Docker. Whenever a request arrives, the Web API Server
-just calls the appropriate command, e.g. `ocrd-[processor]` or Nextflow related command, and returns results to the
-users.
-
 A database is needed to store necessary information, such as users requests, the job status, path to workspace, etc. We
 recommend to use [MongoDB](https://www.mongodb.com/) since it is used by the [Processor API](#rest-api-for-processors),
 but other kind of storage will work fine as well.
 
 The Web API Server requires access to the file system so that it can manage the workspace. In this simple setup, the
 file system can just be the local file system on the machine, where the Web API Server is deployed.
+
+### Distributed Web API Server
+
+Instead of implementing all endpoints of the specification in one server, it might make sense to separate them into many
+servers. The example in Figure 2 shows 4 servers, each of them is responsible for a section in the Web API
+specification. In this case, all processors are installed only in the Processing Server, and Nextflow is installed only
+in the Workflow Server. There is a reverse proxy sitting in front of these 4 servers, which handles all requests from
+users and routes them to the responsible server.
+
+<figure>
+  <img src="images/web-api-partly-distributed.jpg" alt="Different servers implement different parts of the Web API"/>
+  <figcaption align="center">
+    <b>Fig. 2:</b> The Web API specification is implemented by many servers, each of them is responsible for a corresponding section, as they are named.
+  </figcaption>
+</figure>
+
+The Processing, Workflow, and Workspace server need to access to workspaces created from users' requests. Instead of
+moving the workspaces between the servers, it is more efficient to set up a Network File System (NFS) and share the
+access among them. The Discovery server, on the other hand, has nothing to do with workspaces. Therefore, it only needs
+access to the database.
+
+By separating the responsibility, one can easily customize a server to fit its need. For example, the Discovery server
+does not need as many resources as the Processing and Workflow server. It is also possible to scale out a type of server
+in case it is heavily used. Last but not least, each server can be developed independently, and a failure of a server
+does not lead to the failure of the whole system.
 
 ## REST API for Processors
 
