@@ -52,7 +52,7 @@ There are different ways to build a system which implements this Web API. In thi
 architecture, starting from the simplest setup. The implementers do not have to strictly follow one of them, but free to
 choose the approach which fits their situation best.
 
-### Centralized approach
+### Centralized System Architecture
 
 The simplest way is having everything implemented and installed in one server, as shown in Figure 1. In this case, the
 Web API Server implements all endpoints from this specification. On the same machine, there are also all processors and
@@ -73,30 +73,39 @@ but other kind of storage will work fine as well.
 The Web API Server requires access to the file system so that it can manage the workspace. In this simple setup, the
 file system can just be the local file system on the machine, where the Web API Server is deployed.
 
-### Distributed Web API Server
+### Separate the Web API Server
 
 Instead of implementing all endpoints of the specification in one server, it might make sense to separate them into many
-servers. The example in Figure 2 shows 4 servers, each of them is responsible for a section in the Web API
-specification. In this case, all processors are installed only in the Processing Server, and Nextflow is installed only
-in the Workflow Server. There is a reverse proxy sitting in front of these 4 servers, which handles all requests from
-users and routes them to the responsible server.
+servers. If so, a reverse proxy should be deployed in front of these servers. It handles all requests from users and
+routes them to the responsible server. Figure 2 shows this setup. There are three servers, which are responsible for
+different sections in the Web API specification, as they are named. In this case, all processors and Nextflow are
+installed only in the Processing/Workflow Server. A workflow is basically a series of processors connecting to each
+other. Therefore, it is better to have the `Processing` and `Workflow` part implemented in the same server. Otherwise,
+we need to install all processors on the Workflow Server as well.
 
 <figure>
   <img src="images/web-api-partly-distributed.jpg" alt="Different servers implement different parts of the Web API"/>
   <figcaption align="center">
-    <b>Fig. 2:</b> The Web API specification is implemented by many servers, each of them is responsible for a corresponding section, as they are named.
+    <b>Fig. 2:</b> The Web API specification is implemented by many servers, each of them is responsible for different sets of endpoints, as they are named.
   </figcaption>
 </figure>
 
-The Processing, Workflow, and Workspace server need to access to workspaces created from users' requests. Instead of
+The Processing/Workflow and Workspace server need access to workspaces created from users' requests. Instead of
 moving the workspaces between the servers, it is more efficient to set up a Network File System (NFS) and share the
 access among them. The Discovery server, on the other hand, has nothing to do with workspaces. Therefore, it only needs
 access to the database.
 
 By separating the responsibility, one can easily customize a server to fit its need. For example, the Discovery server
-does not need as many resources as the Processing and Workflow server. It is also possible to scale out a type of server
-in case it is heavily used. Last but not least, each server can be developed independently, and a failure of a server
-does not lead to the failure of the whole system.
+does not need as many resources as the Processing/Workflow server. It is also possible to scale out a type of server
+in case it is heavily used. This setup is also enhance security since we can restrict access to all components and only
+expose the reverse proxy to the public network. Last but not least, each component can be developed independently, and a
+failure of one does not lead to the failure of the whole system.
+
+### Distributed System Architecture
+
+In the previous approach, all processors are installed on the Processing/Workflow server, either natively or via Docker.
+We can take one step further by having each processor running on a different machine and communicate with them via
+their [REST API](#rest-api-for-processors), as illustrated in Figure 3.
 
 ## REST API for Processors
 
