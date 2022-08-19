@@ -130,7 +130,8 @@ instead the access to processors and the database.
 ## REST API for Processors
 
 In the [Distributed System Architecture](#distributed-system-architecture), we describe a case, where a processor runs
-as a server instead of its usual one-shot mode. This section describe the Processor API in detail.
+as a server instead of its usual one-shot mode. This section describe the REST API of processor in detail, which we call
+it _Processor API_.
 
 ### Why do we need this?
 
@@ -145,8 +146,41 @@ docker run --rm -u $(id -u) -v $PWD:/data -w /data -- ocrd/all:maximum ocrd-[pro
 
 Although this approach works perfectly fine, it poses a drawback: the processor cannot be called remotely. One always
 needs to connect to the machine where the processor is installed and execute the command on the CLI. If the data is
-small, one might not have to deal with this problem.
+small, this might not be a problem. However, in the era of big data, where one has to constantly deal with a huge amount
+of input, resource utilization has become vital and a distributed system is the way to go. To achieve a distributed
+OCR-D system, the mentioned drawback must be overcome. Therefore, we provide a wrapper for processors to enable their
+communication over network ability.
 
-However, in the era of big data, where one has to constantly deal with a huge amount of input, resource utilization has
-become vital and a distributed system is the way to go. To achieve a distributed OCR-D system, the mentioned drawback
-must be overcome. Therefore, we provide a wrapper for processors to enable their communication over network ability.
+### Usage
+
+Since the Processor API uses [MongoDB](https://www.mongodb.com/) to store data, we must have an instance of MongoDB
+running before starting a Processor API. There are 2 ways to start it:
+
+```shell
+# 1. Via processor CLI
+ocrd-[processor needed] --server=<ip>:<port>:<mongo-url>
+
+# 2. Via ocrd CLI
+ocrd server --server=<ip>:<port>:<mongo-url> <processor-name>
+```
+
+The parameters are:
+
+1. `processor-name`: name of the processor, e.g. `ocrd-dummy`
+2. `ip`: the IP address to which the server should bind, e.g. `0.0.0.0`
+3. `port`: the port number on which the server should listen, e.g. `80`
+4. `mongo-url`: the URL to the Mongo database, e.g. `mongodb://localhost:27017`
+
+For example, to have an `ocrd-dummy` processor running at port `80` of all IPv4 addresses on the local machine and
+connecting to a MongoDB instance at `localhost:27017`, we run one of the two commands:
+
+```shell
+# 1. Via processor CLI
+ocrd-dummy --server=0.0.0.0:80:mongodb://localhost:27017
+
+# 2. Via ocrd CLI
+ocrd server --server=0.0.0.0:80:mongodb://localhost:27017 ocrd-dummy
+```
+
+**Note**: this feature is currently under code review. Once it is finished and release, this page will be updated with
+more information regarding the endpoints of the Processor API.
