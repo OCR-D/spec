@@ -105,9 +105,32 @@ failure of one does not lead to the failure of the whole system.
 
 In the previous approach, all processors are installed on the Processing/Workflow server, either natively or via Docker.
 We can take one step further by having each processor running on a different machine and communicate with them via
-their [REST API](#rest-api-for-processors), as illustrated in Figure 3.
+[their REST API](#rest-api-for-processors), as illustrated in Figure 3.
+
+<figure>
+  <img src="images/web-api-distributed.jpg" alt="Distributed architecture with the Web API"/>
+  <figcaption align="center">
+    <b>Fig. 3:</b> A distributed architecture, where each processor runs as a server on their own machine and communicates via REST API. The Workflow Server is also separated from the Processing Server.
+  </figcaption>
+</figure>
+
+By having each processor running on its own machine, it can reduce the risk of conflicting. Furthermore, we can
+customize the machine to fit best to the processor as well as its need. For example, some processors need GPU, some do
+not, or some need more compute power while others need more memory. It is also easier to scale out the processors, or
+even apply Function-as-a-Service on some of them, which are not constantly used, to save resources. The Processing
+Server in this case plays the role as an entrance to the processors. It takes a request, pre-process it if necessary,
+and forward it to the appropriate processor. The caller does not need to know the detail about the deployment of each
+processor (e.g. which IP address, which port).
+
+Since processors are now running independently, there is no need to have the `Workflow` and `Processing` section in the
+Web API implemented on the same machine anymore. Instead, we can have a Workflow Server separated from the Processing
+Server, and Nextflow is installed on this server. This Workflow Server does not require access to file system, but
+instead the access to processors and the database.
 
 ## REST API for Processors
+
+In the [Distributed System Architecture](#distributed-system-architecture), we describe a case, where a processor runs
+as a server instead of its usual one-shot mode. This section describe the Processor API in detail.
 
 ### Why do we need this?
 
@@ -127,5 +150,3 @@ small, one might not have to deal with this problem.
 However, in the era of big data, where one has to constantly deal with a huge amount of input, resource utilization has
 become vital and a distributed system is the way to go. To achieve a distributed OCR-D system, the mentioned drawback
 must be overcome. Therefore, we provide a wrapper for processors to enable their communication over network ability.
-
-### OCR-D Distributed System Architecture
