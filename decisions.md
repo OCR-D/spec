@@ -89,7 +89,7 @@ The current approach to file management requires processors accessing a single
 METS file on disk, which turns file management into a bottleneck for workflows.
 
 To alleviate this, we will develop an HTTP server that provides asynchronous
-and parallel access to the METS in **Q4 2023**.
+and parallel access to the METS in **Q4 2022**.
 
 ### Decentralized resource list
 
