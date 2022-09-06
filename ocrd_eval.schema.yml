@@ -1,0 +1,97 @@
+type: object
+description: An evaluation report
+properties:
+  type: object
+  patternProperties:
+    '*':
+      type: object
+      properties:
+        label:
+          type: string
+          description: Label to be displayed in UI
+        metadata:
+          type: object
+          description: Metadata about the evaluation(s)
+          properties:
+            workflow:
+              type: object
+              properties:
+                $id:
+                  type: string
+                  format: uri
+                  description: The Nextflow workflow used to generate the data
+                label:
+                  type: string
+                  description: Label to be displayed in UI
+            workflow_job:
+              type: object
+              properties:
+                $id:
+                  type: string
+                  format: uri
+                  description: The WorkflowJob that produced the OCR
+                label:
+                  type: string
+                  description: Label to be displayed in UI
+            eval_data:
+              type: object
+              properties:
+                $id:
+                  type: string
+                  format: uri
+                  description: The OCRD-ZIP of the data to be evaluated
+                label:
+                  type: string
+                  description: Label to be displayed in UI
+            gt_data:
+              type: object
+              properties:
+                $id:
+                  type: string
+                  format: uri
+                  description: The OCRD-ZIP of the Ground Truth for this evaluationi
+                label:
+                  type: string
+                  description: Label to be displayed in UI
+            document:
+              type: object
+              properties:
+                publication_year:
+                  type: number
+                  description: Year of the document was originally published
+                number_of_pages:
+                  type: number
+                  description: Number of pages in this OCRD-ZIP
+            provenance:
+              type: object
+              description: Information on which tools in which version were used in determining metrics
+        evaluation:
+          type: object
+          description: The metrics measured for this document
+          document_wide:
+            type: object
+            description: Document-wide metrics
+            properties: { $ref: '#$defs/metrics' }
+          by_page:
+            type: object
+            description: Metrics page-by-page, key is the page ID
+            patternProperties:
+              '*':
+                type: object
+                properties: { $ref: '#$defs/metrics' }
+$defs:
+  metrics:
+    cer_document_total:
+      description: CER calculated over the text of a page (in by_page) or combined text of all pages (in document_wide) of GT and OCR
+    cer_document_mean:
+      description: Arithmetic mean of the page-wise CER
+    cer_document_median:
+      description: Median of the page-wise CER
+    cer_document_standard_deviation:
+      description: Standard deviation the page-wise CER
+    wall_time:
+      description: Actual time needed for processing workflow
+    cpu_time:
+      description: Cumulative CPU time used for processing workflow
+
+

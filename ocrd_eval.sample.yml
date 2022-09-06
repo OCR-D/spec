@@ -1,0 +1,38 @@
+wf1-data345-eval1:
+  label: Workflow 1 on Data 345
+  metadata:
+    workflow: https://example.org/workflow/1
+    eval_workflow: https://example.org/workflow/eval1
+    eval_data: https://example.org/workspace/345
+    gt_data: https://gt.ocr-d.de/workspace/789
+    document:
+      publication_year: 1789
+      number_of_pages: 10
+  evaluations:
+    document_wide:
+      cer: 0.57
+      cer_document_mean: 0.38
+      cer_document_median: 0.52
+      cer_document_standard_deviation: 0.12
+    by_page:
+      PHYS_0001:
+        cer: 0.8
+wf2-data345-eval1:
+  label: Workflow 2 on Data 345
+  metadata:
+    workflow: https://example.org/workflow/2
+    eval_workflow: https://example.org/workflow/eval1
+    eval_data: https://example.org/workspace/345
+    gt_data: https://gt.ocr-d.de/workspace/789
+    document:
+      publication_year: 1789
+      number_of_pages: 10
+  evaluations:
+    document_wide:
+      cer: 0.88
+      cer_document_mean: 0.77
+      cer_document_median: 0.66
+      cer_document_standard_deviation: 0.55
+    by_page:
+      PHYS_0001:
+        cer: 0.9
