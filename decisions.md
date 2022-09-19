@@ -25,7 +25,7 @@ Only the [REST API wrapper](https://github.com/OCR-D/core/pull/884) of a single 
 * [2022] We will create a web application, QUIVER (for QUalIty oVERview), in which several information about OCR-D processors are provided:
   * a general overview of the projects (i.e. GitHub repositories), e.g. if their `ocrd-tool.json` is valid, when their last release has been made etc.
   * a workflow section where we [benchmark](#benchmarking) different workflows for different corpora.
-  * a general overview of the availeble processors
+  * a general overview of the available processors
 
 ### Benchmarking
 
