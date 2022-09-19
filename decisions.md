@@ -19,3 +19,29 @@ Further details can be found [here](spec/nextflow).
 
 * [2022] OCR-D Coordination Project provides the [Web API spec](spec/web_api).
 Only the [REST API wrapper](https://github.com/OCR-D/core/pull/884) of a single processor is provided by OCR-D Core.
+
+## QUIVER
+
+* [2022] We will create a web application, QUIVER (for QUalIty oVERview), in which several information about OCR-D processors are provided:
+  * a general overview of the projects (i.e. GitHub repositories), e.g. if their `ocrd-tool.json` is valid, when their last release has been made etc.
+  * a workflow section where we [benchmark](#benchmarking) different workflows for different corpora.
+  * a general overview of the availeble processors
+
+### Benchmarking
+
+* [2022] To execute the benchmarking, we will create several corpora with different characteristics (font, creation date, layout, …) and 
+run different workflows with these as input. The result is then displayed in the QUIVER workflow tab.
+The corpora will be publicly available for better transparency.
+* [2022] Relevant benchmarks for the mininum viable product (MVP) will be:
+  * CER
+  * WER
+  * Bag of Words
+  * Reading order
+  * IoU
+  * CPU time
+  * wall time
+  * I/O
+  * Memory Usage
+  * Disc usage
+* [2022] The benchmarking will be executed automatically in a regular intervall to measure if changes in the processors improve the result.
+This might be done via CI, GitHub Actions or as a CRON job on a separate server.
