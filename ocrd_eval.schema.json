@@ -1,0 +1,238 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "https://ocr-d.de/en/spec/ocrd_eval.schema.json",
+  "title": "A list of evaluations for OCR-D",
+  "description": "- All references to URL are JSON-LD-like objects with at least an `@id`\n  property referencing the URL and `label` for a human-readable label to be\n  used in the UI\n",
+  "type": "array",
+  "items": {
+    "required": [
+      "@id",
+      "label",
+      "metadata",
+      "evaluation"
+    ],
+    "unevaluatedProperties": false,
+    "allOf": [
+      {
+        "$ref": "#/$defs/LabeledUrl"
+      },
+      {
+        "properties": {
+          "metadata": {
+            "$ref": "#/$defs/EvaluationMetadata"
+          },
+          "evaluation": {
+            "$ref": "#/$defs/EvaluationReport"
+          }
+        }
+      }
+    ]
+  },
+  "$defs": {
+    "LabeledUrl": {
+      "type": "object",
+      "required": [
+        "@id"
+      ],
+      "properties": {
+        "@id": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of the thing"
+        },
+        "label": {
+          "type": "string",
+          "description": "Description of the thing for UI purposes"
+        }
+      }
+    },
+    "EvaluationMetadata": {
+      "type": "object",
+      "title": "Metadata about one evaluation",
+      "additionalProperties": false,
+      "description": "EvaluationMetadata contains all the info on how an EvaluationReport came to be.\nThere are two OCR-D *workflows* involved:\n  - ocr_workflow: The workflow which produced the OCR results to evaluate\n  - eval_workflow: The workflow run to evaluate OCR and GT\n\nThere are three OCR-D *workspaces* involved:\n  - gt_workspace: The workspace containing the GT\n  - ocr_workspace: The workspace containing the OCR results from ocr_workflow\n  - eval_workspace: The workspace on which the eval_workflow was run\n",
+      "required": [
+        "ocr_workflow",
+        "ocr_workspace",
+        "eval_workflow",
+        "eval_workspace",
+        "gt_workspace",
+        "document_metadata"
+      ],
+      "properties": {
+        "ocr_workflow": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/LabeledUrl"
+            }
+          ],
+          "description": "The OCR-D workflow that produced the ocr_workspace"
+        },
+        "ocr_workspace": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/LabeledUrl"
+            }
+          ],
+          "description": "The workspace containing the OCR"
+        },
+        "eval_workflow": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/LabeledUrl"
+            }
+          ],
+          "description": "The OCR-D workflow that produced the eval_workspace"
+        },
+        "eval_workspace": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/LabeledUrl"
+            }
+          ],
+          "description": "The workspace containing the evaluation results"
+        },
+        "gt_workspace": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/LabeledUrl"
+            }
+          ],
+          "description": "The workspace containing the GT"
+        },
+        "workflow_steps": {
+          "type": "object",
+          "description": "Human readable description of the individual steps in the workflow (for UI)",
+          "patternProperties": {
+            "^[0-9]+$": {
+              "type": "string",
+              "description": "Description of this workflow step"
+            }
+          }
+        },
+        "workflow_model": {
+          "type": "string",
+          "description": "Human readable name of the main model used for recognition in the OCR workflow (for UI)"
+        },
+        "eval_tool": {
+          "type": "string",
+          "description": "Human readable name and version of evaluation tool used (for UI"
+        },
+        "document_metadata": {
+          "type": "object",
+          "title": "Bibliographical and typographical metadata about the work to be evaluated",
+          "properties": {
+            "publication_year": {
+              "type": "number",
+              "description": "Year he document was originally published"
+            },
+            "publication_century": {
+              "type": "string",
+              "description": "Century he document was originally published",
+              "pattern": "[12][0-9]{3}-[12][0-9]{3}"
+            },
+            "publication_decade": {
+              "type": "string",
+              "description": "Decade the document was originally published",
+              "pattern": "[12][0-9]{3}-[12][0-9]{3}"
+            },
+            "number_of_pages": {
+              "type": "number",
+              "description": "Number of pages in this work (i.e. the number of images in the gt_workspace)"
+            },
+            "layout": {
+              "type": "string",
+              "enum": [
+                "simple",
+                "complex"
+              ]
+            },
+            "fonts": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "antiqua",
+                  "fraktur"
+                ]
+              }
+            }
+          }
+        },
+        "provenance": {
+          "type": "object",
+          "description": "Information on which tools in which version were used in determining metrics",
+          "properties": {
+            "paramters": {
+              "type": "object",
+              "description": "Parameters passed to the evaluation processor"
+            }
+          }
+        }
+      }
+    },
+    "EvaluationReport": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The metrics measured for this document",
+      "properties": {
+        "document_wide": {
+          "type": "object",
+          "description": "Document-wide metrics"
+        },
+        "by_page": {
+          "type": "array",
+          "description": "Metrics page-by-page",
+          "items": {
+            "type": "object",
+            "allOf": [
+              {
+                "properties": {
+                  "page_id": {
+                    "type": "string",
+                    "description": "PAGE ID"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "EvaluationMetrics": {
+      "cer": {
+        "description": "CER calculated over the text of a whole page (in by_page) or combined text of all pages (in document_wide)"
+      },
+      "cer_mean": {
+        "description": "Arithmetic mean of the page-wise CER (in document_wide) or regions on a page (in by_page)"
+      },
+      "cer_median": {
+        "description": "Median of the page-wise CER (in document_wide) or regions on a page (in by_page)"
+      },
+      "cer_range": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 2,
+        "items": {
+          "type": "number",
+          "description": "Minimum and maximum of CER calculated over the text of a whole page (in by_page) or combined text of all pages (in document_wide)"
+        }
+      },
+      "cer_standard_deviation": {
+        "description": "Standard deviation the page-wise CER (in document_wide) or regions on a page (in by_page)"
+      },
+      "wer": {
+        "description": "CER calculated over the text of a whole page (in by_page) or combined text of all pages (in document_wide)"
+      },
+      "wall_time": {
+        "description": "Actual time needed for processing workflow"
+      },
+      "cpu_time": {
+        "description": "Cumulative CPU time used for processing workflow"
+      },
+      "pages_per_minute": {
+        "description": "Number of pages processed per minute"
+      }
+    }
+  }
+}
