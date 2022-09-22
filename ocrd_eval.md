@@ -331,7 +331,7 @@ Example:
 Given the example above, we get:
 
 $$
-\begin{array}{2}
+\begin{array}{ll}
 AP &  = \displaystyle\sum_{k=0}^{k=n-1}[r(k) - r(k+1)] * p(k) \\
 & = \displaystyle\sum_{k=0}^{k=6}[r(k) - r(k+1)] * p(k) \\
 & = (1-0.9) * 0.66 + (0.9-0.8) * 0.69 + \text{...} + (0.2-0) * 1\\
@@ -343,9 +343,7 @@ $$
 
 The mean Average Precision is a metric used to measure how accurate an object detector is. [As stated](#Thresholds), a threshold can be chosen freely, so there is some room for errors when picking one single threshold. To mitigate this effect, the mean Average Precision metric has been introduced which considers a set of IoU thresholds to determine the detector's performance. It is calculated by first computing the Average Precision for each IoU threshold and then finding the average:
 
-$mAP = \displaystyle\frac{1}{N}\sum_{i=1}^{N}AP_i$
-
-with $N$ being the number of thresholds.
+$mAP = \displaystyle\frac{1}{N}\sum_{i=1}^{N}AP_i$ with $N$ being the number of thresholds.
 
 
 ##### Scenario-driven Performance Evaluation
