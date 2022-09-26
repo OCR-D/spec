@@ -9,9 +9,9 @@ solution works best for their use case.
 
 ## Evaluation metrics
 
-The evaluation of the success (accuracy) of OCR is a complex task for which multiple methods and metrics are available. It aims to capture quality in different aspects, such as the recognition of text, but also the detection of layout, for which different methods and metrics are needed. 
+The evaluation of the success (accuracy) of OCR is a complex task for which multiple methods and metrics are available. It aims to capture quality in different aspects, such as the recognition of text, but also the detection of layout, for which different methods and metrics are needed.
 
-Furthermore, the time and resources required for OCR processing also have to be captured. Here we describe the metrics that were selected for use in OCR-D, how exactly they are applied, and what was the motivation. 
+Furthermore, the time and resources required for OCR processing also have to be captured. Here we describe the metrics that were selected for use in OCR-D, how exactly they are applied, and what was the motivation.
 
 ### Scope of these Definitions
 
@@ -27,7 +27,7 @@ Levenshtein distance between two strings `a` and `b` is the number of edit opera
 
 The Levenshtein distance forms the basis for the calculation of [CER/WER](https://pad.gwdg.de/#CERWER).
 
-General example:
+##### General example
 
 The Levenshtein distance between "Monday" and "Tuesday" is 4, because 4 edit operations are necessary to turn "Monday" into "Tuesday":
 
@@ -36,7 +36,7 @@ The Levenshtein distance between "Monday" and "Tuesday" is 4, because 4 edit ope
 * Tu**n**day --> Tu**e**day (substitution)
 * Tueday --> Tue**s**day (insertion)
 
-OCR example:
+##### OCR example
 
 Given a Ground truth that reads `ſind` and the recognized text `fmd`.
 
@@ -46,14 +46,13 @@ The Levenshtein distance between these texts is 4, because 4 edit operations are
 * `ſmd` --> `ſimd` (insertion)
 * `ſimd` --> `ſind` (substitution)
 
-
 #### CER and WER
 
 ##### Characters
 
 A text consists of a set of characters that have a certain meaning. A character is a glyph that represents a word, a letter in a word, or a symbol.
 
-Examples:
+###### Examples
 
 * the character `a` in the text `babst` represents the German letter `a`
 * the character `&` represents the Latin abbreviation `etc.`
@@ -65,19 +64,28 @@ The character error rate (CER) describes how many faulty characters the output o
 
 Errors fall into one of the following three categories:
 
-* **deletion**: a character that is present in the text has been deleted from the output. Example:
-![](https://pad.gwdg.de/uploads/304cf855-3436-42b7-86af-87c16106f1ad.jpg)
+* **deletion**: a character that is present in the text has been deleted from the output.
+
+Example:
+![A Fraktur sample reading "Sonnenfinſterniſſe:"](https://pad.gwdg.de/uploads/d7fa6f23-7c79-4fb2-ad94-7e98084c69d6.jpg)
+
 This reads `Sonnenfinſterniſſe:`. The output contains `Sonnenfinſterniſſe`, deleting `:`.
 
-* **substitution**: a character is replaced by another character in the output. Example: 
-![](https://pad.gwdg.de/uploads/d7fa6f23-7c79-4fb2-ad94-7e98084c69d6.jpg)
+* **substitution**: a character is replaced by another character in the output.
+
+Example:
+
+![A Fraktur sample reading "Die Finſterniſſe des 1801ſten Jahrs"](https://pad.gwdg.de/uploads/b894049b-8d98-4fe7-ac31-71b2c9393a6c.jpg)
 
 This heading reads `Die Finſterniſſe des 1801ſten Jahrs`. The output contains `180iſten`, replacing `1` with `i`.
 
-* **insertion**: a new character is introduced in the output. Example:
-![](https://pad.gwdg.de/uploads/e6b6432e-d79c-4568-9aef-15a026c05b39.jpg)
-This reads `diese Strahlen, und`. The output contains `Strahlen ,`, inserting a white space before the comma.
+* **insertion**: a new character is introduced in the output.
 
+Example:
+
+![A Fraktur sample reading "diese Strahlen, und"](https://pad.gwdg.de/uploads/e6b6432e-d79c-4568-9aef-15a026c05b39.jpg)
+
+This reads `diese Strahlen, und`. The output contains `Strahlen ,`, inserting a white space before the comma.
 
 CER can be calculated in several ways, depending on whether a normalized CER is used or not.
 
@@ -92,7 +100,6 @@ The *normalized* CER tries to mitigate this effect by considering the number of 
 $CER_n = \frac{i + s+ d}{i + s + d + c}$
 
 In OCR-D's benchmarking we calculate the *non-normalized* CER where values over 1 should be read as 100%.
-
 
 ###### CER Granularity
 
@@ -112,13 +119,11 @@ where $i_w$ is the number of inserted, $s_w$ the number of substituted, $d_w$ th
 
 More specific cases of WER consider only the "significant" words, omitting e.g. stopwords from the calculation.
 
-
 ###### WER Granularity
 
 In OCR-D we distinguish between the WER per **page** and the **overall** WER of a text. The reasoning here follows the one of CER granularity.
 
 At this point we only provide a WER per page; an overall WER might be calculated at a later stage.
-
 
 #### Bag of Words
 
@@ -126,14 +131,14 @@ In the "Bag of Words" model a text is represented as a set of its word irregardl
 
 Example:
 
-![](https://pad.gwdg.de/uploads/4d33b422-6c77-436c-a3e6-bf27e67dc203.jpg)
-
+![A sample paragraph in German Fraktur](https://pad.gwdg.de/uploads/4d33b422-6c77-436c-a3e6-bf27e67dc203.jpg)
 
 > Eine Mondfinsternis ist die Himmelsbegebenheit welche sich zur Zeit des Vollmondes ereignet, wenn die Erde zwischen der Sonne und dem Monde steht, so daß die Strahlen der Sonne von der Erde aufgehalten werden, und daß man so den Schatten der Erde in dem Monde siehet. In diesem Jahre sind zwey Monfinsternisse, davon ist ebenfalls nur Eine bey uns sichtbar, und zwar am 30sten März des Morgens nach 4 Uhr, und währt bis nach 6 Uhr.
 
 To get the Bag of Words of this paragraph a set containing each word and its number of occurence is created:
 
-$BoW$ = 
+$BoW$ =
+
 ```json=
 {
     "Eine": 2, "Mondfinsternis": 1, "ist": 2, "die": 2, "Himmelsbegebenheit": 1, 
@@ -149,12 +154,11 @@ $BoW$ =
 }
 ```
 
-
 ### Layout Evaluation
 
-For documents with a complex structure, looking at the recognized text's accuracy alone is often insufficient to accurately determine the quality of OCR. An example can help to illustrate this: in a document containing two columns, all characters and words may be recognized correctly, but when the two columns are detected by layout analysis as just one, the OCR result will contain the text for the first lines of the first and second column, followed by the second lines of the first and second column asf., rendering the sequence of words and paragraphs in the Ground Truth text wrongly, which defeats almost all downstream processes. 
+For documents with a complex structure, looking at the recognized text's accuracy alone is often insufficient to accurately determine the quality of OCR. An example can help to illustrate this: in a document containing two columns, all characters and words may be recognized correctly, but when the two columns are detected by layout analysis as just one, the OCR result will contain the text for the first lines of the first and second column, followed by the second lines of the first and second column asf., rendering the sequence of words and paragraphs in the Ground Truth text wrongly, which defeats almost all downstream processes.
 
-While the comprehensive evaluation of OCR with consideration of layout analysis is still a research topic, several established metrics can be used to capture different aspects of it. 
+While the comprehensive evaluation of OCR with consideration of layout analysis is still a research topic, several established metrics can be used to capture different aspects of it.
 
 #### Reading Order
 
@@ -162,22 +166,19 @@ Reading order describes the order in which segments on a page are intended to be
 
 Example of a simple page layout with reading order:
 
-![](https://pad.gwdg.de/uploads/bc5258cb-bf91-479e-8a91-abf5ff8bbbfa.jpg)
-(http://resolver.sub.uni-goettingen.de/purl?PPN1726778096)
-
+![A sample page in German Fraktur with a simple page layout showing the intended reading order](https://pad.gwdg.de/uploads/bc5258cb-bf91-479e-8a91-abf5ff8bbbfa.jpg)
+(<http://resolver.sub.uni-goettingen.de/purl?PPN1726778096>)
 
 Example of a complex page layout with reading order:
 
-![](https://pad.gwdg.de/uploads/100f14c4-19b0-4810-b3e5-74c674575424.jpg)
-(http://resolver.sub.uni-goettingen.de/purl?PPN1726778096)
-
-
+![A sample page in German Fraktur with a complex page layout showing the intended reading order](https://pad.gwdg.de/uploads/100f14c4-19b0-4810-b3e5-74c674575424.jpg)
+(<http://resolver.sub.uni-goettingen.de/purl?PPN1726778096>)
 
 #### IoU (Intersection over Union)
 
 Intersection over Union is a term which describes the degree of overlap of two regions of a (document) image defined either by a bounding box or polygon. Example:
 
-![](https://pad.gwdg.de/uploads/62945a01-a7a7-48f3-86c2-6bb8f97d67fe.jpg)
+![A sample heading in German Fraktur illustrating a Ground Truth bounding box and a detected bounding box](https://pad.gwdg.de/uploads/62945a01-a7a7-48f3-86c2-6bb8f97d67fe.jpg)
 
 (where green represents the Ground Truth and red the detected bounding box)
 
@@ -219,7 +220,7 @@ Disk usage is the number of bytes the process allocates on hard disk.
 
 In Unicode there can be multiple ways to express characters that have multiple components, such as a base letter and an accent. For evaluation it is essential that both Ground Truth and OCR results are normalized *in the same way* before evaluation.
 
-For example, the letter `ä` can be expressed directly as `ä` (`U+00E4` in Unicode) or as a combination of `a` and `◌̈` (`U+0061 + U+0308`). Both encodings are semantically equivalent but technically different. 
+For example, the letter `ä` can be expressed directly as `ä` (`U+00E4` in Unicode) or as a combination of `a` and `◌̈` (`U+0061 + U+0308`). Both encodings are semantically equivalent but technically different.
 
 Unicode has the notion of *normalization forms* to provide canonically normalized text. The most common forms are *NFC* (Normalization Form Canonical Composed) and *NFD* (Normalization Form Canonical Decomposed). When a Unicode string is in NFC, all decomposed codepoints are replaced with their decomposed equivalent (e.g. `U+0061 + U+0308` to `U+00E4`). In an NFD encoding, all decomposed codepoints are replaced with their composed equivalents (e.g. `U+00E4` to `U+0061 + U+0308`).
 
@@ -233,9 +234,7 @@ The Unicode normalization algorithms rely on data from the Unicode database on e
 
 ### Metrics Not in Use Yet
 
-:::info
 The following metrics are not part of the MVP (minimal viable product) and will (if ever) be implemented at a later stage.
-:::
 
 #### GPU metrics
 
@@ -296,7 +295,6 @@ Precision and recall are connected to each other since both depend on the true p
 
 Given a dataset with 100 images in total of which 50 depict a bicycle. Also given a model trying to identify bicycles on images. The model is run 7 times using the given dataset while gradually increasing the threshold from 0.1 to 0.7.
 
-
 | run | threshold | true positives | false positives | false negatives |precision | recall |
 |-----|-----------|----------------|-----------------|-----------------|----------|--------|
 | 1   | 0.1       |  50            | 25              | 0               | 0.66     | 1      |
@@ -309,17 +307,15 @@ Given a dataset with 100 images in total of which 50 depict a bicycle. Also give
 
 For each threshold a pair of precision and recall can be computed and plotted to a curve:
 
-![](https://pad.gwdg.de/uploads/2d3c62ff-cab4-4a12-8043-014fe0440459.png)
-
+![A sample precision/recall curve](https://pad.gwdg.de/uploads/2d3c62ff-cab4-4a12-8043-014fe0440459.png)
 
 This graph is called Precision-Recall-Curve.
-
 
 ###### Average Precision
 
 The average precision (AP) describes how well a model can detect objects in an image for recall values over 0 to 1 by computing the average of all precisions given in the Precision-Recall-Curve. It is equal to the area under the curve.
 
-![](https://pad.gwdg.de/uploads/799e6a05-e64a-4956-9ede-440ac0463a3f.png)
+![A sample precision/recall curve with highlighted area under curve](https://pad.gwdg.de/uploads/799e6a05-e64a-4956-9ede-440ac0463a3f.png)
 
 The Average Precision can be computed with the weighted mean of precision at each confidence threshold:
 
@@ -345,12 +341,11 @@ The mean Average Precision is a metric used to measure how accurate an object de
 
 $mAP = \displaystyle\frac{1}{N}\sum_{i=1}^{N}AP_i$ with $N$ being the number of thresholds.
 
-
 ##### Scenario-driven Performance Evaluation
 
-Scenario-driven performance evaluation as described in [Clausner et al., 2011](https://primaresearch.org/publications/ICDAR2011_Clausner_PerformanceEvaluation) is currently the most comprehensive and sophisticated approach to evaluate OCR success with consideration of layout. 
+Scenario-driven performance evaluation as described in [Clausner et al., 2011](https://primaresearch.org/publications/ICDAR2011_Clausner_PerformanceEvaluation) is currently the most comprehensive and sophisticated approach to evaluate OCR success with consideration of layout.
 
-The approach is based on the definition of so called evaluation scenarios, which allow the flexible combination of a selection of metrics together with their weights, targeted at a specific use case. 
+The approach is based on the definition of so called evaluation scenarios, which allow the flexible combination of a selection of metrics together with their weights, targeted at a specific use case.
 
 ## Evaluation JSON schema
 
@@ -361,22 +356,22 @@ the [`ocrd-eval.json`](https://ocr-d.de/en/spec/ocrd-eval.schema.json).
 
 ## Tools
 
-See [OCR-D workflow guide](https://ocr-d.de/en/workflows#evaluation)
+See [OCR-D workflow guide](https://ocr-d.de/en/workflows#evaluation).
 
 ## References
 
 * CER/WER:
-    * https://sites.google.com/site/textdigitisation/qualitymeasures
-    * https://towardsdatascience.com/evaluating-ocr-output-quality-with-character-error-rate-cer-and-word-error-rate-wer-853175297510#5aec
+  * <https://sites.google.com/site/textdigitisation/qualitymeasures>
+  * <https://towardsdatascience.com/evaluating-ocr-output-quality-with-character-error-rate-cer-and-word-error-rate-wer-853175297510#5aec>
 * IoU:
-    * https://medium.com/analytics-vidhya/iou-intersection-over-union-705a39e7acef
+  * <https://medium.com/analytics-vidhya/iou-intersection-over-union-705a39e7acef>
 * mAP:
-    * https://blog.paperspace.com/mean-average-precision/
-    * https://jonathan-hui.medium.com/map-mean-average-precision-for-object-detection-45c121a31173
+  * <https://blog.paperspace.com/mean-average-precision/>
+  * <https://jonathan-hui.medium.com/map-mean-average-precision-for-object-detection-45c121a31173>
 * BoW:
-    * https://en.wikipedia.org/wiki/Bag-of-words_model
+  * <https://en.wikipedia.org/wiki/Bag-of-words_model>
 * FCA:
-    * https://www.primaresearch.org/www/assets/papers/PRL_Clausner_FlexibleCharacterAccuracy.pdf
+  * <https://www.primaresearch.org/www/assets/papers/PRL_Clausner_FlexibleCharacterAccuracy.pdf>
 * More background on evaluation of OCR
-    * https://doi.org/10.1145/3476887.3476888
-    * https://doi.org/10.1515/9783110691597-009
+  * <https://doi.org/10.1145/3476887.3476888>
+  * <https://doi.org/10.1515/9783110691597-009>
