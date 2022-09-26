@@ -167,11 +167,13 @@ Reading order describes the order in which segments on a page are intended to be
 Example of a simple page layout with reading order:
 
 ![A sample page in German Fraktur with a simple page layout showing the intended reading order](https://pad.gwdg.de/uploads/bc5258cb-bf91-479e-8a91-abf5ff8bbbfa.jpg)
+
 (<http://resolver.sub.uni-goettingen.de/purl?PPN1726778096>)
 
 Example of a complex page layout with reading order:
 
 ![A sample page in German Fraktur with a complex page layout showing the intended reading order](https://pad.gwdg.de/uploads/100f14c4-19b0-4810-b3e5-74c674575424.jpg)
+
 (<http://resolver.sub.uni-goettingen.de/purl?PPN1726778096>)
 
 #### IoU (Intersection over Union)
