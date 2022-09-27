@@ -160,11 +160,12 @@ $defs:
     cer:
       description: CER calculated over the text of a whole page (in by_page) or combined text of all pages (in document_wide)
 
-    cer_mean:
-      description: Arithmetic mean of the page-wise CER (in document_wide) or regions on a page (in by_page)
-
-    cer_median:
-      description: Median of the page-wise CER (in document_wide) or regions on a page (in by_page)
+#  To be implemented in the future.
+#    cer_mean:
+#      description: Arithmetic mean of the page-wise CER (in document_wide) or regions on a page (in by_page)
+#
+#    cer_median:
+#      description: Median of the page-wise CER (in document_wide) or regions on a page (in by_page)
 
     cer_range:
       type: array
@@ -174,8 +175,9 @@ $defs:
         type: number
         description: Minimum and maximum of CER calculated over the text of a whole page (in by_page) or combined text of all pages (in document_wide)
 
-    cer_standard_deviation:
-      description: Standard deviation the page-wise CER (in document_wide) or regions on a page (in by_page)
+#  To be implemented in the future.
+#    cer_standard_deviation:
+#      description: Standard deviation the page-wise CER (in document_wide) or regions on a page (in by_page)
 
     wer:
       description: CER calculated over the text of a whole page (in by_page) or combined text of all pages (in document_wide)
