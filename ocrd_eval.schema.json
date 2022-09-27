@@ -116,7 +116,7 @@
         },
         "eval_tool": {
           "type": "string",
-          "description": "Human readable name and version of evaluation tool used (for UI"
+          "description": "Human readable name and version of evaluation tool used (for UI)"
         },
         "document_metadata": {
           "type": "object",
@@ -124,11 +124,11 @@
           "properties": {
             "publication_year": {
               "type": "number",
-              "description": "Year he document was originally published"
+              "description": "Year the document was originally published"
             },
             "publication_century": {
               "type": "string",
-              "description": "Century he document was originally published",
+              "description": "Century the document was originally published",
               "pattern": "[12][0-9]{3}-[12][0-9]{3}"
             },
             "publication_decade": {
@@ -153,7 +153,9 @@
                 "type": "string",
                 "enum": [
                   "antiqua",
-                  "fraktur"
+                  "fraktur",
+                  "ancient_greek",
+                  "hebrew"
                 ]
               }
             }
@@ -163,7 +165,7 @@
           "type": "object",
           "description": "Information on which tools in which version were used in determining metrics",
           "properties": {
-            "paramters": {
+            "parameters": {
               "type": "object",
               "description": "Parameters passed to the evaluation processor"
             }

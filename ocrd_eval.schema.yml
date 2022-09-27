@@ -130,7 +130,7 @@ $defs:
         type: object
         description: Information on which tools in which version were used in determining metrics
         properties:
-          paramters:
+          parameters:
             type: object
             description: Parameters passed to the evaluation processor
 
