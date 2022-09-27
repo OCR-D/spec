@@ -113,6 +113,7 @@ properties:
           parameters:
             description: Object describing the parameters of a tool. Keys are parameter names, values sub-schemas.
             type: object
+            default: {}
             patternProperties:
               ".*":
                 type: object
