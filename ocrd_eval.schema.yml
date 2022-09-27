@@ -91,7 +91,7 @@ $defs:
 
       eval_tool:
         type: string
-        description: Human readable name and version of evaluation tool used (for UI
+        description: Human readable name and version of evaluation tool used (for UI)
 
       document_metadata:
         type: object
@@ -100,11 +100,11 @@ $defs:
 
           publication_year:
             type: number
-            description: Year he document was originally published
+            description: Year the document was originally published
 
           publication_century:
             type: string
-            description: Century he document was originally published
+            description: Century the document was originally published
             pattern: '[12][0-9]{3}-[12][0-9]{3}'
 
           publication_decade:
@@ -124,7 +124,7 @@ $defs:
             type: array
             items:
               type: string
-              enum: ['antiqua', 'fraktur']
+              enum: ['antiqua', 'fraktur', 'ancient_greek', 'hebrew']
 
       provenance:
         type: object
