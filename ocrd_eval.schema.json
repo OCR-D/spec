@@ -180,7 +180,10 @@
       "properties": {
         "document_wide": {
           "type": "object",
-          "description": "Document-wide metrics"
+          "description": "Document-wide metrics",
+          "properties": {
+            "$ref": "#$defs/EvaluationMetrics"
+          }
         },
         "by_page": {
           "type": "array",
@@ -194,6 +197,11 @@
                     "type": "string",
                     "description": "PAGE ID"
                   }
+                }
+              },
+              {
+                "properties": {
+                  "$ref": "#$defs/EvaluationMetrics"
                 }
               }
             ]

@@ -142,7 +142,7 @@ $defs:
       document_wide:
         type: object
         description: Document-wide metrics
-        #properties: { $ref: '#$defs/EvaluationMetrics' }
+        properties: { $ref: '#$defs/EvaluationMetrics' }
       by_page:
         type: array
         description: Metrics page-by-page
@@ -153,7 +153,7 @@ $defs:
                 page_id:
                   type: string
                   description: PAGE ID
-            #- properties: { $ref: '#$defs/EvaluationMetrics' }
+            - properties: { $ref: '#$defs/EvaluationMetrics' }
 
   EvaluationMetrics:
 
