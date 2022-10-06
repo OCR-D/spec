@@ -27,9 +27,9 @@ benefit of all OCR-D stakeholders.
   server including web API implementation is part of the
   [implementation projects](phase3).  Further details can be found [in the nextflow spec](spec/nextflow).
 
-##  Web API
+## Web API
 
-* [Q2 2022] OCR-D Coordination Project provides the [Web API spec](spec/web_api). 
+* [2022] OCR-D Coordination Project provides the [Web API spec](spec/web_api).
 Only the [REST API wrapper](https://github.com/OCR-D/core/pull/884) of a single processor is provided by OCR-D Core.
 
 ## QUIVER
