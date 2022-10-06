@@ -104,14 +104,16 @@ to process individual pages in a `process_page` method.
    -community that we refactor it.
    -->
 
-## ocrd_all docker deployment
+## ocrd_all Docker deployment
+
 
 * Our current target container is a **fat container**, with **maximum**,
   **medium** and **minimum** versions with decreasing amount of processors
   contained.
 * We will wrap processor projects individually and transition to **slim containers** in **Q1 2023**.
 
-## Supported python versions
+## Supported Python versions
+
 
 * Our current target version for Python is **3.7**, we support **3.6** and **3.7** fully, later versions partially.
 * :warning: We cannot currently upgrade beyond **3.7** because there are no [tensorflow v1.15.x](#tensorflow) prebuilt images available. We need to investigate how to alleviate this until **Q4 2022**.
