@@ -137,7 +137,8 @@ to process individual pages in a `process_page` method.
 ### [calamari](https://github.com/OCR-D/ocrd_calamari)
 
 * Our currently supported calamari version is **1.x**.
-* We will switch to **2.x** in **Q3 2022**.
+* We will switch to **2.x** in **Q4 2022**.
+
 * Support for **1.x** will end in in **Q3 2022**
 
 ### [pillow](https://pillow.readthedocs.io/)
