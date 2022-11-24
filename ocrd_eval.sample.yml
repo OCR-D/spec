@@ -4,6 +4,9 @@
     ocr_workflow:
       '@id': https://github.com/OCR-D/quiver/tree/data/workflows/1.nf
       label: OCR Workflow 1
+      steps:
+        '0': Processor A
+        '1': Processor B
     eval_workflow:
       '@id': https://github.com/OCR-D/quiver/tree/data/workflows/eval1.nf
       label: Evaluation Workflow 1
@@ -16,9 +19,6 @@
     eval_workspace:
       '@id': https://github.com/OCR-D/quiver/tree/data/workspaces/345.ocrd.zip
       label: Evaluation Workspace 345
-    workflow_steps:
-      '0': Processor A
-      '1': Processor B
     workflow_model: Fraktur_GT4HistOCR
     document_metadata:
       fonts:
@@ -47,6 +47,9 @@
     ocr_workflow:
       '@id': https://github.com/OCR-D/quiver/tree/data/workflows/2.nf
       label: OCR Workflow 2
+      steps:
+        '0': Processor A
+        '1': Processor B
     eval_workflow:
       '@id': https://github.com/OCR-D/quiver/tree/data/workflows/eval1.nf
       label: Evaluation Workflow 1
@@ -59,9 +62,6 @@
     eval_workspace:
       '@id': https://github.com/OCR-D/quiver/tree/data/workspaces/345.ocrd.zip
       label: Evaluation Workspace 345
-    workflow_steps:
-      '0': Processor A
-      '1': Processor B
     workflow_model: Fraktur_GT4HistOCR
     document_metadata:
       fonts:

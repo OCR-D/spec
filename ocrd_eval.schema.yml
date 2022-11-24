@@ -58,7 +58,23 @@ $defs:
     properties:
 
       ocr_workflow:
-        allOf:  [{ '$ref': '#/$defs/LabeledUrl' }]
+        type: object
+        required: ['@id', 'steps']
+        properties:
+          '@id':
+            type: string
+            format: uri
+            description: URL of the thing
+          label:
+            type: string
+            description: Description of the thing for UI purposes
+          steps:
+            type: object
+            description: Human readable description of the individual steps in the workflow (for UI)
+            patternProperties:
+              '^[0-9]+$':
+                type: string
+                description: Description of this workflow step
         description: The OCR-D workflow that produced the ocr_workspace
 
       ocr_workspace:
@@ -76,14 +92,6 @@ $defs:
       gt_workspace:
         allOf:  [{ '$ref': '#/$defs/LabeledUrl' }]
         description: The workspace containing the GT
-
-      workflow_steps:
-        type: object
-        description: Human readable description of the individual steps in the workflow (for UI)
-        patternProperties:
-          '^[0-9]+$':
-            type: string
-            description: Description of this workflow step
 
       workflow_model:
         type: string
