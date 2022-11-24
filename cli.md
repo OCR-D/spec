@@ -21,6 +21,9 @@ part of the string.
 **NOTE**: Parameters marked **REGEX** support the regular expression operator `//` to
 generate all values matching the pattern after that prefix.
 
+**NOTE**: For parameters which allow for a combination of multi-value, range and/or regex,
+the operator precedence is  **MULTI-VALUE** > **REGEX** > **RANGE**.
+
 ## CLI executable name
 
 Every CLI executable's name must begin with `ocrd-`.
