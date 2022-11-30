@@ -6,6 +6,10 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Fixed:
+
+  * web api: `GET /workflow/{workflow-id}` should return a work**flow**, not a work**space**, #223
+
 Changed:
 
   * web api: `POST /workflow/{workflow-id}` accepts a `WorkflowArgs` object with workspace ID and workflow parameters, #220
