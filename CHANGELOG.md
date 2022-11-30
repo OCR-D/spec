@@ -15,6 +15,7 @@ Added:
 
   * `cli`: `--page-id`/`-g` option accepts regular expressions as well, #221, OCR-D/core#856
   * `mets`: conventions for providing document-wide files (`FULLDOWNLOAD_...`), #154, #207
+  * `cli`: clarify the semantics and order of preference for multi-value/regex/range param values, #232, OCR-D/core#921
 
 
 ## [3.20.0] - 2022-08-14
