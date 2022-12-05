@@ -219,7 +219,7 @@ paths:
           description: Return Workflow
           content:
             application/json: {schema: {$ref: '#/components/schemas/Workflow'}}
-            application/vnd.ocrd+zip: {}
+            'text/vnd.ocrd.workflow': {}
         '404':
           description: 'Workflow not available'
     post:
@@ -231,6 +231,11 @@ paths:
           description: ID of the Workflow
           schema: {type: string}
           required: true
+      requestBody:
+        description: Execute this Workflow
+        content:
+          application/json: {schema: {$ref: '#/components/schemas/WorkflowArgs'}}
+        required: true
       responses:
         '200':
           description: Return WorkflowJob
@@ -443,6 +448,18 @@ components:
     Workflow:
       allOf:
         - {$ref: '#/components/schemas/Resource'}
+    WorkflowArgs:
+      description: The arguments needed to run the Workflow
+      type: object
+      required: ['workspace_id']
+      properties:
+        workspace_id: {type: string}
+        workflow_parameters:
+          description: >-
+            Possibility to add additional parameters for the workflow. The parameters that can/must
+            be specified here depend on the respective implementation of the workflow.
+          type: object
+          default: {}
     WorkflowJob:
       allOf:
         - {$ref: '#/components/schemas/Job'}
