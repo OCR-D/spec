@@ -1,6 +1,6 @@
 # Web API
 
-## Why we need a Web API?
+## Why do we need a Web API?
 
 The purpose of this specification is to improve the interoperability between Implementation Projects (IP). Based on a
 common API definition, users can interact with different systems built by different IPs in the same way.
@@ -11,23 +11,23 @@ The Web API specification can be found [here](openapi.yml). It follows
 the [OpenAPI specification](https://swagger.io/specification/). There are 4 parts to be implemented: discovery,
 processing, workflow, and workspace.
 
-**Discovery**: the endpoints in this section give information about the system to users. It includes but not limited to
+**Discovery**: The service endpoints in this section provide information about the server. They include, but are not limited to,
 hardware configuration, installed processors, and information about each processor.
 
-**Processing**: via the endpoints in this section, one can get information about a specific processor, trigger a
-processor, and check a status of a running processor. By exposing these endpoints, the Web API can encapsulate the
+**Processing**: Via the service endpoints in this section, one can get information about a specific [processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor),
+trigger a processor run, and check a status of a running processor. By exposing these endpoints, the server can encapsulate the
 detailed setup of the system and offer users a single entry to the processors.
 
-**Workflow**: unlike a single processor, one can manage workflows, which is a series of connected processors. In this
-Web API spec, a workflow is a [Nextflow](https://www.nextflow.io/) script. Some information about Nextflow and how to
+**Workflow**: Beyond single processors one can manage entire [workflows](https://ocr-d.de/en/spec/glossary#ocr-d-workflow), i.e. a series of connected processor configurations. 
+In this spec, a workflow amounts to a [Nextflow](https://www.nextflow.io/) script. Some information about Nextflow and how to
 use it in OCR-D is documented [here](nextflow.md).
 
-**Workspace**: [workspaces](https://ocr-d.de/en/user_guide#preparing-a-workspace) are managed via these endpoints. Users
-always need to refer to an existing workspace when they want to trigger a processor or a workflow.
+**Workspace**: The service endpoints in this section concern data management, which in OCR-D is handled via [workspaces](https://ocr-d.de/en/spec/glossary#workspace). 
+Processing (via single processors or workflows) always refers to existing workspaces.
 
 ## Usage
 
-When a system implemented this Web API, it can be used as following:
+When a system implements the Web API completely, it can be used as follows:
 
 1. User gets information about the system via endpoints in the `Discovery` section.
 2. User creates a workspace via the `POST /workspace` endpoint and gets back a workspace ID.
@@ -46,18 +46,20 @@ When a system implemented this Web API, it can be used as following:
    header `Accept: application/vnd.ocrd+zip`. Without that header, only the metadata of the specified workspace is
    returned.
 
-## Suggested Architecture for the Implementers
+## Suggested Architecture for Implementors
 
-There are different ways to build a system which implements this Web API. In this section, we suggest 3 types of
-architecture, starting from the simplest setup. The implementers do not have to strictly follow one of them, but free to
-choose the approach which fits their situation best.
+There are various ways to build a system which implements this Web API. 
+In this section, we describe 3 different architectures, starting from the simplest setup. 
+These are meant for illustrative purposes only – implementors do not need to strictly follow any one of them,
+but should choose an approach which best fits their situation.
 
 ### Centralized System Architecture
 
-The simplest way is having everything implemented and installed in one server, as shown in Figure 1. In this case, the
-Web API Server implements all endpoints from this specification. On the same machine, there are also all processors and
-Nextflow installed, either natively or using Docker. Whenever a request arrives, the Web API Server just calls the
-appropriate command, e.g. `ocrd-[processor]` or Nextflow related command, and returns results to the users.
+In the most simple case, everything is implemented and installed in one server, as shown in Figure 1. 
+The OCR-D Server implements all Web API endpoints from this specification.
+On the same machine, all processors and Nextflow are installed, either natively or using Docker.
+Whenever a request arrives, the OCR-D Server just calls the appropriate processor CLI, e.g. `ocrd-[processor]`,
+or Nextflow related command, and returns its results.
 
 <figure>
   <img src="images/web-api-simple.jpg" alt="A simple architecture of a system with Web API"/>
@@ -66,22 +68,24 @@ appropriate command, e.g. `ocrd-[processor]` or Nextflow related command, and re
   </figcaption>
 </figure>
 
-A database is needed to store necessary information, such as users requests, the job status, path to workspace, etc. We
+A database is needed to store necessary information such as users requests, jobs status, workspace paths etc. We
 recommend to use [MongoDB](https://www.mongodb.com/) since it is used by the [Processor API](#rest-api-for-processors),
-but other kind of storage will work fine as well.
+but other kinds of storage may work as well.
 
-The Web API Server requires access to the file system so that it can manage the workspace. In this simple setup, the
-file system can just be the local file system on the machine, where the Web API Server is deployed.
+The OCR-D Server requires access to the file system in order to manage workspaces. In this simple setup, the
+file system can just be the local file system of the machine where the OCR-D Server is deployed.
 
-### Separate the Web API Server
+### Multiple Server Architecture
 
-Instead of implementing all endpoints of the specification in one server, it might make sense to separate them into many
-servers. If so, a reverse proxy should be deployed in front of these servers. It handles all requests from users and
-routes them to the responsible server. Figure 2 shows this setup. There are three servers, which are responsible for
-different sections in the Web API specification, as they are named. In this case, all processors and Nextflow are
-installed only in the Processing/Workflow Server. A workflow is basically a series of processors connecting to each
-other. Therefore, it is better to have the `Processing` and `Workflow` part implemented in the same server. Otherwise,
-we need to install all processors on the Workflow Server as well.
+Instead of implementing all endpoints of the specification in one server, it might make sense to separate them
+into multiple servers for increased scalability/redundancy or changeability/manageability. 
+If so, a reverse proxy should be deployed in front of these servers to encapsulate the subsystem details,
+handling all requests from/to the outside and routing them to/from the responsible server, respectively.
+Figure 2 shows this setup. In this example, there are three servers, each of which is responsible for a
+different section of the Web API specification, as indicated by its name. In this case, all processors and Nextflow
+are installed only in the Processing/Workflow Server. Since the workflow server must be able to run all processors,
+it is better to have the `Processing` and `Workflow` section implemented on the same server. (But the workflow server
+might also have _some_ processors installed locally, and delegate others to dedicated processing servers.)
 
 <figure>
   <img src="images/web-api-partly-distributed.jpg" alt="Different servers implement different parts of the Web API"/>
@@ -90,9 +94,10 @@ we need to install all processors on the Workflow Server as well.
   </figcaption>
 </figure>
 
-The Processing/Workflow and Workspace server need access to workspaces created from users' requests. Instead of
-moving the workspaces between the servers, it is more efficient to set up a Network File System (NFS) and share the
-access among them. The Discovery server, on the other hand, has nothing to do with workspaces. Therefore, it only needs
+Both the Processing/Workflow server and Workspace server need access to workspaces created from Web API requests.
+Instead of transferring the workspaces between the servers explicitly on demand, it may be more efficient to set up
+a Network File System (NFS) or similar network storage, and share access among them. 
+The Discovery server, on the other hand, is not concerned with workspaces. It only needs
 access to the database.
 
 By separating the responsibility, one can easily customize a server to fit its need. For example, the Discovery server
@@ -104,8 +109,8 @@ failure of one does not lead to the failure of the whole system.
 ### Distributed System Architecture
 
 In the previous approach, all processors are installed on the Processing/Workflow server, either natively or via Docker.
-We can take one step further by having each processor running on a different machine and communicate with them via
-[their REST API](#rest-api-for-processors), as illustrated in Figure 3.
+We can take that one step further by having each processor run on a separate machine and use
+[their REST API](#rest-api-for-processors) for communication, as illustrated in Figure 3.
 
 <figure>
   <img src="images/web-api-distributed.jpg" alt="Distributed architecture with the Web API"/>
@@ -114,28 +119,29 @@ We can take one step further by having each processor running on a different mac
   </figcaption>
 </figure>
 
-By having each processor running on its own machine, it can reduce the risk of conflicting. Furthermore, we can
-customize the machine to fit best to the processor as well as its need. For example, some processors need GPU, some do
-not, or some need more compute power while others need more memory. It is also easier to scale out the processors, or
+Having each processor run on its own machine reduces the risk of version and resource conflicts. Furthermore, we can
+customize the machine to best fit the processor's hardware requirements and throughput demand.
+For example, some processors need GPU computation, while others do
+not, or some need more CPU capacity while others need more memory. It is also easier to scale up the processors, or
 even apply Function-as-a-Service on some of them, which are not constantly used, to save resources. The Processing
-Server in this case plays the role as an entrance to the processors. It takes a request, pre-process it if necessary,
-and forward it to the appropriate processor. The caller does not need to know the detail about the deployment of each
-processor (e.g. which IP address, which port).
+Server has the role of an agent for the processor instances. It takes a request, pre-processes it if necessary,
+and forwards it to the appropriate processor instance. 
+The caller does not need to know any details about the deployment of each processor (e.g. IP addresses or ports).
 
 Since processors are now running independently, there is no need to have the `Workflow` and `Processing` section in the
 Web API implemented on the same machine anymore. Instead, we can have a Workflow Server separated from the Processing
 Server, and Nextflow is installed on this server. This Workflow Server does not require access to file system, but
-instead the access to processors and the database.
+only access to the Processing Server and the database.
 
 ## REST API for Processors
 
-In the [Distributed System Architecture](#distributed-system-architecture), we describe a case, where a processor runs
-as a server instead of its usual one-shot mode. This section describe the REST API of processor in detail, which we call
-it _Processor API_.
+In the [Distributed System Architecture](#distributed-system-architecture) above, we describe a case where processors run
+as servers instead of their usual CLI one-shot mode. This section describes the REST API for processors in detail, 
+abbreviated _Processor API_.
 
-### Why do we need this?
+### Rationale
 
-As described in the [OCR-D syntax](https://ocr-d.de/en/user_guide#ocr-d-syntax), one can call a single processor by
+By the [OCR-D  CLI specification](https://ocr-d.de/en/spec/cli), one can call a single processor
 using the command
 
 ```shell
@@ -144,12 +150,15 @@ ocrd-[processor needed] -I [Input-Group] -O [Output-Group] -P [parameter]
 docker run --rm -u $(id -u) -v $PWD:/data -w /data -- ocrd/all:maximum ocrd-[processor needed] -I [Input-Group] -O [Output-Group] -P [parameter]
 ```
 
-Although this approach works perfectly fine, it poses a drawback: the processor cannot be called remotely. One always
-needs to connect to the machine where the processor is installed and execute the command on the CLI. If the data is
-small, this might not be a problem. However, in the era of big data, where one has to constantly deal with a huge amount
-of input, resource utilization has become vital and a distributed system is the way to go. To achieve a distributed
-OCR-D system, the mentioned drawback must be overcome. Therefore, we provide a wrapper for processors to enable their
-communication over network ability.
+Obviously, command-line interfaces do not suit all use-cases well: Calling processors remotely would require 
+connecting to the machine via some login and data transfer mechanism, and then executing the CLI locally. Also,
+the initialization cannot be easily shared between runs, and that overhead might be very large for GPU processing.
+Moreover, scaling up can be difficult: A machine may only support a certain number of concurrent computations,
+so it is usually necessary to control the maximum number of parallel sessions.
+
+With a server interface, all these shortcomings can be overcome: Remote access, preloading, queueing etc. become possible.
+Also, in virtualized execution environments, containers can only call each other as network services. 
+So deploying single-processor containers as network services allows building larger systems.
 
 ### Usage
 
@@ -182,5 +191,5 @@ ocrd-dummy --server=0.0.0.0:80:mongodb://localhost:27017
 ocrd server --server=0.0.0.0:80:mongodb://localhost:27017 ocrd-dummy
 ```
 
-**Note**: this feature is currently under code review. Once it is finished and release, this page will be updated with
+**Note**: this feature is currently under code review. Once it is finished and released, this page will be updated with
 more information regarding the endpoints of the Processor API.
