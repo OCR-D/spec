@@ -75,26 +75,78 @@ example, some processors need GPU computation, while others do not, or some need
 more memory. It is also easier to scale up the processors, or even apply Function-as-a-Service on some of them, which
 are not constantly used, to save resources.
 
-Since the `Processing` section is provided by [OCR-D Core](https://github.com/OCR-D/core), implementors do not need to
-implement Processing Broker, Message Queue, and Processing Server. Once a request comes, the broker pre-processes it if
-necessary, and push it to an appropriate queue. A Processing Server, which is
+**Processing**: since the `Processing` section is provided by [OCR-D Core](https://github.com/OCR-D/core), implementors
+do not need to implement Processing Broker, Message Queue, and Processing Server. Once a request comes, the broker
+pre-processes it if necessary, and push it to an appropriate queue. A processing queue always has the same name as its
+respective processors. For example, `ocrd-olena-binarize` processors listen only to the queue
+named `ocrd-olena-binarize`. A Processing Server, which is
 an [OCR-D Processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor) running as a worker, listens to the queue, pulls
 new jobs when available, processes them, and returns results. One do not call a Processing Server directly, but via a
 Processing Broker. Job statuses can be pushed back to the queue, depending on the [job configuration](#message-queue),
 so that other services get updates and act accordingly.
 
-In this architecture, a database is required to store necessary information such as users requests, jobs statuses,
-workspaces, etc. We recommend to use [MongoDB](https://www.mongodb.com/) since it is used by the Processing Server, but
-other kinds of storage may work as well.
+**Database**: in this architecture, a database is required to store necessary information such as users requests, jobs
+statuses, workspaces, etc. We recommend to use [MongoDB](https://www.mongodb.com/) since it is used by Processing
+Servers, but other kinds of storage may work as well.
 
-In order to avoid file transfer between different machines, it is highly recommended to have
+**Network File System**: in order to avoid file transfer between different machines, it is highly recommended to have
 a [Network File System](https://en.wikipedia.org/wiki/Network_File_System) set up. With NFS, all Processing Servers
 (specifically processors) can work in a shared storage environment and access files as if they are local files. To get
 data into the NFS, one could use the `POST /workspace` endpoint to upload [OCRD-ZIP](https://ocr-d.de/en/spec/ocrd_zip)
 files. However, this approach is only appropriate for small data size. Usually, Workspace Server should be able to pull
 data from other storages.
 
-## Processing Broker
+### Processing Broker
 
-## Message Queue
+A Processing Broker is a server which exposes REST endpoints in the `Processing` section of
+the [Web API specification](openapi.yml). There are two types of task performed by a broker: deployment management and
+message producer. For the former, a broker can deploy, re-use, and shutdown Processing Servers, Message Queue, and
+Database, depending on the configuration. To start a Processing Broker, run
+
+```shell
+$ ocrd processing-broker /path/to/config.yml
+```
+
+The schema of this configuration file can be found [here](web_api/config.schema.yml). Below is a small example of how
+the file might look like.
+
+```yaml
+message_queue:
+  address: localhost
+  port: 5672
+  ssh:
+    username: cloud
+    password: 1234
+mongo_db:
+  address: localhost
+  port: 27017
+  credentials:
+    username: admin
+    password: admin
+  ssh:
+    username: cloud
+    password: 1234
+hosts:
+  - localhost:
+      address: localhost
+      username: cloud
+      password: 1234
+      deploy_processors:
+        - name: ocrd-cis-ocropy-binarize
+          number_of_instance: 2
+          type: native
+        - name: ocrd-olena-binarize
+          number_of_instance: 1
+          type: docker
+  - vm01:
+      address: 134.76.1.1
+      username: tdoan
+      path_to_privkey: /path/to/file
+      deploy_processors:
+        - name: ocrd-eynollah-segment
+          number_of_instance: 1
+          type: native
+```
+
+### Message Queue
 
