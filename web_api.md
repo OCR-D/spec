@@ -167,7 +167,80 @@ There are three main sections in the configuration file.
 Among three sections, only the `message_queue` is required. However, if `hosts` is presented, `mongo_db` must be there
 as well. For more information, please check the [configuration file schema](web_api/config.schema.yml).
 
+### Processing Server
+
+One do not need to start (or stop) a Processing Server manually, since it can be managed by a Processing Broker via
+a [configuration file](#processing-broker). However, if it is necessary to do so, there are two ways to start a
+Processing Server:
+
+```shell
+# 1. Use ocrd tool
+$ ocrd processing-server <processor-name> --queue=<queue-address> --database=<database-address>
+
+# 2. Use processor name
+<processor-name> processing-server --queue=<queue-address> --database=<database-address>
+```
+
+* `--queue`: a [Rabbit MQ connection string](https://www.rabbitmq.com/uri-spec.html) to a running instance.
+* `--database`: a [MongoDB connection string](https://www.mongodb.com/docs/manual/reference/connection-string/) to a
+  running instance.
+
 ### Message Queue
+
+By using a queuing system, specifically [RabbitMQ](https://www.rabbitmq.com/), the reliability and flexibility of the
+whole system are greatly improved. In our implementation, manual acknowledgement mode is used. This means, when a
+Processing Server finishes successfully, it sends a positive ACK signal to RabbitMQ. In case of failure, it tries again
+three times before sending a negative ACK signal. When a negative signal is received, RabbitMQ will re-queue the
+message. If there is not any ACK signal sent for any reason (e.g. consumer crash, power outage, network problem, etc.),
+RabbitMQ will automatically re-queue the message after timeout, which is 30
+minutes [by default](https://www.rabbitmq.com/consumers.html#acknowledgement-timeout). This value is, however, can be
+configured.
+
+To avoid processing the same input twice (in case of re-queuing), a Processing Server first checks
+the [`redeliver`](https://www.rabbitmq.com/confirms.html#automatic-requeueing) property to see if this message was
+re-queued. If yes, and the status of this process in the database is not `SUCCESS`, it will process the data described
+in the message again.
+
+When a Processing Broker receives a request, it adds some more data to the content, then push it to an appropriate
+queue. A processing queue always has the same name as its respective processors. For example, `ocrd-olena-binarize`
+processors listen only to the queue named `ocrd-olena-binarize`. Below is an example of how a message looks like. For a
+detailed schema, please check the [message schema](web_api/message.schema.yml).
+
+```yaml
+job_id: uuid
+processor_name: ocrd-cis-ocropy-binarize
+
+path_to_mets: /path/to/mets.xml
+input_file_grps:
+  - OCR-D-DEFAULT
+output_file_grps:
+  - OCR-D-BIN
+page_id: PHYS_001,PHYS_002
+parameters:
+  params_1: 1
+  params_2: 2
+result_queue_name: ocrd-cis-ocropy-binarize-result
+
+created_time: 1668782988590
+```
+
+In the message content, except `job_id`, `processor_name`, and `created_time`, are added by the Processing Broker. The
+rest comes from the body of the `POST /processor/{executable}` request.
+
+Instead of `path_to_mets`, one can also use `workspace_id` to specify a workspace. An ID of a workspace can be obtained
+from the Workspace Server. In case `result_queue_name` property is presented, the result of the processing will be
+pushed to the queue with the provided name. If the queue does not exist yet, it will be created on the fly. This is
+useful when there is another service waiting for the results of processing. That service can simply listen to that queue
+and will be immediately notified when the results are available. An example of a result message looks like this:
+
+```yaml
+job_id: uuid
+status: SUCCESS
+```
+
+With the returned `job_id`, one can retrieve more information by sending a `GET` request to
+the `/processor/{executable}/{job_id}` endpoint, or to `/processor/{executable}/{job_id}/log` to get all logs of that
+job.
 
 ### Database
 
