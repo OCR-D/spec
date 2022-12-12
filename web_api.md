@@ -114,6 +114,9 @@ the file might look like.
 message_queue:
   address: localhost
   port: 5672
+  credentials:
+    username: admin
+    password: admin
   ssh:
     username: cloud
     password: 1234
@@ -149,15 +152,16 @@ hosts:
 
 There are three main sections in the configuration file.
 
-1. `message_queue`: it contains the `address` and `port`, where the queue was deployed, or will be deployed. If
-   the `ssh` property is presented, the Processing Broker will try to connect to the `address` via `ssh` with
-   provided `username` and `password` and deploy [RabbitMQ](https://www.rabbitmq.com/) at the specified `port`. The
-   remote machine must have [Docker](https://www.docker.com/) installed since the deployment is done via Docker. Make
-   sure that the provided `username` has enough rights to run Docker commands. In case the `ssh` property is not
-   presented, the Processing Broker assumes that RabbitMQ was already deployed and just uses it.
+1. `message_queue`: it contains the `address` and `port`, where the queue was deployed, or will be deployed with the
+   specified `credentials`. If the `ssh` property is presented, the Processing Broker will try to connect to
+   the `address` via `ssh` with provided `username` and `password` and deploy [RabbitMQ](https://www.rabbitmq.com/) at
+   the specified `port`. The remote machine must have [Docker](https://www.docker.com/) installed since the deployment
+   is done via Docker. Make sure that the provided `username` has enough rights to run Docker commands. In case
+   the `ssh` property is not presented, the Processing Broker assumes that RabbitMQ was already deployed and just uses
+   it.
 2. `mongo_db`: this section also contains the `address` and `port`, where the [MongoDB](https://www.mongodb.com/) is
-   running, or will run. If `credentials` is presented, it will be used when connecting to the database. The `ssh`
-   section behaves exactly the same as described in the `message_queue` section above.
+   running, or will run. If `credentials` is presented, it will be used when deploying and connecting to the database.
+   The `ssh` section behaves exactly the same as described in the `message_queue` section above.
 3. `hosts`: this section contains a list of hosts, usually virtual machines, where Processing Servers should be
    deployed. To be able to connect to a host, an `address` and `username` are required, then comes either `password`
    or `path_to_privkey` (path to a private key). All Processing Servers, which will be deployed, must be declared under
