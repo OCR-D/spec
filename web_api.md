@@ -127,26 +127,56 @@ mongo_db:
     username: cloud
     password: 1234
 hosts:
-  - localhost:
-      address: localhost
-      username: cloud
-      password: 1234
-      deploy_processors:
-        - name: ocrd-cis-ocropy-binarize
-          number_of_instance: 2
-          type: native
-        - name: ocrd-olena-binarize
-          number_of_instance: 1
-          type: docker
-  - vm01:
-      address: 134.76.1.1
-      username: tdoan
-      path_to_privkey: /path/to/file
-      deploy_processors:
-        - name: ocrd-eynollah-segment
-          number_of_instance: 1
-          type: native
+  - address: localhost
+    username: cloud
+    password: 1234
+    deploy_processors:
+      - name: ocrd-cis-ocropy-binarize
+        number_of_instance: 2
+        type: native
+      - name: ocrd-olena-binarize
+        number_of_instance: 1
+        type: docker
+
+  - address: 134.76.1.1
+    username: tdoan
+    path_to_privkey: /path/to/file
+    deploy_processors:
+      - name: ocrd-eynollah-segment
+        number_of_instance: 1
+        type: native
 ```
+
+There are three main sections in the configuration file.
+
+1. `message_queue`: it contains the `address` and `port`, where the queue was deployed, or will be deployed. If
+   the `ssh` property is presented, the Processing Broker will try to connect to the `address` via `ssh` with
+   provided `username` and `password` and deploy [RabbitMQ](https://www.rabbitmq.com/) at the specified `port`. The
+   remote machine must have [Docker](https://www.docker.com/) installed since the deployment is done via Docker. Make
+   sure that the provided `username` has enough rights to run Docker commands. In case the `ssh` property is not
+   presented, the Processing Broker assumes that RabbitMQ was already deployed and just uses it.
+2. `mongo_db`: this section also contains the `address` and `port`, where the [MongoDB](https://www.mongodb.com/) is
+   running, or will run. If `credentials` is presented, it will be used when connecting to the database. The `ssh`
+   section behaves exactly the same as described in the `message_queue` section above.
+3. `hosts`: this section contains a list of hosts, usually virtual machines, where Processing Servers should be
+   deployed. To be able to connect to a host, an `address` and `username` are required, then comes either `password`
+   or `path_to_privkey` (path to a private key). All Processing Servers, which will be deployed, must be declared under
+   the `deploy_processors` property. In case `type` is `docker`, make sure that [Docker](https://www.docker.com/) is
+   installed in the target machine and the provided `username` has enough rights to execute Docker commands.
+
+Among three sections, only the `message_queue` is required. However, if `hosts` is presented, `mongo_db` must be there
+as well. For more information, please check the [configuration file schema](web_api/config.schema.yml).
 
 ### Message Queue
 
+### Database
+
+The database is required to store necessary information such as users requests, jobs statuses, workspaces, etc. We
+recommend to use [MongoDB](https://www.mongodb.com/) since it is used by Processing Servers, but other kinds of storage
+may work as well. However, there must be a MongoDB running in the system because all Processing Servers will read and
+write to it. To connect to MongoDB via a Graphical User
+Interface, [MongoDB Compass](https://www.mongodb.com/products/compass) is recommended.
+
+When a Processing Server connects to the database for the first time, it will create a database called `ocrd`.
+For collections, each processor creates and works on a collection with the same name as its own. For example,
+all `ocrd-olena-binarize` processors will read and write to the `ocrd-olena-binarize` collection only.
