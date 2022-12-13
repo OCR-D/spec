@@ -198,9 +198,17 @@ properties:
                   enum: ['as-is', 'without-extension']
                   default: 'as-is'
                 path_in_archive:
-                  type: string
-                  description: if type is archive, the resource is at this location in the archive
-                  default: '.'
+                  anyOf:
+                    - type: string
+                      description: if type is archive, the resource is at this location in the archive
+                      default: '.'
+                    - type: object
+                      description: >
+                        if type is archive, take the key-value pairs of path_in_archive, mapping
+                        key to name and value to the path in the archive. This overrides the name
+                        attribute of the resource description. Using this mechanism, it is possible
+                        to download the resource once and extract multiple files/folders from it
+                        in one step.
                 version_range:
                   type: string
                   description: Range of supported versions, syntax like in PEP 440
