@@ -119,7 +119,7 @@ message_queue:
     password: admin
   ssh:
     username: cloud
-    password: 1234
+    password: "1234"
 mongo_db:
   address: localhost
   port: 27017
@@ -128,18 +128,18 @@ mongo_db:
     password: admin
   ssh:
     username: cloud
-    password: 1234
+    password: "1234"
 hosts:
   - address: localhost
     username: cloud
-    password: 1234
+    password: "1234"
     deploy_processors:
       - name: ocrd-cis-ocropy-binarize
         number_of_instance: 2
-        type: native
+        deploy_type: native
       - name: ocrd-olena-binarize
         number_of_instance: 1
-        type: docker
+        deploy_type: docker
 
   - address: 134.76.1.1
     username: tdoan
@@ -147,7 +147,7 @@ hosts:
     deploy_processors:
       - name: ocrd-eynollah-segment
         number_of_instance: 1
-        type: native
+        deploy_type: native
 ```
 
 There are three main sections in the configuration file.
