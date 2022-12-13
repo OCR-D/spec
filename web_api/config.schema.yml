@@ -16,15 +16,10 @@ properties:
     properties:
       address:
         description: The IP address or domain name of the machine where Message Queue is deployed
-        type: string
-        anyOf:
-          - format: hostname
-          - format: ipv4
+        $ref: "#/$defs/address"
       port:
         description: The port number of the Message Queue
-        type: integer
-        minimum: 1
-        maximum: 65535
+        $ref: "#/$defs/port"
       credentials:
         description: The credentials for the Message Queue
         $ref: "#/$defs/credentials"
