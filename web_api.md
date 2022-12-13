@@ -119,7 +119,7 @@ message_queue:
     password: admin
   ssh:
     username: cloud
-    password: "1234"
+    path_to_privkey: /path/to/file
 mongo_db:
   address: localhost
   port: 27017
