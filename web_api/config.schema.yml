@@ -1,5 +1,5 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: https://ocr-d.de/config.schema.yml
+$id: https://ocr-d.de/spec/web-api/config.schema.yml
 description: Schema for the Processing Broker configuration file
 type: object
 additionalProperties: false
