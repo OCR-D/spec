@@ -208,7 +208,7 @@ in the message again.
 When a Processing Broker receives a request, it adds some more data to the content, then push it to an appropriate
 queue. A processing queue always has the same name as its respective processors. For example, `ocrd-olena-binarize`
 processors listen only to the queue named `ocrd-olena-binarize`. Below is an example of how a message looks like. For a
-detailed schema, please check the [message schema](web_api/message.schema.yml).
+detailed schema, please check the [message schema](web_api/processing-message.schema.yml).
 
 ```yaml
 job_id: uuid
@@ -235,7 +235,8 @@ Instead of `path_to_mets`, one can also use `workspace_id` to specify a workspac
 from the Workspace Server. In case `result_queue_name` property is presented, the result of the processing will be
 pushed to the queue with the provided name. If the queue does not exist yet, it will be created on the fly. This is
 useful when there is another service waiting for the results of processing. That service can simply listen to that queue
-and will be immediately notified when the results are available. An example of a result message looks like this:
+and will be immediately notified when the results are available. The message schema can be
+found [here](web_api/result-message.schema.yml), while an example of a result message looks like this:
 
 ```yaml
 job_id: uuid
