@@ -241,6 +241,7 @@ found [here](web_api/result-message.schema.yml), while an example of a result me
 ```yaml
 job_id: uuid
 status: SUCCESS
+path_to_mets: /path/to/mets.xml
 ```
 
 With the returned `job_id`, one can retrieve more information by sending a `GET` request to
