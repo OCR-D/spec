@@ -21,6 +21,7 @@ properties:
     type: string
     enum:
       - SUCCESS
+      - RUNNING
       - FAILED
   path_to_mets:
     description: Path to a METS file
