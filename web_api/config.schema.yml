@@ -15,7 +15,7 @@ properties:
       - port
     properties:
       address:
-        description: The IP address or domain name of the machine where Message Queue is deployed
+        description: The IP address or domain name of the machine where the Message Queue is deployed
         $ref: "#/$defs/address"
       port:
         description: The port number of the Message Queue
