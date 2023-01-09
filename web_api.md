@@ -16,15 +16,16 @@ processing, workflow, and workspace.
 limited to, hardware configuration, installed processors, and information about each processor.
 
 **Processing**: Via the service endpoints in this section, one can get information about a
-specific [processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor), trigger a processor run, and check the status of
-a running processor. By exposing these endpoints, the server can encapsulate the detailed setup of the system and offer
-users a single entry to the processors. The implementation of this section is provided
-by [OCR-D/core](https://github.com/OCR-D/core). Implementors do not need to implement it themselves, they can reuse and/or extend the reference implementation from OCR-D/core.
+specific [processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor), trigger a processor run, and check the status
+of a running processor. By exposing these endpoints, the server can encapsulate the detailed setup of the system and
+offer users a single entry to the processors. The implementation of this section is provided
+by [OCR-D/core](https://github.com/OCR-D/core). Implementors do not need to implement it themselves, they can reuse
+and/or extend the reference implementation from OCR-D/core.
 
 **Workflow**: Beyond single processors, one can manage
 entire [workflows](https://ocr-d.de/en/spec/glossary#ocr-d-workflow), i.e. a series of connected processor
 instances. In this spec, a workflow amounts to a [Nextflow](https://www.nextflow.io/) script. Some information
-about Nextflow and how to use it in OCR-D is documented [in the nextflow spec](nextflow).
+about Nextflow and how to use it in OCR-D is documented [in the Nextflow spec](nextflow).
 
 **Workspace**: The service endpoints in this section concern data management, which in OCR-D is handled
 via [workspaces](https://ocr-d.de/en/spec/glossary#workspace). Processing (via single processors or workflows) always
@@ -76,25 +77,25 @@ more memory. It is also easier to scale up the processors, or even apply Functio
 are not constantly used, to save resources.
 
 **Processing**: since the `Processing` section is provided by [OCR-D Core](https://github.com/OCR-D/core), implementors
-do not need to implement Processing Broker, Message Queue, and Processing Server themselves, they can reuse/customize the existing implementation. Once a request comes, the broker
-pre-processes it if necessary, and push it to an appropriate queue. A processing queue always has the same name as its
-respective processors. For example, `ocrd-olena-binarize` processors listen only to the queue
-named `ocrd-olena-binarize`. A Processing Server, which is
-an [OCR-D Processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor) running as a worker, listens to the queue, pulls
-new jobs when available, processes them, and returns results. One normally does not call a Processing Server directly, but via a
-Processing Broker. Job statuses can be pushed back to the queue, depending on the [job configuration](#message-queue),
-so that other services get updates and act accordingly.
+do not need to implement Processing Broker, Message Queue, and Processing Server themselves, they can reuse/customize
+the existing implementation. Once a request comes, the broker pre-processes it if necessary, and push it to an
+appropriate queue. A processing queue always has the same name as its respective processors. For
+example, `ocrd-olena-binarize` processors listen only to the queue named `ocrd-olena-binarize`. A Processing Server,
+which is an [OCR-D Processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor) running as a worker, listens to the
+queue, pulls new jobs when available, processes them, and returns results. One normally does not call a Processing
+Server directly, but via a Processing Broker. Job statuses can be pushed back to the queue, depending on
+the [job configuration](#message-queue), so that other services get updates and act accordingly.
 
 **Database**: in this architecture, a database is required to store information such as users requests, jobs
 statuses, workspaces, etc. We recommend to use [MongoDB](https://www.mongodb.com/) since it is used by Processing
 Servers, but other kinds of storage may work as well.
 
 **Network File System**: in order to avoid file transfer between different machines, it is highly recommended to have
-a [Network File System (NFS)](https://en.wikipedia.org/wiki/Network_File_System) set up. With NFS, all Processing Servers
-(specifically processors) can work in a shared storage environment and access files as if they are local files. To get
-data into the NFS, one could use the `POST /workspace` endpoint to upload [OCRD-ZIP](https://ocr-d.de/en/spec/ocrd_zip)
-files. However, this approach is only appropriate for testing or very limited data sizes. Usually, Workspace Server should be able to pull
-data from other storages.
+a [Network File System (NFS)](https://en.wikipedia.org/wiki/Network_File_System) set up. With NFS, all Processing
+Servers(specifically processors) can work in a shared storage environment and access files as if they are local files.
+To get data into the NFS, one could use the `POST /workspace` endpoint to
+upload [OCRD-ZIP](https://ocr-d.de/en/spec/ocrd_zip)files. However, this approach is only appropriate for testing or
+very limited data sizes. Usually, Workspace Server should be able to pull data from other storages.
 
 ### Processing Broker
 
@@ -173,9 +174,9 @@ as well. For more information, please check the [configuration file schema](web_
 
 ### Processing Server
 
-There is normally no need to start (or stop) a Processing Server manually, since it can be managed by a Processing Broker via
-a [configuration file](#processing-broker). However, if it is necessary to do so, there are two ways to start a
-Processing Server:
+There is normally no need to start (or stop) a Processing Server manually, since it can be managed by a Processing
+Broker via a [configuration file](#processing-broker). However, if it is necessary to do so, there are two ways to start
+a Processing Server:
 
 ```shell
 # 1. Use ocrd CLI bundled with OCR-D/core
@@ -196,8 +197,9 @@ whole system are greatly improved. In our implementation, manual acknowledgement
 Processing Server finishes successfully, it sends a positive ACK signal to RabbitMQ. In case of failure, it tries again
 three times before sending a negative ACK signal. When a negative signal is received, RabbitMQ will re-queue the
 message. If there is not any ACK signal sent for any reason (e.g. consumer crash, power outage, network problem, etc.),
-RabbitMQ will automatically re-queue the message after timeout, which is 30
-minutes [by default](https://www.rabbitmq.com/consumers.html#acknowledgement-timeout). This behavior can be [overridden](link that describes how].
+RabbitMQ will automatically re-queue the message after timeout, which is 30 minutes by default. This behavior, however,
+can be [overridden](https://www.rabbitmq.com/consumers.html#acknowledgement-timeout) by setting another value for
+the `consumer_timeout` property in the [`rabbitmq.conf`](https://www.rabbitmq.com/configure.html#config-file) file.
 
 To avoid processing the same input twice (in case of re-queuing), a Processing Server first checks
 the [`redeliver`](https://www.rabbitmq.com/confirms.html#automatic-requeueing) property to see if this message was
