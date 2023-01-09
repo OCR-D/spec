@@ -22,13 +22,13 @@ In this document, such decisions on key aspects of OCR-D are discussed for the b
 
 * [Q3 2022] We use Nextflow. The whole `.nf` file (Nextflow file) as the workflow format workflow server and processing
   server including web API implementation is part of the [implementation projects](phase3). Further details can be
-  found [in the nextflow spec](spec/nextflow).
+  found [in the nextflow spec](nextflow).
 
 ## Web API
 
 * [Q3 2022] Switch to the new architecture with message queue.
     * Processing Broker and Processing Server will be provided via OCR-D Core.
-* [2022] OCR-D Coordination Project provides the [Web API spec](spec/web_api). Only
+* [2022] OCR-D Coordination Project provides the [Web API spec](web_api). Only
   the [REST API wrapper](https://github.com/OCR-D/core/pull/884) of a single processor is provided by OCR-D Core.
 
 ## QUIVER
