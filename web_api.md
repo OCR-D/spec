@@ -48,9 +48,8 @@ When a system implements the Web API completely, it can be used as follows:
 5. With the given job ID, it is possible to check the job status by calling:
     * `GET /processor/{executable}/{job-id}` for a single processor, or
     * `GET /workflow/{workflow-id}/{job-id}` for the workflow.
-6. The result can be downloaded by calling the `GET /workspace/{workspace-id}` endpoint with the
-   header `Accept: application/vnd.ocrd+zip`. Without that header, only the metadata of the specified workspace is
-   returned.
+6. The result can be downloaded by calling the `GET /workspace/{workspace-id}` endpoint. In case users only want
+   metadata of the workspace but not the files, simply set the header to `Accept: application/json`.
 
 ## Suggested OCR-D System Architecture
 
@@ -65,6 +64,12 @@ the [CLI](https://ocr-d.de/en/spec/cli) approach.
   </figcaption>
 </figure>
 
+In this architecture, all servers are implemented using [FastAPI](https://fastapi.tiangolo.com/). Behind the scene, it
+runs [Uvicorn](https://www.uvicorn.org/), an [ASGI](https://asgi.readthedocs.io/en/latest/) web server implementation
+for Python. [RabbitMQ](https://www.rabbitmq.com/) is used for the Message Queue, and [MongoDB](https://www.mongodb.com/)
+is the database system. There are many options for a reverse proxy, such as Nginx, Apache, or HAProxy. From our side, we
+recommend using [Traefik](https://doc.traefik.io/traefik/).
+
 ### Description
 
 As shown in Fig. 1, each section in the [Web API specification](#the-specification) is implemented by different servers,
@@ -73,8 +78,7 @@ in the figure is deployed on its own machine, it is completely up to the impleme
 servers. However, having each processor run on its own machine reduces the risk of version and resource conflicts.
 Furthermore, the machine can be customized to best fit the processor's hardware requirements and throughput demand. For
 example, some processors need GPU computation, while others do not, or some need more CPU capacity while others need
-more memory. It is also easier to scale up the processors, or even apply Function-as-a-Service on some of them, which
-are not constantly used, to save resources.
+more memory.
 
 **Processing**: since the `Processing` section is provided by [OCR-D Core](https://github.com/OCR-D/core), implementors
 do not need to implement Processing Broker, Message Queue, and Processing Server themselves, they can reuse/customize
@@ -82,13 +86,12 @@ the existing implementation. Once a request comes, the broker pre-processes it i
 appropriate queue. A processing queue always has the same name as its respective processors. For
 example, `ocrd-olena-binarize` processors listen only to the queue named `ocrd-olena-binarize`. A Processing Server,
 which is an [OCR-D Processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor) running as a worker, listens to the
-queue, pulls new jobs when available, processes them, and returns results. One normally does not call a Processing
-Server directly, but via a Processing Broker. Job statuses can be pushed back to the queue, depending on
-the [job configuration](#message-queue), so that other services get updates and act accordingly.
+queue, pulls new jobs when available, processes them, and push the job statuses back to the queue if necessary. One
+normally does not call a Processing Server directly, but via a Processing Broker. Job statuses can be pushed back to the
+queue, depending on the [job configuration](#message-queue), so that other services get updates and act accordingly.
 
 **Database**: in this architecture, a database is required to store information such as users requests, jobs
-statuses, workspaces, etc. We recommend to use [MongoDB](https://www.mongodb.com/) since it is used by Processing
-Servers, but other kinds of storage may work as well.
+statuses, workspaces, etc. [MongoDB](https://www.mongodb.com/) is required here.
 
 **Network File System**: in order to avoid file transfer between different machines, it is highly recommended to have
 a [Network File System (NFS)](https://en.wikipedia.org/wiki/Network_File_System) set up. With NFS, all Processing
@@ -102,7 +105,7 @@ very limited data sizes. Usually, Workspace Server should be able to pull data f
 A Processing Broker is a server which exposes REST endpoints in the `Processing` section of
 the [Web API specification](openapi.yml). There are two types of task performed by a broker: deployment management and
 message producer. For the former, a broker can deploy, re-use, and shutdown Processing Servers, Message Queue, and
-Databases, depending on the configuration. To start a Processing Broker, run
+Database, depending on the configuration. To start a Processing Broker, run
 
 ```shell
 $ ocrd processing-broker /path/to/config.yml
@@ -206,10 +209,11 @@ the [`redeliver`](https://www.rabbitmq.com/confirms.html#automatic-requeueing) p
 re-queued. If yes, and the status of this process in the database is not `SUCCESS`, it will process the data described
 in the message again.
 
-When a Processing Broker receives a request, it adds some more data to the content, then push it to an appropriate
-queue. A processing queue always has the same name as its respective processors. For example, `ocrd-olena-binarize`
-processors listen only to the queue named `ocrd-olena-binarize`. Below is an example of how a message looks like. For a
-detailed schema, please check the [message schema](web_api/processing-message.schema.yml).
+When a Processing Broker receives a request, it creates a message based on the request content, then push it to an
+appropriate queue. A processing queue always has the same name as its respective processors. For
+example, `ocrd-olena-binarize`processors listen only to the queue named `ocrd-olena-binarize`. Below is an example of
+how a message looks like. For a detailed schema, please check
+the [message schema](web_api/processing-message.schema.yml).
 
 ```yaml
 job_id: uuid
@@ -251,10 +255,8 @@ job.
 
 ### Database
 
-The database is required to store necessary information such as users requests, jobs statuses, workspaces, etc. We
-recommend to use [MongoDB](https://www.mongodb.com/) since it is used by Processing Servers, but other kinds of storage
-may work as well. However, there must be a MongoDB running in the system because all Processing Servers will read and
-write to it. To connect to MongoDB via a Graphical User
+A database is required to store necessary information such as users requests, jobs statuses, workspaces,
+etc. [MongoDB](https://www.mongodb.com/) is used in this case. To connect to MongoDB via a Graphical User
 Interface, [MongoDB Compass](https://www.mongodb.com/products/compass) is recommended.
 
 When a Processing Server connects to the database for the first time, it will create a database called `ocrd`.
