@@ -29,8 +29,10 @@ benefit of all OCR-D stakeholders.
 
 ## Web API
 
-* [2022] OCR-D Coordination Project provides the [Web API spec](spec/web_api).
-  Only the [REST API wrapper](https://github.com/OCR-D/core/pull/884) of a single processor is provided by OCR-D Core.
+* [Q3 2022] Switch to the new architecture with message queue.
+  * Processing Broker and Processing Server will be provided via OCR-D Core.
+* [2022] OCR-D Coordination Project provides the [Web API spec](web_api). Only
+  the [REST API wrapper](https://github.com/OCR-D/core/pull/884) of a single processor is provided by OCR-D Core.
 
 ## QUIVER
 
