@@ -108,11 +108,12 @@ message producer. For the former, a broker can deploy, re-use, and shutdown Proc
 Database, depending on the configuration. To start a Processing Broker, run
 
 ```shell
-$ ocrd processing-broker /path/to/config.yml
+$ ocrd processing-broker --address=<IP>:<PORT> /path/to/config.yml
 ```
 
-The schema of this configuration file can be found [here](web_api/config.schema.yml). Below is a small example of how
-the file might look like.
+This command starts a processing broker on the provided IP and port. It accepts only one argument, which is the path to
+a configuration file. The schema of a configuration file can be found [here](web_api/config.schema.yml). Below is a
+small example of how the file might look like.
 
 ```yaml
 message_queue:
