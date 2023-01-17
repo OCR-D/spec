@@ -143,7 +143,6 @@ Added:
 
   * docker: instructions on naming and labelling images, #139
   * CLI tools must implement `-h/--help`, #115
->>>>>>> master
 
 ## [3.4.2] - 2020-01-08
 
