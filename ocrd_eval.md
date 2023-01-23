@@ -26,7 +26,7 @@ The most important measure to assess the quality of OCR is the accuracy of the r
 Levenshtein distance between two strings `a` and `b` is the number of edit operations needed to turn `a` into `b`. Edit operations depend on the specific variant of the algorithm but for OCR, relevant operations are deletion, insertion and substitution.
 
 The Levenshtein distance forms the basis for the calculation of [CER/WER](https://pad.gwdg.de/#CERWER).
-As there are different implementations of the edit distance available (e.g. rapidfuzz, jellyfish, …), the OCR-D coordination project will provide a recommendation in the final version of this document.
+As there are different implementations of the edit distance available (e.g. [rapidfuzz](https://maxbachmann.github.io/RapidFuzz/Usage/distance/Levenshtein.html), [jellyfish](https://jamesturk.github.io/jellyfish/functions/#levenshtein-distance), …), the OCR-D coordination project will provide a recommendation in the final version of this document.
 
 ##### Example
 
