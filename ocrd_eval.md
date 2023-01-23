@@ -7,13 +7,13 @@ evaluation metrics and evaluation tools that need to work together in a
 well-defined manner to allow users to make informed decisions about which OCR
 solution works best for their use case.
 
-## Evaluation metrics
+## Evaluation Metrics
 
 The evaluation of the success (accuracy) of OCR is a complex task for which multiple methods and metrics are available. It aims to capture quality in different aspects, such as the recognition of text, but also the detection of layout, for which different methods and metrics are needed.
 
 Furthermore, the time and resources required for OCR processing also have to be captured. Here we describe the metrics that were selected for use in OCR-D, how exactly they are applied, and what was the motivation.
 
-### Scope of these Definitions
+### Scope of These Definitions
 
 At this stage (Q3 2022) these definitions serve as a basis of common understanding for the metrics used in the benchmarking presented in OCR-D QUIVER. Further implications for evaluation tools do not yet apply.
 
@@ -21,22 +21,14 @@ At this stage (Q3 2022) these definitions serve as a basis of common understandi
 
 The most important measure to assess the quality of OCR is the accuracy of the recognized text. The majority of metrics for this are based on the Levenshtein distance, an algorithm to compute the distance between two strings. In OCR, one of these strings is generally the Ground Truth text and the other the recognized text which is the result of an OCR.
 
-#### Levenshtein Distance
+#### Levenshtein Distance (Edit Distance)
 
 Levenshtein distance between two strings `a` and `b` is the number of edit operations needed to turn `a` into `b`. Edit operations depend on the specific variant of the algorithm but for OCR, relevant operations are deletion, insertion and substitution.
 
 The Levenshtein distance forms the basis for the calculation of [CER/WER](https://pad.gwdg.de/#CERWER).
+As there are different implementations of the edit distance available (e.g. rapidfuzz, jellyfish, …), the OCR-D coordination project will provide a recommendation in the final version of this document.
 
-##### General example
-
-The Levenshtein distance between "Monday" and "Tuesday" is 4, because 4 edit operations are necessary to turn "Monday" into "Tuesday":
-
-* **M**onday --> **T**onday (substitution)
-* T**o**nday --> T**u**nday (substitution)
-* Tu**n**day --> Tu**e**day (substitution)
-* Tueday --> Tue**s**day (insertion)
-
-##### OCR example
+##### Example
 
 Given a Ground truth that reads `ſind` and the recognized text `fmd`.
 
@@ -51,6 +43,7 @@ The Levenshtein distance between these texts is 4, because 4 edit operations are
 ##### Characters
 
 A text consists of a set of characters that have a certain meaning. A character is a glyph that represents a word, a letter in a word, or a symbol.
+Not included in the character definition are all forms of white spaces.
 
 ###### Examples
 
@@ -60,7 +53,7 @@ A text consists of a set of characters that have a certain meaning. A character 
 
 ##### Character Error Rate (CER)
 
-The character error rate (CER) describes how many faulty characters the output of an OCR engine contains compaired to the Ground Truth text in relation to the text length.
+The character error rate (CER) describes how many faulty characters the output of an OCR engine contains compaired to the Ground Truth text in relation to the text length (i.e. the number of characters of the text).
 
 Errors fall into one of the following three categories:
 
@@ -218,7 +211,7 @@ Memory usage is the number of bytes the process allocates in memory (RAM).
 
 Disk usage is the number of bytes the process allocates on hard disk.
 
-### Unicode normalization
+### Unicode Normalization
 
 In Unicode there can be multiple ways to express characters that have multiple components, such as a base letter and an accent. For evaluation it is essential that both Ground Truth and OCR results are normalized *in the same way* before evaluation.
 
@@ -238,13 +231,13 @@ The Unicode normalization algorithms rely on data from the Unicode database on e
 
 The following metrics are not part of the MVP (minimal viable product) and will (if ever) be implemented at a later stage.
 
-#### GPU metrics
+#### GPU Metrics
 
-##### GPU time
+##### GPU Time
 
 GPU time is the time a GPU (graphics card) spent processing instructions
 
-##### GPU avg memory
+##### GPU Avg Memory
 
 GPU avg memory refers to the average amount of memory of the GPU (in GiB) that was used during processing.
 
@@ -343,7 +336,7 @@ The mean Average Precision is a metric used to measure how accurate an object de
 
 $mAP = \displaystyle\frac{1}{N}\sum_{i=1}^{N}AP_i$ with $N$ being the number of thresholds.
 
-##### Scenario-driven Performance Evaluation
+##### Scenario-Driven Performance Evaluation
 
 Scenario-driven performance evaluation as described in [Clausner et al., 2011](https://primaresearch.org/publications/ICDAR2011_Clausner_PerformanceEvaluation) is currently the most comprehensive and sophisticated approach to evaluate OCR success with consideration of layout.
 
