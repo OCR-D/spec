@@ -1,5 +1,15 @@
 # Web API
 
+## Terminology
+
+* **Processing Worker**: a Processing Worker is an [OCR-D Processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor)
+  running as a worker, listens to a message queue, pulls new jobs when available, processes them, and push the job
+  statuses back to the queue if necessary.
+* **Processing Server**: a Processing Server is a server which exposes REST endpoints in the `Processing` section of
+  the [Web API specification](openapi.yml).
+* **Process Queue**: a Process Queue is a queuing system. In our implementation,
+  it's [RabbitMQ](https://www.rabbitmq.com/).
+
 ## Why do we need a Web API?
 
 After having processors running locally via the [CLI](https://ocr-d.de/en/spec/cli), communication over network is the
@@ -86,13 +96,13 @@ more memory.
 
 **Processing**: since the `Processing` section is provided by [OCR-D Core](https://github.com/OCR-D/core), implementors
 do not need to implement Processing Server, Process Queue, and Processing Worker themselves, they can reuse/customize
-the existing implementation. Once a request comes, the broker pre-processes it if necessary, and push it to an
-appropriate queue. A processing queue always has the same name as its respective processors. For
-example, `ocrd-olena-binarize` processors listen only to the queue named `ocrd-olena-binarize`. A Processing Worker,
-which is an [OCR-D Processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor) running as a worker, listens to the
-queue, pulls new jobs when available, processes them, and push the job statuses back to the queue if necessary. One
-normally does not call a Processing Worker directly, but via a Processing Server. Job statuses can be pushed back to the
-queue, depending on the [job configuration](#process-queue), so that other services get updates and act accordingly.
+the existing implementation. Once a request comes, it will be pushed to an appropriate queue. A processing queue always
+has the same name as its respective processors. For example, `ocrd-olena-binarize` processors listen only to the queue
+named `ocrd-olena-binarize`. A Processing Worker, which is
+an [OCR-D Processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor) running as a worker, listens to the queue, pulls
+new jobs when available, processes them, and push the job statuses back to the queue if necessary. One normally does not
+call a Processing Worker directly, but via a Processing Server. Job statuses can be pushed back to the queue, depending
+on the [job configuration](#process-queue), so that other services get updates and act accordingly.
 
 **Database**: in this architecture, a database is required to store information such as users requests, jobs
 statuses, workspaces, etc. [MongoDB](https://www.mongodb.com/) is required here.
@@ -107,9 +117,9 @@ very limited data sizes. Usually, Workspace Server should be able to pull data f
 ### Processing Server
 
 A Processing Server is a server which exposes REST endpoints in the `Processing` section of
-the [Web API specification](openapi.yml). There are two types of task performed by a broker: deployment management and
-message producer. For the former, a broker can deploy, re-use, and shutdown Processing Workers, Process Queue, and
-Database, depending on the configuration. To start a Processing Server, run
+the [Web API specification](openapi.yml). There are two types of task performed by a Processing Server: deployment
+management and message producer. For the former, a Processing Server can deploy, re-use, and shutdown Processing
+Workers, Process Queue, and Database, depending on the configuration. To start a Processing Server, run
 
 ```shell
 $ ocrd processing-server --address=<IP>:<PORT> /path/to/config.yml
@@ -183,7 +193,7 @@ as well. For more information, please check the [configuration file schema](web_
 ### Processing Worker
 
 There is normally no need to start (or stop) a Processing Worker manually, since it can be managed by a Processing
-Broker via a [configuration file](#processing-server). However, if it is necessary to do so, there are two ways to start
+Server via a [configuration file](#processing-server). However, if it is necessary to do so, there are two ways to start
 a Processing Worker:
 
 ```shell
