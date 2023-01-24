@@ -27,9 +27,12 @@ entire [workflows](https://ocr-d.de/en/spec/glossary#ocr-d-workflow), i.e. a ser
 instances. In this spec, a workflow amounts to a [Nextflow](https://www.nextflow.io/) script. Some information
 about Nextflow and how to use it in OCR-D is documented [in the Nextflow spec](nextflow).
 
-**Workspace**: The service endpoints in this section concern data management, which in OCR-D is handled
-via [workspaces](https://ocr-d.de/en/spec/glossary#workspace). Processing (via single processors or workflows) always
-refers to existing workspaces, i.e. combinations of `mets.xml` and downloaded files from the `mets.xml`.
+**Workspace**: The service endpoints in this section concern data management, 
+which in OCR-D is handled via [workspaces](https://ocr-d.de/en/spec/glossary#workspace). 
+(A workspace is the combination of a [METS](https://ocr-d.de/en/spec/mets) file and 
+any number of referenced files already downloaded, i.e. with locations relative to the METS file path.)
+Processing (via single processors or workflows) always refers to existing workspaces, 
+i.e. workspaces residing in the server's filesystem.
 
 ## Usage
 
@@ -44,12 +47,12 @@ When a system implements the Web API completely, it can be used as follows:
       processor name, workspace ID and parameters, or
     * Start a workflow on a workspace by calling the `POST /workflow/{workflow-id}` endpoint with the chosen workflow ID
       and workspace ID.
-    * In both case, a job ID is returned.
+    * In both cases, a job ID is returned.
 5. With the given job ID, it is possible to check the job status by calling:
     * `GET /processor/{executable}/{job-id}` for a single processor, or
     * `GET /workflow/{workflow-id}/{job-id}` for the workflow.
-6. The result can be downloaded by calling the `GET /workspace/{workspace-id}` endpoint. In case users only want
-   metadata of the workspace but not the files, simply set the header to `Accept: application/json`.
+6. Download the resulting workspace via the `GET /workspace/{workspace-id}` endpoint and get back an OCRD-ZIP.
+   Set the request header to `Accept: application/json` in case you only want the meta-data of the workspace but not the files.
 
 ## Suggested OCR-D System Architecture
 
