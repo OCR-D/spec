@@ -92,7 +92,7 @@ example, `ocrd-olena-binarize` processors listen only to the queue named `ocrd-o
 which is an [OCR-D Processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor) running as a worker, listens to the
 queue, pulls new jobs when available, processes them, and push the job statuses back to the queue if necessary. One
 normally does not call a Processing Worker directly, but via a Processing Server. Job statuses can be pushed back to the
-queue, depending on the [job configuration](#message-queue), so that other services get updates and act accordingly.
+queue, depending on the [job configuration](#process-queue), so that other services get updates and act accordingly.
 
 **Database**: in this architecture, a database is required to store information such as users requests, jobs
 statuses, workspaces, etc. [MongoDB](https://www.mongodb.com/) is required here.
@@ -183,7 +183,7 @@ as well. For more information, please check the [configuration file schema](web_
 ### Processing Worker
 
 There is normally no need to start (or stop) a Processing Worker manually, since it can be managed by a Processing
-Broker via a [configuration file](#processing-broker). However, if it is necessary to do so, there are two ways to start
+Broker via a [configuration file](#processing-server). However, if it is necessary to do so, there are two ways to start
 a Processing Worker:
 
 ```shell
