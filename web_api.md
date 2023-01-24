@@ -39,7 +39,7 @@ i.e. workspaces residing in the server's filesystem.
 When a system implements the Web API completely, it can be used as follows:
 
 1. Retrieve information about the system via endpoints in the `Discovery` section.
-2. Create a workspace via the `POST /workspace` endpoint and gets back a workspace ID.
+2. Create a workspace (from an [OCRD-ZIP](https://ocr-d.de/en/spec/ocrd_zip) or METS URL) via the `POST /workspace` endpoint and get back a workspace ID.
 3. Create a workflow by uploading a Nextflow script to the system via the `POST /workflow` endpoint and get back a
    workflow ID.
 4. One can either:
