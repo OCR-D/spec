@@ -245,8 +245,47 @@ Instead of `path_to_mets`, one can also use `workspace_id` to specify a workspac
 from the Workspace Server. In case `result_queue_name` property is presented, the result of the processing will be
 pushed to the queue with the provided name. If the queue does not exist yet, it will be created on the fly. This is
 useful when there is another service waiting for the results of processing. That service can simply listen to that queue
-and will be immediately notified when the results are available. The message schema for results can be
-found [here](web_api/result-message.schema.yml), while an example of a result message looks like this:
+and will be immediately notified when the results are available. Below is a simple Python script to demonstrate how a
+service can listen to the `result_queue_name` and act accordingly.
+
+```python
+import pika, sys, os
+
+def main():
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+    channel = connection.channel()
+
+    # Create the result queue, in case it's not existed yet
+    result_queue_name = 'ocrd-cis-ocropy-binarize-result'
+    channel.queue_declare(queue=result_queue_name)
+
+    def callback(ch, method, properties, body):
+        print(' [x] Received %r' % body)
+
+    channel.basic_consume(queue=result_queue_name, on_message_callback=callback, auto_ack=True)
+
+    print(' [*] Waiting for messages. To exit press CTRL+C')
+    channel.start_consuming()
+
+if __name__ == '__main__':
+    try:
+        main()
+    except KeyboardInterrupt:
+        print('Interrupted')
+        try:
+            sys.exit(0)
+        except SystemExit:
+            os._exit(0)
+```
+
+It is important that the result queue exists before one starts listening on it, otherwise an error is thrown. The best
+way to ensure this is trying to create the result queue in the listener service, as shown in the Python script above. In
+RabbitMQ, this action is idempotent, which means that the creation only happens if the queue doesn't exist yet,
+otherwise nothing will happen. For more information, please check
+the [RabbitMQ tutorials](https://www.rabbitmq.com/getstarted.html).
+
+The schema for messages in the result queues can be found [here](web_api/result-message.schema.yml), while an example of
+a result message looks like this:
 
 ```yaml
 job_id: uuid
