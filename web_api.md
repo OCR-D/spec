@@ -152,25 +152,28 @@ database:
   ssh:
     username: cloud
     password: "1234"
-workers:
+hosts:
   - address: localhost
     username: cloud
     password: "1234"
-    deploy_processors:
+    processors:
       - name: ocrd-cis-ocropy-binarize
         number_of_instance: 2
         deploy_type: native
+        server_type: worker
       - name: ocrd-olena-binarize
         number_of_instance: 1
         deploy_type: docker
+        server_type: rest
 
   - address: 134.76.1.1
     username: tdoan
     path_to_privkey: /path/to/file
-    deploy_processors:
+    processors:
       - name: ocrd-eynollah-segment
         number_of_instance: 1
         deploy_type: native
+        server_type: worker
 ```
 
 There are three main sections in the configuration file.
@@ -188,8 +191,12 @@ There are three main sections in the configuration file.
 3. `workers`: this section contains a list of hosts, usually virtual machines, where Processing Workers should be
    deployed. To be able to connect to a host, an `address` and `username` are required, then comes either `password`
    or `path_to_privkey` (path to a private key). All Processing Workers, which will be deployed, must be declared under
-   the `deploy_processors` property. In case `type` is `docker`, make sure that [Docker](https://www.docker.com/) is
+   the `processors` property. In case `deploy_type` is `docker`, make sure that [Docker](https://www.docker.com/) is
    installed in the target machine and the provided `username` has enough rights to execute Docker commands.
+   `server_type` accepts two values:
+    * `worker`: the processor will be deployed as a worker, i.e. listening to the Process Queue for jobs.
+    * `rest`: the processor will be deployed as a standalone server which can be triggered via REST calls. The
+      specification of this API can be found [here](web_api/standalone_api.yml).
 
 Among three sections, only the `message_queue` is required. However, if `workers` is present, `database` must be there
 as well. For more information, please check the [configuration file schema](web_api/config.schema.yml).
