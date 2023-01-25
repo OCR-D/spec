@@ -293,7 +293,8 @@ the `result_queue_name` and act accordingly.
 import pika, sys, os
 
 def main():
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+    credentials = pika.PlainCredentials('username', 'password')
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='my.domain.name', port=5672, credentials=credentials))
     channel = connection.channel()
 
     # Create the result queue, in case it does not exist yet
@@ -315,8 +316,8 @@ RabbitMQ, this action is idempotent, which means that the creation only happens 
 otherwise nothing will happen. For more information, please check
 the [RabbitMQ tutorials](https://www.rabbitmq.com/getstarted.html).
 
-If the `callback_url` is set, a `POST` request will be made to the provided endpoint when the processing is finished.
-The body of the request is the result message described below.
+If the `callback_url` in the processing message is set, a `POST` request will be made to the provided endpoint when the
+processing is finished. The body of the request is the result message described below.
 
 The schema for result messages can be found [here](web_api/result-message.schema.yml). This message is sent to the
 callback URL or to the result queue, depending on the configuration in the processing message. An example of the message
