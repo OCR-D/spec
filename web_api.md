@@ -3,11 +3,12 @@
 ## Terminology
 
 * **Processing Worker**: a Processing Worker is an [OCR-D Processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor)
-  running as a worker, listens to a message queue, pulls new jobs when available, processes them, and push the job
+  running as a worker, i.e. listening to the Process Queue, pulling new jobs when available, processing them, and pushing the updated job
   statuses back to the queue if necessary.
 * **Processing Server**: a Processing Server is a server which exposes REST endpoints in the `Processing` section of
   the [Web API specification](openapi.yml).
-* **Process Queue**: a Process Queue is a queuing system. In our implementation,
+* **Process Queue**: a Process Queue is a queueing system for workflow jobs 
+(i.e. single or chained processor runs on one workspace) to be executed by Processing Workers. In our implementation,
   it's [RabbitMQ](https://www.rabbitmq.com/).
 
 ## Why do we need a Web API?
@@ -96,12 +97,12 @@ more memory.
 
 **Processing**: since the `Processing` section is provided by [OCR-D Core](https://github.com/OCR-D/core), implementors
 do not need to implement Processing Server, Process Queue, and Processing Worker themselves, they can reuse/customize
-the existing implementation. Once a request comes, it will be pushed to an appropriate queue. A processing queue always
+the existing implementation. Once a request arrives, it will be (split into single-processor jobs and) pushed to an appropriate queue. A processing queue always
 has the same name as its respective processors. For example, `ocrd-olena-binarize` processors listen only to the queue
 named `ocrd-olena-binarize`. A Processing Worker, which is
 an [OCR-D Processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor) running as a worker, listens to the queue, pulls
 new jobs when available, processes them, and push the job statuses back to the queue if necessary. One normally does not
-call a Processing Worker directly, but via a Processing Server. Job statuses can be pushed back to the queue, depending
+run a Processing Worker directly, but via a Processing Server. Job statuses can be pushed back to the queue, depending
 on the [job configuration](#process-queue), so that other services get updates and act accordingly.
 
 **Database**: in this architecture, a database is required to store information such as users requests, jobs
@@ -116,16 +117,19 @@ very limited data sizes. Usually, Workspace Server should be able to pull data f
 
 ### Processing Server
 
-A Processing Server is a server which exposes REST endpoints in the `Processing` section of
-the [Web API specification](openapi.yml). There are two types of task performed by a Processing Server: deployment
-management and message producer. For the former, a Processing Server can deploy, re-use, and shutdown Processing
-Workers, Process Queue, and Database, depending on the configuration. To start a Processing Server, run
+The Processing Server is a server which exposes REST endpoints in the `Processing` section of
+the [Web API specification](openapi.yml). In the queue-based system architecture, a Processing Server is responsible for deployment
+management and enqueueing workflow jobs. For the former, a Processing Server can deploy, re-use, and shutdown Processing
+Workers, Process Queue, and Database, depending on the configuration. For the latter, it decodes requests 
+and delegates them to the Process Queue.
+
+To start a Processing Server, run
 
 ```shell
 $ ocrd processing-server --address=<IP>:<PORT> /path/to/config.yml
 ```
 
-This command starts a Processing Server on the provided IP and port. It accepts only one argument, which is the path to
+This command starts a Processing Server on the provided IP address and port. It accepts only one argument, which is the path to
 a configuration file. The schema of a configuration file can be found [here](web_api/config.schema.yml). Below is a
 small example of how the file might look like.
 
@@ -210,8 +214,11 @@ $ ocrd processing-worker <processor-name> --queue=<queue-address> --database=<da
 
 ### Process Queue
 
-By using a queuing system, specifically [RabbitMQ](https://www.rabbitmq.com/), the reliability and flexibility of the
-whole system are greatly improved. In our implementation, manual acknowledgement mode is used. This means, when a
+By using a queuing system for individual per-workspace per-job processor runs, 
+specifically as message queueing with [RabbitMQ](https://www.rabbitmq.com/), the reliability and flexibility of the
+Processing Server are greatly improved over a system directly coupling the workflow engine and distributed processor instances.
+
+ In our implementation of the Process Queue, manual acknowledgement mode is used. This means, when a
 Processing Worker finishes successfully, it sends a positive ACK signal to RabbitMQ. In case of failure, it tries again
 three times before sending a negative ACK signal. When a negative signal is received, RabbitMQ will re-queue the
 message. If there is not any ACK signal sent for any reason (e.g. consumer crash, power outage, network problem, etc.),
@@ -265,7 +272,7 @@ def main():
     connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
     channel = connection.channel()
 
-    # Create the result queue, in case it's not existed yet
+    # Create the result queue, in case it does not exist yet
     result_queue_name = 'ocrd-cis-ocropy-binarize-result'
     channel.queue_declare(queue=result_queue_name)
 
@@ -274,18 +281,8 @@ def main():
 
     channel.basic_consume(queue=result_queue_name, on_message_callback=callback, auto_ack=True)
 
-    print(' [*] Waiting for messages. To exit press CTRL+C')
+    print(' [*] Waiting for job results.)
     channel.start_consuming()
-
-if __name__ == '__main__':
-    try:
-        main()
-    except KeyboardInterrupt:
-        print('Interrupted')
-        try:
-            sys.exit(0)
-        except SystemExit:
-            os._exit(0)
 ```
 
 It is important that the result queue exists before one starts listening on it, otherwise an error is thrown. The best
