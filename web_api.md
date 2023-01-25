@@ -3,12 +3,12 @@
 ## Terminology
 
 * **Processing Worker**: a Processing Worker is an [OCR-D Processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor)
-  running as a worker, i.e. listening to the Process Queue, pulling new jobs when available, processing them, and pushing the updated job
-  statuses back to the queue if necessary.
+  running as a worker, i.e. listening to the Process Queue, pulling new jobs when available, processing them, and
+  pushing the updated job statuses back to the queue if necessary.
 * **Processing Server**: a Processing Server is a server which exposes REST endpoints in the `Processing` section of
   the [Web API specification](openapi.yml).
-* **Process Queue**: a Process Queue is a queueing system for workflow jobs 
-(i.e. single or chained processor runs on one workspace) to be executed by Processing Workers. In our implementation,
+* **Process Queue**: a Process Queue is a queueing system for workflow jobs (i.e. single or chained processor runs on
+  one workspace) to be executed by Processing Workers. In our implementation,
   it's [RabbitMQ](https://www.rabbitmq.com/).
 
 ## Why do we need a Web API?
@@ -97,16 +97,16 @@ more memory.
 
 **Processing**: since the `Processing` section is provided by [OCR-D Core](https://github.com/OCR-D/core), implementors
 do not need to implement Processing Server, Process Queue, and Processing Worker themselves, they can reuse/customize
-the existing implementation. Once a request arrives, it will be (split into single-processor jobs and) pushed to an appropriate queue. A processing queue always
-has the same name as its respective processors. For example, `ocrd-olena-binarize` processors listen only to the queue
-named `ocrd-olena-binarize`. A Processing Worker, which is
-an [OCR-D Processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor) running as a worker, listens to the queue, pulls
-new jobs when available, processes them, and push the job statuses back to the queue if necessary. One normally does not
-run a Processing Worker directly, but via a Processing Server. Job statuses can be pushed back to the queue, depending
-on the [job configuration](#process-queue), so that other services get updates and act accordingly.
+the existing implementation. Once a request arrives, it will be (split into single-processor jobs and) pushed to a
+processing queue. A processing queue always has the same name as its respective processors. For
+example, `ocrd-olena-binarize` processors listen only to the queue named `ocrd-olena-binarize`. A Processing Worker,
+which is an [OCR-D Processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor) running as a worker, listens to the
+queue, pulls new jobs when available, processes them, and push the job statuses back to the queue if necessary. One
+normally does not run a Processing Worker directly, but via a Processing Server. Job statuses can be pushed back to the
+queue, depending on the [job configuration](#process-queue), so that other services get updates and act accordingly.
 
-**Database**: in this architecture, a database is required to store information such as users requests, jobs
-statuses, workspaces, etc. [MongoDB](https://www.mongodb.com/) is required here.
+**Database**: in this architecture, a database is required to store information such as users requests, jobs statuses,
+workspaces, etc. [MongoDB](https://www.mongodb.com/) is required here.
 
 **Network File System**: in order to avoid file transfer between different machines, it is highly recommended to have
 a [Network File System (NFS)](https://en.wikipedia.org/wiki/Network_File_System) set up. With NFS, all Processing
@@ -118,10 +118,10 @@ very limited data sizes. Usually, Workspace Server should be able to pull data f
 ### Processing Server
 
 The Processing Server is a server which exposes REST endpoints in the `Processing` section of
-the [Web API specification](openapi.yml). In the queue-based system architecture, a Processing Server is responsible for deployment
-management and enqueueing workflow jobs. For the former, a Processing Server can deploy, re-use, and shutdown Processing
-Workers, Process Queue, and Database, depending on the configuration. For the latter, it decodes requests 
-and delegates them to the Process Queue.
+the [Web API specification](openapi.yml). In the queue-based system architecture, a Processing Server is responsible for
+deployment management and enqueueing workflow jobs. For the former, a Processing Server can deploy, re-use, and shutdown
+Processing Workers, Process Queue, and Database, depending on the configuration. For the latter, it decodes requests and
+delegates them to the Process Queue.
 
 To start a Processing Server, run
 
@@ -129,9 +129,9 @@ To start a Processing Server, run
 $ ocrd processing-server --address=<IP>:<PORT> /path/to/config.yml
 ```
 
-This command starts a Processing Server on the provided IP address and port. It accepts only one argument, which is the path to
-a configuration file. The schema of a configuration file can be found [here](web_api/config.schema.yml). Below is a
-small example of how the file might look like.
+This command starts a Processing Server on the provided IP address and port. It accepts only one argument, which is the
+path to a configuration file. The schema of a configuration file can be found [here](web_api/config.schema.yml). Below
+is a small example of how the file might look like.
 
 ```yaml
 message_queue:
@@ -143,7 +143,7 @@ message_queue:
   ssh:
     username: cloud
     path_to_privkey: /path/to/file
-mongo_db:
+database:
   address: localhost
   port: 27017
   credentials:
@@ -152,7 +152,7 @@ mongo_db:
   ssh:
     username: cloud
     password: "1234"
-hosts:
+workers:
   - address: localhost
     username: cloud
     password: "1234"
@@ -182,16 +182,16 @@ There are three main sections in the configuration file.
    is done via Docker. Make sure that the provided `username` has enough rights to run Docker commands. In case
    the `ssh` property is not presented, the Processing Server assumes that RabbitMQ was already deployed and just uses
    it.
-2. `mongo_db`: this section also contains the `address` and `port`, where the [MongoDB](https://www.mongodb.com/) is
+2. `database`: this section also contains the `address` and `port`, where the [MongoDB](https://www.mongodb.com/) is
    running, or will run. If `credentials` is presented, it will be used when deploying and connecting to the database.
    The `ssh` section behaves exactly the same as described in the `message_queue` section above.
-3. `hosts`: this section contains a list of hosts, usually virtual machines, where Processing Workers should be
+3. `workers`: this section contains a list of hosts, usually virtual machines, where Processing Workers should be
    deployed. To be able to connect to a host, an `address` and `username` are required, then comes either `password`
    or `path_to_privkey` (path to a private key). All Processing Workers, which will be deployed, must be declared under
    the `deploy_processors` property. In case `type` is `docker`, make sure that [Docker](https://www.docker.com/) is
    installed in the target machine and the provided `username` has enough rights to execute Docker commands.
 
-Among three sections, only the `message_queue` is required. However, if `hosts` is present, `mongo_db` must be there
+Among three sections, only the `message_queue` is required. However, if `workers` is present, `database` must be there
 as well. For more information, please check the [configuration file schema](web_api/config.schema.yml).
 
 ### Processing Worker
@@ -214,16 +214,16 @@ $ ocrd processing-worker <processor-name> --queue=<queue-address> --database=<da
 
 ### Process Queue
 
-By using a queuing system for individual per-workspace per-job processor runs, 
-specifically as message queueing with [RabbitMQ](https://www.rabbitmq.com/), the reliability and flexibility of the
-Processing Server are greatly improved over a system directly coupling the workflow engine and distributed processor instances.
+By using a queuing system for individual per-workspace per-job processor runs, specifically as message queueing
+with [RabbitMQ](https://www.rabbitmq.com/), the reliability and flexibility of the Processing Server are greatly
+improved over a system directly coupling the workflow engine and distributed processor instances.
 
- In our implementation of the Process Queue, manual acknowledgement mode is used. This means, when a
-Processing Worker finishes successfully, it sends a positive ACK signal to RabbitMQ. In case of failure, it tries again
-three times before sending a negative ACK signal. When a negative signal is received, RabbitMQ will re-queue the
-message. If there is not any ACK signal sent for any reason (e.g. consumer crash, power outage, network problem, etc.),
-RabbitMQ will automatically re-queue the message after timeout, which is 30 minutes by default. This behavior, however,
-can be [overridden](https://www.rabbitmq.com/consumers.html#acknowledgement-timeout) by setting another value for
+In our implementation of the Process Queue, manual acknowledgement mode is used. This means, when a Processing Worker
+finishes successfully, it sends a positive ACK signal to RabbitMQ. In case of failure, it tries again three times before
+sending a negative ACK signal. When a negative signal is received, RabbitMQ will re-queue the message. If there is not
+any ACK signal sent for any reason (e.g. consumer crash, power outage, network problem, etc.), RabbitMQ will
+automatically re-queue the message after timeout, which is 30 minutes by default. This behavior, however, can
+be [overridden](https://www.rabbitmq.com/consumers.html#acknowledgement-timeout) by setting another value for
 the `consumer_timeout` property in the [`rabbitmq.conf`](https://www.rabbitmq.com/configure.html#config-file) file.
 
 To avoid processing the same input twice (in case of re-queuing), a Processing Worker first checks
@@ -255,7 +255,7 @@ result_queue_name: ocrd-cis-ocropy-binarize-result
 created_time: 1668782988590
 ```
 
-In the message content, except `job_id`, `processor_name`, and `created_time`, are added by the Processing Server. The
+In the message content, `job_id`, `processor_name`, and `created_time` are added by the Processing Server, while the
 rest comes from the body of the `POST /processor/{executable}` request.
 
 Instead of `path_to_mets`, one can also use `workspace_id` to specify a workspace. An ID of a workspace can be obtained
