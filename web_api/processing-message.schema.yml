@@ -55,6 +55,11 @@ properties:
   result_queue_name:
     description: Name of the queue to which result is published
     type: string
+  callback_url:
+    description: The URL where the result message will be POST-ed to
+    type: string
+    format: uri,
+    pattern: "^https?://"
   created_time:
     description: The Unix timestamp when the message was created
     type: integer

@@ -10,6 +10,19 @@
 * **Process Queue**: a Process Queue is a queueing system for workflow jobs (i.e. single or chained processor runs on
   one workspace) to be executed by Processing Workers. In our implementation,
   it's [RabbitMQ](https://www.rabbitmq.com/).
+* **Job queue**: one or many queues in the Process Queue, which contains processing messages. Processing Workers listen
+  to the job queues.
+* **Result queue**: one or many queues in the Process Queue, which contains result messages. Depending on the
+  configuration in the processing messages, Processing Workers might publish result messages to these queues. A
+  3rd-party service can listen to these queues to get updated about the job status.
+* **Processing message**: a message published to the job queue. This message contains necessary information for the
+  Processing Worker to process data and perform actions after the processing has finished. These actions include `POST`
+  ing the result message to the provided callback URL, or publishing the result message to the result queue. The schema
+  of processing messages can be found [here](web_api/processing-message.schema.yml).
+* **Result message**: a message published to the result queue. This message contains information about a job (ID,
+  status, etc.). Depending on the configuration in the processing message, a result message can be `POST`ed to the
+  callback URL, published to the result queue, or both. The schema for result messages can be
+  found [here](web_api/result-message.schema.yml).
 
 ## Why do we need a Web API?
 
@@ -98,12 +111,12 @@ more memory.
 **Processing**: since the `Processing` section is provided by [OCR-D Core](https://github.com/OCR-D/core), implementors
 do not need to implement Processing Server, Process Queue, and Processing Worker themselves, they can reuse/customize
 the existing implementation. Once a request arrives, it will be (split into single-processor jobs and) pushed to a
-processing queue. A processing queue always has the same name as its respective processors. For
-example, `ocrd-olena-binarize` processors listen only to the queue named `ocrd-olena-binarize`. A Processing Worker,
-which is an [OCR-D Processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor) running as a worker, listens to the
-queue, pulls new jobs when available, processes them, and push the job statuses back to the queue if necessary. One
-normally does not run a Processing Worker directly, but via a Processing Server. Job statuses can be pushed back to the
-queue, depending on the [job configuration](#process-queue), so that other services get updates and act accordingly.
+job queue. A job queue always has the same name as its respective processors. For example, `ocrd-olena-binarize`
+processors listen only to the queue named `ocrd-olena-binarize`. A Processing Worker, which is
+an [OCR-D Processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor) running as a worker, listens to the queue, pulls
+new jobs when available, processes them, and push the job statuses back to the queue if necessary. One normally does not
+run a Processing Worker directly, but via a Processing Server. Job statuses can be pushed back to the queue, depending
+on the [job configuration](#process-queue), so that other services get updates and act accordingly.
 
 **Database**: in this architecture, a database is required to store information such as users requests, jobs statuses,
 workspaces, etc. [MongoDB](https://www.mongodb.com/) is required here.
@@ -238,10 +251,10 @@ the [`redeliver`](https://www.rabbitmq.com/confirms.html#automatic-requeueing) p
 re-queued. If yes, and the status of this process in the database is not `SUCCESS`, it will process the data described
 in the message again.
 
-When a Processing Server receives a request, it creates a message based on the request content, then push it to an
-appropriate queue. A processing queue always has the same name as its respective processors. For
-example, `ocrd-olena-binarize`processors listen only to the queue named `ocrd-olena-binarize`. Below is an example of
-how a message looks like. For a detailed schema, please check
+When a Processing Server receives a request, it creates a message based on the request content, then push it to a
+job queue. A job queue always has the same name as its respective processors. For
+example, `ocrd-olena-binarize` processors listen only to the job queue named `ocrd-olena-binarize`. Below is an example
+of how a message looks like. For a detailed schema, please check
 the [message schema](web_api/processing-message.schema.yml).
 
 ```yaml
@@ -257,7 +270,9 @@ page_id: PHYS_001,PHYS_002
 parameters:
   params_1: 1
   params_2: 2
+
 result_queue_name: ocrd-cis-ocropy-binarize-result
+callback_url: https://my.domain.com/callback
 
 created_time: 1668782988590
 ```
@@ -266,11 +281,13 @@ In the message content, `job_id`, `processor_name`, and `created_time` are added
 rest comes from the body of the `POST /processor/{executable}` request.
 
 Instead of `path_to_mets`, one can also use `workspace_id` to specify a workspace. An ID of a workspace can be obtained
-from the Workspace Server. In case `result_queue_name` property is presented, the result of the processing will be
-pushed to the queue with the provided name. If the queue does not exist yet, it will be created on the fly. This is
-useful when there is another service waiting for the results of processing. That service can simply listen to that queue
-and will be immediately notified when the results are available. Below is a simple Python script to demonstrate how a
-service can listen to the `result_queue_name` and act accordingly.
+from the Workspace Server.
+
+In case `result_queue_name` property is presented, the result of the processing will be pushed to the queue with the
+provided name. If the queue does not exist yet, it will be created on the fly. This is useful when there is another
+service waiting for the results of processing. That service can simply listen to that queue and will be immediately
+notified when the results are available. Below is a simple Python script to demonstrate how a service can listen to
+the `result_queue_name` and act accordingly.
 
 ```python
 import pika, sys, os
@@ -298,8 +315,12 @@ RabbitMQ, this action is idempotent, which means that the creation only happens 
 otherwise nothing will happen. For more information, please check
 the [RabbitMQ tutorials](https://www.rabbitmq.com/getstarted.html).
 
-The schema for messages in the result queues can be found [here](web_api/result-message.schema.yml), while an example of
-a result message looks like this:
+If the `callback_url` is set, a `POST` request will be made to the provided endpoint when the processing is finished.
+The body of the request is the result message described below.
+
+The schema for result messages can be found [here](web_api/result-message.schema.yml). This message is sent to the
+callback URL or to the result queue, depending on the configuration in the processing message. An example of the message
+looks like this:
 
 ```yaml
 job_id: uuid
