@@ -4,9 +4,9 @@ description: Schema for the Processing Broker configuration file
 type: object
 additionalProperties: false
 required:
-  - message_queue
+  - process_queue
 properties:
-  message_queue:
+  process_queue:
     description: Information about the Message Queue
     type: object
     additionalProperties: false
@@ -57,7 +57,7 @@ properties:
       required:
         - address
         - username
-        - processors
+        - workers
       oneOf:
         - required:
             - password
@@ -74,8 +74,8 @@ properties:
         path_to_privkey:
           description: Path to private key file
           type: string
-        processors:
-          description: List of processors which will be deployed
+        workers:
+          description: List of workers which will be deployed
           type: array
           minItems: 1
           items:
@@ -103,13 +103,6 @@ properties:
                   - native
                   - docker
                 default: native
-              server_type:
-                description: Should the processor be deployed as a worker or standalone REST server
-                type: string
-                enum:
-                  - worker
-                  - rest
-                default: worker
 $defs:
   address:
     type: string
