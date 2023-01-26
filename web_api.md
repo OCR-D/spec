@@ -83,7 +83,7 @@ When a system implements the Web API completely, it can be used as follows:
 
 There are various ways to build a system which implements this Web API. In this section, we describe a distributed
 architecture, which greatly improves the scalability, flexibility, and reliability of the system compared to
-the [CLI](https://ocr-d.de/en/spec/cli) approach.
+the [CLI](https://ocr-d.de/en/spec/cli) and the Distributed Processor REST Calls approach.
 
 <figure>
   <img src="images/web-api-distributed-queue.jpg" alt="Distributed architecture with the Web API"/>
@@ -147,7 +147,7 @@ path to a configuration file. The schema of a configuration file can be found [h
 is a small example of how the file might look like.
 
 ```yaml
-message_queue:
+process_queue:
   address: localhost
   port: 5672
   credentials:
@@ -169,30 +169,27 @@ hosts:
   - address: localhost
     username: cloud
     password: "1234"
-    processors:
+    workers:
       - name: ocrd-cis-ocropy-binarize
         number_of_instance: 2
         deploy_type: native
-        server_type: worker
       - name: ocrd-olena-binarize
         number_of_instance: 1
         deploy_type: docker
-        server_type: rest
 
   - address: 134.76.1.1
     username: tdoan
     path_to_privkey: /path/to/file
-    processors:
+    workers:
       - name: ocrd-eynollah-segment
         number_of_instance: 1
         deploy_type: native
-        server_type: worker
 ```
 
 There are three main sections in the configuration file.
 
-1. `message_queue`: it contains the `address` and `port`, where the queue was deployed, or will be deployed with the
-   specified `credentials`. If the `ssh` property is presented, the Processing Server will try to connect to
+1. `process_queue`: it contains the `address` and `port`, where the Process Queue was deployed, or will be deployed with
+   the specified `credentials`. If the `ssh` property is presented, the Processing Server will try to connect to
    the `address` via `ssh` with provided `username` and `password` and deploy [RabbitMQ](https://www.rabbitmq.com/) at
    the specified `port`. The remote machine must have [Docker](https://www.docker.com/) installed since the deployment
    is done via Docker. Make sure that the provided `username` has enough rights to run Docker commands. In case
@@ -200,37 +197,15 @@ There are three main sections in the configuration file.
    it.
 2. `database`: this section also contains the `address` and `port`, where the [MongoDB](https://www.mongodb.com/) is
    running, or will run. If `credentials` is presented, it will be used when deploying and connecting to the database.
-   The `ssh` section behaves exactly the same as described in the `message_queue` section above.
-3. `workers`: this section contains a list of hosts, usually virtual machines, where Processing Workers should be
+   The `ssh` section behaves exactly the same as described in the `process_queue` section above.
+3. `hosts`: this section contains a list of hosts, usually virtual machines, where Processing Workers should be
    deployed. To be able to connect to a host, an `address` and `username` are required, then comes either `password`
    or `path_to_privkey` (path to a private key). All Processing Workers, which will be deployed, must be declared under
-   the `processors` property. In case `deploy_type` is `docker`, make sure that [Docker](https://www.docker.com/) is
+   the `workers` property. In case `deploy_type` is `docker`, make sure that [Docker](https://www.docker.com/) is
    installed in the target machine and the provided `username` has enough rights to execute Docker commands.
-   `server_type` accepts two values:
-    * `worker`: the processor will be deployed as a worker, i.e. listening to the Process Queue for jobs.
-    * `rest`: the processor will be deployed as a standalone server which can be triggered via REST calls. The
-      specification of this API can be found [here](web_api/standalone_api.yml).
 
-Among three sections, only the `message_queue` is required. However, if `workers` is present, `database` must be there
+Among three sections, only the `process_queue` is required. However, if `hosts` is present, `database` must be there
 as well. For more information, please check the [configuration file schema](web_api/config.schema.yml).
-
-### Processing Worker
-
-There is normally no need to start (or stop) a Processing Worker manually, since it can be managed by a Processing
-Server via a [configuration file](#processing-server). However, if it is necessary to do so, there are two ways to start
-a Processing Worker:
-
-```shell
-# 1. Use ocrd CLI bundled with OCR-D/core
-$ ocrd processing-worker <processor-name> --queue=<queue-address> --database=<database-address>
-
-# 2. Use processor name
-<processor-name> processing-worker --queue=<queue-address> --database=<database-address>
-```
-
-* `--queue`: a [Rabbit MQ connection string](https://www.rabbitmq.com/uri-spec.html) to a running instance.
-* `--database`: a [MongoDB connection string](https://www.mongodb.com/docs/manual/reference/connection-string/) to a
-  running instance.
 
 ### Process Queue
 
@@ -332,6 +307,24 @@ path_to_mets: /path/to/mets.xml
 With the returned `job_id`, one can retrieve more information by sending a `GET` request to
 the `/processor/{executable}/{job_id}` endpoint, or to `/processor/{executable}/{job_id}/log` to get all logs of that
 job.
+
+### Processing Worker
+
+There is normally no need to start (or stop) a Processing Worker manually, since it can be managed by a Processing
+Server via a [configuration file](#processing-server). However, if it is necessary to do so, there are two ways to start
+a Processing Worker:
+
+```shell
+# 1. Use ocrd CLI bundled with OCR-D/core
+$ ocrd processing-worker <processor-name> --queue=<queue-address> --database=<database-address>
+
+# 2. Use processor name
+$ <processor-name> processing-worker --queue=<queue-address> --database=<database-address>
+```
+
+* `--queue`: a [Rabbit MQ connection string](https://www.rabbitmq.com/uri-spec.html) to a running instance.
+* `--database`: a [MongoDB connection string](https://www.mongodb.com/docs/manual/reference/connection-string/) to a
+  running instance.
 
 ### Database
 
