@@ -316,10 +316,10 @@ a Processing Worker:
 
 ```shell
 # 1. Use ocrd CLI bundled with OCR-D/core
-$ ocrd processing-worker <processor-name> --queue=<queue-address> --database=<database-address>
+$ ocrd server <processor-name> --type=worker --queue=<queue-address> --database=<database-address>
 
 # 2. Use processor name
-$ <processor-name> processing-worker --queue=<queue-address> --database=<database-address>
+$ <processor-name> server --type=worker --queue=<queue-address> --database=<database-address>
 ```
 
 * `--queue`: a [Rabbit MQ connection string](https://www.rabbitmq.com/uri-spec.html) to a running instance.
