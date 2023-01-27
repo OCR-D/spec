@@ -91,7 +91,7 @@ $defs:
 
       eval_tool:
         type: string
-        description: Human readable name and version of evaluation tool used (for UI
+        description: Human readable name and version of evaluation tool used (for UI)
 
       document_metadata:
         type: object
@@ -104,7 +104,7 @@ $defs:
 
           publication_century:
             type: string
-            description: Century he document was originally published
+            description: Century the document was originally published
             pattern: '[12][0-9]{3}-[12][0-9]{3}'
 
           publication_decade:
@@ -130,7 +130,7 @@ $defs:
         type: object
         description: Information on which tools in which version were used in determining metrics
         properties:
-          paramters:
+          parameters:
             type: object
             description: Parameters passed to the evaluation processor
 
