@@ -100,7 +100,7 @@ $defs:
 
           publication_year:
             type: number
-            description: Year he document was originally published
+            description: Year the document was originally published
 
           publication_century:
             type: string
