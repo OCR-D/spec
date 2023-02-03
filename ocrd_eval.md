@@ -342,7 +342,9 @@ $mAP = \displaystyle\frac{1}{N}\sum_{i=1}^{N}AP_i$ with $N$ being the number of 
 
 ##### Scenario-Driven Performance Evaluation
 
-Scenario-driven performance evaluation as described in [Clausner et al., 2011](https://primaresearch.org/publications/ICDAR2011_Clausner_PerformanceEvaluation) is currently the most comprehensive and sophisticated approach to evaluate OCR success with consideration of layout.
+Scenario-driven, layout-dedicated, text-flow informed performance evaluation as described in 
+[Clausner et al., 2011](https://primaresearch.org/publications/ICDAR2011_Clausner_PerformanceEvaluation)
+is currently the most comprehensive and sophisticated approach to evaluate the quality of layout analysis.
 
 The approach is based on the definition of so called evaluation scenarios, which allow the flexible combination of a selection of metrics together with their weights, targeted at a specific use case.
 
