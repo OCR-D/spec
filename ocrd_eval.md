@@ -32,7 +32,7 @@ As there are different implementations of the edit distance available (e.g. [rap
 
 Given a Ground truth that reads `ſind` and the recognized text `fmd`.
 
-The Levenshtein distance between these texts is 4, because 4 edit operations are necessary to turn `fmd` into `ſind`:
+The Levenshtein distance between these texts is 3, because 3 single-character edit operations are necessary to turn `fmd` into `ſind`. For example:
 
 * `fmd` --> `ſmd` (substitution)
 * `ſmd` --> `ſimd` (insertion)
