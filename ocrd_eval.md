@@ -56,7 +56,7 @@ Not included in the character definition are all forms of white spaces.
 
 The character error rate (CER) describes how many faulty characters the output of an OCR engine contains compaired to the Ground Truth text in relation to the text length (i.e. the number of characters of the text in the GT)
 
-Errors fall into one of the following three categories:
+Thus, CER defines a (single-character) **error** in terms of the above three categories of edit operations:
 
 * **deletion**: a character that is present in the text has been deleted from the output.
 
