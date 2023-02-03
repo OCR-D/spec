@@ -92,7 +92,10 @@ $CER = \frac{i + s+ d}{n}$
 
 If the CER value is calculated this way, it represents the percentage of characters incorrectly recognized by the OCR engine. Also, we can easily reach error rates beyond 100% when the output contains a lot of insertions.
 
-The *normalized* CER tries to mitigate this effect by considering the number of correct characters, $c$:
+Sometimes, this is mitigated by defining $n$ as the maximum of both lengths, or by clipping the rate at 100%.
+Neither of these strategies yields an unbiased estimate.
+
+The *normalized* CER avoids this effect by considering the number of correct characters (or identity operations), $c$:
 
 $CER_n = \frac{i + s+ d}{i + s + d + c}$
 
@@ -102,11 +105,14 @@ In OCR-D's benchmarking we calculate the *non-normalized* CER where values over 
 
 In OCR-D we distinguish between the CER per **page** and the **overall** CER of a text. The reasoning behind this is that the material OCR-D mainly aims at (historical prints) is very heterogeneous: Some pages might have an almost simplistic layout while others can be highly complex and difficult to process. Providing only an overall CER would cloud these differences between pages.
 
-At this point we only provide a CER per page; an overall CER might be calculated as a weighted aggregate at a later stage.
+Currently we only provide CER per page; higher-level CER results might be calculated as a weighted aggregate at a later stage.
 
 ##### Word Error Rate (WER)
 
-The word error rate (WER) is closely connected to the CER. While the CER focusses on differences between characters, the WER represents the percentage of words incorrectly recognized in a text.
+Word error rate (WER) is analogous to CER: While CER operates on (differences between) characters, 
+WER measures the percentage of incorrectly recognized words in a text.
+
+A **word** in that context is usually defined as any sequence of characters between white space (including line breaks), with leading and trailing punctuation removed (according to [Unicode TR29 Word Boundary algorithm](http://unicode.org/reports/tr29/#Word_Boundaries)).
 
 CER and WER share categories of errors, and the WER is similarly calculated:
 
@@ -120,7 +126,7 @@ More specific cases of WER consider only the "significant" words, omitting e.g. 
 
 In OCR-D we distinguish between the WER per **page** and the **overall** WER of a text. The reasoning here follows the one of CER granularity.
 
-At this point we only provide a WER per page; an overall WER might be calculated at a later stage.
+Currently we only provide WER per page; higher-level WER results might be calculated at a later stage.
 
 #### Bag of Words
 
@@ -197,7 +203,7 @@ Last but not least, it is important to collect information about the resource ut
 
 #### CPU Time
 
-CPU time is the time taken by the CPU to process an instruction. It does not include idle time.
+CPU time is the time taken by the CPU(s) on the processors. It does not include idle time, but does grow with the number of threads/processes.
 
 #### Wall Time
 
@@ -205,15 +211,15 @@ Wall time (or elapsed time) is the time taken by a processor to process an instr
 
 #### I/O
 
-I/O (input / output) is the number of bytes read and written during a process.
+I/O (input / output) bandwith is the (average/peak) number of bytes per second read and written from disk during processing.
 
 #### Memory Usage
 
-Memory usage is the number of bytes the process allocates in memory (RAM).
+Memory usage is the (average/peak) number of bytes the process allocates in memory (RAM), i.e. resident set size (RSS) or proportional set size (PSS).
 
 #### Disk Usage
 
-Disk usage is the number of bytes the process allocates on hard disk.
+Disk usage is the total number of bytes the process reads and writes on disk.
 
 ### Unicode Normalization
 
@@ -249,9 +255,14 @@ GPU avg memory refers to the average amount of memory of the GPU (in GiB) that w
 
 ##### Flexible Character Accuracy Measure
 
-The flexible character accuracy measure has been introduced to mitigate a major flaw of the CER: The CER is heavily dependent on the reading order an OCR engine detects; When content blocks are e.g. mixed up or merged during the text recognition step but single characters have been perfectly recognized, the CER is still very low.
+The Flexible Character Accuracy (FCA) measure has been introduced to mitigate a major drawback of CER: 
+CER (if applied naively by comparing concatenated page-level texts) is heavily dependent on the reading order an OCR engine detects.
+Thus, where text blocks are rearranged or merged, no suitable text alignment can be made, so CER is very low,
+even if single characters, words and even lines have been perfectly recognized.
 
-The flexible character accuracy measure circumvents this effect by splitting the recognized text and the Ground Truth in smaller chunks and measure their partial edit distance. After all partial edit distances have been obtained, they are summed up to receive the overall character accuracy measure.
+FCA avoids this by splitting the recognized text and GT into lines and, if necessary, sub-line chunks, 
+finding pairs that align maximally until only unmatched lines remain (which must be treated as errors),
+and measuring average CER of all pairs.
 
 The algorithm can be summarized as follows:
 
@@ -271,6 +282,11 @@ The algorithm can be summarized as follows:
 
 ##### mAP (mean Average Precision)
 
+This score was originally devised for object detection in photo scenery (where overlaps are allowed and cannot conflict with text flow).
+It is not adequate for document layout for various reasons, but since it is a standard metric in the domain of neural computer vision,
+methods and tools of which are increasingly used for layout analysis as well, it is still somewhat useful for reference.
+
+The following paragraphs will first introduce the intermediate concepts needed to define the mAP metric itself.
 ###### Precision and Recall
 
 **Precision** is a means to describe how accurate a model can identify an object within an image. The higher the precision of a model, the more confidently we can assume that a prediction (e.g. the model having identified a bicycle in an image) is correct. A precision of 1 indicates that each identified object in an image has been correctly identified (true positives) and no false positives have been detected. As the precision value descreases, the result contains more and more false positives.
@@ -288,7 +304,7 @@ A threshold is a freely chosen number between 0 and 1. It divides the output of 
 Example:
 Given a threshold of 0.6 and a model that tries to detect bicycles in an image. The model returns two areas in an image that might be bicycles, one with a prediction score of 0.4 and one with 0.9. Since the threshold equals 0.6, the first area is tossed and not regarded as bicycle while the second one is kept and counted as recognized.
 
-###### Precision-Recall-Curve
+###### Precision-Recall Curve
 
 Precision and recall are connected to each other since both depend on the true positives detected. A precision-recall-curve is a means to balance these values while maximizing them.
 
@@ -320,7 +336,7 @@ The Average Precision can be computed with the weighted mean of precision at eac
 
 $AP = \displaystyle\sum_{k=0}^{k=n-1}[r(k) - r(k+1)] * p(k)$
 
-with $n$ being the number of thresholds and $r(k)$/$p(k)$ being the respective recall/precision values for the current confidence threshold $k$.
+with $n$ being the number of thresholds and $r(k)/p(k)$ being the respective recall/precision values for the current confidence threshold $k$.
 
 Example:
 Given the example above, we get:
@@ -334,19 +350,25 @@ AP &  = \displaystyle\sum_{k=0}^{k=n-1}[r(k) - r(k+1)] * p(k) \\
 \end{array}
 $$
 
-###### mAP (mean Average Precision)
+###### Mean Average Precision
 
 The mean Average Precision is a metric used to measure how accurate an object detector is. [As stated](#Thresholds), a threshold can be chosen freely, so there is some room for errors when picking one single threshold. To mitigate this effect, the mean Average Precision metric has been introduced which considers a set of IoU thresholds to determine the detector's performance. It is calculated by first computing the Average Precision for each IoU threshold and then finding the average:
 
 $mAP = \displaystyle\frac{1}{N}\sum_{i=1}^{N}AP_i$ with $N$ being the number of thresholds.
 
+Often, this mAP for a range of IoU thresholds gets complemented by additional mAP runs for a set of fixed values, or for various classes and object sizes only.
+The common understanding is that those different measures collectively allow drawing better conclusions and comparisons about the model's quality.
 ##### Scenario-Driven Performance Evaluation
 
 Scenario-driven, layout-dedicated, text-flow informed performance evaluation as described in 
 [Clausner et al., 2011](https://primaresearch.org/publications/ICDAR2011_Clausner_PerformanceEvaluation)
 is currently the most comprehensive and sophisticated approach to evaluate the quality of layout analysis.
 
-The approach is based on the definition of so called evaluation scenarios, which allow the flexible combination of a selection of metrics together with their weights, targeted at a specific use case.
+It is not a single metric, but comprises a multitude of measures derived in a unified method, which considers
+the crucial effects that segmentation can have on text flow, i.e. which kinds of overlaps (merges and splits) 
+amount to benign deviations (extra white-space) or pathological ones (breaking lines and words apart).
+In this approach, all the derived measures are aggregated under various sets of weights, called evaluation scenarios,
+which target specific use cases (like headline or keyword extraction, linear fulltext, newspaper or figure extraction).
 
 ## Evaluation JSON schema
 
