@@ -9,7 +9,8 @@ solution works best for their use case.
 
 ## Evaluation Metrics
 
-The evaluation of the success (accuracy) of OCR is a complex task for which multiple methods and metrics are available. It aims to capture quality in different aspects, such as the recognition of text, but also the detection of layout, for which different methods and metrics are needed.
+The evaluation of the quality (accuracy and precision) of OCR is a complex task, for which multiple methods and metrics are available.
+It needs to capture several aspects corresponding to the interdependent subtasks of an OCR workflow, viz. layout analysis and text recognition, which themselves require different methods and metrics.
 
 Furthermore, the time and resources required for OCR processing also have to be captured. Here we describe the metrics that were selected for use in OCR-D, how exactly they are applied, and what was the motivation.
 
