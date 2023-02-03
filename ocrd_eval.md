@@ -289,7 +289,16 @@ methods and tools of which are increasingly used for layout analysis as well, it
 The following paragraphs will first introduce the intermediate concepts needed to define the mAP metric itself.
 ###### Precision and Recall
 
-**Precision** is a means to describe how accurate a model can identify an object within an image. The higher the precision of a model, the more confidently we can assume that a prediction (e.g. the model having identified a bicycle in an image) is correct. A precision of 1 indicates that each identified object in an image has been correctly identified (true positives) and no false positives have been detected. As the precision value descreases, the result contains more and more false positives.
+**Precision** describes to which degree the predictions of a model are correct. 
+The higher the precision of a model, the more confidently we can assume that each prediction is correct
+(e.g. the model having identified a bicycle in an image actually depicts a bicycle). 
+A precision of 1 (or 100%) indicates all predictions are correct (true positives) and no predictions are incorrect (false positives). The lower the precision value, the more false positives.
+
+In the context of object detection in images, it measures either 
+- the ratio of correctly detected segments over all detected segments
+  (where _correct_ is defined as having sufficient overlap with some GT segment), or
+- the ratio of correctly segmented pixels over the image size  
+  (assuming all predictions can be combined into some coherent segmentation).
 
 **Recall**, on the other hand, measures how well a model performs in finding all instances of an object in an image (true positives), irregardless of false positives. Given a model tries to identify bicycles in an image, a recall of 1 indicates that all bicycles have been found by the model (while not considering other objects that have been falsely labelled as a bicycle).
 
@@ -328,7 +337,9 @@ This graph is called Precision-Recall-Curve.
 
 ###### Average Precision
 
-The average precision (AP) describes how well a model can detect objects in an image for recall values over 0 to 1 by computing the average of all precisions given in the Precision-Recall-Curve. It is equal to the area under the curve.
+Average Precision (AP) describes how well (flexible and robust) a model can detect objects in an image, 
+by averaging precision over the full range (from 0 to 1) of confidence thresholds (and thus, recall results). 
+It is equal to the area under the Precision-Recall Curve.
 
 ![A sample precision/recall curve with highlighted area under curve](https://pad.gwdg.de/uploads/799e6a05-e64a-4956-9ede-440ac0463a3f.png)
 
@@ -352,7 +363,10 @@ $$
 
 ###### Mean Average Precision
 
-The mean Average Precision is a metric used to measure how accurate an object detector is. [As stated](#Thresholds), a threshold can be chosen freely, so there is some room for errors when picking one single threshold. To mitigate this effect, the mean Average Precision metric has been introduced which considers a set of IoU thresholds to determine the detector's performance. It is calculated by first computing the Average Precision for each IoU threshold and then finding the average:
+Mean Average Precision (mAP) is a metric used to measure the full potential of an object detector over various conditions.
+AP is merely an average over confidence thresholds. But as [stated earlier](#iou-thresholds), the IoU threshold can be chosen freely,
+so AP only reflects the performance under that particular choice. In general though, how accurately every object must be matched may depend on the use-case, and on the class or size of the objects.
+That's why the mAP metric has been introduced: It is calculated by computing the AP over a range of IoU thresholds, and averaging over them:
 
 $mAP = \displaystyle\frac{1}{N}\sum_{i=1}^{N}AP_i$ with $N$ being the number of thresholds.
 
