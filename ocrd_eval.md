@@ -2,10 +2,17 @@
 
 ## Rationale
 
-Estimating the quality of OCR requires workflows run on representative data,
-evaluation metrics and evaluation tools that need to work together in a
-well-defined manner to allow users to make informed decisions about which OCR
-solution works best for their use case.
+Evaluating the quality of OCR requires comparing the OCR results on representative **ground truth** (GT) 
+– i.e. realistic data (images) with manual transcriptions (segmentation, text). 
+OCR results can be obtained via several distinct **OCR workflows**.
+
+The comparison requires evaluation tools which themselves build on a number of established
+evaluation metrics. 
+The evaluation results must be presented in a way that allows factorising and localising aberrations,
+both within documents (page types, individual pages, region types, individual regions) and across classes of similar documents.
+
+ All this needs to  work together in a well-defined and automatically repeatable manner, so
+ users can make informed decisions about which OCR workflow works best for which material and use case.
 
 ## Evaluation Metrics
 
