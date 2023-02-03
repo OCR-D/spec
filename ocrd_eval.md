@@ -85,7 +85,8 @@ This reads `diese Strahlen, und`. The output contains `Strahlen ,`, inserting a 
 
 CER can be calculated in several ways, depending on whether a normalized CER is used or not.
 
-Given $i$ as the number of insertions, $d$ the number of deletions, $s$ the number of substitutions and $n$ the total number of characters in a text, the CER can be obtained by
+Given $i$ as the number of insertions, $d$ the number of deletions, $s$ the number of substitutions of the OCR text,
+and $n$ the total number of characters of the GT text, the CER can be obtained by
 
 $CER = \frac{i + s+ d}{n}$
 
