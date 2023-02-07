@@ -53,7 +53,7 @@ The Levenshtein distance between these texts is 3, because 3 single-character ed
 ##### Characters
 
 A text consists of a set of characters that have a certain meaning. A character is a glyph that represents a word, a letter in a word, or a symbol.
-Not included in the character definition are all forms of white spaces.
+White spaces are considered as characters.
 
 ###### Examples
 
