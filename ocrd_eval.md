@@ -32,7 +32,7 @@ The most important measure to assess the quality of OCR is the accuracy of the r
 #### Characters
 
 A text consists of a set of characters that have a certain meaning.
-In OCR-D, a character is technically defined as a grapheme cluster, i.e. one or more Unicode (or Private Use Area) codepoint(s) that represents an element of a writing system in NFC (see [#Unicode-Normalization]).
+In OCR-D, a character is technically defined as a grapheme cluster, i.e. one or more Unicode (or Private Use Area) codepoint(s) that represents an element of a writing system in NFC (see [Unicode Normalization](#unicode-normalization)).
 White spaces are considered as characters.
 
 Special codepoints like Byte-Order Marks or directional marks are ignored.
