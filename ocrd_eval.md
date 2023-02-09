@@ -29,6 +29,19 @@ At this stage (Q3 2022) these definitions serve as a basis of common understandi
 
 The most important measure to assess the quality of OCR is the accuracy of the recognized text. The majority of metrics for this are based on the Levenshtein distance, an algorithm to compute the distance between two strings. In OCR, one of these strings is generally the Ground Truth text and the other the recognized text which is the result of an OCR.
 
+#### Characters
+
+A text consists of a set of characters that have a certain meaning.
+In OCR-D, a character is technically defined as a grapheme cluster, i.e. one or more Unicode (or Private Use Area) codepoint(s) that represents an element of a writing system in NFC (see [#Unicode-Normalization]).
+White spaces are considered as characters.
+
+Special codepoints like Byte-Order Marks or directional marks are ignored.
+
+##### Examples
+
+* the character `ä` in the word `Kälte` is encoded by Unicode `U+00E4`
+* the character `ܡܿ` in the word `ܡܿܢ` is encoded by Unicode `U+0721` + `U+073F`
+
 #### Levenshtein Distance (Edit Distance)
 
 Levenshtein distance between two strings is defined as the (minimum) number of (single-character) edit operations needed to turn the one into the other.
@@ -49,19 +62,6 @@ The Levenshtein distance between these texts is 3, because 3 single-character ed
 * `ſimd` --> `ſind` (substitution)
 
 #### CER and WER
-
-##### Characters
-
-A text consists of a set of characters that have a certain meaning.
-In OCR-D, a character is technically defined as a grapheme cluster, i.e. one or more Unicode (or Private Use Area) codepoint(s) that represents an element of a writing system in NFC (see [#Unicode-Normalization]).
-White spaces are considered as characters.
-
-Special codepoints like Byte-Order Marks or directional marks are ignored.
-
-###### Examples
-
-* the character `ä` in the word `Kälte` is encoded by Unicode `U+00E4`
-* the character `ܡܿ` in the word `ܡܿܢ` is encoded by Unicode `U+0721` + `U+073F`
 
 ##### Character Error Rate (CER)
 
