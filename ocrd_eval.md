@@ -2,7 +2,7 @@
 
 ## Rationale
 
-Evaluating the quality of OCR requires comparing the OCR results on representative **ground truth** (GT) 
+Evaluating the quality of OCR requires comparing the OCR results on representative **ground truth** (GT)
 – i.e. realistic data (images) with manual transcriptions (segmentation, text). 
 OCR results can be obtained via several distinct **OCR workflows**.
 
@@ -52,14 +52,16 @@ The Levenshtein distance between these texts is 3, because 3 single-character ed
 
 ##### Characters
 
-A text consists of a set of characters that have a certain meaning. A character is a glyph that represents a word, a letter in a word, or a symbol.
+A text consists of a set of characters that have a certain meaning.
+In OCR-D, a character is technically defined as a grapheme cluster, i.e. one or more Unicode (or Private Use Area) codepoint(s) that represents an element of a writing system in NFC (see [#Unicode-Normalization]).
 White spaces are considered as characters.
+
+Special codepoints like Byte-Order Marks or directional marks are ignored.
 
 ###### Examples
 
-* the character `a` in the text `babst` represents the German letter `a`
-* the character `&` represents the Latin abbreviation `etc.`
-* the character `☿` represents an Astronomical symbol for the planet Mercury
+* the character `ä` in the word `Kälte` is encoded by Unicode `U+00E4`
+* the character `ܡܿ` in the word `ܡܿܢ` is encoded by Unicode `U+0721` + `U+073F`
 
 ##### Character Error Rate (CER)
 
