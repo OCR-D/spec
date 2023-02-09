@@ -92,7 +92,7 @@ Example:
 
 This reads `diese Strahlen, und`. The output contains `Strahlen ,`, inserting a white space before the comma.
 
-CER can be calculated in several ways, depending on whether a normalized CER is used or not.
+CER can be defined in multiple ways, depending on what exactly counts as the **length** of the text.
 
 Given $i$ as the number of insertions, $d$ the number of deletions, $s$ the number of substitutions of the OCR text,
 and $n$ the total number of characters of the GT text, the CER can be obtained by
