@@ -65,7 +65,9 @@ The Levenshtein distance between these texts is 3, because 3 single-character ed
 
 ##### Character Error Rate (CER)
 
-The character error rate (CER) describes how many faulty characters the output of an OCR engine contains compaired to the Ground Truth text in relation to the text length (i.e. the number of characters of the text in the GT)
+The character error rate (CER) is defined as the quotient of the edit distance over the length
+with respect to the character string pair of GT and OCR text. It thus describes an empirical estimate
+of the probability of some random character to be misrecognised.
 
 Thus, CER defines a (single-character) **error** in terms of the above three categories of edit operations:
 
