@@ -262,6 +262,10 @@ GPU avg memory refers to the average amount of memory of the GPU (in GiB) that w
 
 #### Text Evaluation
 
+##### Letter Accuracy
+
+TODO
+
 ##### Flexible Character Accuracy Measure
 
 The Flexible Character Accuracy (FCA) measure has been introduced to mitigate a major drawback of CER: 
@@ -296,6 +300,7 @@ It is not adequate for document layout for various reasons, but since it is a st
 methods and tools of which are increasingly used for layout analysis as well, it is still somewhat useful for reference.
 
 The following paragraphs will first introduce the intermediate concepts needed to define the mAP metric itself.
+
 ###### Precision and Recall
 
 **Precision** describes to which degree the predictions of a model are correct. 
@@ -303,10 +308,11 @@ The higher the precision of a model, the more confidently we can assume that eac
 (e.g. the model having identified a bicycle in an image actually depicts a bicycle). 
 A precision of 1 (or 100%) indicates all predictions are correct (true positives) and no predictions are incorrect (false positives). The lower the precision value, the more false positives.
 
-In the context of object detection in images, it measures either 
-- the ratio of correctly detected segments over all detected segments
-  (where _correct_ is defined as having sufficient overlap with some GT segment), or
-- the ratio of correctly segmented pixels over the image size  
+In the context of object detection in images, it measures either
+
+* the ratio of correctly detected segments over all detected segments
+  (where *correct* is defined as having sufficient overlap with some GT segment), or
+* the ratio of correctly segmented pixels over the image size  
   (assuming all predictions can be combined into some coherent segmentation).
 
 **Recall**, on the other hand, measures how well a model performs in finding all instances of an object in an image (true positives), irregardless of false positives. Given a model tries to identify bicycles in an image, a recall of 1 indicates that all bicycles have been found by the model (while not considering other objects that have been falsely labelled as a bicycle).
