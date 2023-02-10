@@ -324,7 +324,7 @@ a Processing Worker:
 $ ocrd server <processor-name> --type=worker --queue=<queue-address> --database=<database-address>
 
 # 2. Use processor name
-$ <processor-name> server --type=worker --queue=<queue-address> --database=<database-address>
+$ <processor-name> --server --type=worker --queue=<queue-address> --database=<database-address>
 ```
 
 * `--queue`: a [Rabbit MQ connection string](https://www.rabbitmq.com/uri-spec.html) to a running instance.
