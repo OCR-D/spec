@@ -218,7 +218,7 @@ CPU time is the time taken by the CPU(s) on the processors. It does not include 
 
 #### Wall Time
 
-Wall time (or elapsed time) is the time taken by a processor to process an instruction including idle time.
+Wall-clock time (or elapsed time) is the time taken on the processors including idle time but ignoring concurrency.
 
 #### I/O
 
