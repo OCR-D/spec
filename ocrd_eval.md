@@ -27,7 +27,10 @@ At this stage (Q3 2022) these definitions serve as a basis of common understandi
 
 ### Text Evaluation
 
-The most important measure to assess the quality of OCR is the accuracy of the recognized text. The majority of metrics for this are based on the Levenshtein distance, an algorithm to compute the distance between two strings. In OCR, one of these strings is generally the Ground Truth text and the other the recognized text which is the result of an OCR.
+The most important measure to assess the quality of OCR is the accuracy of the recognized text.
+The majority of metrics for this are based on the Levenshtein distance, an algorithm to compute the distance between two strings.
+In OCR, one of these strings is generally the Ground Truth text and the other the recognized text which is the result of an OCR.
+The text is concatenated at page level from smaller constituents in reading order.
 
 #### Characters
 
