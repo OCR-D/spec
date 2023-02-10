@@ -257,13 +257,13 @@ The following metrics are not part of the MVP (minimal viable product) and will 
 
 #### GPU Metrics
 
-##### GPU Time
+##### GPU Avg Usage
 
-GPU time is the time a GPU (graphics card) spent processing instructions
+GPU avg usage is the average GPU load during the execution of a workflow represented by a real number between 0 and 1.
 
-##### GPU Avg Memory
+##### GPU Peak Usage
 
-GPU avg memory refers to the average amount of memory of the GPU (in GiB) that was used during processing.
+GPU peak usage is the maximum GPU load during the execution of a workflow represented by a real number between 0 and 1.
 
 #### Text Evaluation
 
