@@ -110,7 +110,7 @@ The *normalized* CER avoids this effect by considering the number of correct cha
 
 $CER_n = \frac{i + s+ d}{i + s + d + c}$
 
-In OCR-D's benchmarking we calculate the *non-normalized* CER where values over 1 should be read as 100%.
+In OCR-D's benchmarking we calculate the *normalized* CER where values naturally range between 0 and 100%.
 
 ###### CER Granularity
 
