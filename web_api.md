@@ -5,11 +5,18 @@
 * **Processing Worker**: a Processing Worker is an [OCR-D Processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor)
   running as a worker, i.e. listening to the Process Queue, pulling new jobs when available, processing them, and
   pushing the updated job statuses back to the queue if necessary.
+* **Workflow Server**: a Workflow Server is a server which exposes REST endpoints in the `Workflow` section
+of
+   the [Web API specification](openapi.yml). In particular, for each `POST /workflow/{workflow-id}` request,
+   a new task (in Nextflow: channel) comprised of a chain of `POST /processor/{executable}` jobs
+   (in Nextflow: processes) is added and scheduled (communicating with the Processing Server for requests
+   and the Process Queue for results).
 * **Processing Server**: a Processing Server is a server which exposes REST endpoints in the `Processing` section of
-  the [Web API specification](openapi.yml).
-* **Process Queue**: a Process Queue is a queueing system for workflow jobs (i.e. single or chained processor runs on
-  one workspace) to be executed by Processing Workers. In our implementation,
-  it's [RabbitMQ](https://www.rabbitmq.com/).
+  the [Web API specification](openapi.yml). In particular, for each `POST /processor/{executable}` request,
+  a Processing Message is added to the respective Job Queue.
+* **Process Queue**: a Process Queue is a queueing system for workflow jobs (i.e. single processor runs on
+  one workspace) to be executed by Processing Workers and to be enqueued by the Workflow Server via the Processing Server.
+  In our implementation, it's [RabbitMQ](https://www.rabbitmq.com/).
 * **Job queue**: one or many queues in the Process Queue, which contains processing messages. Processing Workers listen
   to the job queues.
 * **Result queue**: one or many queues in the Process Queue, which contains result messages. Depending on the
