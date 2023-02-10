@@ -115,9 +115,9 @@ more memory.
 
 **Processing**: since the `Processing` section is provided by [OCR-D Core](https://github.com/OCR-D/core), implementors
 do not need to implement Processing Server, Process Queue, and Processing Worker themselves, they can reuse/customize
-the existing implementation. Once a request arrives, it will be (split into single-processor jobs and) pushed to a
-job queue. A job queue always has the same name as its respective processors. For example, `ocrd-olena-binarize`
-processors listen only to the queue named `ocrd-olena-binarize`. A Processing Worker, which is
+the existing implementation. Once a request arrives, it will be pushed to a job queue. A job queue always has the same
+name as its respective processors. For example, `ocrd-olena-binarize`processors listen only to the queue
+named `ocrd-olena-binarize`. A Processing Worker, which is
 an [OCR-D Processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor) running as a worker, listens to the queue, pulls
 new jobs when available, processes them, and push the job statuses back to the queue if necessary. One normally does not
 run a Processing Worker directly, but via a Processing Server. Job statuses can be pushed back to the queue, depending
