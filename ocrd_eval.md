@@ -294,7 +294,7 @@ The algorithm can be summarized as follows:
 > 6. Count non-matched lines / strings as insertions or deletions (depending on origin: ground truth or result)
 > 7. Sum up all partial edit distances and calculate overall character accuracy
 
-(C. Clausner, S. Pletschacher and A. Antonacopoulos / Pattern Recognition Letters 131 (2020) 390–397, p. 392)
+(paraphrase of C. Clausner, S. Pletschacher and A. Antonacopoulos / Pattern Recognition Letters 131 (2020) 390–397, p. 392)
 
 #### Layout Evalutation
 
