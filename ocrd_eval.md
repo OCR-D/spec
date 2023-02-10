@@ -117,7 +117,7 @@ In OCR-D's benchmarking we calculate the *normalized* CER where values naturally
 
 ###### CER Granularity
 
-In OCR-D we distinguish between the CER per **page** and the **overall** CER of a text. The reasoning behind this is that the material OCR-D mainly aims at (historical prints) is very heterogeneous: Some pages might have an almost simplistic layout while others can be highly complex and difficult to process. Providing only an overall CER would cloud these differences between pages.
+In OCR-D we distinguish between the CER per **page** and the **overall** CER of a document. The reasoning behind this is that the material OCR-D mainly aims at (historical prints) is very heterogeneous: Some pages might have an almost simplistic layout while others can be highly complex and difficult to process. Providing only an overall CER would cloud these differences between pages.
 
 Currently we only provide CER per page; higher-level CER results might be calculated as a weighted aggregate at a later stage.
 
@@ -138,7 +138,7 @@ More specific cases of WER consider only the "significant" words, omitting e.g. 
 
 ###### WER Granularity
 
-In OCR-D we distinguish between the WER per **page** and the **overall** WER of a text. The reasoning here follows the one of CER granularity.
+In OCR-D we distinguish between the WER per **page** and the **overall** WER of a document. The reasoning here follows the one of CER granularity.
 
 Currently we only provide WER per page; higher-level WER results might be calculated at a later stage.
 
