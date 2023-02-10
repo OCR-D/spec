@@ -144,7 +144,7 @@ Currently we only provide WER per page; higher-level WER results might be calcul
 
 #### Bag of Words
 
-In the "Bag of Words" model a text is represented as a set of its word irregardless of word order or grammar; Only the words themselves and their number of occurence are considered.
+In the "Bag of Words" (BaW) model, a text is represented as a multiset of the words (as defined in the previous section) it contains, regardless of their order.
 
 Example:
 
@@ -284,15 +284,18 @@ and measuring average CER of all pairs.
 
 The algorithm can be summarized as follows:
 
-> 1. Split the two input texts into text lines
-> 2. Sort the ground truth text lines by length (in descending order)
-> 3. For the first ground truth line, find the best matching OCR result line segment (by minimising a penalty that is partly based on string edit distance)
-> 4. If full match (full length of line)
-> a. Mark as done and remove line from list
-> b. Else subdivide and add to respective list of text lines; resort
+> 1. Split both input texts into text lines
+> 2. Sort the GT lines by length  
+>      (in descending order)
+> 3. For the top GT line, find the best fully or partially matching OCR line  
+>      (by lowest edit distance and highest coverage)
+> 4. If full match (i.e. full length of line)
+>     a. Mark as done and remove line from both lists
+>     b. Else mark matching part as done,  
+>         then cut off unmatched part and add to respective list of text lines; resort
 > 5. If any more lines available repeat step 3
-> 6. Count non-matched lines / strings as insertions or deletions (depending on origin: ground truth or result)
-> 7. Sum up all partial edit distances and calculate overall character accuracy
+> 6. Count remaining unmatched lines as insertions or deletions (depending on origin – GT or OCR)
+> 7. Calculate the (micro-)average CER of all marked pairs and return as overall FCER
 
 (paraphrase of C. Clausner, S. Pletschacher and A. Antonacopoulos / Pattern Recognition Letters 131 (2020) 390–397, p. 392)
 
@@ -320,22 +323,50 @@ In the context of object detection in images, it measures either
 * the ratio of correctly segmented pixels over the image size  
   (assuming all predictions can be combined into some coherent segmentation).
 
-**Recall**, on the other hand, measures how well a model performs in finding all instances of an object in an image (true positives), irregardless of false positives. Given a model tries to identify bicycles in an image, a recall of 1 indicates that all bicycles have been found by the model (while not considering other objects that have been falsely labelled as a bicycle).
+**Recall**, on the other hand,  describes to which degree a model predicts what is actually present.
+The higher the recall of a model, the more confidently we can assume that it covers everything to be found
+(e.g. the model having identified every bicycle, car, person etc. in an image).
+A recall of 1 (or 100%) indicates that all objects have a correct prediction (true positives) and no predictions are missing or mislabelled (false negatives). The lower the recall value, the more false negatives.
+
+In the context of object detection in images, it measures either
+- the ratio of correctly detected segments over all actual segments, or
+- the ratio of correctly segmented pixels over the image size.
+
+Notice that both goals are naturally conflicting each other. A good predictor needs both high precision and recall.
+But the optimal trade-off depens on the application.
+
+For layout analysis though, the underlying notion of sufficient overlap itself is inadequate:
+- it does not discern oversegmentation from undersegmentation
+- it does not discern splits/merges that are allowable (irrelevant w.r.t. text flow) or not (break up or conflate lines)
+- it does not discern foreground from background, or when partial overlap starts breaking character legibility or introducing ghost characters
 
 ###### Prediction Score
 
-When a model tries to identify objects in an image, it predicts that a certain area in an image represents said object with a certain confidence or prediction score. The prediction score varies between 0 and 1 and represents the percentage of certainty of having correctly identified an object. Given a model tries to identify ornaments on a page. If the model returns an area of a page with a prediction score of 0.6, the model is "60% sure" that this area is an ornament. If this area is then considered to be a positive, depends on the chosen threshold.
+Most types of model can output a confidence score alongside each predicted object,
+which represents the model's certainty that the prediction is correct.
+For example, when a model tries to identify ornaments on a page, if it returns a segment (polygon / mask)
+with a prediction score of 0.6, the model asserts there is a 60% probability that there is an ornament at that location.
+Whether this prediction is then considered to be a positive detection, depends on the chosen threshold.
 
-###### Thresholds
+###### IoU Thresholds
 
-A threshold is a freely chosen number between 0 and 1. It divides the output of a model into two groups: Outputs that have a prediction score or IoU greater than or equal to the threshold represent an object. Outputs with a prediction score or IoU below the threshold are discarded as not representing the object.
+For object detection, the metrics precision and recall are usually defined in terms of a threshold for the degree of overlap
+(represented by the IoU as defined [above](#iou-intersection-over-union)), ranging between 0 and 1)
+above which pairs of detected and GT segments are qualified as matches. 
+
+(Predictions that are non-matches across all GT objects – false positives – and GT objects that are non-matches across all predictions – false negatives – contribute indirectly in the denominator.)
 
 Example:
-Given a threshold of 0.6 and a model that tries to detect bicycles in an image. The model returns two areas in an image that might be bicycles, one with a prediction score of 0.4 and one with 0.9. Since the threshold equals 0.6, the first area is tossed and not regarded as bicycle while the second one is kept and counted as recognized.
+Given a prediction threshold of 0.8, an IoU threshold of 0.6 and a model that tries to detect bicycles in an image which depicts two bicycles.
+The model returns two areas in an image that might be bicycles, one with a confidence score of 0.4 and one with 0.9. Since the prediction threshold equals 0.8, the first candidate gets immediately tossed out. The other
+is compared to both bicycles in the GT. One GT object is missed (false negative), the other intersects the remaining prediction, but the latter is twice as large.
+Therefore, the union of that pair is more than double the intersection. But since the IoU threshold equals 0.6, even the second candidate is not regarded as a match and thus also counted as false negative. Overall, both precision and recall are zero (becaue 1 kept prediction is a false positive and 2 GTs are false negatives).
 
 ###### Precision-Recall Curve
 
-Precision and recall are connected to each other since both depend on the true positives detected. A precision-recall-curve is a means to balance these values while maximizing them.
+By varying the prediction threshold (and/or the IoU threshold), the tradeoff between precision and recall can be tuned. 
+When the full range of combinations has been gauged, the result can be visualised in a precision-recall curve (or receiver operator characteristic, ROC).
+Usually the optimum balance is where the product of precision and recall (i.e. area under the curve) is maximal.
 
 Given a dataset with 100 images in total of which 50 depict a bicycle. Also given a model trying to identify bicycles on images. The model is run 7 times using the given dataset while gradually increasing the threshold from 0.1 to 0.7.
 
@@ -380,6 +411,8 @@ AP &  = \displaystyle\sum_{k=0}^{k=n-1}[r(k) - r(k+1)] * p(k) \\
 & = 0.878
 \end{array}
 $$
+
+Usually, AP calculation also involves _smoothing_ (i.e. clipping local minima) and _interpolation_ (i.e. adding data points between the measured confidence thresholds).
 
 ###### Mean Average Precision
 
