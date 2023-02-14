@@ -285,7 +285,7 @@ GPU avg memory refers to the average amount of memory of the GPU (in GiB) that w
 
 ##### GPU Peak Memory
 
-GPU peak memory refers to the largest amount of memory of the GPU (in GiB) that was used during processing.
+GPU peak memory is the maximum GPU memory allocated during the execution of a workflow in MB.
 
 #### Text Evaluation
 
