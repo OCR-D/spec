@@ -283,7 +283,7 @@ The following metrics are not part of the MVP (minimal viable product) and will 
 
 GPU avg memory refers to the average amount of memory of the GPU (in GiB) that was used during processing.
 
-##### GPU Peak Usage
+##### GPU Peak Memory
 
 GPU peak memory refers to the largest amount of memory of the GPU (in GiB) that was used during processing.
 
