@@ -279,13 +279,13 @@ The following metrics are not part of the MVP (minimal viable product) and will 
 
 #### GPU Metrics
 
-##### GPU Avg Usage
+##### GPU Avg Memory
 
-GPU avg usage is the average GPU load during the execution of a workflow represented by a real number between 0 and 1.
+GPU avg memory refers to the average amount of memory of the GPU (in GiB) that was used during processing.
 
 ##### GPU Peak Usage
 
-GPU peak usage is the maximum GPU load during the execution of a workflow represented by a real number between 0 and 1.
+GPU peak memory refers to the largest amount of memory of the GPU (in GiB) that was used during processing.
 
 #### Text Evaluation
 
