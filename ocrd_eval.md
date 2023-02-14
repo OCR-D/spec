@@ -132,7 +132,7 @@ CER and WER share categories of errors, and the WER is similarly calculated:
 
 $WER = \frac{i_w + s_w + d_w}{i_w + s_w + d_w + c_w}$
 
-where $i_w$ is the number of inserted, $s_w$ the number of substituted, $d_w$ the number of deleted and $c_w$ the number of correctl words.
+where $i_w$ is the number of inserted, $s_w$ the number of substituted, $d_w$ the number of deleted and $c_w$ the number of correct words.
 
 More specific cases of WER consider only the "significant" words, omitting e.g. stopwords from the calculation.
 
