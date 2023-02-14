@@ -3,11 +3,11 @@
 ## Rationale
 
 Evaluating the quality of OCR requires comparing the OCR results on representative **ground truth** (GT)
-– i.e. realistic data (images) with manual transcriptions (segmentation, text). 
+– i.e. realistic data (images) with manual transcriptions (segmentation, text).
 OCR results can be obtained via several distinct **OCR workflows**.
 
 The comparison requires evaluation tools which themselves build on a number of established
-evaluation metrics. 
+evaluation metrics.
 The evaluation results must be presented in a way that allows factorising and localising aberrations,
 both within documents (page types, individual pages, region types, individual regions) and across classes of similar documents.
 
@@ -123,7 +123,7 @@ Currently we only provide CER per page; higher-level CER results might be calcul
 
 ##### Word Error Rate (WER)
 
-Word error rate (WER) is analogous to CER: While CER operates on (differences between) characters, 
+Word error rate (WER) is analogous to CER: While CER operates on (differences between) characters,
 WER measures the percentage of incorrectly recognized words in a text.
 
 A **word** in that context is usually defined as any sequence of characters between white space (including line breaks), with leading and trailing punctuation removed (according to [Unicode TR29 Word Boundary algorithm](http://unicode.org/reports/tr29/#Word_Boundaries)).
@@ -295,12 +295,12 @@ TODO
 
 ##### Flexible Character Accuracy Measure
 
-The Flexible Character Accuracy (FCA) measure has been introduced to mitigate a major drawback of CER: 
+The Flexible Character Accuracy (FCA) measure has been introduced to mitigate a major drawback of CER:
 CER (if applied naively by comparing concatenated page-level texts) is heavily dependent on the reading order an OCR engine detects.
 Thus, where text blocks are rearranged or merged, no suitable text alignment can be made, so CER is very low,
 even if single characters, words and even lines have been perfectly recognized.
 
-FCA avoids this by splitting the recognized text and GT into lines and, if necessary, sub-line chunks, 
+FCA avoids this by splitting the recognized text and GT into lines and, if necessary, sub-line chunks,
 finding pairs that align maximally until only unmatched lines remain (which must be treated as errors),
 and measuring average CER of all pairs.
 
@@ -333,9 +333,9 @@ The following paragraphs will first introduce the intermediate concepts needed t
 
 ###### Precision and Recall
 
-**Precision** describes to which degree the predictions of a model are correct. 
+**Precision** describes to which degree the predictions of a model are correct.
 The higher the precision of a model, the more confidently we can assume that each prediction is correct
-(e.g. the model having identified a bicycle in an image actually depicts a bicycle). 
+(e.g. the model having identified a bicycle in an image actually depicts a bicycle).
 A precision of 1 (or 100%) indicates all predictions are correct (true positives) and no predictions are incorrect (false positives). The lower the precision value, the more false positives.
 
 In the context of object detection in images, it measures either
@@ -351,16 +351,18 @@ The higher the recall of a model, the more confidently we can assume that it cov
 A recall of 1 (or 100%) indicates that all objects have a correct prediction (true positives) and no predictions are missing or mislabelled (false negatives). The lower the recall value, the more false negatives.
 
 In the context of object detection in images, it measures either
-- the ratio of correctly detected segments over all actual segments, or
-- the ratio of correctly segmented pixels over the image size.
+
+* the ratio of correctly detected segments over all actual segments, or
+* the ratio of correctly segmented pixels over the image size.
 
 Notice that both goals are naturally conflicting each other. A good predictor needs both high precision and recall.
 But the optimal trade-off depens on the application.
 
 For layout analysis though, the underlying notion of sufficient overlap itself is inadequate:
-- it does not discern oversegmentation from undersegmentation
-- it does not discern splits/merges that are allowable (irrelevant w.r.t. text flow) or not (break up or conflate lines)
-- it does not discern foreground from background, or when partial overlap starts breaking character legibility or introducing ghost characters
+
+* it does not discern oversegmentation from undersegmentation
+* it does not discern splits/merges that are allowable (irrelevant w.r.t. text flow) or not (break up or conflate lines)
+* it does not discern foreground from background, or when partial overlap starts breaking character legibility or introducing ghost characters
 
 ###### Prediction Score
 
@@ -374,7 +376,7 @@ Whether this prediction is then considered to be a positive detection, depends o
 
 For object detection, the metrics precision and recall are usually defined in terms of a threshold for the degree of overlap
 (represented by the IoU as defined [above](#iou-intersection-over-union)), ranging between 0 and 1)
-above which pairs of detected and GT segments are qualified as matches. 
+above which pairs of detected and GT segments are qualified as matches.
 
 (Predictions that are non-matches across all GT objects – false positives – and GT objects that are non-matches across all predictions – false negatives – contribute indirectly in the denominator.)
 
@@ -386,7 +388,7 @@ Therefore, the union of that pair is more than double the intersection. But sinc
 
 ###### Precision-Recall Curve
 
-By varying the prediction threshold (and/or the IoU threshold), the tradeoff between precision and recall can be tuned. 
+By varying the prediction threshold (and/or the IoU threshold), the tradeoff between precision and recall can be tuned.
 When the full range of combinations has been gauged, the result can be visualised in a precision-recall curve (or receiver operator characteristic, ROC).
 Usually the optimum balance is where the product of precision and recall (i.e. area under the curve) is maximal.
 
@@ -410,8 +412,8 @@ This graph is called Precision-Recall-Curve.
 
 ###### Average Precision
 
-Average Precision (AP) describes how well (flexible and robust) a model can detect objects in an image, 
-by averaging precision over the full range (from 0 to 1) of confidence thresholds (and thus, recall results). 
+Average Precision (AP) describes how well (flexible and robust) a model can detect objects in an image,
+by averaging precision over the full range (from 0 to 1) of confidence thresholds (and thus, recall results).
 It is equal to the area under the Precision-Recall Curve.
 
 ![A sample precision/recall curve with highlighted area under curve](https://pad.gwdg.de/uploads/799e6a05-e64a-4956-9ede-440ac0463a3f.png)
@@ -434,7 +436,7 @@ AP &  = \displaystyle\sum_{k=0}^{k=n-1}[r(k) - r(k+1)] * p(k) \\
 \end{array}
 $$
 
-Usually, AP calculation also involves _smoothing_ (i.e. clipping local minima) and _interpolation_ (i.e. adding data points between the measured confidence thresholds).
+Usually, AP calculation also involves *smoothing* (i.e. clipping local minima) and *interpolation* (i.e. adding data points between the measured confidence thresholds).
 
 ###### Mean Average Precision
 
@@ -447,14 +449,15 @@ $mAP = \displaystyle\frac{1}{N}\sum_{i=1}^{N}AP_i$ with $N$ being the number of 
 
 Often, this mAP for a range of IoU thresholds gets complemented by additional mAP runs for a set of fixed values, or for various classes and object sizes only.
 The common understanding is that those different measures collectively allow drawing better conclusions and comparisons about the model's quality.
+
 ##### Scenario-Driven Performance Evaluation
 
-Scenario-driven, layout-dedicated, text-flow informed performance evaluation as described in 
+Scenario-driven, layout-dedicated, text-flow informed performance evaluation as described in
 [Clausner et al., 2011](https://primaresearch.org/publications/ICDAR2011_Clausner_PerformanceEvaluation)
 is currently the most comprehensive and sophisticated approach to evaluate the quality of layout analysis.
 
 It is not a single metric, but comprises a multitude of measures derived in a unified method, which considers
-the crucial effects that segmentation can have on text flow, i.e. which kinds of overlaps (merges and splits) 
+the crucial effects that segmentation can have on text flow, i.e. which kinds of overlaps (merges and splits)
 amount to benign deviations (extra white-space) or pathological ones (breaking lines and words apart).
 In this approach, all the derived measures are aggregated under various sets of weights, called evaluation scenarios,
 which target specific use cases (like headline or keyword extraction, linear fulltext, newspaper or figure extraction).
