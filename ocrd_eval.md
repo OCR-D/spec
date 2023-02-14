@@ -152,15 +152,15 @@ Example:
 
 > Eine Mondfinsternis ist die Himmelsbegebenheit welche sich zur Zeit des Vollmondes ereignet, wenn die Erde zwischen der Sonne und dem Monde steht, so daß die Strahlen der Sonne von der Erde aufgehalten werden, und daß man so den Schatten der Erde in dem Monde siehet. In diesem Jahre sind zwey Monfinsternisse, davon ist ebenfalls nur Eine bey uns sichtbar, und zwar am 30sten März des Morgens nach 4 Uhr, und währt bis nach 6 Uhr.
 
-To get the Bag of Words of this paragraph a set containing each word and its number of occurence is created:
+To get the Bag of Words of this paragraph a multiset containing each word and its number of occurence is created:
 
-$BoW$ =
+$BoW_{GT}$ =
 
 ```json=
 {
     "Eine": 2, "Mondfinsternis": 1, "ist": 2, "die": 2, "Himmelsbegebenheit": 1, 
     "welche": 1, "sich": 1, "zur": 1,  "Zeit": 1, "des": 2, "Vollmondes": 1,
-    "ereignet,": 1, "wenn":1, "Erde": 3, "zwischen": 1, "der": 4, "Sonne": 2,
+    "ereignet,": 1, "wenn": 1, "Erde": 3, "zwischen": 1, "der": 4, "Sonne": 2,
     "und": 4, "dem": 2, "Monde": 2, "steht,": 1, "so": 2, "daß": 2, 
     "Strahlen": 1, "von": 1, "aufgehalten": 1, "werden,": 1, "man": 1, "den": 1, 
     "Schatten": 1, "in": 1, "siehet.": 1, "In": 1, "diesem": 1, "Jahre": 1, 
@@ -170,6 +170,28 @@ $BoW$ =
     "bis": 1, "6": 1, "Uhr.": 1
 }
 ```
+
+##### Bag of Words Metric
+
+The Bag of Words Metric describes how many words in a recognized text correspond to words given in the Ground Truth, independent of a page's layout.
+
+$BoW_m = \frac{BoW_{GT} - |\Delta_{GT/recognized}|}{|n_{GT}|}$
+
+###### Example
+
+Given
+
+$BoW_{GT} = \{"Eine": 1, "Mondfinsternis": 1, "steht": 1, "bevor": 1\}$
+
+and
+
+$BoW_{recognized} = \{"Eine": 1, "Mondfinsternis": 1, "fteht": 1, "bevor": 1\}$
+
+results in:
+
+$BoW_m = \frac{4 - 1}{4}$ = 0.75
+
+In this example 75% of the words have been correctly recognized.
 
 ### Layout Evaluation
 
