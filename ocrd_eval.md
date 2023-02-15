@@ -207,7 +207,9 @@ Even if all characters and words may be recognized correctly, all downstream pro
 While the comprehensive evaluation of OCR with consideration of layout analysis is still a research topic, several established metrics can be used to capture different aspects of it.
 For pragmatic reasons we set aside errors resulting from misdetecting the reading order for the moment (though this might be implemented in the future).
 
-#### Reading Order
+Any layout evaluation in the context of OCR-D focusses on region level which should be sufficient for most use cases.
+
+#### Reading Order (Definition)
 
 Reading order describes the order in which segments on a page are intended to be read. While the reading order might be easily obtained in monographs with a single column where only a few page segments exist, identifying the reading order in more complex layouts (e.g. newspapers or multi-column layouts) can be more challenging.
 
@@ -222,6 +224,8 @@ Example of a complex page layout with reading order:
 ![A sample page in German Fraktur with a complex page layout showing the intended reading order](https://pad.gwdg.de/uploads/100f14c4-19b0-4810-b3e5-74c674575424.jpg)
 
 (<http://resolver.sub.uni-goettingen.de/purl?PPN1726778096>)
+
+See [Reading Order Evaluation](#reading-order-evaluation) for the actual metric.
 
 #### IoU (Intersection over Union)
 
@@ -337,6 +341,25 @@ The algorithm can be summarized as follows:
 (paraphrase of C. Clausner, S. Pletschacher and A. Antonacopoulos / Pattern Recognition Letters 131 (2020) 390–397, p. 392)
 
 #### Layout Evalutation
+
+##### Reading Order Evaluation
+
+[Clausner, Pletschacher and Antonacopoulos 2013](https://www.primaresearch.org/www/assets/papers/ICDAR2013_Clausner_ReadingOrder.pdf) propose a way of evaluating reading order by classifying relations between two regions.
+For both the ground truth and the detected reading order the type of relation between two regions are calculated and then compared.
+The authors introduce a penalty matrix in which a penality (as integer) for a misclassified relation is given.
+The more the detected relation differs from the relation in the ground truth, the higher the penalty.
+
+If for example the relation given in the ground truth is "Somewhere after (but unordered group involved)" and the detected relation is "directly before" the penalty is lower (`10`) than as if the ground truth relation was "directly after" (`40`) because the latter is more specific than the former.
+
+To calculate the success measure $s$ of the detected reading order, first all penalties obtained from comparing all GT to detected relations are summed up ($e$) and the error value at a success rate of 50% is determined by
+
+$e_{50} = p_{max} * n_{GT} / 2$
+
+where $p_{max}$ is the highest single penality and $n_{GT}$ is the number of regions in the ground truth.
+
+The success measure is then given by
+
+$s = \frac{1}{e * (1/e_{50}) + 1}$
 
 ##### mAP (mean Average Precision)
 
@@ -502,6 +525,11 @@ See [OCR-D workflow guide](https://ocr-d.de/en/workflows#evaluation).
   * <https://en.wikipedia.org/wiki/Bag-of-words_model>
 * FCA:
   * <https://www.primaresearch.org/www/assets/papers/PRL_Clausner_FlexibleCharacterAccuracy.pdf>
+* Letter Accuary:
+  * <https://www.o-bib.de/bib/article/view/5888/8845>
+* Reading Order Evaluation:
+  * <https://www.primaresearch.org/www/assets/papers/ICDAR2013_Clausner_ReadingOrder.pdf>
+
 * More background on evaluation of OCR
   * <https://doi.org/10.1145/3476887.3476888>
   * <https://doi.org/10.1515/9783110691597-009>
