@@ -197,9 +197,15 @@ In this example, 66% of the words have been correctly recognized.
 
 ### Layout Evaluation
 
-For documents with a complex structure, looking at the recognized text's accuracy alone is often insufficient to accurately determine the quality of OCR. An example can help to illustrate this: in a document containing two columns, all characters and words may be recognized correctly, but when the two columns are detected by layout analysis as just one, the OCR result will contain the text for the first lines of the first and second column, followed by the second lines of the first and second column asf., rendering the sequence of words and paragraphs in the Ground Truth text wrongly, which defeats almost all downstream processes.
+A good text segementation is the basis for measuring text accuracy.
+
+An example can help to illustrate this:
+Given in a document containing two columns these two columns are detected by layout analysis as just one.
+The OCR result will then contain the text for the first lines of the first and second column, followed by the second lines of the first and second column asf. which does not correspond to the sequence of words and paragraphs given in the Ground Truth.
+Even if all characters and words may be recognized correctly, all downstream processes to measure text accuracy will be defeated.
 
 While the comprehensive evaluation of OCR with consideration of layout analysis is still a research topic, several established metrics can be used to capture different aspects of it.
+For pragmatic reasons we set aside errors resulting from misdetecting the reading order for the moment (though this might be implemented in the future).
 
 #### Reading Order
 
