@@ -181,19 +181,19 @@ $BWE = \frac{|BoW_{GT} - BoW_{OCR}|}{{n_w}_{GT} + {n_w}_{OCR}}$
 
 ###### Example
 
-Given
+Given the GT text `der Mann steht an der Ampel`, recognised by OCR as `cer Mann fteht an der Ampel`:
 
-$BoW_{GT} = \{"Eine": 1, "Mondfinsternis": 1, "steht": 1, "bevor": 1\}$
+$BoW_{GT} = \{"Ampel": 1, "an": 1, "der": 2, "Mann": 1, "steht": 1\}$
 
 and
 
-$BoW_{recognized} = \{"Eine": 1, "Mondfinsternis": 1, "fteht": 1, "bevor": 1\}$
+$BoW_{OCR} = \{"Ampel": 1, "an": 1, "cer": 1, "der": 1, "Mann": 1, "fteht": 1\}$
 
 results in:
 
-$BoW_m = \frac{4 - 1}{4}$ = 0.75
+$BWE = \frac{|1 - 1| + |1 - 1| + |2 - 1| + |0 - 1| + |1 - 1| + |1 - 0| + |0 - 1|}{12} = \frac{0 + 0 + 1 + 1 + 0 + 1 + 1}{12}$ = 0.33
 
-In this example 75% of the words have been correctly recognized.
+In this example, 66% of the words have been correctly recognized.
 
 ### Layout Evaluation
 
