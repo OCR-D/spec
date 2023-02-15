@@ -177,7 +177,7 @@ Based on the above concept, the Bag-of-Words Error Rate is defined as the sum ov
 
 The BoW error therefore describes how many words are misrecognized (positively or negatively), independent of a page's layout (order/segmentation).
 
-$BoW_m = \frac{BoW_{GT} - |\Delta_{GT/recognized}|}{|n_{GT}|}$
+$BWE = \frac{|BoW_{GT} - BoW_{OCR}|}{{n_w}_{GT} + {n_w}_{OCR}}$
 
 ###### Example
 
