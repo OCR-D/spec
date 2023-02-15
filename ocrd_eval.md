@@ -171,9 +171,11 @@ $BoW_{GT}$ =
 }
 ```
 
-##### Bag of Words Metric
+##### Bag-of-Words Error Rate
 
-The Bag of Words Metric describes how many words in a recognized text correspond to words given in the Ground Truth, independent of a page's layout.
+Based on the above concept, the Bag-of-Words Error Rate is defined as the sum over the modulus of the GT count minus OCR count of each word, divided by the sum total of words in GT and OCR.
+
+The BoW error therefore describes how many words are misrecognized (positively or negatively), independent of a page's layout (order/segmentation).
 
 $BoW_m = \frac{BoW_{GT} - |\Delta_{GT/recognized}|}{|n_{GT}|}$
 
