@@ -303,8 +303,10 @@ GPU peak memory is the maximum GPU memory allocated during the execution of a wo
 
 ##### Letter Accuracy
 
-Letter Accuracy is a metric that focusses on a defined set of characters for evaluation while ignoring the rest.
-The set relevant for Letter Accuracy can be chosen freely, but it is common to omit punctuation and white spaces which are removed from both the candidate text and the ground truth before evaluation.
+Letter Accuracy is a metric that focusses on a pre-defined set of characters classes for evaluation while ignoring others.
+Letters in a common sense do not include white spaces and punctuations or Arabic and Indic digits.
+Furthermore, even letter capitalization might be ignored.
+The relevant character classes must be removed from both the candidate text and the ground truth before evaluation.
 
 Letter Accuracy can be calculated as follows:
 
