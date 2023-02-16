@@ -1,7 +1,7 @@
 $schema: https://json-schema.org/draft/2019-09/schema
 $id: https://ocr-d.de/en/spec/ocrd_eval.schema.json
 
-title: A list of evaluations for OCR-D
+title: A List of Evaluations for OCR-D
 description: >
   - All references to URL are JSON-LD-like objects with at least an `@id`
     property referencing the URL and `label` for a human-readable label to be
