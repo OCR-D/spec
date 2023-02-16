@@ -346,14 +346,25 @@ The algorithm can be summarized as follows:
 
 ##### Reading Order Evaluation
 
-[Clausner, Pletschacher and Antonacopoulos 2013](https://www.primaresearch.org/www/assets/papers/ICDAR2013_Clausner_ReadingOrder.pdf) propose a way of evaluating reading order by classifying relations between two regions.
-For both the ground truth and the detected reading order the type of relation between two regions are calculated and then compared.
-The authors introduce a penalty matrix in which a penality (as integer) for a misclassified relation is given.
-The more the detected relation differs from the relation in the ground truth, the higher the penalty.
+[Clausner, Pletschacher and Antonacopoulos 2013](https://www.primaresearch.org/www/assets/papers/ICDAR2013_Clausner_ReadingOrder.pdf) 
+propose a method to evaluate reading order by classifying relations between any two regions:
+direct or indirect successor / predecessor, unordered, undefined.
 
-If for example the relation given in the ground truth is "Somewhere after (but unordered group involved)" and the detected relation is "directly before" the penalty is lower (`10`) than as if the ground truth relation was "directly after" (`40`) because the latter is more specific than the former.
+Next, text regions on both sides, ground truth and detected reading order, are matched and assigned (depending on overlap area). 
+A GT region can have multiple corresponding detections. Then, for each pair of regions, the relation type
+on GT is compared to the relation types of the corresponding predictions. Any deviation introduces costs,
+depending both on the kind of relation (e.g. direct vs indirect, or successor vs predecessor)
+and the relative size of the overlap.
 
-To calculate the success measure $s$ of the detected reading order, first all penalties obtained from comparing all GT to detected relations are summed up ($e$) and the error value at a success rate of 50% is determined by
+The authors introduce a predefined penalty matrix where the cost for each misclassification is given.
+(Direct opposition is more expensive than indirect.)
+
+For example, if the relation given in GT is "somewhere after (but unordered group involved)",
+but the detected relation is "directly before", then the penalty will be lower (`10`) than
+if the GT relation is "directly after" (`40`) – because the latter is more specific than the former.
+
+To calculate the success measure $s$ of the detected reading order, first the costs obtained from comparing all GT to all detected relations are summed up ($e$).
+Then this error value is normalised by the hypothetical error value at 50% agreement ($e_{50}$):
 
 $e_{50} = p_{max} * n_{GT} / 2$
 
