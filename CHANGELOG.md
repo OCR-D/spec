@@ -8,7 +8,8 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 Added:
 
-  * QA Spec, defining metrics for evaluation of OCR against Ground Truth, #225
+  * QA Spec: defining metrics for evaluation of OCR against Ground Truth, #225
+  * Web API Spec: Defining the components and interactions of the Web API, #222
 
 Fixed:
 
