@@ -207,4 +207,4 @@ properties:
                   default: '>= 0.0.1'
                 size:
                   type: number
-                  description: Size of the resource in bytes to be retrieved (for archives: size of the archive)
+                  description: "Size of the resource in bytes to be retrieved (for archives: size of the archive)"
