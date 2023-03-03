@@ -6,6 +6,11 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Added:
+
+  * QA Spec, defining metrics for evaluation of OCR against Ground Truth, #225
+
+
 ## [3.21.0] - 2022-11-30
 
 Fixed:
