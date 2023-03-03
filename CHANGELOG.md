@@ -10,6 +10,10 @@ Added:
 
   * QA Spec, defining metrics for evaluation of OCR against Ground Truth, #225
 
+Fixed:
+
+  * `ocrd-tool.json`: Wording on `size` attribute of resources, #233
+
 
 ## [3.21.0] - 2022-11-30
 
