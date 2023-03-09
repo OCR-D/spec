@@ -191,7 +191,7 @@ $$ BoW_{OCR} = \{ \text{Ampel}: 1, \text{an}: 1, \text{cer}: 1, \text{der}: 1, \
 
 results in:
 
-$BWE = \frac{|1 - 1| + |1 - 1| + |2 - 1| + |0 - 1| + |1 - 1| + |1 - 0| + |0 - 1|}{12} = \frac{0 + 0 + 1 + 1 + 0 + 1 + 1}{12}$ = 0.33
+$$ BWE = \frac{|1 - 1| + |1 - 1| + |2 - 1| + |0 - 1| + |1 - 1| + |1 - 0| + |0 - 1|}{12} = \frac{0 + 0 + 1 + 1 + 0 + 1 + 1}{12} = 0.33 $$
 
 In this example, 66% of the words have been correctly recognized.
 
