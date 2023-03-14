@@ -78,12 +78,20 @@ $defs:
         description: The workspace containing the GT
 
       workflow_steps:
-        type: object
-        description: Human readable description of the individual steps in the workflow (for UI)
-        patternProperties:
-          '^[0-9]+$':
-            type: string
-            description: Description of this workflow step
+        type: array
+        description: Human readable description of the individual steps and their parameters in the workflow (for UI)
+        minItems: 1
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              description: The name of the processor used for this workflow step
+              pattern: '^ocrd-[a-z\-]+'
+            params:
+              type: object
+              description: A map of parameters and their values applied to the processor used for this workflow step
+          required: ['id', 'params']
 
       workflow_model:
         type: string
