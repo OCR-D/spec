@@ -6,6 +6,24 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [3.22.0] - 2023-03-03
+
+Added:
+
+  * QA Spec: defining metrics for evaluation of OCR against Ground Truth, #225
+  * Web API Spec: Defining the components and interactions of the Web API, #222
+
+Fixed:
+
+  * `ocrd-tool.json`: Wording on `size` attribute of resources, #233
+
+
+## [3.21.0] - 2022-11-30
+
+Fixed:
+
+  * web api: `GET /workflow/{workflow-id}` should return a work**flow**, not a work**space**, #223
+
 Changed:
 
   * web api: `POST /workflow/{workflow-id}` accepts a `WorkflowArgs` object with workspace ID and workflow parameters, #220
@@ -15,6 +33,7 @@ Added:
 
   * `cli`: `--page-id`/`-g` option accepts regular expressions as well, #221, OCR-D/core#856
   * `mets`: conventions for providing document-wide files (`FULLDOWNLOAD_...`), #154, #207
+  * `cli`: clarify the semantics and order of preference for multi-value/regex/range param values, #232, OCR-D/core#921
 
 
 ## [3.20.0] - 2022-08-14
@@ -468,6 +487,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[3.21.0]: ../../compare/v3.21.0...v3.20.0
 [3.20.0]: ../../compare/v3.20.0...v3.19.0
 [3.19.0]: ../../compare/v3.19.0...v3.18.0
 [3.18.0]: ../../compare/v3.18.0...v3.17.0
