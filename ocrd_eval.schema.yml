@@ -5,7 +5,7 @@ title: A List of Evaluations for OCR-D
 description: >
   - All references to URL are JSON-LD-like objects with at least an `@id`
     property referencing the URL and `label` for a human-readable label to be
-    used in the UI
+    used in the UI.
 type: array
 items:
   required: ['@id', 'label', 'metadata', 'evaluation']
