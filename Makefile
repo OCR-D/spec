@@ -7,4 +7,4 @@ validate: json
 	jsonschema --output pretty --validator Draft201909Validator --instance ocrd_eval.sample.json ocrd_eval.schema.json
 
 deps:
-	pip install yaml click jsonschema
+	pip install pyyaml click jsonschema
