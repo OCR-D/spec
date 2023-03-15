@@ -8,13 +8,13 @@ description: >
     used in the UI.
 type: array
 items:
-  required: ['@id', 'label', 'metadata', 'evaluation']
+  required: ['@id', 'label', 'metadata', 'evaluation_results']
   unevaluatedProperties: false
   allOf:
     - { '$ref': '#/$defs/LabeledUrl' }
     - properties:
         metadata: { '$ref': '#/$defs/EvaluationMetadata' }
-        evaluation: { '$ref': '#/$defs/EvaluationReport' }
+        evaluation_results: { '$ref': '#/$defs/EvaluationReport' }
 
 # Reusable definitions
 $defs:
@@ -150,48 +150,68 @@ $defs:
       document_wide:
         type: object
         description: Document-wide metrics
-        #properties: { $ref: '#$defs/EvaluationMetrics' }
+        allOf: [
+          { $ref: '#$defs/DocumentEvaluationMetrics' },
+          { $ref: '#$defs/CommonEvaluationMetrics' }
+        ]
+        unevaluatedProperties: false
       by_page:
         type: array
         description: Metrics page-by-page
         items:
           type: object
-          allOf:
-            - properties:
-                page_id:
-                  type: string
-                  description: PAGE ID
-            #- properties: { $ref: '#$defs/EvaluationMetrics' }
+          allOf: [
+            { $ref: '#$defs/CommonEvaluationMetrics' },
+            { $ref: '#$defs/PageId' }
+          ] 
+          unevaluatedProperties: false
 
-  EvaluationMetrics:
+  PageId:
+    type: object
+    properties:
+      page_id:
+        type: string
+        description: PAGE ID
 
-    cer_mean:
-      description: Arithmetic mean of the page-wise CER (in document_wide) or regions on a page (in by_page)
-
-    cer_median:
-      description: Median of the page-wise CER (in document_wide) or regions on a page (in by_page)
-
-    cer_range:
-      type: array
-      minItems: 2
-      maxItems: 2
-      items:
+  CommonEvaluationMetrics:
+    type: object
+    properties:
+      cer_mean:
         type: number
-        description: Minimum and maximum of CER calculated over the text of a whole page (in by_page) or combined text of all pages (in document_wide)
+        description: Arithmetic mean of the page-wise CER (in document_wide) or regions on a page (in by_page)
 
-    cer_standard_deviation:
-      description: Standard deviation the page-wise CER (in document_wide) or regions on a page (in by_page)
-
-    wer:
-      description: CER calculated over the text of a whole page (in by_page) or combined text of all pages (in document_wide)
-
-    wall_time:
-      description: Actual time needed for processing workflow
-
-    cpu_time:
-      description: Cumulative CPU time used for processing workflow
-
-    pages_per_minute:
-      description: Number of pages processed per minute
+      wer:
+        type: number
+        description: CER calculated over the text of a whole page (in by_page) or combined text of all pages (in document_wide)
 
 
+  DocumentEvaluationMetrics:
+    type: object
+    properties:
+      cer_median:
+        type: number
+        description: Median of the page-wise CER (in document_wide) or regions on a page (in by_page)
+
+      cer_range:
+        type: array
+        minItems: 2
+        maxItems: 2
+        items:
+          type: number
+          description: Minimum and maximum of CER calculated over the text of a whole page (in by_page) or combined text of all pages (in document_wide)
+
+      cer_standard_deviation:
+        type: number
+        description: Standard deviation the page-wise CER (in document_wide) or regions on a page (in by_page)
+
+      wall_time:
+        type: number
+        description: Actual time needed for processing workflow
+
+      cpu_time:
+        type: number
+        description: Cumulative CPU time used for processing workflow
+
+      pages_per_minute:
+        type: number
+        description: Number of pages processed per minute
