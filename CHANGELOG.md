@@ -6,6 +6,10 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Added:
+
+  * JSON-schema for QUIVER / QA Spec, #236
+
 ## [3.22.0] - 2023-03-03
 
 Added:
