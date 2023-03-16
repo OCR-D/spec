@@ -132,7 +132,7 @@ $defs:
             type: array
             items:
               type: string
-              enum: ['antiqua', 'fraktur']
+              enum: ['antiqua', 'textura', 'gotico-antiqua', 'rotunda', 'italic', 'bastarda', 'greek', 'schwabacher', 'hebrew', 'fraktur']
 
       provenance:
         type: object
