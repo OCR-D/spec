@@ -6,6 +6,8 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [3.23.0] - 2023-03-16
+
 Added:
 
   * JSON-schema for QUIVER / QA Spec, #236
@@ -491,6 +493,8 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[3.23.0]: ../../compare/v3.23.0...v3.22.0
+[3.22.0]: ../../compare/v3.22.0...v3.21.0
 [3.21.0]: ../../compare/v3.21.0...v3.20.0
 [3.20.0]: ../../compare/v3.20.0...v3.19.0
 [3.19.0]: ../../compare/v3.19.0...v3.18.0
