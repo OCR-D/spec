@@ -91,7 +91,7 @@ architecture, which greatly improves the scalability, flexibility, and reliabili
 the [CLI](https://ocr-d.de/en/spec/cli) and the Distributed Processor REST Calls approach.
 
 <figure>
-  <img src="images/web-api-distributed-queue.jpg" alt="Distributed architecture with the Web API"/>
+  <img src="/assets/web-api-distributed-queue.jpg" alt="Distributed architecture with the Web API"/>
   <figcaption align="center">
     <b>Fig. 1:</b> OCR-D System Architecture
   </figcaption>
