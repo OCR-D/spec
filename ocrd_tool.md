@@ -10,6 +10,75 @@ services](swagger).
 
 To validate a `ocrd-tool.json` file, use `ocrd ocrd-tool /path/to/ocrd-tool.json validate`.
 
+## Standard parameters
+
+There is a number of parameters common to all processors that MUST be supported by processors.
+
+### `dpi`
+
+Custom DPI to assume for pixel density of images.
+
+MUST default to 300.
+
+### `output-level`
+
+On what level of typography should output images be produced?
+
+Processors MAY define a `default` value.
+
+`enum` MUST be a list of one or more of:
+
+* `page`
+* `block`
+* `line`
+* `word`
+* `glyph`
+
+Whether the provided data and `output-level` match semantically is up to the
+processor. I.e. if the input data and `output-level` are inconsistent according
+to its semantics, processors MUST refuse further processing.
+
+For example, the user provides an `output-level` of `word`. For this, the
+processor expects text lines in the input. If there are no text lines in the
+input for whatever reason (it might be an empty page or it might not have been
+processed down to line level yet), the processor MUST raise an exception.
+
+### Sample for standard parameters
+
+Here is a snippet of an `ocrd-tool.json` for a tool that can operate on `page`, `block` or `line` level
+and produce output on `block`, `line` or `glyph` level, e.g. [ocrd-cis-ocropy-segment](https://github.com/cisocrgroup/ocrd_cis/blob/dev/ocrd_cis/ocropy/segment.py):
+
+```hjson
+{
+  [...]
+  "parameter": {
+    "dpi": {
+      "type": "number",
+      "default": 300,
+    },
+    "input-level": {
+      "type": "string":
+      "enum": ["page", "block", "line"],
+      "default": "page"
+    }
+    "output-level": {
+      "type": "array":
+      "item": {
+        "type": "string",
+        "enum": ["block", "line", "glyph"],
+      }
+      "default": "block"
+    }
+  }
+}
+```
+
+Some sample parameters by the user and how they are passed to the processor:
+
+* `{}` --> `{"dpi": 300, "input-level": "page", "output-level": "block"}`
+* `{"dpi": 72}` --> `{"dpi": 72, "input-level": "page", "output-level": "block"}`
+* `{"input-level": "glyph"}` --> `{"dpi": 72, "input-level": "glyph", "output-level": "block"}` (This should in all likelihood be an error since it's highly unlikely that `output-level` is above the `input-level` but that is to be handled by processor) 
+
 ## File parameters
 
 To mark a parameter as expecting the address of a file, it MUST declare the
