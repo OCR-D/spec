@@ -1,34 +1,5 @@
 # Web API
 
-## Terminology
-
-* **Processing Worker**: a Processing Worker is an [OCR-D Processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor)
-  running as a worker, i.e. listening to the Process Queue, pulling new jobs when available, processing them, and
-  pushing the updated job statuses back to the queue if necessary.
-* **Workflow Server**: a Workflow Server is a server which exposes REST endpoints in the `Workflow` section of
-  the [Web API specification](openapi.yml). In particular, for each `POST /workflow/{workflow-id}` request, the
-  corresponding Nextflow script is executed. The script comprises a chain of call to the `POST /processor/{executable}`
-  endpoint in an appropriate order.
-* **Processing Server**: a Processing Server is a server which exposes REST endpoints in the `Processing` section of
-  the [Web API specification](openapi.yml). In particular, for each `POST /processor/{executable}` request,
-  a Processing Message is added to the respective Job Queue.
-* **Process Queue**: a Process Queue is a queueing system for workflow jobs (i.e. single processor runs on one
-  workspace) to be executed by Processing Workers and to be enqueued by the Workflow Server via the Processing Server.
-  In our implementation, it's [RabbitMQ](https://www.rabbitmq.com/).
-* **Job queue**: one or many queues in the Process Queue, which contains processing messages. Processing Workers listen
-  to the job queues.
-* **Result queue**: one or many queues in the Process Queue, which contains result messages. Depending on the
-  configuration in the processing messages, Processing Workers might publish result messages to these queues. A
-  3rd-party service can listen to these queues to get updated about the job status.
-* **Processing message**: a message published to the job queue. This message contains necessary information for the
-  Processing Worker to process data and perform actions after the processing has finished. These actions include `POST`
-  ing the result message to the provided callback URL, or publishing the result message to the result queue. The schema
-  of processing messages can be found [here](web_api/processing-message.schema.yml).
-* **Result message**: a message published to the result queue. This message contains information about a job (ID,
-  status, etc.). Depending on the configuration in the processing message, a result message can be `POST`ed to the
-  callback URL, published to the result queue, or both. The schema for result messages can be
-  found [here](web_api/result-message.schema.yml).
-
 ## Why do we need a Web API?
 
 After having processors running locally via the [CLI](https://ocr-d.de/en/spec/cli), communication over network is the
@@ -102,6 +73,35 @@ runs [Uvicorn](https://www.uvicorn.org/), an [ASGI](https://asgi.readthedocs.io/
 for Python. [RabbitMQ](https://www.rabbitmq.com/) is used for the Process Queue, and [MongoDB](https://www.mongodb.com/)
 is the database system. There are many options for a reverse proxy, such as Nginx, Apache, or HAProxy. From our side, we
 recommend using [Traefik](https://doc.traefik.io/traefik/).
+
+### Terminology
+
+* **Processing Worker**: a Processing Worker is an [OCR-D Processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor)
+  running as a worker, i.e. listening to the Process Queue, pulling new jobs when available, processing them, and
+  pushing the updated job statuses back to the queue if necessary.
+* **Workflow Server**: a Workflow Server is a server which exposes REST endpoints in the `Workflow` section of
+  the [Web API specification](openapi.yml). In particular, for each `POST /workflow/{workflow-id}` request, the
+  corresponding Nextflow script is executed. The script comprises a chain of call to the `POST /processor/{executable}`
+  endpoint in an appropriate order.
+* **Processing Server**: a Processing Server is a server which exposes REST endpoints in the `Processing` section of
+  the [Web API specification](openapi.yml). In particular, for each `POST /processor/{executable}` request,
+  a Processing Message is added to the respective Job Queue.
+* **Process Queue**: a Process Queue is a queueing system for workflow jobs (i.e. single processor runs on one
+  workspace) to be executed by Processing Workers and to be enqueued by the Workflow Server via the Processing Server.
+  In our implementation, it's [RabbitMQ](https://www.rabbitmq.com/).
+* **Job queue**: one or many queues in the Process Queue, which contains processing messages. Processing Workers listen
+  to the job queues.
+* **Result queue**: one or many queues in the Process Queue, which contains result messages. Depending on the
+  configuration in the processing messages, Processing Workers might publish result messages to these queues. A
+  3rd-party service can listen to these queues to get updated about the job status.
+* **Processing message**: a message published to the job queue. This message contains necessary information for the
+  Processing Worker to process data and perform actions after the processing has finished. These actions include `POST`
+  ing the result message to the provided callback URL, or publishing the result message to the result queue. The schema
+  of processing messages can be found [here](web_api/processing-message.schema.yml).
+* **Result message**: a message published to the result queue. This message contains information about a job (ID,
+  status, etc.). Depending on the configuration in the processing message, a result message can be `POST`ed to the
+  callback URL, published to the result queue, or both. The schema for result messages can be
+  found [here](web_api/result-message.schema.yml).
 
 ### Description
 
