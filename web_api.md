@@ -152,12 +152,13 @@ The Processing Server is a server which exposes REST endpoints in the `Processin
 the [Web API specification](openapi.yml). In the queue-based system architecture, a Processing Server is responsible for
 deployment management and enqueueing workflow jobs. For the former, a Processing Server can deploy, re-use, and shutdown
 Processing Workers, Process Queue, and Database, depending on the configuration. For the latter, it decodes requests and
-delegates them to the Process Queue.
+delegates them to the Process Queue. Additionally it is possible to start the needed components externally, with Docker.
+Therefore `skip_deployment: true` can be set in the `process_queue` and `database` section of the configuration file.
 
 To start a Processing Server, run
 
 ```shell
-$ ocrd processing-server --address=<IP>:<PORT> /path/to/config.yml
+$ ocrd network processing-server --address=<IP>:<PORT> /path/to/config.yml
 ```
 
 This command starts a Processing Server on the provided IP address and port. It accepts only one argument, which is the
@@ -206,7 +207,7 @@ hosts:
 
 There are three main sections in the configuration file.
 
-1. `process_queue`: it contains the `address` and `port`, where the Process Queue was deployed, or will be deployed with
+1. `process_queue`: it contains the `address` and `port`, where the Process Queue is deployed, or will be deployed with
    the specified `credentials`. If the `ssh` property is presented, the Processing Server will try to connect to
    the `address` via `ssh` with provided `username` and `password` and deploy [RabbitMQ](https://www.rabbitmq.com/) at
    the specified `port`. The remote machine must have [Docker](https://www.docker.com/) installed since the deployment
@@ -218,12 +219,13 @@ There are three main sections in the configuration file.
    The `ssh` section behaves exactly the same as described in the `process_queue` section above.
 3. `hosts`: this section contains a list of hosts, usually virtual machines, where Processing Workers should be
    deployed. To be able to connect to a host, an `address` and `username` are required, then comes either `password`
-   or `path_to_privkey` (path to a private key). All Processing Workers, which will be deployed, must be declared under
+   or `path_to_privkey` (path to a private key). All Processing Workers, which should be deployed, must be declared under
    the `workers` property. In case `deploy_type` is `docker`, make sure that [Docker](https://www.docker.com/) is
    installed in the target machine and the provided `username` has enough rights to execute Docker commands.
 
-Among three sections, only the `process_queue` is required. However, if `hosts` is present, `database` must be there
-as well. For more information, please check the [configuration file schema](web_api/config.schema.yml).
+Among three sections, `process_queue` and `database` are required, `hosts` is optional. Processing Workers can
+additionally be start externally and register themselfs to the process_queue`. For more information, please check the
+[configuration file schema](web_api/config.schema.yml).
 
 ### Process Queue
 
@@ -245,10 +247,9 @@ re-queued. If yes, and the status of this process in the database is not `SUCCES
 in the message again.
 
 When a Processing Server receives a request, it creates a message based on the request content, then push it to a
-job queue. A job queue always has the same name as its respective processors. For
-example, `ocrd-olena-binarize` processors listen only to the job queue named `ocrd-olena-binarize`. Below is an example
-of how a message looks like. For a detailed schema, please check
-the [message schema](web_api/processing-message.schema.yml).
+job queue. A job queue always has the same name as its respective processors. For example, `ocrd-olena-binarize`
+processors listen only to the job queue named `ocrd-olena-binarize`. Below is an example of how a message looks like.
+For a detailed schema, please check the [message schema](web_api/processing-message.schema.yml).
 
 ```yaml
 job_id: uuid
@@ -266,17 +267,18 @@ parameters:
 
 result_queue_name: ocrd-cis-ocropy-binarize-result
 callback_url: https://my.domain.com/callback
+internall_callback_url: http://ocrd-processing-server:8000
 
 created_time: 1668782988590
 ```
 
-In the message content, `job_id`, `processor_name`, and `created_time` are added by the Processing Server, while the
-rest comes from the body of the `POST /processor/{executable}` request.
+In the message content, `job_id`, `processor_name`, `internal_callback_url` and `created_time` are added by the
+Processing Server, while the rest comes from the body of the `POST /processor/{executable}` request.
 
 Instead of `path_to_mets`, one can also use `workspace_id` to specify a workspace. An ID of a workspace can be obtained
-from the Workspace Server.
+from the Workspace Server which is not part of OCR-D core.
 
-In case `result_queue_name` property is presented, the result of the processing will be pushed to the queue with the
+In case `result_queue_name` property is present, the result of the processing will be pushed to the queue with the
 provided name. If the queue does not exist yet, it will be created on the fly. This is useful when there is another
 service waiting for the results of processing. That service can simply listen to that queue and will be immediately
 notified when the results are available. Below is a simple Python script to demonstrate how a service can listen to
@@ -306,8 +308,8 @@ def main():
 It is important that the result queue exists before one starts listening on it, otherwise an error is thrown. The best
 way to ensure this is trying to create the result queue in the listener service, as shown in the Python script above. In
 RabbitMQ, this action is idempotent, which means that the creation only happens if the queue doesn't exist yet,
-otherwise nothing will happen. For more information, please check
-the [RabbitMQ tutorials](https://www.rabbitmq.com/getstarted.html).
+otherwise nothing will happen. For more information, please check the
+[RabbitMQ tutorials](https://www.rabbitmq.com/getstarted.html).
 
 If the `callback_url` in the processing message is set, a `POST` request will be made to the provided endpoint when the
 processing is finished. The body of the request is the result message described below.
@@ -328,16 +330,16 @@ job.
 
 ### Processing Worker
 
-There is normally no need to start (or stop) a Processing Worker manually, since it can be managed by a Processing
-Server via a [configuration file](#processing-server). However, if it is necessary to do so, there are two ways to start
-a Processing Worker:
+A Processing Worker can be started manually or it can be managed by a Processing Server via a [configuration file](#processing-server).
+Here are the two ways described to start a processing worker:
 
 ```shell
-# 1. Use ocrd CLI bundled with OCR-D/core
-$ ocrd server <processor-name> --type=worker --queue=<queue-address> --database=<database-address>
+# 1. Use processor name
+$ <processor-name> worker --queue=<queue-address> --database=<database-address>
 
-# 2. Use processor name
-$ <processor-name> --server --type=worker --queue=<queue-address> --database=<database-address>
+# 2. Use ocrd CLI bundled with OCR-D/core
+$ ocrd network processing-worker <processor-name> --queue=<queue-address> --database=<database-address>
+
 ```
 
 * `--queue`: a [Rabbit MQ connection string](https://www.rabbitmq.com/uri-spec.html) to a running instance.
