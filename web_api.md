@@ -21,7 +21,7 @@ limited to, hardware configuration, installed processors, and information about 
 specific [processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor), trigger a processor run, and check the status
 of a running processor. By exposing these endpoints, the server can encapsulate the detailed setup of the system and
 offer users a single entry to the processors. The implementation of this section is provided
-by [OCR-D/core](https://github.com/OCR-D/core). Implementors do not need to implement it themselves, they can reuse
+by [OCR-D/core](https://github.com/OCR-D/core). Implementers do not need to implement it themselves, they can reuse
 and/or extend the reference implementation from OCR-D/core.
 
 **Workflow**: Beyond single processors, one can manage
@@ -33,7 +33,7 @@ about Nextflow and how to use it in OCR-D is documented [in the Nextflow spec](n
 via [workspaces](https://ocr-d.de/en/spec/glossary#workspace). (A workspace is the combination of
 a [METS](https://ocr-d.de/en/spec/mets) file and any number of referenced files already downloaded, i.e. with locations
 relative to the METS file path.) Processing (via single processors or workflows) always refers to existing workspaces,
-i.e. workspaces residing in the server's filesystem.
+i.e. workspaces residing in the server's file system.
 
 ## Usage
 
@@ -63,7 +63,7 @@ There are various ways to build a system which implements this Web API. In this 
 architecture, which greatly improves the scalability, flexibility, and reliability of the system compared to
 the [CLI](https://ocr-d.de/en/spec/cli) and the Distributed Processor REST Calls approach. This architecture is the
 basis of the implementation done in the [ocrd_network package](https://github.com/OCR-D/core/tree/master/ocrd_network/ocrd_network)
-of OCR-D core described in the [next section](TODO: link to next h2)
+of OCR-D core described in the [next section](#description-of-ocr-d-core-network-implementation)
 
 <figure>
   <img src="/assets/web-api-distributed-queue.jpg" alt="Distributed architecture with the Web API"/>
@@ -92,7 +92,7 @@ The key terms used in this OCR-D System Architecture are described here. These t
 * **Processing Server**: a Processing Server is a server which exposes REST endpoints in the `Processing` section of
   the [Web API specification](openapi.yml). In particular, for each `POST /processor/{executable}` request,
   a Processing Message is added to the respective Job Queue.
-* **Process Queue**: a Process Queue is a queueing system for workflow jobs (i.e. single processor runs on one
+* **Process Queue**: a Process Queue is a queuing system for workflow jobs (i.e. single processor runs on one
   workspace) to be executed by Processing Workers and to be enqueued by the Workflow Server via the Processing Server.
   In our implementation, it's [RabbitMQ](https://www.rabbitmq.com/).
 * **Job queue**: one or many queues in the Process Queue, which contains processing messages. Processing Workers listen
@@ -113,13 +113,13 @@ The key terms used in this OCR-D System Architecture are described here. These t
 
 As shown in Fig. 1, each section in the [Web API specification](#the-specification) is implemented by different servers,
 which are Discovery Server, Processing Server, Workflow Server, and Workspace Server respectively. Although each server
-in the figure is deployed on its own machine, it is completely up to the implementors to decide which machines run which
+in the figure is deployed on its own machine, it is completely up to the implementers to decide which machines run which
 servers. However, having each processor run on its own machine reduces the risk of version and resource conflicts.
 Furthermore, the machine can be customized to best fit the processor's hardware requirements and throughput demand. For
 example, some processors need GPU computation, while others do not, or some need more CPU capacity while others need
 more memory.
 
-**Processing**: since the `Processing` section is provided by [OCR-D Core](https://github.com/OCR-D/core), implementors
+**Processing**: since the `Processing` section is provided by [OCR-D Core](https://github.com/OCR-D/core), implementers
 do not need to implement Processing Server, Process Queue, and Processing Worker themselves, they can reuse/customize
 the existing implementation. Once a request arrives, it will be pushed to a job queue. A job queue always has the same
 name as its respective processors. For example, `ocrd-olena-binarize`processors listen only to the queue
@@ -137,20 +137,20 @@ a [Network File System (NFS)](https://en.wikipedia.org/wiki/Network_File_System)
 Servers(specifically processors) can work in a shared storage environment and access files as if they are local files.
 To get data into the NFS, one could use the `POST /workspace` endpoint to
 upload [OCRD-ZIP](https://ocr-d.de/en/spec/ocrd_zip)files. However, this approach is only appropriate for testing or
-very limited data sizes. Usually, Workspace Server should be able to pull data from other storages.
+very limited data sizes. Usually, Workspace Server should be able to pull data from other storage.
 
 
 ## Description of OCR-D core network implementation
 
-This section explains the implementation of part of the described architecture in OCR-D core. OCR-D Core currently provides
-implementation of parts of the webAPI which are the Processing Server and an endpoint for running a workflow with OCR-D
+This section explains the implementation of parts of the described architecture in OCR-D core. OCR-D Core currently provides
+implementation of parts of the WebAPI which are the Processing Server and an endpoint for running a workflow with OCR-D
 process syntax
 
 ### Processing Server
 
 The Processing Server is a server which exposes REST endpoints in the `Processing` section of
 the [Web API specification](openapi.yml). In the queue-based system architecture, a Processing Server is responsible for
-deployment management and enqueueing workflow jobs. For the former, a Processing Server can deploy, re-use, and shutdown
+deployment management and enqueuing workflow jobs. For the former, a Processing Server can deploy, re-use, and shutdown
 Processing Workers, Process Queue, and Database, depending on the configuration. For the latter, it decodes requests and
 delegates them to the Process Queue. Additionally it is possible to start the needed components externally, with Docker.
 Therefore `skip_deployment: true` can be set in the `process_queue` and `database` section of the configuration file.
@@ -224,16 +224,16 @@ There are three main sections in the configuration file.
    installed in the target machine and the provided `username` has enough rights to execute Docker commands.
 
 Among three sections, `process_queue` and `database` are required, `hosts` is optional. Processing Workers can
-additionally be start externally and register themselfs to the process_queue`. For more information, please check the
+additionally be start externally and register themselves to the process_queue`. For more information, please check the
 [configuration file schema](web_api/config.schema.yml).
 
 ### Process Queue
 
-By using a queuing system for individual per-workspace per-job processor runs, specifically as message queueing
+By using a queuing system for individual per-workspace per-job processor runs, specifically as message queuing
 with [RabbitMQ](https://www.rabbitmq.com/), the reliability and flexibility of the Processing Server are greatly
 improved over a system directly coupling the workflow engine and distributed processor instances.
 
-In our implementation of the Process Queue, manual acknowledgement mode is used. This means, when a Processing Worker
+In our implementation of the Process Queue, manual acknowledgment mode is used. This means, when a Processing Worker
 finishes successfully, it sends a positive ACK signal to RabbitMQ. In case of failure, it tries again three times before
 sending a negative ACK signal. When a negative signal is received, RabbitMQ will re-queue the message. If there is not
 any ACK signal sent for any reason (e.g. consumer crash, power outage, network problem, etc.), RabbitMQ will
