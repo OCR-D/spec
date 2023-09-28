@@ -3,8 +3,10 @@
 ## Why do we need a Web API?
 
 After having processors running locally via the [CLI](https://ocr-d.de/en/spec/cli), communication over network is the
-natural extension. This feature will improve the flexibility, scalability and reliability of the system. This
-specification presents ideas behind the endpoints, how to use them, and technical details happening in the background.
+natural extension. Offering OCR-D as a Service over the web should improve the flexibility, scalability and reliability
+of the system. The WebAPI specification presents ideas behind the endpoints, how to use them, and technical details
+happening in the background. When using OCR-D as service a common interface should make it easier to use different
+providers of a service offering OCR-D.
 
 ## The Specification
 
