@@ -139,6 +139,13 @@ To get data into the NFS, one could use the `POST /workspace` endpoint to
 upload [OCRD-ZIP](https://ocr-d.de/en/spec/ocrd_zip)files. However, this approach is only appropriate for testing or
 very limited data sizes. Usually, Workspace Server should be able to pull data from other storages.
 
+
+## Description of OCR-D core network implementation
+
+This section explains the implementation of part of the described architecture in OCR-D core. OCR-D Core currently provides
+implementation of parts of the webAPI which are the Processing Server and an endpoint for running a workflow with OCR-D
+process syntax
+
 ### Processing Server
 
 The Processing Server is a server which exposes REST endpoints in the `Processing` section of
