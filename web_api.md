@@ -61,7 +61,9 @@ When a system implements the Web API completely, it can be used as follows:
 
 There are various ways to build a system which implements this Web API. In this section, we describe a distributed
 architecture, which greatly improves the scalability, flexibility, and reliability of the system compared to
-the [CLI](https://ocr-d.de/en/spec/cli) and the Distributed Processor REST Calls approach.
+the [CLI](https://ocr-d.de/en/spec/cli) and the Distributed Processor REST Calls approach. This architecture is the
+basis of the implementation done in the [ocrd_network package](https://github.com/OCR-D/core/tree/master/ocrd_network/ocrd_network)
+of OCR-D core described in the [next section](TODO: link to next h2)
 
 <figure>
   <img src="/assets/web-api-distributed-queue.jpg" alt="Distributed architecture with the Web API"/>
@@ -77,6 +79,8 @@ is the database system. There are many options for a reverse proxy, such as Ngin
 recommend using [Traefik](https://doc.traefik.io/traefik/).
 
 ### Terminology
+
+The key terms used in this OCR-D System Architecture are described here. These terms are often used here so a common understanding is necessary.
 
 * **Processing Worker**: a Processing Worker is an [OCR-D Processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor)
   running as a worker, i.e. listening to the Process Queue, pulling new jobs when available, processing them, and
@@ -100,9 +104,9 @@ recommend using [Traefik](https://doc.traefik.io/traefik/).
   Processing Worker to process data and perform actions after the processing has finished. These actions include `POST`
   ing the result message to the provided callback URL, or publishing the result message to the result queue. The schema
   of processing messages can be found [here](web_api/processing-message.schema.yml).
-* **Result message**: a message published to the result queue. This message contains information about a job (ID,
-  status, etc.). Depending on the configuration in the processing message, a result message can be `POST`ed to the
-  callback URL, published to the result queue, or both. The schema for result messages can be
+* **Result message**: a message send from a Processing Worker when it has finished processing. This message contains
+  information about a job (ID, status, etc.). Depending on the configuration in the processing message, a result message
+  can be `POST`ed to the callback URL, published to the result queue, or both. The schema for result messages can be
   found [here](web_api/result-message.schema.yml).
 
 ### Description
