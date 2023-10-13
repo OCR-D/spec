@@ -91,7 +91,7 @@ The key terms used in this OCR-D System Architecture are described here. These t
   endpoint in an appropriate order.
 * **Processing Server**: a Processing Server is a server which exposes REST endpoints in the `Processing` section of
   the [Web API specification](openapi.yml). In particular, for each `POST /processor/{executable}` request,
-  a Processing Message is added to the respective Job Queue.
+  a processing message is added to the respective Job Queue.
 * **Process Queue**: a Process Queue is a queuing system for workflow jobs (i.e. single processor runs on one
   workspace) to be executed by Processing Workers and to be enqueued by the Workflow Server via the Processing Server.
   In our implementation, it's [RabbitMQ](https://www.rabbitmq.com/).
@@ -227,6 +227,16 @@ Among three sections, `process_queue` and `database` are required, `hosts` is op
 additionally be start externally and register themselves to the process_queue`. For more information, please check the
 [configuration file schema](web_api/config.schema.yml).
 
+#### Running a processor job
+The Fig. 2 shows what happens when the Processing Server receives a process request at `/processor/{processor-name}`.
+
+<figure>
+  <img src="/assets/activity-push-processor-job.jpg" alt="Activity diagram Processing Server 1"/>
+  <figcaption align="center">
+    <b>Fig. 2:</b> Activity diagram Processing Server 1
+  </figcaption>
+</figure>
+
 ### Process Queue
 
 By using a queuing system for individual per-workspace per-job processor runs, specifically as message queuing
@@ -345,6 +355,17 @@ $ ocrd network processing-worker <processor-name> --queue=<queue-address> --data
 * `--queue`: a [Rabbit MQ connection string](https://www.rabbitmq.com/uri-spec.html) to a running instance.
 * `--database`: a [MongoDB connection string](https://www.mongodb.com/docs/manual/reference/connection-string/) to a
   running instance.
+
+#### Activity of the Processing Worker when receiving a processing message
+The Fig. 3 shows what happens when a Processing Worker reads a processing message from the queue.
+
+<figure>
+  <img src="/assets/activity-worker.jpg" alt="Activity diagram Processing Worker"/>
+  <figcaption align="center">
+    <b>Fig. 3:</b> Activity diagram Processing Worker
+  </figcaption>
+</figure>
+
 
 ### Database
 
