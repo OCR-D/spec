@@ -102,7 +102,7 @@ paths:
           description: Return the ProcessorJob running this ProcessorCall
           content: {application/json: {schema: {$ref: '#/components/schemas/ProcessorJob'}}}
 
-  '/processor/{executable}/{job-id}':
+  '/processor/job/{job-id}':
     get:
       tags: ['processing']
       operationId: getProcessorJob
@@ -124,7 +124,7 @@ paths:
         '404':
           description: 'ProcessorJob not found'
 
-  '/processor/{executable}/{job-id}/log':
+  '/processor/log/{job-id}':
     get:
       tags: ['processing']
       operationId: getProcessorJobLog
@@ -242,7 +242,7 @@ paths:
           content:
             application/json: {schema: {$ref: '#/components/schemas/WorkflowJob'}}
 
-  '/workflow/{workflow-id}/{job-id}':
+  '/workflow/job/{job-id}':
     get:
       tags: ['workflow']
       operationId: getWorkflowJob
