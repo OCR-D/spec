@@ -102,6 +102,7 @@ paths:
           description: Return the ProcessorJob running this ProcessorCall
           content: {application/json: {schema: {$ref: '#/components/schemas/ProcessorJob'}}}
 
+  # TODO: core impl has to be changed, uses `/processor/{executable}/{job-id}` atm
   '/processor/job/{job-id}':
     get:
       tags: ['processing']
@@ -124,6 +125,7 @@ paths:
         '404':
           description: 'ProcessorJob not found'
 
+  # TODO: core impl has to be changed, uses `/processor/{processor_name}/{job_id}/log` atm
   '/processor/log/{job-id}':
     get:
       tags: ['processing']
@@ -184,6 +186,75 @@ paths:
         '400':
           description: Invalid workflow
 
+    # TODO: this is currently implemented in core but conflicts with endpoint to upload a workflow
+    post:
+      tags: ['workflow', 'processing']
+      description: current implementation in OCR-D core for running a workflow
+      summary: Run a workflow
+      operationId: runWorkflow
+      parameters:
+        - name: mets_path
+          in: query
+          description: path to mets-file
+          schema:
+            type: string
+            title: Mets Path
+          required: true
+        - name: agent_type
+          in: query
+          description: Type of agent to run the processor: 'worker' or 'server'
+          schema:
+            type: string
+            title: Agent Type
+            default: worker
+          required: false
+        - name: page_id
+          in: query
+          description: Page Id or Page Range to process
+          schema:
+            type: string
+            title: Page Id
+          required: false
+        - name: page_wise
+          required: false
+          schema:
+            type: boolean
+            title: Page Wise
+            default: false
+            description:
+          in: query
+        - name: workflow_callback_url
+          in: query
+          description: Url to receive a callback after workflow finished
+          schema:
+            type: string
+            title: Workflow Callback Url
+          required: false
+      requestBody:
+        content:
+          multipart/form-data:
+            description: Textfile with ocrd process syntax
+            schema:
+              type: string
+              format: binary
+              example: |
+                cis-ocropy-binarize -I DEFAULT -O BIN
+                anybaseocr-crop -I BIN -O CROP
+                cis-ocropy-denoise -I CROP -O DENOISE -P dpi 300 -P level-of-operation page
+        required: true
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                # TODO: either change type or provide the type in "components" section
+                $ref: '#/components/schemas/PYWorkflowJobOutput'
+        '404':
+          description: Workspace not found
+        '422':
+          description: Input validation error
+
   '/workflow/{workflow-id}':
     put:
       tags: ['workflow']
@@ -222,6 +293,8 @@ paths:
             'text/vnd.ocrd.workflow': {}
         '404':
           description: 'Workflow not available'
+
+    # TODO: this conflicts with current core implemantation (in core post '/workflow' is used to run a workflow)
     post:
       tags: ['workflow']
       operationId: runWorkflow
@@ -242,6 +315,7 @@ paths:
           content:
             application/json: {schema: {$ref: '#/components/schemas/WorkflowJob'}}
 
+  # TODO: core impl has to be changed, uses `/workflow/{workflow_job_id}` atm
   '/workflow/job/{job-id}':
     get:
       tags: ['workflow']
@@ -438,6 +512,7 @@ components:
           required: ['executable']
           properties:
             executable: {$ref: '#/components/schemas/OcrdExecutable'}
+    # TODO: Possibly change response of a processor job
     ProcessorJob:
       allOf:
         - {$ref: '#/components/schemas/Job'}
@@ -460,6 +535,7 @@ components:
             be specified here depend on the respective implementation of the workflow.
           type: object
           default: {}
+    # TODO: Possibly change response of a workflow job
     WorkflowJob:
       allOf:
         - {$ref: '#/components/schemas/Job'}
@@ -507,4 +583,3 @@ components:
           description: Log UTC time
           type: string
           format: date-time
-
