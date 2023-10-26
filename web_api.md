@@ -108,6 +108,9 @@ The key terms used in this OCR-D System Architecture are described here. These t
   information about a job (ID, status, etc.). Depending on the configuration in the processing message, a result message
   can be `POST`ed to the callback URL, published to the result queue, or both. The schema for result messages can be
   found [here](web_api/result-message.schema.yml).
+* **METS Server**: The METS Server makes a workspace accessible over http or unix file socket. It provides asynchronous
+  and parallel access to the METS and this makes it possible for multiple Processing Workers to work on the same workspace
+  at the same time.
 
 ### Description
 
