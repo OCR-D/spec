@@ -231,10 +231,10 @@ additionally be start externally and register themselves to the process_queue`. 
 [configuration file schema](web_api/config.schema.yml).
 
 #### Running a processor job
-The Fig. 2 shows what happens when the Processing Server receives a process request at `/processor/{processor-name}`.
+The Fig. 2 shows the workflow when the Processing Server receives a process request at `/processor/{processor-name}`.
 
 <figure>
-  <img src="/assets/activity-push-processor-job.jpg" alt="Activity diagram Processing Server 1"/>
+  <img src="/assets/activity-processing-server.jpg" alt="Activity diagram Processing Server 1"/>
   <figcaption align="center">
     <b>Fig. 2:</b> Activity diagram Processing Server 1
   </figcaption>
