@@ -230,13 +230,25 @@ Among three sections, `process_queue` and `database` are required, `hosts` is op
 additionally be start externally and register themselves to the process_queue`. For more information, please check the
 [configuration file schema](web_api/config.schema.yml).
 
-#### Running a processor job
+#### Running a processing request
 The Fig. 2 shows the workflow when the Processing Server receives a process request at `/processor/{processor-name}`.
+When pushing requests to the Processing Server, it is possible to specify a id of one or more jobs which the request
+depends on. Before executing a job, it is ensured that this job is finished. If dependend jobs are not finished the
+request will be cached. Additionally, the pages of the output file groups of a job are stored. Only one job can work on
+the same page id and output file group at the same time. These are the two reasons to cache a job.
+The actual work on the workspace is done by the Processing Worker or the Processor Server. The Processing Worker gets
+invoked automatically after a Processing Message is pushed into the queue it reads on. This is done in the middle of the
+workflow of the Processing Server.
+After each processed request, the Processing Server receives a callback from the Processing Worker or from the Processor
+Server. At this step, the Processing Server queries the cache for unprocessed jobs. Dependencies of a cached job
+are the same as described in the beginning: locked pages or other unfinished jobs the cached job depends on. If there
+are no dependencies, the job can be processed. This is done by either pushing a Processing Message to the queue or by
+sending a request to the Processor Server.
 
 <figure>
-  <img src="/assets/activity-processing-server.jpg" alt="Activity diagram Processing Server 1"/>
+  <img src="/assets/request-processing.jpg" alt="Activity diagram Processing Server"/>
   <figcaption align="center">
-    <b>Fig. 2:</b> Activity diagram Processing Server 1
+    <b>Fig. 2:</b> Activity diagram Processing Server
   </figcaption>
 </figure>
 
@@ -358,17 +370,6 @@ $ ocrd network processing-worker <processor-name> --queue=<queue-address> --data
 * `--queue`: a [Rabbit MQ connection string](https://www.rabbitmq.com/uri-spec.html) to a running instance.
 * `--database`: a [MongoDB connection string](https://www.mongodb.com/docs/manual/reference/connection-string/) to a
   running instance.
-
-#### Activity of the Processing Worker when receiving a processing message
-The Fig. 3 shows what happens when a Processing Worker reads a processing message from the queue.
-
-<figure>
-  <img src="/assets/activity-worker.jpg" alt="Activity diagram Processing Worker"/>
-  <figcaption align="center">
-    <b>Fig. 3:</b> Activity diagram Processing Worker
-  </figcaption>
-</figure>
-
 
 ### Database
 
