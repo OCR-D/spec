@@ -1,18 +1,18 @@
-# Web API
+# OCR-D Network
 
-## Why do we need a Web API?
+## 1. Why do we need OCR-D Network?
 
 After having processors running locally via the [CLI](https://ocr-d.de/en/spec/cli), communication over network is the
-natural extension. Offering OCR-D as a Service over the web should improve the flexibility, scalability and reliability
-of the system. The WebAPI specification presents ideas behind the endpoints, how to use them, and technical details
-happening in the background. When using OCR-D as service a common interface should make it easier to use different
-providers of a service offering OCR-D.
+natural extension. The [OCR-D Network]((https://github.com/OCR-D/core/tree/master/ocrd_network/ocrd_network)) package,
+which is implemented as part of [OCR-D/core](https://github.com/OCR-D/core), allows users to set up OCR-D in a
+distributed environment. This setup greatly improves the flexibility, scalability and reliability of OCR-D.
 
 ## The Specification
 
-The Web API specification can be found [here](openapi.yml). It follows
-the [OpenAPI specification](https://swagger.io/specification/). There are 4 parts to be implemented: discovery,
-processing, workflow, and workspace.
+When having OCR-D running over network, it should expose endpoints to allow users' interactions. Those endpoints are
+described [here](openapi.yml). It follows the [OpenAPI specification](https://swagger.io/specification/). Most endpoints
+are already included in [OCR-D/core](https://github.com/OCR-D/core). The rest could be implemented by the organization
+which uses it. There are 4 parts in the specification: discovery, processing, workflow, and workspace.
 
 **Discovery**: The service endpoints in this section provide information about the server. They include, but are not
 limited to, hardware configuration, installed processors, and information about each processor.
@@ -35,84 +35,23 @@ a [METS](https://ocr-d.de/en/spec/mets) file and any number of referenced files 
 relative to the METS file path.) Processing (via single processors or workflows) always refers to existing workspaces,
 i.e. workspaces residing in the server's file system.
 
-## Usage
+## 2. Suggested OCR-D System Architecture
 
-When a system implements the Web API completely, it can be used as follows:
-
-1. Retrieve information about the system via endpoints in the `Discovery` section.
-2. Create a workspace (from an [OCRD-ZIP](https://ocr-d.de/en/spec/ocrd_zip) or METS URL) via the `POST /workspace`
-   endpoint and get back a workspace ID.
-3. Create a workflow by uploading a Nextflow script to the system via the `POST /workflow` endpoint and get back a
-   workflow ID.
-4. One can either:
-    * Trigger a single processor on a workspace by calling the `POST /processor/{executable}` endpoint with the chosen
-      processor name, workspace ID and parameters, or
-    * Start a workflow on a workspace by calling the `POST /workflow/{workflow-id}` endpoint with the chosen workflow ID
-      and workspace ID.
-    * In both cases, a job ID is returned.
-5. With the given job ID, it is possible to check the job status by calling:
-    * `GET /processor/{executable}/{job-id}` for a single processor, or
-    * `GET /workflow/{workflow-id}/{job-id}` for the workflow.
-6. Download the resulting workspace via the `GET /workspace/{workspace-id}` endpoint and get back an OCRD-ZIP.
-   Set the request header to `Accept: application/json` in case you only want the meta-data of the workspace but not the
-   files.
-
-## Suggested OCR-D System Architecture
-
-There are various ways to build a system which implements this Web API. In this section, we describe a distributed
-architecture, which greatly improves the scalability, flexibility, and reliability of the system compared to
-the [CLI](https://ocr-d.de/en/spec/cli) and the Distributed Processor REST Calls approach. This architecture is the
-basis of the implementation done in the [ocrd_network package](https://github.com/OCR-D/core/tree/master/ocrd_network/ocrd_network)
-of OCR-D core described in the [next section](#description-of-ocr-d-core-network-implementation)
-
-<figure>
-  <img src="/assets/web-api-distributed-queue.jpg" alt="Distributed architecture with the Web API"/>
-  <figcaption align="center">
-    <b>Fig. 1:</b> OCR-D System Architecture
-  </figcaption>
-</figure>
-
-In this architecture, all servers are implemented using [FastAPI](https://fastapi.tiangolo.com/). Behind the scene, it
+This document presents two possible architecture setup using OCR-D Network and the technical details behind. In both
+setup, all servers are implemented using [FastAPI](https://fastapi.tiangolo.com/). Behind the scene, it
 runs [Uvicorn](https://www.uvicorn.org/), an [ASGI](https://asgi.readthedocs.io/en/latest/) web server implementation
 for Python. [RabbitMQ](https://www.rabbitmq.com/) is used for the Process Queue, and [MongoDB](https://www.mongodb.com/)
 is the database system. There are many options for a reverse proxy, such as Nginx, Apache, or HAProxy. From our side, we
 recommend using [Traefik](https://doc.traefik.io/traefik/).
 
-### Terminology
+### 2.1 Processors as workers
 
-The key terms used in this OCR-D System Architecture are described here. These terms are often used here so a common understanding is necessary.
-
-* **Processing Worker**: a Processing Worker is an [OCR-D Processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor)
-  running as a worker, i.e. listening to the Process Queue, pulling new jobs when available, processing them, and
-  pushing the updated job statuses back to the queue if necessary.
-* **Workflow Server**: a Workflow Server is a server which exposes REST endpoints in the `Workflow` section of
-  the [Web API specification](openapi.yml). In particular, for each `POST /workflow/{workflow-id}` request, the
-  corresponding Nextflow script is executed. The script comprises a chain of call to the `POST /processor/{executable}`
-  endpoint in an appropriate order.
-* **Processing Server**: a Processing Server is a server which exposes REST endpoints in the `Processing` section of
-  the [Web API specification](openapi.yml). In particular, for each `POST /processor/{executable}` request,
-  a processing message is added to the respective Job Queue.
-* **Process Queue**: a Process Queue is a queuing system for workflow jobs (i.e. single processor runs on one
-  workspace) to be executed by Processing Workers and to be enqueued by the Workflow Server via the Processing Server.
-  In our implementation, it's [RabbitMQ](https://www.rabbitmq.com/).
-* **Job queue**: one or many queues in the Process Queue, which contains processing messages. Processing Workers listen
-  to the job queues.
-* **Result queue**: one or many queues in the Process Queue, which contains result messages. Depending on the
-  configuration in the processing messages, Processing Workers might publish result messages to these queues. A
-  3rd-party service can listen to these queues to get updated about the job status.
-* **Processing message**: a message published to the job queue. This message contains necessary information for the
-  Processing Worker to process data and perform actions after the processing has finished. These actions include `POST`
-  ing the result message to the provided callback URL, or publishing the result message to the result queue. The schema
-  of processing messages can be found [here](web_api/processing-message.schema.yml).
-* **Result message**: a message send from a Processing Worker when it has finished processing. This message contains
-  information about a job (ID, status, etc.). Depending on the configuration in the processing message, a result message
-  can be `POST`ed to the callback URL, published to the result queue, or both. The schema for result messages can be
-  found [here](web_api/result-message.schema.yml).
-* **METS Server**: The METS Server makes a workspace accessible over http or unix file socket. It provides asynchronous
-  and parallel access to the METS and this makes it possible for multiple Processing Workers to work on the same workspace
-  at the same time.
-
-### Description
+<figure>
+  <img src="/assets/web-api-distributed-queue.jpg" alt="Distributed architecture where processors are deployed as workers."/>
+  <figcaption align="center">
+    <b>Fig. 1:</b> A distributed architecture with message queue. In this architecture, processors are deployed as workers.
+  </figcaption>
+</figure>
 
 As shown in Fig. 1, each section in the [Web API specification](#the-specification) is implemented by different servers,
 which are Discovery Server, Processing Server, Workflow Server, and Workspace Server respectively. Although each server
@@ -142,12 +81,79 @@ To get data into the NFS, one could use the `POST /workspace` endpoint to
 upload [OCRD-ZIP](https://ocr-d.de/en/spec/ocrd_zip)files. However, this approach is only appropriate for testing or
 very limited data sizes. Usually, Workspace Server should be able to pull data from other storage.
 
+### 2.2 Processors as servers
+
+<figure>
+  <img src="/assets/web-api-distributed.jpg" alt="Distributed architecture where processors are deployed as servers."/>
+  <figcaption align="center">
+    <b>Fig. 2:</b> A distributed architecture where processors are deployed as servers.
+  </figcaption>
+</figure>
+
+### Terminology
+
+The key terms used in this OCR-D System Architecture are described here. These terms are often used here so a common
+understanding is necessary.
+
+* **Processing Worker**: a Processing Worker is an [OCR-D Processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor)
+  running as a worker, i.e. listening to the Process Queue, pulling new jobs when available, processing them, and
+  pushing the updated job statuses back to the queue if necessary.
+* **Processor Server**: a Processor Server is an [OCR-D Processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor)
+  running as a server over HTTP. It accepts requests, execute the processor with parameters provided in the requests,
+  and return responses.
+* **Workflow Server**: a Workflow Server is a server which exposes REST endpoints in the `Workflow` section of
+  the [Web API specification](openapi.yml). In particular, for each `POST /workflow/{workflow-id}` request, the
+  corresponding Nextflow script is executed. The script comprises a chain of call to the `POST /processor/{executable}`
+  endpoint in an appropriate order.
+* **Processing Server**: a Processing Server is a server which exposes REST endpoints in the `Processing` section of
+  the [Web API specification](openapi.yml). In particular, for each `POST /processor/{executable}` request,
+  a processing message is added to the respective Job Queue.
+* **Process Queue**: a Process Queue is a queuing system for workflow jobs (i.e. single processor runs on one
+  workspace) to be executed by Processing Workers and to be enqueued by the Workflow Server via the Processing Server.
+  In our implementation, it's [RabbitMQ](https://www.rabbitmq.com/).
+* **Job queue**: one or many queues in the Process Queue, which contains processing messages. Processing Workers listen
+  to the job queues.
+* **Result queue**: one or many queues in the Process Queue, which contains result messages. Depending on the
+  configuration in the processing messages, Processing Workers might publish result messages to these queues. A
+  3rd-party service can listen to these queues to get updated about the job status.
+* **Processing message**: a message published to the job queue. This message contains necessary information for the
+  Processing Worker to process data and perform actions after the processing has finished. These actions include `POST`
+  ing the result message to the provided callback URL, or publishing the result message to the result queue. The schema
+  of processing messages can be found [here](web_api/processing-message.schema.yml).
+* **Result message**: a message send from a Processing Worker when it has finished processing. This message contains
+  information about a job (ID, status, etc.). Depending on the configuration in the processing message, a result message
+  can be `POST`ed to the callback URL, published to the result queue, or both. The schema for result messages can be
+  found [here](web_api/result-message.schema.yml).
+* **METS Server**: a METS Server makes a workspace accessible over HTTP or Unix file socket. Thanks to this server, all
+  operations on a METS file can be executed asynchronously.
+
+## Usage
+
+When a system implements the Web API completely, it can be used as follows:
+
+1. Retrieve information about the system via endpoints in the `Discovery` section.
+2. Create a workspace (from an [OCRD-ZIP](https://ocr-d.de/en/spec/ocrd_zip) or METS URL) via the `POST /workspace`
+   endpoint and get back a workspace ID.
+3. Create a workflow by uploading a Nextflow script to the system via the `POST /workflow` endpoint and get back a
+   workflow ID.
+4. One can either:
+    * Trigger a single processor on a workspace by calling the `POST /processor/{executable}` endpoint with the chosen
+      processor name, workspace ID and parameters, or
+    * Start a workflow on a workspace by calling the `POST /workflow/{workflow-id}` endpoint with the chosen workflow ID
+      and workspace ID.
+    * In both cases, a job ID is returned.
+5. With the given job ID, it is possible to check the job status by calling:
+    * `GET /processor/{executable}/{job-id}` for a single processor, or
+    * `GET /workflow/{workflow-id}/{job-id}` for the workflow.
+6. Download the resulting workspace via the `GET /workspace/{workspace-id}` endpoint and get back an OCRD-ZIP.
+   Set the request header to `Accept: application/json` in case you only want the meta-data of the workspace but not the
+   files.
 
 ## Description of OCR-D core network implementation
 
-This section explains the implementation of parts of the described architecture in OCR-D core. OCR-D Core currently provides
-implementation of parts of the WebAPI which are the Processing Server and an endpoint for running a workflow with OCR-D
-process syntax
+This section explains the implementation of parts of the described architecture in OCR-D core. OCR-D Core currently
+provides implementation of parts of the WebAPI which are the Processing Server and an endpoint for running a workflow
+with OCR-D process syntax.
 
 ### Processing Server
 
@@ -222,7 +228,8 @@ There are three main sections in the configuration file.
    The `ssh` section behaves exactly the same as described in the `process_queue` section above.
 3. `hosts`: this section contains a list of hosts, usually virtual machines, where Processing Workers should be
    deployed. To be able to connect to a host, an `address` and `username` are required, then comes either `password`
-   or `path_to_privkey` (path to a private key). All Processing Workers, which should be deployed, must be declared under
+   or `path_to_privkey` (path to a private key). All Processing Workers, which should be deployed, must be declared
+   under
    the `workers` property. In case `deploy_type` is `docker`, make sure that [Docker](https://www.docker.com/) is
    installed in the target machine and the provided `username` has enough rights to execute Docker commands.
 
@@ -231,6 +238,7 @@ additionally be start externally and register themselves to the process_queue`. 
 [configuration file schema](web_api/config.schema.yml).
 
 #### Running a processing request
+
 The Fig. 2 shows the workflow when the Processing Server receives a process request at `/processor/{processor-name}`.
 When pushing requests to the Processing Server, it is possible to specify a id of one or more jobs which the request
 depends on. Before executing a job, it is ensured that this job is finished. If dependend jobs are not finished the
@@ -355,7 +363,8 @@ job.
 
 ### Processing Worker
 
-A Processing Worker can be started manually or it can be managed by a Processing Server via a [configuration file](#processing-server).
+A Processing Worker can be started manually or it can be managed by a Processing Server via
+a [configuration file](#processing-server).
 Here are the two ways described to start a processing worker:
 
 ```shell
