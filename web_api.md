@@ -7,93 +7,7 @@ natural extension. The [OCR-D Network]((https://github.com/OCR-D/core/tree/maste
 which is implemented as part of [OCR-D/core](https://github.com/OCR-D/core), allows users to set up OCR-D in a
 distributed environment. This setup greatly improves the flexibility, scalability and reliability of OCR-D.
 
-## The Specification
-
-When having OCR-D running over network, it should expose endpoints to allow users' interactions. Those endpoints are
-described [here](openapi.yml). It follows the [OpenAPI specification](https://swagger.io/specification/). Most endpoints
-are already included in [OCR-D/core](https://github.com/OCR-D/core). The rest could be implemented by the organization
-which uses it. There are 4 parts in the specification: discovery, processing, workflow, and workspace.
-
-**Discovery**: The service endpoints in this section provide information about the server. They include, but are not
-limited to, hardware configuration, installed processors, and information about each processor.
-
-**Processing**: Via the service endpoints in this section, one can get information about a
-specific [processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor), trigger a processor run, and check the status
-of a running processor. By exposing these endpoints, the server can encapsulate the detailed setup of the system and
-offer users a single entry to the processors. The implementation of this section is provided
-by [OCR-D/core](https://github.com/OCR-D/core). Implementers do not need to implement it themselves, they can reuse
-and/or extend the reference implementation from OCR-D/core.
-
-**Workflow**: Beyond single processors, one can manage
-entire [workflows](https://ocr-d.de/en/spec/glossary#ocr-d-workflow), i.e. a series of connected processor
-instances. In this spec, a workflow amounts to a [Nextflow](https://www.nextflow.io/) script. Some information
-about Nextflow and how to use it in OCR-D is documented [in the Nextflow spec](nextflow).
-
-**Workspace**: The service endpoints in this section concern data management, which in OCR-D is handled
-via [workspaces](https://ocr-d.de/en/spec/glossary#workspace). (A workspace is the combination of
-a [METS](https://ocr-d.de/en/spec/mets) file and any number of referenced files already downloaded, i.e. with locations
-relative to the METS file path.) Processing (via single processors or workflows) always refers to existing workspaces,
-i.e. workspaces residing in the server's file system.
-
-## 2. Suggested OCR-D System Architecture
-
-This document presents two possible architecture setup using OCR-D Network and the technical details behind. In both
-setup, all servers are implemented using [FastAPI](https://fastapi.tiangolo.com/). Behind the scene, it
-runs [Uvicorn](https://www.uvicorn.org/), an [ASGI](https://asgi.readthedocs.io/en/latest/) web server implementation
-for Python. [RabbitMQ](https://www.rabbitmq.com/) is used for the Process Queue, and [MongoDB](https://www.mongodb.com/)
-is the database system. There are many options for a reverse proxy, such as Nginx, Apache, or HAProxy. From our side, we
-recommend using [Traefik](https://doc.traefik.io/traefik/).
-
-### 2.1 Processors as workers
-
-<figure>
-  <img src="/assets/web-api-distributed-queue.jpg" alt="Distributed architecture where processors are deployed as workers."/>
-  <figcaption align="center">
-    <b>Fig. 1:</b> A distributed architecture with message queue. In this architecture, processors are deployed as workers.
-  </figcaption>
-</figure>
-
-As shown in Fig. 1, each section in the [Web API specification](#the-specification) is implemented by different servers,
-which are Discovery Server, Processing Server, Workflow Server, and Workspace Server respectively. Although each server
-in the figure is deployed on its own machine, it is completely up to the implementers to decide which machines run which
-servers. However, having each processor run on its own machine reduces the risk of version and resource conflicts.
-Furthermore, the machine can be customized to best fit the processor's hardware requirements and throughput demand. For
-example, some processors need GPU computation, while others do not, or some need more CPU capacity while others need
-more memory.
-
-**Processing**: since the `Processing` section is provided by [OCR-D Core](https://github.com/OCR-D/core), implementers
-do not need to implement Processing Server, Process Queue, and Processing Worker themselves, they can reuse/customize
-the existing implementation. Once a request arrives, it will be pushed to a job queue. A job queue always has the same
-name as its respective processors. For example, `ocrd-olena-binarize`processors listen only to the queue
-named `ocrd-olena-binarize`. A Processing Worker, which is
-an [OCR-D Processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor) running as a worker, listens to the queue, pulls
-new jobs when available, processes them, and push the job statuses back to the queue if necessary. One normally does not
-run a Processing Worker directly, but via a Processing Server. Job statuses can be pushed back to the queue, depending
-on the [job configuration](#process-queue), so that other services get updates and act accordingly.
-
-**Database**: in this architecture, a database is required to store information such as users requests, jobs statuses,
-workspaces, etc. [MongoDB](https://www.mongodb.com/) is required here.
-
-**Network File System**: in order to avoid file transfer between different machines, it is highly recommended to have
-a [Network File System (NFS)](https://en.wikipedia.org/wiki/Network_File_System) set up. With NFS, all Processing
-Servers(specifically processors) can work in a shared storage environment and access files as if they are local files.
-To get data into the NFS, one could use the `POST /workspace` endpoint to
-upload [OCRD-ZIP](https://ocr-d.de/en/spec/ocrd_zip)files. However, this approach is only appropriate for testing or
-very limited data sizes. Usually, Workspace Server should be able to pull data from other storage.
-
-### 2.2 Processors as servers
-
-<figure>
-  <img src="/assets/web-api-distributed.jpg" alt="Distributed architecture where processors are deployed as servers."/>
-  <figcaption align="center">
-    <b>Fig. 2:</b> A distributed architecture where processors are deployed as servers.
-  </figcaption>
-</figure>
-
-### Terminology
-
-The key terms used in this OCR-D System Architecture are described here. These terms are often used here so a common
-understanding is necessary.
+## 2. Terminology
 
 * **Processing Worker**: a Processing Worker is an [OCR-D Processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor)
   running as a worker, i.e. listening to the Process Queue, pulling new jobs when available, processing them, and
@@ -127,14 +41,101 @@ understanding is necessary.
 * **METS Server**: a METS Server makes a workspace accessible over HTTP or Unix file socket. Thanks to this server, all
   operations on a METS file can be executed asynchronously.
 
-## Usage
+## 3. The Specification
 
-When a system implements the Web API completely, it can be used as follows:
+When having OCR-D running over network, it should expose endpoints to allow users' interactions. Those endpoints are
+described [here](openapi.yml). It follows the [OpenAPI specification](https://swagger.io/specification/). Most endpoints
+are already included in [OCR-D/core](https://github.com/OCR-D/core). The rest could be implemented by the organization
+which uses it. There are 4 parts in the specification: discovery, processing, workflow, and workspace.
+
+**Discovery**: The service endpoints in this section provide information about the server. They include, but are not
+limited to, hardware configuration, installed processors, and information about each processor.
+
+**Processing**: Via the service endpoints in this section, one can get information about a
+specific [processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor), trigger a processor run, and check the status
+of a running processor. By exposing these endpoints, the server can encapsulate the detailed setup of the system and
+offer users a single entry to the processors. The implementation of this section is provided
+by [OCR-D/core](https://github.com/OCR-D/core).
+
+**Workflow**: Beyond single processors, one can manage
+entire [workflows](https://ocr-d.de/en/spec/glossary#ocr-d-workflow), i.e. a series of connected processor
+instances. A workflow is a text file that describes the OCR-D workflow using `ocrd process` syntax.
+
+**Workspace**: The service endpoints in this section concern data management, which in OCR-D is handled
+via [workspaces](https://ocr-d.de/en/spec/glossary#workspace). (A workspace is the combination of
+a [METS](https://ocr-d.de/en/spec/mets) file and any number of referenced files already downloaded, i.e. with locations
+relative to the METS file path.) Processing (via single processors or workflows) always refers to existing workspaces,
+i.e. workspaces residing in the server's file system.
+
+## 4. Suggested OCR-D System Architecture
+
+This document presents two possible architecture setup using OCR-D Network and the technical details behind. In both
+setup, all servers are implemented using [FastAPI](https://fastapi.tiangolo.com/). Behind the scene, it
+runs [Uvicorn](https://www.uvicorn.org/), an [ASGI](https://asgi.readthedocs.io/en/latest/) web server implementation
+for Python. [RabbitMQ](https://www.rabbitmq.com/) is used for the Process Queue, and [MongoDB](https://www.mongodb.com/)
+is the database system. There are many options for a reverse proxy, such as Nginx, Apache, or HAProxy. From our side, we
+recommend using [Traefik](https://doc.traefik.io/traefik/).
+
+### 4.1 Processors as workers
+
+<figure>
+  <img src="/assets/web-api-distributed-queue.jpg" alt="Distributed architecture where processors are deployed as workers."/>
+  <figcaption align="center">
+    <b>Fig. 1:</b> A distributed architecture with message queue. In this architecture, processors are deployed as workers.
+  </figcaption>
+</figure>
+
+As shown in Fig. 1, each section in the [Web API specification](#3-the-specification) is implemented by different servers,
+which are Discovery Server, Processing Server, Workflow Server, and Workspace Server respectively. Although each server
+in the figure is deployed on its own machine, it is completely up to the implementers to decide which machines run which
+servers. However, having each processor run on its own machine reduces the risk of version and resource conflicts.
+Furthermore, the machine can be customized to best fit the processor's hardware requirements and throughput demand. For
+example, some processors need GPU computation, while others do not, or some need more CPU capacity while others need
+more memory.
+
+**Processing**: once a request arrives, it will be pushed to a job queue. A job queue always has the same name as its
+respective processors. For example, `ocrd-olena-binarize`processors listen only to the queue
+named `ocrd-olena-binarize`. A Processing Worker, which is
+an [OCR-D Processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor) running as a worker, listens to the queue, pulls
+new jobs when available, processes them, and push the job statuses back to the queue if necessary. One normally does not
+run a Processing Worker directly, but via a Processing Server. Job statuses can be pushed back to the queue, depending
+on the [job configuration](#63-process-queue), so that other services get updates and act accordingly.
+
+**Database**: in this architecture, a database is required to store information such as users requests, jobs statuses,
+workspaces, etc. [MongoDB](https://www.mongodb.com/) is required here.
+
+**Network File System**: in order to avoid file transfer between different machines, it is highly recommended to have
+a [Network File System (NFS)](https://en.wikipedia.org/wiki/Network_File_System) set up. With NFS, all Processing
+Servers(specifically processors) can work in a shared storage environment and access files as if they are local files.
+To get data into the NFS, one could use the `POST /workspace` endpoint to
+upload [OCRD-ZIP](https://ocr-d.de/en/spec/ocrd_zip)files. However, this approach is only appropriate for testing or
+very limited data sizes. Usually, Workspace Server should be able to pull data from other storage.
+
+### 4.2 Processors as servers
+
+<figure>
+  <img src="/assets/web-api-distributed.jpg" alt="Distributed architecture where processors are deployed as servers."/>
+  <figcaption align="center">
+    <b>Fig. 2:</b> A distributed architecture where processors are deployed as servers.
+  </figcaption>
+</figure>
+
+The difference between this architecture and the one shown in Fig. 1 is the processors. In this architecture, each
+processor runs as a server and exposes one endpoint. When the Processing Server receives a request, it will forward that
+request to the respective Processor Server and wait for the response.
+
+This architecture is simpler than the other one, since there is no need to have a Process Queue involved. Without a
+queue, all communications are synchronous. It means that clients need to wait for responses from Processing Server. It
+might take a long time, therefore high timeout is recommended.
+
+## 5. Usage
+
+Both setups above can be used as follows:
 
 1. Retrieve information about the system via endpoints in the `Discovery` section.
 2. Create a workspace (from an [OCRD-ZIP](https://ocr-d.de/en/spec/ocrd_zip) or METS URL) via the `POST /workspace`
    endpoint and get back a workspace ID.
-3. Create a workflow by uploading a Nextflow script to the system via the `POST /workflow` endpoint and get back a
+3. Create a workflow by uploading a workflow script to the system via the `POST /workflow` endpoint and get back a
    workflow ID.
 4. One can either:
     * Trigger a single processor on a workspace by calling the `POST /processor/{executable}` endpoint with the chosen
@@ -149,20 +150,37 @@ When a system implements the Web API completely, it can be used as follows:
    Set the request header to `Accept: application/json` in case you only want the meta-data of the workspace but not the
    files.
 
-## Description of OCR-D core network implementation
+## 6. Technical Details
 
-This section explains the implementation of parts of the described architecture in OCR-D core. OCR-D Core currently
-provides implementation of parts of the WebAPI which are the Processing Server and an endpoint for running a workflow
-with OCR-D process syntax.
+### 6.1 How does Processing Server process requests?
 
-### Processing Server
+As one can see from two setups above, the Processing Server needs to go through many steps when it receives a request.
+These steps are illustrated in Fig. 3 below.
 
-The Processing Server is a server which exposes REST endpoints in the `Processing` section of
+<figure>
+  <img src="/assets/request-processing.jpg" alt="This activity diagram shows how a Processing Server handles a request"/>
+  <figcaption align="center">
+    <b>Fig. 3:</b> This activity diagram shows how a Processing Server handles a request.
+  </figcaption>
+</figure>
+
+**Job cache**: there are usually dependencies between jobs, i.e. one job can only run after other jobs are finished. To
+support this, when the Processing Server receives a job at `/processor/{processor-name}` endpoint, it first checks if
+all dependent jobs are finished or not. If not, the new coming job will be cached and then executed later.
+
+**Page lock**: to avoid conflict, only one job is allowed to write to a page group at a time. Therefore, before a job is
+executed, its output file group is locked so that other jobs cannot write to it. The group will then be unlocked when
+the job finished. If a job needs to write to a locked file group, it will be cached and executed later.
+
+### 6.2 Processing Server
+
+A Processing Server is a server which exposes REST endpoints in the `Processing` section of
 the [Web API specification](openapi.yml). In the queue-based system architecture, a Processing Server is responsible for
 deployment management and enqueuing workflow jobs. For the former, a Processing Server can deploy, re-use, and shutdown
 Processing Workers, Process Queue, and Database, depending on the configuration. For the latter, it decodes requests and
-delegates them to the Process Queue. Additionally it is possible to start the needed components externally, with Docker.
-Therefore `skip_deployment: true` can be set in the `process_queue` and `database` section of the configuration file.
+delegates them to the Process Queue. Additionally, it is possible to start the needed components externally, with
+Docker. Therefore `skip_deployment: true` can be set in the `process_queue` and `database` section of the configuration
+file.
 
 To start a Processing Server, run
 
@@ -237,30 +255,7 @@ Among three sections, `process_queue` and `database` are required, `hosts` is op
 additionally be start externally and register themselves to the process_queue`. For more information, please check the
 [configuration file schema](web_api/config.schema.yml).
 
-#### Running a processing request
-
-The Fig. 2 shows the workflow when the Processing Server receives a process request at `/processor/{processor-name}`.
-When pushing requests to the Processing Server, it is possible to specify a id of one or more jobs which the request
-depends on. Before executing a job, it is ensured that this job is finished. If dependend jobs are not finished the
-request will be cached. Additionally, the pages of the output file groups of a job are stored. Only one job can work on
-the same page id and output file group at the same time. These are the two reasons to cache a job.
-The actual work on the workspace is done by the Processing Worker or the Processor Server. The Processing Worker gets
-invoked automatically after a Processing Message is pushed into the queue it reads on. This is done in the middle of the
-workflow of the Processing Server.
-After each processed request, the Processing Server receives a callback from the Processing Worker or from the Processor
-Server. At this step, the Processing Server queries the cache for unprocessed jobs. Dependencies of a cached job
-are the same as described in the beginning: locked pages or other unfinished jobs the cached job depends on. If there
-are no dependencies, the job can be processed. This is done by either pushing a Processing Message to the queue or by
-sending a request to the Processor Server.
-
-<figure>
-  <img src="/assets/request-processing.jpg" alt="Activity diagram Processing Server"/>
-  <figcaption align="center">
-    <b>Fig. 2:</b> Activity diagram Processing Server
-  </figcaption>
-</figure>
-
-### Process Queue
+### 6.3 Process Queue
 
 By using a queuing system for individual per-workspace per-job processor runs, specifically as message queuing
 with [RabbitMQ](https://www.rabbitmq.com/), the reliability and flexibility of the Processing Server are greatly
@@ -361,11 +356,10 @@ With the returned `job_id`, one can retrieve more information by sending a `GET`
 the `/processor/{executable}/{job_id}` endpoint, or to `/processor/{executable}/{job_id}/log` to get all logs of that
 job.
 
-### Processing Worker
+### 6.4 Processing Worker
 
-A Processing Worker can be started manually or it can be managed by a Processing Server via
-a [configuration file](#processing-server).
-Here are the two ways described to start a processing worker:
+A Processing Worker can be started manually, or it can be managed by a Processing Server via
+a [configuration file](#62-processing-server). There are the two ways to start a processing worker:
 
 ```shell
 # 1. Use processor name
@@ -373,14 +367,21 @@ $ <processor-name> worker --queue=<queue-address> --database=<database-address>
 
 # 2. Use ocrd CLI bundled with OCR-D/core
 $ ocrd network processing-worker <processor-name> --queue=<queue-address> --database=<database-address>
-
 ```
 
 * `--queue`: a [Rabbit MQ connection string](https://www.rabbitmq.com/uri-spec.html) to a running instance.
 * `--database`: a [MongoDB connection string](https://www.mongodb.com/docs/manual/reference/connection-string/) to a
   running instance.
 
-### Database
+### 6.5 Processor Server
+
+To run a processor as a server, the following command can be used:
+
+```shell
+
+```
+
+### 6.6 Database
 
 A database is required to store necessary information such as users requests, jobs statuses, workspaces,
 etc. [MongoDB](https://www.mongodb.com/) is used in this case. To connect to MongoDB via a Graphical User
