@@ -21,7 +21,7 @@ distributed environment. This setup greatly improves the flexibility, scalabilit
   appropriate order.
 * **Processing Server**: a Processing Server is a server which exposes REST endpoints in the `Processing` section of
   the [Web API specification](openapi.yml). In particular, for each `POST /processor/run/{executable}` request,
-  either a processing message is added to the respective Job Queue or a request is delegated to the respective ` Processor
+  either a processing message is added to the respective Job Queue or a request is delegated to the respective Processor
   Server.
 * **Process Queue**: a Process Queue is a queuing system for workflow jobs (i.e. single processor runs on one
   workspace) to be executed by Processing Workers and to be enqueued by the Workflow Server via the Processing Server.
@@ -86,13 +86,13 @@ recommend using [Traefik](https://doc.traefik.io/traefik/).
   </figcaption>
 </figure>
 
-As shown in Fig. 1, each section in the [Web API specification](#3-the-specification) is implemented by different servers,
-which are Discovery Server, Processing Server, Workflow Server, and Workspace Server respectively. Although each server
-in the figure is deployed on its own machine, it is completely up to the implementers to decide which machines run which
-servers. However, having each processor run on its own machine reduces the risk of version and resource conflicts.
-Furthermore, the machine can be customized to best fit the processor's hardware requirements and throughput demand. For
-example, some processors need GPU computation, while others do not, or some need more CPU capacity while others need
-more memory.
+As shown in Fig. 1, each section in the [Web API specification](#3-the-specification) is implemented by different
+servers, which are Discovery Server, Processing Server, Workflow Server, and Workspace Server respectively. Although
+each server in the figure is deployed on its own machine, it is completely up to the implementers to decide which
+machines run which servers. However, having each processor run on its own machine reduces the risk of version and
+resource conflicts. Furthermore, the machine can be customized to best fit the processor's hardware requirements and
+throughput demand. For example, some processors need GPU computation, while others do not, or some need more CPU
+capacity while others need more memory.
 
 **Processing**: once a request arrives, it will be pushed to a job queue. A job queue always has the same name as its
 respective processors. For example, `ocrd-olena-binarize`processors listen only to the queue
@@ -139,8 +139,8 @@ Both setups above can be used as follows:
 3. Create a workflow by uploading a workflow script to the system via the `POST /workflow` endpoint and get back a
    workflow ID.
 4. One can either:
-    * Trigger a single processor on a workspace by calling the `POST /processor/run/{executable}` endpoint with the chosen
-      processor name, workspace ID and parameters, or
+    * Trigger a single processor on a workspace by calling the `POST /processor/run/{executable}` endpoint with the
+      chosen processor name, workspace ID and parameters, or
     * Start a workflow on a workspace by calling the `POST /workflow/run` endpoint with the chosen workflow ID
       and workspace ID.
     * In both cases, a job ID is returned.
@@ -166,8 +166,8 @@ These steps are illustrated in Fig. 3 below.
 </figure>
 
 **Job cache**: there are usually dependencies between jobs, i.e. one job can only run after other jobs are finished. To
-support this, when the Processing Server receives a job at `/processor/run/{processor-name}` endpoint, it first checks if
-all dependent jobs are finished or not. If not, the new coming job will be cached and then executed later.
+support this, when the Processing Server receives a job at `/processor/run/{processor-name}` endpoint, it first checks
+if all dependent jobs are finished or not. If not, the new coming job will be cached and then executed later.
 
 **Page lock**: to avoid conflict, only one job is allowed to write to a page group at a time. Therefore, before a job is
 executed, its output file group is locked so that other jobs cannot write to it. The group will then be unlocked when
