@@ -378,8 +378,13 @@ $ ocrd network processing-worker <processor-name> --queue=<queue-address> --data
 To run a processor as a server, the following command can be used:
 
 ```shell
-
+$ <processor-name> server --address=<server-address> --database=<database-address>
 ```
+
+* `--address`: The URL/address to run the processor server on, format: host:port.
+* `--database`: a [MongoDB connection string](https://www.mongodb.com/docs/manual/reference/connection-string/) to a
+  running instance.
+
 
 ### 6.6 Database
 
