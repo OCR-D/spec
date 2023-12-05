@@ -16,12 +16,13 @@ distributed environment. This setup greatly improves the flexibility, scalabilit
   running as a server over HTTP. It accepts requests, execute the processor with parameters provided in the requests,
   and return responses.
 * **Workflow Server**: a Workflow Server is a server which exposes REST endpoints in the `Workflow` section of
-  the [Web API specification](openapi.yml). In particular, for each `POST /workflow/{workflow-id}` request, the
-  corresponding Nextflow script is executed. The script comprises a chain of call to the `POST /processor/{executable}`
-  endpoint in an appropriate order.
+  the [Web API specification](openapi.yml). In particular, with a `POST /workflow/run` request a workflow can be
+  executed. The Workflow Server comprises a chain of call to the `POST /processor/run/{executable}` endpoint in an
+  appropriate order.
 * **Processing Server**: a Processing Server is a server which exposes REST endpoints in the `Processing` section of
-  the [Web API specification](openapi.yml). In particular, for each `POST /processor/{executable}` request,
-  a processing message is added to the respective Job Queue.
+  the [Web API specification](openapi.yml). In particular, for each `POST /processor/run/{executable}` request,
+  either a processing message is added to the respective Job Queue or a request is delegated to the respective ` Processor
+  Server.
 * **Process Queue**: a Process Queue is a queuing system for workflow jobs (i.e. single processor runs on one
   workspace) to be executed by Processing Workers and to be enqueued by the Workflow Server via the Processing Server.
   In our implementation, it's [RabbitMQ](https://www.rabbitmq.com/).
@@ -138,14 +139,14 @@ Both setups above can be used as follows:
 3. Create a workflow by uploading a workflow script to the system via the `POST /workflow` endpoint and get back a
    workflow ID.
 4. One can either:
-    * Trigger a single processor on a workspace by calling the `POST /processor/{executable}` endpoint with the chosen
+    * Trigger a single processor on a workspace by calling the `POST /processor/run/{executable}` endpoint with the chosen
       processor name, workspace ID and parameters, or
-    * Start a workflow on a workspace by calling the `POST /workflow/{workflow-id}` endpoint with the chosen workflow ID
+    * Start a workflow on a workspace by calling the `POST /workflow/run` endpoint with the chosen workflow ID
       and workspace ID.
     * In both cases, a job ID is returned.
 5. With the given job ID, it is possible to check the job status by calling:
-    * `GET /processor/{executable}/{job-id}` for a single processor, or
-    * `GET /workflow/{workflow-id}/{job-id}` for the workflow.
+    * `GET /processor/job/{job-id}` for a single processor, or
+    * `GET /workflow/job/{job-id}` for the workflow.
 6. Download the resulting workspace via the `GET /workspace/{workspace-id}` endpoint and get back an OCRD-ZIP.
    Set the request header to `Accept: application/json` in case you only want the meta-data of the workspace but not the
    files.
@@ -165,7 +166,7 @@ These steps are illustrated in Fig. 3 below.
 </figure>
 
 **Job cache**: there are usually dependencies between jobs, i.e. one job can only run after other jobs are finished. To
-support this, when the Processing Server receives a job at `/processor/{processor-name}` endpoint, it first checks if
+support this, when the Processing Server receives a job at `/processor/run/{processor-name}` endpoint, it first checks if
 all dependent jobs are finished or not. If not, the new coming job will be cached and then executed later.
 
 **Page lock**: to avoid conflict, only one job is allowed to write to a page group at a time. Therefore, before a job is
@@ -301,7 +302,7 @@ created_time: 1668782988590
 ```
 
 In the message content, `job_id`, `processor_name`, `internal_callback_url` and `created_time` are added by the
-Processing Server, while the rest comes from the body of the `POST /processor/{executable}` request.
+Processing Server, while the rest comes from the body of the `POST /processor/run/{executable}` request.
 
 Instead of `path_to_mets`, one can also use `workspace_id` to specify a workspace. An ID of a workspace can be obtained
 from the Workspace Server which is not part of OCR-D core.
@@ -353,7 +354,7 @@ path_to_mets: /path/to/mets.xml
 ```
 
 With the returned `job_id`, one can retrieve more information by sending a `GET` request to
-the `/processor/{executable}/{job_id}` endpoint, or to `/processor/{executable}/{job_id}/log` to get all logs of that
+the `/processor/job/{job_id}` endpoint, or to `/processor/log/{job_id}` to get all logs of that
 job.
 
 ### 6.4 Processing Worker
