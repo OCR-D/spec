@@ -375,23 +375,22 @@ $ ocrd network processing-worker <processor-name> --queue=<queue-address> --data
 
 ### 6.5 Processor Server
 
-To run a processor as a server, the following command can be used:
+Same as Processing Worker, there are also two ways to start a Processor Server:
 
 ```shell
+# 1. Use processor name
 $ <processor-name> server --address=<server-address> --database=<database-address>
+
+# 2. Use ocrd CLI bundled with OCR-D/core
+$ ocrd network processor-server <processor-name> --queue=<queue-address> --database=<database-address>
 ```
 
 * `--address`: The URL/address to run the processor server on, format: host:port.
 * `--database`: a [MongoDB connection string](https://www.mongodb.com/docs/manual/reference/connection-string/) to a
   running instance.
 
-
 ### 6.6 Database
 
 A database is required to store necessary information such as users requests, jobs statuses, workspaces,
 etc. [MongoDB](https://www.mongodb.com/) is used in this case. To connect to MongoDB via a Graphical User
 Interface, [MongoDB Compass](https://www.mongodb.com/products/compass) is recommended.
-
-When a Processing Worker connects to the database for the first time, it will create a database called `ocrd`.
-For collections, each processor creates and works on a collection with the same name as its own. For example,
-all `ocrd-olena-binarize` processors will read and write to the `ocrd-olena-binarize` collection only.
