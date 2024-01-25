@@ -6,6 +6,14 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Changed:
+
+  - Rewritten `web_api` to match the implementation in OCR-D/core
+
+Fixed:
+
+  - typos in `ocrd_tool`
+
 ## [3.23.0] - 2023-03-16
 
 Added:
