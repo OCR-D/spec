@@ -9,7 +9,7 @@ benefit of all OCR-D stakeholders.
 
 ## Terminology
 
-* *current* refers to **December 13, 2022**, the last change of this document
+* *current* refers to **August 1, 2024**, the last change of this document
 * *Q1-Q4* refers to yearly quarters
 * *target version* is the version we mainly test and develop for
 * *supported version* means that we test this version and ensure compatibility
