@@ -52,31 +52,27 @@ properties:
           input_file_grp_cardinality:
             description: Number of (comma-separated) input fileGrp@USE this tool expects (either an exact value or a minimum,maximum list with -1 for unlimited)
             oneOf:
-              - items:
+              - type: number
+                multipleOf: 1
+              - type: array
+                items:
                   type: number
                   multipleOf: 1
-              - items:
-                  type: array
-                  items:
-                    type: number
-                    multipleOf: 1
-                  minItems: 2
-                  maxItems: 2
+                minItems: 2
+                maxItems: 2
             default: 1
             additionalProperties: false
           output_file_grp_cardinality:
             description: Number of (comma-separated) output fileGrp@USE this tool expects (either an exact value or a minimum,maximum list with -1 for unlimited)
             oneOf:
-              - items:
+              - type: number
+                multipleOf: 1
+              - type: array
+                items:
                   type: number
                   multipleOf: 1
-              - items:
-                  type: array
-                  items:
-                    type: number
-                    multipleOf: 1
-                  minItems: 2
-                  maxItems: 2
+                minItems: 2
+                maxItems: 2
             default: 1
           parameters:
             description: Object describing the parameters of a tool. Keys are parameter names, values sub-schemas.
