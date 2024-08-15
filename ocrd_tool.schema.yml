@@ -37,14 +37,14 @@ properties:
             type: string
           input_file_grp:
             deprecated: true
-            description: Input fileGrp@USE this tool expects by default
+            description: [DEPRECATED] Input fileGrp@USE this tool expects by default
             type: array
             items:
               type: string
               # pattern: '^OCR-D-[A-Z0-9-]+$'
           output_file_grp:
             deprecated: true
-            description: Output fileGrp@USE this tool produces by default
+            description: [DEPRECATED] Output fileGrp@USE this tool produces by default
             type: array
             items:
               type: string
