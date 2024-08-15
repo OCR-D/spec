@@ -6,6 +6,11 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Changed:
+
+  - Deprecate `input_file_grp` and `output_file_grp`, #255
+  - Introduce `input_file_grp_cardinality` and `ouptut_file_grp_cardinality`, #255
+
 Fixed:
 
   - sorted imports in `scripts/yaml-to-json.py`, #252
