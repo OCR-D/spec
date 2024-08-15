@@ -6,6 +6,8 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [3.25.0] - 2024-08-15
+
 Changed:
 
   - Deprecate `input_file_grp` and `output_file_grp`, #255
@@ -512,6 +514,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[3.25.0]: ../../compare/v3.25.0...v3.24.0
 [3.24.0]: ../../compare/v3.24.0...v3.23.0
 [3.23.0]: ../../compare/v3.23.0...v3.22.0
 [3.22.0]: ../../compare/v3.22.0...v3.21.0
