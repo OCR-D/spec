@@ -61,7 +61,6 @@ properties:
                 minItems: 2
                 maxItems: 2
             default: 1
-            additionalProperties: false
           output_file_grp_cardinality:
             description: Number of (comma-separated) output fileGrp@USE this tool expects (either an exact value or a minimum,maximum list with -1 for unlimited)
             oneOf:
