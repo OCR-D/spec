@@ -6,6 +6,10 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Fixed:
+
+  - sorted imports in `scripts/yaml-to-json.py`, #252
+
 ## [3.24.0] - 2024-01-25
 
 Changed:
