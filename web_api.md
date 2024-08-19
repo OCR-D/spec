@@ -3,7 +3,7 @@
 ## 1. Why do we need OCR-D Network?
 
 After having processors running locally via the [CLI](https://ocr-d.de/en/spec/cli), communication over network is the
-natural extension. The [OCR-D Network]((https://github.com/OCR-D/core/tree/master/ocrd_network/ocrd_network)) package,
+natural extension. The [OCR-D Network](https://github.com/OCR-D/core/tree/master/ocrd_network/ocrd_network) package,
 which is implemented as part of [OCR-D/core](https://github.com/OCR-D/core), allows users to set up OCR-D in a
 distributed environment. This setup greatly improves the flexibility, scalability and reliability of OCR-D.
 
@@ -13,8 +13,8 @@ distributed environment. This setup greatly improves the flexibility, scalabilit
   running as a worker, i.e. listening to the Process Queue, pulling new jobs when available, processing them, and
   pushing the updated job statuses back to the queue if necessary.
 * **Processor Server**: a Processor Server is an [OCR-D Processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor)
-  running as a server over HTTP. It accepts requests, execute the processor with parameters provided in the requests,
-  and return responses.
+  running as a server over HTTP. It accepts requests, executes the processor with parameters provided in the requests,
+  and returns responses.
 * **Workflow Server**: a Workflow Server is a server which exposes REST endpoints in the `Workflow` section of
   the [Web API specification](openapi.yml). In particular, with a `POST /workflow/run` request a workflow can be
   executed. The Workflow Server comprises a chain of call to the `POST /processor/run/{executable}` endpoint in an
