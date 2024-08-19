@@ -6,6 +6,11 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Fixed:
+
+  - typos in `web_api`, `openapi.yml`, #256, #257
+  - validation errors for `openapi.yml`, #258, #259
+
 ## [3.25.0] - 2024-08-15
 
 Changed:
