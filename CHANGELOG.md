@@ -11,6 +11,10 @@ Fixed:
   - typos in `web_api`, `openapi.yml`, #256, #257
   - validation errors for `openapi.yml`, #258, #259
 
+Changed:
+
+  - `ocrd_tool.schema.yml`: For parameters, support `minProperties`, `maxProperties` and schema for `additionalProperties`, #260
+
 ## [3.25.0] - 2024-08-15
 
 Changed:
