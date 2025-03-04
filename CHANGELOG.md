@@ -15,6 +15,10 @@ Changed:
 
   - `ocrd_tool.schema.yml`: For parameters, support `minProperties`, `maxProperties` and schema for `additionalProperties`, #260
 
+Added:
+
+  - `ocrd-tool` Extend/adapt `steps` parameter for format conversion and evaluation, #261
+
 ## [3.25.0] - 2024-08-15
 
 Changed:
