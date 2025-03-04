@@ -151,8 +151,8 @@ $defs:
         type: object
         description: Document-wide metrics
         allOf: [
-          { $ref: '#$defs/DocumentEvaluationMetrics' },
-          { $ref: '#$defs/CommonEvaluationMetrics' }
+          { $ref: '#/$defs/DocumentEvaluationMetrics' },
+          { $ref: '#/$defs/CommonEvaluationMetrics' }
         ]
         unevaluatedProperties: false
       by_page:
@@ -161,9 +161,9 @@ $defs:
         items:
           type: object
           allOf: [
-            { $ref: '#$defs/CommonEvaluationMetrics' },
-            { $ref: '#$defs/PageId' }
-          ] 
+            { $ref: '#/$defs/CommonEvaluationMetrics' },
+            { $ref: '#/$defs/PageId' }
+          ]
           unevaluatedProperties: false
 
   PageId:
