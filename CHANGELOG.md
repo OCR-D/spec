@@ -6,6 +6,8 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [3.26.0] - 2025-03-04
+
 Fixed:
 
   - typos in `web_api`, `openapi.yml`, #256, #257
@@ -527,6 +529,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[3.26.0]: ../../compare/v3.26.0...v3.25.0
 [3.25.0]: ../../compare/v3.25.0...v3.24.0
 [3.24.0]: ../../compare/v3.24.0...v3.23.0
 [3.23.0]: ../../compare/v3.23.0...v3.22.0
