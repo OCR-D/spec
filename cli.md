@@ -71,7 +71,7 @@ Omit to process all pages.
 
 ### `--overwrite`
 
-Delete files in the output file group(s) before processing.
+Overwrite files in the output file group(s) while processing.
 
 If `--overwrite` is set, but [`--page-id`](-g---page-id-id) is not set, delete
 all output file groups set with
@@ -90,6 +90,10 @@ file groups set with
 "Group deletion" in the context of `--overwrite` means deletion of the
 `mets:fileGrp` element from METS, and deletion of all files that belong to this
 `mets:fileGrp` element.
+
+### `--debug`
+
+Instead of skipping the respective pages, abort on any errors with full stack trace.
 
 ### `-p, --parameter PARAM_JSON`
 
@@ -136,6 +140,16 @@ Input [METS](mets) URL. Default: `mets.xml`
 
 Working Directory. Default: current working directory.
 
+### `-U, --mets-server-url URL`
+
+URL of a [METS Server](web_api) for memory resident, parallel, incremental access
+to the METS in lieu of file parsing and serialization.
+
+If `URL` starts with `http://`, then an HTTP server is assumed there,
+otherwise it is expected to be a path to an Unix Domain Socket.
+
+(The METS Server itself must be managed independently of the processor.)
+
 ### `-l, --log-level LOGLEVEL`
 
 Set the global maximum verbosity level. More verbose log entries will be
@@ -146,18 +160,32 @@ other implementation-specific means of logging configuration. For example, with
 `--log-level TRACE` no log messages should be filtered globally, whereas
 `--log-level ERROR`, only errors should be output globally.
 
+### `-D, --dump-module-dir`
+
+Instead of processing METS, output the [resource location](ocrd_tool#resource-parameters)
+of the distribution module for this processor.
+
 ### `-J, --dump-json`
 
 Instead of processing METS, output the [ocrd-tool](ocrd_tool) description for
 this executable, in particular its parameters.
 
-### `-C, --show-resource FILENAME`
+### `-R, --resolve-resource RESNAME`
 
-Print the contents of processor resource `FILENAME`. Look up the resp. absolute filename according to the [file parameter lookup rules](ocrd_tool#file-parameter).
+Instead of processing METS, output the full absolute path name of the [processor resource](cli#processor-resources)
+named `RESNAME`. Look up the absolute path name according to the [resource parameter lookup rules](ocrd_tool#resource-parameters).
+
+### `-C, --show-resource RESNAME`
+
+Instead of processing METS, output the contents of the [processor resource](cli#processor-resources)
+named `RESNAME`. Look up the absolute path name according to the [resource parameter lookup rules](ocrd_tool#resource-parameters).
 
 ### `-L, --list-resources`
 
-List the names of [processor resources](#processor-resources) in all of the paths defined by.the [file parameter lookup rules](ocrd_tool#file-parameter), one name per line.
+Instead of processing METS, output the names of all the known [processor resource](cli#processor-resources)
+for this processor according to the [resource parameter lookup rules](ocrd_tool#resource-parameters).
+
+(Additional resources must be installed to a resource location or provided by absolute path name.)
 
 ### `-h, --help`
 
@@ -185,20 +213,20 @@ The log messages must have the format `TIME LEVEL LOGGERNAME - MESSAGE\n`, where
 
 ## Processor resources
 
-Parameters that reference files can be resolved from relative to absolute
-filename by following the [conventions laid out in the `ocrd_tool`
-spec](ocrd_tool#file-parameters). These files, either bundled by the processor
-developer or put in place by the user, are called *processor resources*. The
-*processor resources* of a processor can be listed with the `-L/--list-resources`
-option and individual *processor resources* can be retrieved with the
-`-C/--show-resource` option. Since *processor resources* use the same mechanism
+Parameters that reference files or directories can be resolved from relative to
+absolute path name by following the [conventions laid out in the `ocrd_tool`
+spec](ocrd_tool#resource-parameters). These files or directories, either 
+bundled by the processor developer or put in place by the user, are called
+*processor resources*. The resources of a processor can be listed with the
+`-L/--list-resources` option and individual ones can be retrieved with the
+`-C/--show-resource` option. Since processor resources use the same mechanism
 as file parameters, they can be used
 
   * as the argument to the `-p/--parameter` option (i.e. a **preset** file), and
-  * as the value of a file-type parameter (e.g. a **model** file)
+  * as the value of a single parameter key (e.g. a **model** file or directory)
 
 and the processor must resolve them to absolute paths [according to the rules
-for file parameters](ocrd_tool#file-parameters).
+for file parameters](ocrd_tool#resource-parameters).
 
 ## URL/file convention
 
