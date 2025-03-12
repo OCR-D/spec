@@ -10,50 +10,61 @@ services](swagger).
 
 To validate a `ocrd-tool.json` file, use `ocrd ocrd-tool /path/to/ocrd-tool.json validate`.
 
-## File parameters
+## Resource parameters
 
-To mark a parameter as expecting the address of a file, it MUST declare the
-`content-type` property as a [valid media
-type](https://www.iana.org/assignments/media-types/media-types.xhtml).
-Optionally, workflow processors can be notified that this file is potentially
-large and static (e.g. a fixed dataset or a precomputed model) and should be cached
-indefinitely after download by setting the `cacheable` property to `true`.
+To mark a parameter as expecting the address of a file or directory,
+it MUST declare the `content-type` property as a [valid media
+type](https://www.iana.org/assignments/media-types/media-types.xhtml),
+which may contain _multiple values_, formatted as a single string with comma-separated items.
 
-The filename itself, i.e. the concrete value `<fpath>` of a file parameter,
-should be resolved in the following way (with `<cwd>` representing the current 
-working directory, and `<mod>` representing the distribution directory of the module):
+Optionally, workflow processors can be notified that this file or directory
+is potentially large and static (e.g. a fixed dataset or a precomputed model),
+and should be cached indefinitely after download, by setting the `cacheable` property
+to `true`.
 
-* If `<fpath>` is an `http`/`https` URL: Download to a temporary directory (if
-  `cacheable==False`) or a semi-temporary cache directory (if `cacheable==True`)
-* If `<fpath>` is an absolute path: Use as-is.
-* If `<fpath>` is a relative path (with or without directory components):
-  Try resolving via the following directories, and return the first one found if any,
-  otherwise abort with an error message stating so:
-  * `<cwd>/<fpath>` (**Note** that the file is expected to be directly under `<cwd>`, not in a subdirectory)
-  * If an environment variable is defined that has the name of the processor in
-    upper-case and with `-` replaced with `-` and followed by `_PATH` (e.g. for a processor
-    `ocrd-dummy`, the variable would need to be called `OCRD_DUMMY_PATH`):
-    * Split the variable value at `:` and try to resolve by appending `<fpath>`
-      to each token and return the first found file if any
-  * `$XDG_DATA_HOME/ocrd-resources/<name-of-processor>/<fpath>` (with `$HOME/.local/share` instead of `$XDG_DATA_HOME` if unset)
-  * `/usr/local/share/ocrd-resources/<name-of-processor>/<fpath>`
-  * `<mod>/<fpath>` (**Note** that the file is expected to be directly under `<mod>`, not in a subdirectory)
+The path of the file or directory itself, i.e. the concrete value `<rpath>` of a 
+resource parameter, should be resolved in the following way:
 
-The path of the `<mod>` directory is implementation specific and allows modules
-to distribute small resources along with the code, i.e. pre-installed files like
-[presets](cli#processor-resources).
+* If `<rpath>` is an `http:` or `https:` URI, download to a temporary directory
+  (if `cacheable==False`) or a semi-temporary cache directory (otherwise).
+* If `<rpath>` is an absolute path: Use as-is.
+* If `<rpath>` is a relative path: Try resolving via the following directories,
+  and return the first one found, if any. Otherwise abort with an error message stating so.
+  * If an environment variable is defined comprising the name of the processor in
+    upper-case, with `-` replaced by `_` and followed by `_PATH`
+    (e.g. for a processor `ocrd-dummy`, the variable would need to be called `OCRD_DUMMY_PATH`):
+    * Split that variable value at `:` and try to resolve by appending each token with
+      `/<rpath>`, returning the first found path, if any
+  * `<cwd>/<rpath>`
+  * `<data>/ocrd-resources/<processor>/<rpath>`
+  * `<system>/ocrd-resources/<processor>/<rpath>`
+  * `<mod>/<rpath>`
+
+where `<processor>` is the name of the processor executable,
+and the resource location directories are defined as follows:
+- `<cwd>` represents the current (i.e. runtime) working directory
+- `<data>` denotes `$XDG_DATA_HOME` (or `$HOME/.local/share`, if unset)
+- `<system>` denotes `/usr/local/share`
+- `<mod>` denotes the distribution directory of the module; 
+  this path is implementation specific and allows modules
+  to distribute small resources along with the code, i.e. pre-installed files
+  like [presets](cli#processor-resources).
+
+(**Note** that `<rpath>` is expected to be flat, i.e. without leading directories,
+ so resources must reside directly under one of the location directories rather
+ than recursively in a subdirectory, with the exception of the `<cwd>` location,
+ where arbitrary relative paths are permissable.)
+
 
 ## Input / Output file groups
 
-Tools should define the names of both expected input and produced output file
-groups as a list of `USE` attributes of `mets:fileGrp` elements. If more than
-one file group is expected or produced, this should be explained in the
-description of the tool.
+Tools should define the number of expected input and produced output file
+groups ([`USE` attributes of `mets:fileGrp` elements](mets#3-file-groups-metsfilegrp)
+as fixed integers or intervals under `input_file_grp_cardinality` and
+`output_file_grp_cardinality`, respectively.
 
-**NOTE:** Both input and output file groups can be [overridden at
-runtime](cli#-i---input-file-grp-grp). Tools must therefore ensure not to
-hardcode file group names. When multiple groups are expected, the order of the
-override reflects the order in which they are defined in the `ocrd-tool.json`.
+If more than one file group is expected or produced, its semantics should be explained 
+in the description of the tool.
 
 ## Definition
 
@@ -91,25 +102,50 @@ properties:
           - steps
           - executable
           - categories
-          - input_file_grp
-          # Not required because not all processors produce output files
-          # - output_file_grp
+          - input_file_grp_cardinality
+          - output_file_grp_cardinality
         properties:
           executable:
             description: The name of the CLI executable in $PATH
             type: string
           input_file_grp:
-            description: Input fileGrp@USE this tool expects by default
+            deprecated: true
+            description: (DEPRECATED) Input fileGrp@USE this tool expects by default
             type: array
             items:
               type: string
               # pattern: '^OCR-D-[A-Z0-9-]+$'
           output_file_grp:
-            description: Output fileGrp@USE this tool produces by default
+            deprecated: true
+            description: (DEPRECATED) Output fileGrp@USE this tool produces by default
             type: array
             items:
               type: string
               # pattern: '^OCR-D-[A-Z0-9-]+$'
+          input_file_grp_cardinality:
+            description: Number of (comma-separated) input fileGrp@USE this tool expects (either an exact value or a minimum,maximum list with -1 for unlimited)
+            oneOf:
+              - type: number
+                multipleOf: 1
+              - type: array
+                items:
+                  type: number
+                  multipleOf: 1
+                minItems: 2
+                maxItems: 2
+            default: 1
+          output_file_grp_cardinality:
+            description: Number of (comma-separated) output fileGrp@USE this tool expects (either an exact value or a minimum,maximum list with -1 for unlimited)
+            oneOf:
+              - type: number
+                multipleOf: 1
+              - type: array
+                items:
+                  type: number
+                  multipleOf: 1
+                minItems: 2
+                maxItems: 2
+            default: 1
           parameters:
             description: Object describing the parameters of a tool. Keys are parameter names, values sub-schemas.
             type: object
@@ -145,6 +181,12 @@ properties:
                   maximum:
                     type: number
                     description: Maximum value for number parameters, including the maximum
+                  minProperties:
+                    type: number
+                    description: Minimum number of properties of an object
+                  maxProperties:
+                    type: number
+                    description: Maximum number of properties of an object
                   exclusiveMinimum:
                     type: number
                     description: Minimum value for number parameters, excluding the minimum
@@ -158,8 +200,11 @@ properties:
                     type: object
                     description: Describe the properties of an object value
                   additionalProperties:
-                    type: boolean
-                    description: Whether an object value may contain properties not explicitly defined
+                    oneOf:
+                    - type: boolean
+                      description: Whether an object value may contain properties not explicitly defined
+                    - type: object
+                      description: Schema any additional properties need to adhere to
                   required:
                     type: boolean
                     description: Whether this parameter is required
@@ -203,6 +248,7 @@ properties:
             items:
               type: string
               enum:
+                - preprocessing/format-conversion
                 - preprocessing/characterization
                 - preprocessing/optimization
                 - preprocessing/optimization/cropping
@@ -221,6 +267,10 @@ properties:
                 - layout/segmentation/word
                 - layout/segmentation/classification
                 - layout/analysis
+                - postprocessing/format-conversion
+                - postprocessing/archival
+                - evaluation/layout
+                - evaluation/text
           resource_locations:
             type: array
             description: The locations in the filesystem this processor supports for resource lookup
@@ -276,396 +326,221 @@ properties:
 
 ## Example
 
-This is from the [ocrd_tesserocr project](https://github.com/OCR-D/ocrd_tesserocr):
+This is from the [ocrd_kraken project](https://github.com/OCR-D/ocrd_kraken):
 
 ```json
+
 {
-  "version": "0.10.0",
-  "git_url": "https://github.com/OCR-D/ocrd_tesserocr",
-  "dockerhub": "ocrd/tesserocr",
+  "git_url": "https://github.com/OCR-D/ocrd_kraken",
+  "version": "1.0.1",
+  "dockerhub": "ocrd/kraken",
   "tools": {
-    "ocrd-tesserocr-deskew": {
-      "executable": "ocrd-tesserocr-deskew",
-      "categories": ["Image preprocessing"],
-      "description": "Detect script, orientation and skew angle for pages or regions",
-      "input_file_grp": [
-        "OCR-D-IMG",
-        "OCR-D-SEG-BLOCK"
+    "ocrd-kraken-binarize": {
+      "executable": "ocrd-kraken-binarize",
+      "input_file_grp_cardinality": 1,
+      "output_file_grp_cardinality": 1,
+      "categories": [
+        "Image preprocessing"
       ],
-      "output_file_grp": [
-        "OCR-D-DESKEW-BLOCK"
+      "steps": [
+        "preprocessing/optimization/binarization"
       ],
-      "steps": ["preprocessing/optimization/deskewing"],
+      "description": "Binarize images with kraken",
       "parameters": {
-        "dpi": {
-          "type": "number",
-          "format": "float",
-          "description": "pixel density in dots per inch (overrides any meta-data in the images); disabled when negative",
-          "default": 0
-        },
-        "operation_level": {
+        "level-of-operation": {
+          "description": "segment hierarchy level to operate on",
           "type": "string",
-          "enum": ["page","region"],
-          "default": "region",
-          "description": "PAGE XML hierarchy level to operate on"
-        },
-        "min_orientation_confidence": {
-          "type": "number",
-          "format": "float",
-          "default": 1.5,
-          "description": "Minimum confidence score to apply orientation as detected by OSD"
+          "default": "page",
+          "enum": ["page", "region", "line"]
         }
       }
     },
-    "ocrd-tesserocr-fontshape": {
-      "executable": "ocrd-tesserocr-fontshape",
-      "categories": ["Text recognition and optimization"],
-      "description": "Recognize font shapes (family/monospace/bold/italic) and size in segmented words with Tesseract (using annotated derived images, or masking and cropping images from coordinate polygons), annotating TextStyle",
-      "input_file_grp": [
-        "OCR-D-SEG-WORD",
-        "OCR-D-OCR"
-      ],
-      "output_file_grp": [
-        "OCR-D-OCR-STYLE"
-      ],
-      "steps": ["recognition/font-identification"],
-      "parameters": {
-        "dpi": {
-          "type": "number",
-          "format": "float",
-          "description": "pixel density in dots per inch (overrides any meta-data in the images); disabled when negative",
-          "default": 0
-        },
-        "padding": {
-          "type": "number",
-          "format": "integer",
-          "default": 0,
-          "description": "Number of background-filled pixels to add around the word image (i.e. the annotated AlternativeImage if it exists or the higher-level image cropped to the bounding box and masked by the polygon otherwise) on each side before recognition."
-        },
-        "model": {
-          "type": "string",
-          "default": "osd",
-          "description": "tessdata model to apply (an ISO 639-3 language specification or some other basename, e.g. deu-frak or osd); must be an old (pre-LSTM) model"
-        }
-      }
-    },
-    "ocrd-tesserocr-recognize": {
-      "executable": "ocrd-tesserocr-recognize",
-      "categories": ["Text recognition and optimization"],
-      "description": "Segment and/or recognize text with Tesseract (using annotated derived images, or masking and cropping images from coordinate polygons) on any level of the PAGE hierarchy.",
-      "input_file_grp": [
-        "OCR-D-SEG-PAGE",
-        "OCR-D-SEG-REGION",
-        "OCR-D-SEG-TABLE",
-        "OCR-D-SEG-LINE",
-        "OCR-D-SEG-WORD"
-      ],
-      "output_file_grp": [
-        "OCR-D-SEG-REGION",
-        "OCR-D-SEG-TABLE",
-        "OCR-D-SEG-LINE",
-        "OCR-D-SEG-WORD",
-        "OCR-D-SEG-GLYPH",
-        "OCR-D-OCR-TESS"
+    "ocrd-kraken-segment": {
+      "executable": "ocrd-kraken-segment",
+      "input_file_grp_cardinality": 1,
+      "output_file_grp_cardinality": 1,
+      "categories": [
+        "Layout analysis"
       ],
       "steps": [
         "layout/segmentation/region",
-        "layout/segmentation/line",
-        "recognition/text-recognition"
+        "layout/segmentation/line"
       ],
+      "description": "Layout segmentation with Kraken",
       "parameters": {
-        "dpi": {
-          "type": "number",
-          "format": "float",
-          "description": "pixel density in dots per inch (overrides any meta-data in the images); disabled when negative",
-          "default": 0
-        },
-        "padding": {
-          "type": "number",
-          "format": "integer",
-          "default": 0,
-          "description": "Extend detected region/cell/line/word rectangles by this many (true) pixels, or extend existing region/line/word images (i.e. the annotated AlternativeImage if it exists or the higher-level image cropped to the bounding box and masked by the polygon otherwise) by this many (background/white) pixels on each side before recognition."
-        },
-        "segmentation_level": {
+        "level-of-operation": {
+          "description": "segment hierarchy level to operate on (page into regions+lines, or regions into lines)",
           "type": "string",
-          "enum": ["region", "cell", "line", "word", "glyph", "none"],
-          "default": "word",
-          "description": "Highest PAGE XML hierarchy level to remove existing annotation from and detect segments for (before iterating downwards); if ``none``, does not attempt any new segmentation; if ``cell``, starts at table regions, detecting text regions (cells). Ineffective when lower than ``textequiv_level``."
-        },
-        "textequiv_level": {
-          "type": "string",
-          "enum": ["region", "cell", "line", "word", "glyph", "none"],
-          "default": "word",
-          "description": "Lowest PAGE XML hierarchy level to re-use or detect segments for and add the TextEquiv results to (before projecting upwards); if ``none``, adds segmentation down to the glyph level, but does not attempt recognition at all; if ``cell``, stops short before text lines, adding text of text regions inside tables (cells) or on page level only."
+          "default": "page",
+          "enum": ["page", "table", "region"]
         },
         "overwrite_segments": {
-          "type": "boolean",
-          "default": false,
-          "description": "If ``segmentation_level`` is not none, but an element already contains segments, remove them and segment again. Otherwise use the existing segments of that element."
+          "description": "remove any existing regions/lines", 
+          "type": "boolean", 
+          "default": false
         },
+        "text_direction": {
+          "type": "string", 
+          "description": "Sets principal text direction", 
+          "enum": ["horizontal-lr", "horizontal-rl", "vertical-lr", "vertical-rl"], 
+          "default": "horizontal-lr"
+        },
+        "maxcolseps": {
+          "description": "Maximum number of column separators. Set to 0 for single-column text to avoid unnecessary computation.", 
+          "type": "number", 
+          "format": "integer", 
+          "default": 2
+        },
+        "scale": {
+          "description": "mean xheight size of glyphs (guessed if zero)", 
+          "type": "number", 
+          "format": "float", 
+          "default": 0
+        },
+        "black_colseps": {
+          "description": "Whether column separators are assumed to be vertical black lines or not", 
+          "type": "boolean", 
+          "default": false
+        },
+        "remove_hlines": {
+          "description": "Remove horizontal colseps before segmentation", 
+          "type": "boolean", 
+          "default": true
+        },
+        "blla_model": {
+          "description": "Model used for baseline detection and page segmentation. Ignored if use_legacy.",
+          "type": "string",
+          "format": "uri",
+          "content-type": "application/python-cpickle",
+          "cacheable": true,
+          "default": "blla.mlmodel"
+        },
+        "blla_classes": {
+          "description": "Class mapping for the region types trained into blla_model.",
+          "type": "object",
+          "minProperties": 2,
+          "additionalProperties": { "type": "string",
+                                    "enum": ["TextRegion", "ImageRegion", "LineDrawingRegion",
+                                             "GraphicRegion", "TableRegion", "ChartRegion",
+                                             "MapRegion", "SeparatorRegion", "MathsRegion",
+                                             "ChemRegion", "MusicRegion", "AdvertRegion",
+                                             "NoiseRegion", "UnknownRegion", "CustomRegion"] },
+          "default": {"text": "TextRegion", "image": "ImageRegion", "line drawing": "LineDrawingRegion",
+                      "graphic": "GraphicRegion", "table": "TableRegion", "chart": "ChartRegion",
+                      "map": "MapRegion", "separator": "SeparatorRegion", "maths": "MathsRegion",
+                      "chem": "ChemRegion", "music": "MusicRegion", "advert": "AdvertRegion",
+                      "noise": "NoiseRegion", "unknown": "UnknownRegion", "custom": "CustomRegion"}
+        },
+        "device": {
+          "description": "CUDA ID (e.g. 'cuda:0') for computation on GPU (if available), or 'cpu' to run on CPU only",
+          "type": "string",
+          "default": "cuda:0"
+        },
+        "use_legacy": {
+          "description": "Use legacy box segmenter as opposed to neural net baseline segmenter",
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "resources": [
+        {
+          "url": "https://github.com/mittagessen/kraken/raw/main/kraken/blla.mlmodel",
+          "size": 5047020,
+          "name": "blla.mlmodel",
+          "parameter_usage": "without-extension",
+          "description": "Pretrained region+baseline segmentation model (trained on handwriting)"
+        },
+        {
+          "url": "https://ub-backup.bib.uni-mannheim.de/~stweil/tesstrain/kraken/ubma_segmentation/ubma_segmentation.mlmodel",
+          "size": 5047020,
+          "name": "ubma_segmentation.mlmodel",
+          "parameter_usage": "without-extension",
+          "description": "region+baseline segmentation model trained by UBMA (on print)"
+        }
+      ]
+    },
+    "ocrd-kraken-recognize": {
+      "executable": "ocrd-kraken-recognize",
+      "input_file_grp_cardinality": 1,
+      "output_file_grp_cardinality": 1,
+      "categories": ["Text recognition and optimization"],
+      "steps": ["recognition/text-recognition"],
+      "description": "Text recognition with Kraken",
+      "parameters": {
         "overwrite_text": {
-          "type": "boolean",
-          "default": true,
-          "description": "If ``textequiv_level`` is not none, but a segment already contains TextEquivs, remove them and replace with recognised text. Otherwise add new text as alternative. (Only the first entry is projected upwards.)"
-        },
-        "block_polygons": {
-          "type": "boolean",
-          "default": false,
-          "description": "When detecting regions, annotate polygon coordinates instead of bounding box rectangles."
-        },
-        "find_tables": {
-          "type": "boolean",
-          "default": true,
-          "description": "When detecting regions, recognise tables as table regions (Tesseract's ``textord_tabfind_find_tables=1``)."
-        },
-        "sparse_text": {
-          "type": "boolean",
-          "default": false,
-          "description": "When detecting regions, use 'sparse text' page segmentation mode (finding as much text as possible in no particular order): only text regions, single lines without vertical or horizontal space."
-        },
-        "raw_lines": {
-          "type": "boolean",
-          "default": false,
-          "description": "When detecting lines, do not attempt additional segmentation (baseline+xheight+ascenders/descenders prediction) on line images. Can increase accuracy for certain workflows. Disable when line segments/images may contain components of more than 1 line, or larger gaps/white-spaces."
-        },
-        "char_whitelist": {
-          "type": "string",
-          "default": "",
-          "description": "When recognizing text, enumeration of character hypotheses (from the model) to allow exclusively; overruled by blacklist if set."
-        },
-        "char_blacklist": {
-          "type": "string",
-          "default": "",
-          "description": "When recognizing text, enumeration of character hypotheses (from the model) to suppress; overruled by unblacklist if set."
-        },
-        "char_unblacklist": {
-          "type": "string",
-          "default": "",
-          "description": "When recognizing text, enumeration of character hypotheses (from the model) to allow inclusively."
+          "description": "remove any existing TextEquiv", 
+          "type": "boolean", 
+          "default": false
         },
         "model": {
+          "description": "OCR model to recognize with",
           "type": "string",
-          "description": "The tessdata text recognition model to apply (an ISO 639-3 language specification or some other basename, e.g. deu-frak or Fraktur)."
-        }
-      }
-    },
-     "ocrd-tesserocr-segment": {
-      "executable": "ocrd-tesserocr-segment",
-      "categories": ["Layout analysis"],
-      "description": "Segment page into regions and lines with Tesseract",
-      "input_file_grp": [
-        "OCR-D-IMG",
-        "OCR-D-SEG-PAGE",
-        "OCR-D-GT-SEG-PAGE"
-      ],
-      "output_file_grp": [
-        "OCR-D-SEG-LINE"
-      ],
-      "steps": ["layout/segmentation/region", "layout/segmentation/line"],
-      "parameters": {
-        "dpi": {
-          "type": "number",
-          "format": "float",
-          "description": "pixel density in dots per inch (overrides any meta-data in the images); disabled when negative",
-          "default": 0
+          "format": "uri",
+          "content-type": "application/python-cpickle",
+          "cacheable": true,
+          "default": "en_best.mlmodel"
         },
-        "padding": {
+        "pad": {
+          "description": "Extra blank padding to the left and right of text line.",
           "type": "number",
           "format": "integer",
-          "description": "extend detected region rectangles by this many (true) pixels",
-          "default": 4
+          "default": 16
         },
-        "block_polygons": {
+        "bidi_reordering": {
+          "description": "Reorder classes in the ocr_record according to  the Unicode bidirectional algorithm for correct display.",
           "type": "boolean",
-          "default": false,
-          "description": "annotate polygon coordinates instead of bounding box rectangles"
+          "default": true
         },
-        "find_tables": {
-          "type": "boolean",
-          "default": true,
-          "description": "recognise tables as table regions (textord_tabfind_find_tables)"
-        },
-        "sparse_text": {
-          "type": "boolean",
-          "default": false,
-          "description": "use 'sparse text' page segmentation mode (find as much text as possible in no particular order): only text regions, single lines without vertical or horizontal space"
-        }
-      }
-   },
-   "ocrd-tesserocr-segment-region": {
-      "executable": "ocrd-tesserocr-segment-region",
-      "categories": ["Layout analysis"],
-      "description": "Segment page into regions with Tesseract",
-      "input_file_grp": [
-        "OCR-D-IMG",
-        "OCR-D-SEG-PAGE",
-        "OCR-D-GT-SEG-PAGE"
-      ],
-      "output_file_grp": [
-        "OCR-D-SEG-BLOCK"
-      ],
-      "steps": ["layout/segmentation/region"],
-      "parameters": {
-        "dpi": {
-          "type": "number",
-          "format": "float",
-          "description": "pixel density in dots per inch (overrides any meta-data in the images); disabled when negative",
-          "default": 0
-        },
-        "overwrite_regions": {
-          "type": "boolean",
-          "default": true,
-          "description": "Remove existing layout and text annotation below the Page level (otherwise skip page; no incremental annotation yet)."
-        },
-        "padding": {
-          "type": "number",
-          "format": "integer",
-          "description": "extend detected region rectangles by this many (true) pixels",
-          "default": 0
-        },
-        "crop_polygons": {
-          "type": "boolean",
-          "default": false,
-          "description": "annotate polygon coordinates instead of bounding box rectangles"
-        },
-        "find_tables": {
-          "type": "boolean",
-          "default": true,
-          "description": "recognise tables as table regions (textord_tabfind_find_tables)"
-        },
-        "sparse_text": {
-          "type": "boolean",
-          "default": false,
-          "description": "use 'sparse text' page segmentation mode (find as much text as possible in no particular order): only text regions, single lines without vertical or horizontal space"
-        }
-      }
-    },
-     "ocrd-tesserocr-segment-table": {
-      "executable": "ocrd-tesserocr-segment-table",
-      "categories": ["Layout analysis"],
-      "description": "Segment table regions into cell text regions with Tesseract",
-      "input_file_grp": [
-        "OCR-D-SEG-BLOCK",
-        "OCR-D-GT-SEG-BLOCK"
-      ],
-      "output_file_grp": [
-        "OCR-D-SEG-BLOCK"
-      ],
-      "steps": ["layout/segmentation/region"],
-      "parameters": {
-        "dpi": {
-          "type": "number",
-          "format": "float",
-          "description": "pixel density in dots per inch (overrides any meta-data in the images); disabled when negative",
-          "default": 0
-        },
-        "overwrite_cells": {
-          "type": "boolean",
-          "default": true,
-          "description": "Remove existing layout and text annotation below the TableRegion level (otherwise skip table; no incremental annotation yet)."
-        }
-      }
-     },
-     "ocrd-tesserocr-segment-line": {
-      "executable": "ocrd-tesserocr-segment-line",
-      "categories": ["Layout analysis"],
-      "description": "Segment regions into lines with Tesseract",
-      "input_file_grp": [
-        "OCR-D-SEG-BLOCK",
-        "OCR-D-GT-SEG-BLOCK"
-      ],
-      "output_file_grp": [
-        "OCR-D-SEG-LINE"
-      ],
-      "steps": ["layout/segmentation/line"],
-      "parameters": {
-        "dpi": {
-          "type": "number",
-          "format": "float",
-          "description": "pixel density in dots per inch (overrides any meta-data in the images); disabled when negative",
-          "default": 0
-        },
-        "overwrite_lines": {
-          "type": "boolean",
-          "default": true,
-          "description": "Remove existing layout and text annotation below the TextRegion level (otherwise skip region; no incremental annotation yet)."
-        }
-      }
-    },
-    "ocrd-tesserocr-segment-word": {
-      "executable": "ocrd-tesserocr-segment-word",
-      "categories": ["Layout analysis"],
-      "description": "Segment lines into words with Tesseract",
-      "input_file_grp": [
-        "OCR-D-SEG-LINE",
-        "OCR-D-GT-SEG-LINE"
-      ],
-      "output_file_grp": [
-        "OCR-D-SEG-WORD"
-      ],
-      "steps": ["layout/segmentation/word"],
-      "parameters": {
-        "dpi": {
-          "type": "number",
-          "format": "float",
-          "description": "pixel density in dots per inch (overrides any meta-data in the images); disabled when negative",
-          "default": 0
-        },
-        "overwrite_words": {
-          "type": "boolean",
-          "default": true,
-          "description": "Remove existing layout and text annotation below the TextLine level (otherwise skip line; no incremental annotation yet)."
-        }
-      }
-    },
-    "ocrd-tesserocr-crop": {
-      "executable": "ocrd-tesserocr-crop",
-      "categories": ["Image preprocessing"],
-      "description": "Poor man's cropping via region segmentation",
-      "input_file_grp": [
-	"OCR-D-IMG"
-      ],
-      "output_file_grp": [
-	"OCR-D-SEG-PAGE"
-      ],
-      "steps": ["preprocessing/optimization/cropping"],
-      "parameters" : {
-        "dpi": {
-          "type": "number",
-          "format": "float",
-          "description": "pixel density in dots per inch (overrides any meta-data in the images); disabled when negative",
-          "default": 0
-        },
-        "padding": {
-          "type": "number",
-          "format": "integer",
-          "description": "extend detected border by this many (true) pixels on every side",
-          "default": 4
-        }
-      }
-    },
-    "ocrd-tesserocr-binarize": {
-      "executable": "ocrd-tesserocr-binarize",
-      "categories": ["Image preprocessing"],
-      "description": "Binarize regions or lines with Tesseract's global Otsu",
-      "input_file_grp": [
-        "OCR-D-IMG",
-        "OCR-D-SEG-BLOCK",
-        "OCR-D-SEG-LINE"
-      ],
-      "output_file_grp": [
-        "OCR-D-BIN-BLOCK",
-        "OCR-D-BIN-LINE"
-      ],
-      "steps": ["preprocessing/optimization/binarization"],
-      "parameters": {
-        "operation_level": {
+        "device": {
+          "description": "CUDA ID (e.g. 'cuda:0') for computation on GPU (if available), or 'cpu' to run on CPU only",
           "type": "string",
-          "enum": ["region", "line"],
-          "default": "region",
-          "description": "PAGE XML hierarchy level to operate on"
+          "default": "cuda:0"
         }
-      }
+      },
+      "resources": [
+        {
+          "url": "https://ub-backup.bib.uni-mannheim.de/~stweil/tesstrain/kraken/austriannewspapers/20220520/austriannewspapers_best.mlmodel",
+          "size": 16243476,
+          "name": "austriannewspapers.mlmodel",
+          "parameter_usage": "without-extension",
+          "description": "19th and 20th century German Fraktur; https://github.com/UB-Mannheim/AustrianNewspapers/wiki/Training-with-Kraken"
+        },
+        {
+          "url": "https://ub-backup.bib.uni-mannheim.de/~stweil/tesstrain/kraken/reichsanzeiger-gt/reichsanzeiger_best.mlmodel",
+          "size": 16358636,
+          "name": "reichsanzeiger.mlmodel",
+          "parameter_usage": "without-extension",
+          "description": "19th and 20th century German Fraktur ('Deutscher Reichsanzeiger'); https://github.com/UB-Mannheim/reichsanzeiger-gt/wiki/Training-with-Kraken"
+        },
+        {
+          "url": "https://ub-backup.bib.uni-mannheim.de/~stweil/tesstrain/kraken/digitue-gt/digitue_best.mlmodel",
+          "size": 16364343,
+          "name": "digitue.mlmodel",
+          "parameter_usage": "without-extension",
+          "description": "mostly 19th century German Fraktur; https://github.com/UB-Mannheim/digitue-gt/wiki/Training-with-Kraken"
+        },
+        {
+          "url": "https://ub-backup.bib.uni-mannheim.de/~stweil/tesstrain/kraken/digi-gt/luther_best.mlmodel",
+          "size": 16305851,
+          "name": "luther.mlmodel",
+          "parameter_usage": "without-extension",
+          "description": "16th century German Gothic; https://github.com/UB-Mannheim/digi-gt/wiki/Training"
+        },
+        {
+          "url": "https://ub-backup.bib.uni-mannheim.de/~stweil/tesstrain/kraken/typewriter/typewriter.mlmodel",
+          "size": 16364780,
+          "name": "typewriter.mlmodel",
+          "parameter_usage": "without-extension",
+          "description": "20th century typewriter http://idb.ub.uni-tuebingen.de/opendigi/walz_1976, pretrained on austriannewspapers.mlmodel"
+        },
+        {
+          "url": "https://zenodo.org/record/2577813/files/en_best.mlmodel?download=1",
+          "size": 2930723,
+          "name": "en_best.mlmodel",
+          "parameter_usage": "without-extension",
+          "description": "This model has been trained on a large corpus of modern printed English text augmented with ~10000 lines of historical pages"
+        }
+      ]
     }
   }
 }
