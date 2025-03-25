@@ -6,6 +6,8 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [3.27.0] - 2025-03-25
+
 Changed:
 
 - `ocrd_tool`: no default for `content-type` of resources, #262
@@ -544,6 +546,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[3.27.0]: ../../compare/v3.27.0...v3.26.0
 [3.26.0]: ../../compare/v3.26.0...v3.25.0
 [3.25.0]: ../../compare/v3.25.0...v3.24.0
 [3.24.0]: ../../compare/v3.24.0...v3.23.0
