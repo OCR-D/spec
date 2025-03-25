@@ -6,6 +6,20 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Changed:
+
+- Rewrite `cli` and `ocrd_tool` specs, #263:
+  - rename `file parameters` to `resource parameters` (matching `cli#processor-resources` )
+  - add multi-valued semantics to `content-type` via comma separated string
+  - stay neutral regarding file vs. directory, replace `fpath` with `rpath`
+  - no more recursive relative names, except for CWD (!)
+  - introduce (i.e. proper define/list) resource locations
+  - update fileGrp cardinality instead of names
+  - update schema verbatim
+  - update and change to simpler example (ocrd_tesserocr→ocrd_kraken)
+  - improve formulations
+
+
 ## [3.26.0] - 2025-03-04
 
 Fixed:
