@@ -8,6 +8,7 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 Changed:
 
+- `ocrd_tool`: no default for `content-type` of resources, #262
 - Rewrite `cli` and `ocrd_tool` specs, #263:
   - rename `file parameters` to `resource parameters` (matching `cli#processor-resources` )
   - add multi-valued semantics to `content-type` via comma separated string
