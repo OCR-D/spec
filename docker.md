@@ -77,7 +77,7 @@ From these build args, the image SHOULD be labelled with this command:
 
 ```dockerfile
 LABEL \
-    maintainer="https://ocr-d.de/en/contakt" \
+    maintainer="https://ocr-d.de/en/contact" \
     org.label-schema.vcs-ref=$VCS_REF \
     org.label-schema.vcs-url="https://github.com/YOUR/REPO" \
     org.label-schema.build-date=$BUILD_DATE \
