@@ -6,6 +6,17 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Changed:
+
+  - `ocrd_eval` spec: Clarify reading order evaluation, #247
+  - `docker` spec, #245:
+    - explain various core base stages
+    - explain GHCR vs Dockerhub
+    - use Opencontainers labels
+    - improve image naming rules
+    - match ocrd-tool.json dockerhub name
+    - improve example
+
 ## [3.27.0] - 2025-03-25
 
 Changed:
