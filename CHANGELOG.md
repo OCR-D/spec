@@ -17,6 +17,11 @@ Changed:
     - match ocrd-tool.json dockerhub name
     - improve example
 
+Added:
+
+  - `ci` spec on best practices for Continuous Integration, #248
+  - `code_review` spec on best practices for code review, #248
+
 ## [3.27.0] - 2025-03-25
 
 Changed:
