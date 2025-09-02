@@ -12,9 +12,6 @@ distributed environment. This setup greatly improves the flexibility, scalabilit
 * **Processing Worker**: a Processing Worker is an [OCR-D Processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor)
   running as a worker, i.e. listening to the Process Queue, pulling new jobs when available, processing them, and
   pushing the updated job statuses back to the queue if necessary.
-* **Processor Server**: a Processor Server is an [OCR-D Processor](https://ocr-d.de/en/spec/glossary#ocr-d-processor)
-  running as a server over HTTP. It accepts requests, executes the processor with parameters provided in the requests,
-  and returns responses.
 * **Workflow Server**: a Workflow Server is a server which exposes REST endpoints in the `Workflow` section of
   the [Web API specification](openapi.yml). In particular, with a `POST /workflow/run` request a workflow can be
   executed. The Workflow Server comprises a chain of call to the `POST /processor/run/{executable}` endpoint in an
@@ -70,7 +67,7 @@ i.e. workspaces residing in the server's file system.
 
 ## 4. Suggested OCR-D System Architecture
 
-This document presents two possible architecture setup using OCR-D Network and the technical details behind. In both
+This document presents a possible architecture setup using OCR-D Network and the technical details behind. In the
 setup, all servers are implemented using [FastAPI](https://fastapi.tiangolo.com/). Behind the scene, it
 runs [Uvicorn](https://www.uvicorn.org/), an [ASGI](https://asgi.readthedocs.io/en/latest/) web server implementation
 for Python. [RabbitMQ](https://www.rabbitmq.com/) is used for the Process Queue, and [MongoDB](https://www.mongodb.com/)
@@ -80,7 +77,7 @@ recommend using [Traefik](https://doc.traefik.io/traefik/).
 ### 4.1 Processors as workers
 
 <figure>
-  <img src="/assets/web-api-distributed-queue.jpg" alt="Distributed architecture where processors are deployed as workers."/>
+  <img src="/assets/web-api-distributed-queue.jpg" alt="Distributed architecture with processors deployed as workers."/>
   <figcaption align="center">
     <b>Fig. 1:</b> A distributed architecture with message queue. In this architecture, processors are deployed as workers.
   </figcaption>
@@ -112,26 +109,9 @@ To get data into the NFS, one could use the `POST /workspace` endpoint to
 upload [OCRD-ZIP](https://ocr-d.de/en/spec/ocrd_zip)files. However, this approach is only appropriate for testing or
 very limited data sizes. Usually, Workspace Server should be able to pull data from other storage.
 
-### 4.2 Processors as servers
-
-<figure>
-  <img src="/assets/web-api-distributed.jpg" alt="Distributed architecture where processors are deployed as servers."/>
-  <figcaption align="center">
-    <b>Fig. 2:</b> A distributed architecture where processors are deployed as servers.
-  </figcaption>
-</figure>
-
-The difference between this architecture and the one shown in Fig. 1 is the processors. In this architecture, each
-processor runs as a server and exposes one endpoint. When the Processing Server receives a request, it will forward that
-request to the respective Processor Server and wait for the response.
-
-This architecture is simpler than the other one, since there is no need to have a Process Queue involved. Without a
-queue, all communications are synchronous. It means that clients need to wait for responses from Processing Server. It
-might take a long time, therefore high timeout is recommended.
-
 ## 5. Usage
 
-Both setups above can be used as follows:
+The setup above can be used as follows:
 
 1. Retrieve information about the system via endpoints in the `Discovery` section.
 2. Create a workspace (from an [OCRD-ZIP](https://ocr-d.de/en/spec/ocrd_zip) or METS URL) via the `POST /workspace`
@@ -374,23 +354,7 @@ $ ocrd network processing-worker <processor-name> --queue=<queue-address> --data
 * `--database`: a [MongoDB connection string](https://www.mongodb.com/docs/manual/reference/connection-string/) to a
   running instance.
 
-### 6.5 Processor Server
-
-Same as Processing Worker, there are also two ways to start a Processor Server:
-
-```shell
-# 1. Use processor name
-$ <processor-name> server --address=<server-address> --database=<database-address>
-
-# 2. Use ocrd CLI bundled with OCR-D/core
-$ ocrd network processor-server <processor-name> --queue=<queue-address> --database=<database-address>
-```
-
-* `--address`: The URL/address to run the processor server on, format: host:port.
-* `--database`: a [MongoDB connection string](https://www.mongodb.com/docs/manual/reference/connection-string/) to a
-  running instance.
-
-### 6.6 Database
+### 6.5 Database
 
 A database is required to store necessary information such as users requests, jobs statuses, workspaces,
 etc. [MongoDB](https://www.mongodb.com/) is used in this case. To connect to MongoDB via a Graphical User
