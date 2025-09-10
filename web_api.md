@@ -79,7 +79,7 @@ recommend using [Traefik](https://doc.traefik.io/traefik/).
 
 ### 4.1 Processors as workers
 
-<figure>
+<figure style="max-height: 100%">
   <img src="/assets/web-api-distributed-queue.jpg" alt="Distributed architecture where processors are deployed as workers."/>
   <figcaption align="center">
     <b>Fig. 1:</b> A distributed architecture with message queue. In this architecture, processors are deployed as workers.
