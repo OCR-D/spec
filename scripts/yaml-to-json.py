@@ -1,8 +1,10 @@
 #!env python3
 
-from yaml import safe_load
 from json import dumps
-from click import command, argument, option
+
+from click import argument, command, option
+from yaml import safe_load
+
 
 @command()
 @option('--indent', default=2, type=int)

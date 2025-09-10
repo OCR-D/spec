@@ -6,6 +6,83 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [3.28.0] - 2025-03-31
+
+Changed:
+
+  - `docker` spec, #245:
+    - explain various core base stages
+    - explain GHCR vs Dockerhub
+    - use Opencontainers labels
+    - improve image naming rules
+    - match ocrd-tool.json dockerhub name
+    - improve example
+  - `ocrd_eval` spec: Clarify reading order evaluation, #247
+
+Added:
+
+  - `ci` spec on best practices for Continuous Integration, #248
+  - `code_review` spec on best practices for code review, #248
+
+## [3.27.0] - 2025-03-25
+
+Changed:
+
+- `ocrd_tool`: no default for `content-type` of resources, #262
+- Rewrite `cli` and `ocrd_tool` specs, #263:
+  - rename `file parameters` to `resource parameters` (matching `cli#processor-resources` )
+  - add multi-valued semantics to `content-type` via comma separated string
+  - stay neutral regarding file vs. directory, replace `fpath` with `rpath`
+  - no more recursive relative names, except for CWD (!)
+  - introduce (i.e. proper define/list) resource locations
+  - update fileGrp cardinality instead of names
+  - update schema verbatim
+  - update and change to simpler example (ocrd_tesserocr→ocrd_kraken)
+  - improve formulations
+
+
+## [3.26.0] - 2025-03-04
+
+Fixed:
+
+  - typos in `web_api`, `openapi.yml`, #256, #257
+  - validation errors for `openapi.yml`, #258, #259
+
+Changed:
+
+  - `ocrd_tool.schema.yml`: For parameters, support `minProperties`, `maxProperties` and schema for `additionalProperties`, #260
+
+Added:
+
+  - `ocrd-tool` Extend/adapt `steps` parameter for format conversion and evaluation, #261
+
+## [3.25.0] - 2024-08-15
+
+Changed:
+
+  - Deprecate `input_file_grp` and `output_file_grp`, #255
+  - Introduce `input_file_grp_cardinality` and `ouptut_file_grp_cardinality`, #255
+
+Fixed:
+
+  - sorted imports in `scripts/yaml-to-json.py`, #252
+
+## [3.24.0] - 2024-01-25
+
+Changed:
+
+  - Rewritten `web_api` to match the implementation in OCR-D/core
+
+Fixed:
+
+  - typos in `ocrd_tool`
+
+## [3.23.0] - 2023-03-16
+
+Added:
+
+  * JSON-schema for QUIVER / QA Spec, #236
+
 ## [3.22.0] - 2023-03-03
 
 Added:
@@ -487,6 +564,13 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[3.28.0]: ../../compare/v3.28.0...v3.27.0
+[3.27.0]: ../../compare/v3.27.0...v3.26.0
+[3.26.0]: ../../compare/v3.26.0...v3.25.0
+[3.25.0]: ../../compare/v3.25.0...v3.24.0
+[3.24.0]: ../../compare/v3.24.0...v3.23.0
+[3.23.0]: ../../compare/v3.23.0...v3.22.0
+[3.22.0]: ../../compare/v3.22.0...v3.21.0
 [3.21.0]: ../../compare/v3.21.0...v3.20.0
 [3.20.0]: ../../compare/v3.20.0...v3.19.0
 [3.19.0]: ../../compare/v3.19.0...v3.18.0

@@ -1,0 +1,102 @@
+[
+    {
+        "@id": "wf-data16_ant_complex_minimal_ocr-eval",
+        "label": "Workflow on data 16_ant_complex_minimal_ocr",
+        "metadata": {
+            "ocr_workflow": {
+                "@id": "https://github.com/OCR-D/quiver-back-end/blob/main/workflows/ocrd_workflows/minimal_ocr.txt",
+                "label": "OCR Workflow minimal_ocr"
+            },
+            "eval_workflow": {
+                "@id": "https://github.com/OCR-D/quiver-back-end/blob/main/workflows/ocrd_workflows/dinglehopper_eval.txt",
+                "label": "Evaluation Workflow dinglehopper_eval"
+            },
+            "gt_workspace": {
+                "@id": "https://github.com/OCR-D/quiver-data/blob/main/16_ant_complex.ocrd.zip",
+                "label": "GT workspace 16th century Antiqua complex layout"
+            },
+            "ocr_workspace": {
+                "@id": "https://github.com/OCR-D/quiver-back-end/blob/main/workflows/results/16_ant_complex_minimal_ocr_ocr.zip",
+                "label": "OCR workspace for 16_ant_complex_minimal_ocr"
+            },
+            "eval_workspace": {
+                "@id": "https://github.com/OCR-D/quiver-back-end/blob/main/workflows/results/16_ant_complex_minimal_ocr_evaluation.zip",
+                "label": "Evaluation workspace for 16_ant_complex_minimal_ocr"
+            },
+            "workflow_steps": [
+                {
+                    "id": "ocrd-tesserocr-recognize",
+                    "params": {
+                        "segmentation_level": "region",
+                        "textequiv_level": "word",
+                        "find_tables": true,
+                        "model": "Fraktur_GT4HistOCR",
+                        "dpi": 0,
+                        "padding": 0,
+                        "overwrite_segments": false,
+                        "overwrite_text": true,
+                        "shrink_polygons": false,
+                        "block_polygons": false,
+                        "find_staves": false,
+                        "sparse_text": false,
+                        "raw_lines": false,
+                        "char_whitelist": "",
+                        "char_blacklist": "",
+                        "char_unblacklist": "",
+                        "tesseract_parameters": {},
+                        "xpath_parameters": {},
+                        "xpath_model": {},
+                        "auto_model": false,
+                        "oem": "DEFAULT"
+                    }
+                }
+            ],
+            "workflow_model": "Fraktur_GT4HistOCR",
+            "eval_tool": "ocrd-dinglehopper vNone",
+            "document_metadata": {
+                "data_properties": {
+                    "fonts": [
+                        "Antiqua"
+                    ],
+                    "publication_century": "1500-1600",
+                    "publication_decade": "",
+                    "publication_year": "16th century",
+                    "number_of_pages": 3,
+                    "layout": "complex"
+                }
+            }
+        },
+        "evaluation_results": {
+            "document_wide": {
+                "wall_time": 7.72297,
+                "cpu_time": 10.385645,
+                "cer_mean": 0.10240852523716282,
+                "cer_median": 0.10536980749746708,
+                "cer_range": [
+                    0.07124352331606218,
+                    0.1306122448979592
+                ],
+                "cer_standard_deviation": 0.02979493530847308,
+                "wer": 0.23466068901129858,
+                "pages_per_minute": 23.307095586283516
+            },
+            "by_page": [
+                {
+                    "page_id": "phys_0007",
+                    "cer_mean": 0.07124352331606218,
+                    "wer": 0.2231404958677686
+                },
+                {
+                    "page_id": "phys_0008",
+                    "cer_mean": 0.10536980749746708,
+                    "wer": 0.2484472049689441
+                },
+                {
+                    "page_id": "phys_0009",
+                    "cer_mean": 0.1306122448979592,
+                    "wer": 0.2323943661971831
+                }
+            ]
+        }
+    }
+]
