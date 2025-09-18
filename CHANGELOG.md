@@ -8,7 +8,12 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 Changed:
 
-  - ocrd_tool: use python packaging regex for version syntax check to support suffixes like `.post1`, #264
+  - `ocrd_tool`: use python packaging regex for version syntax check to support suffixes like `.post1`, #264
+
+Removed:
+
+  - `web_api`: Remove the `processor server` concept in favor of `processing server + processing workers` exclusively, #265
+
 
 ## [3.28.0] - 2025-03-31
 
