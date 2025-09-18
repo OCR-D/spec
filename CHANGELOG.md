@@ -6,6 +6,10 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Changed:
+
+  - ocrd_tool: use python packaging regex for version syntax check to support suffixes like `.post1`, #264
+
 ## [3.28.0] - 2025-03-31
 
 Changed:
