@@ -6,6 +6,8 @@ Versioned according to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [3.29.0] - 2025-09-18
+
 Changed:
 
   - `ocrd_tool`: use python packaging regex for version syntax check to support suffixes like `.post1`, #264
@@ -573,6 +575,7 @@ Removed
 Initial Release
 
 <!-- link-labels -->
+[3.29.0]: ../../compare/v3.29.0...v3.28.0
 [3.28.0]: ../../compare/v3.28.0...v3.27.0
 [3.27.0]: ../../compare/v3.27.0...v3.26.0
 [3.26.0]: ../../compare/v3.26.0...v3.25.0
