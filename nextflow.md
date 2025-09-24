@@ -24,92 +24,167 @@ The NF script contains the following structures:
 
 ### DSL and Parameters
 
-Example:
-
-```
+```nextflow
 // enables a syntax extension that allows definition of module libraries
 nextflow.enable.dsl=2
 
 // pipeline parameters
-params.venv = "\$HOME/venv37-ocrd/bin/activate"
-params.workspace = "$projectDir/ocrd-workspace/"
-params.mets = "$projectDir/ocrd-workspace/mets.xml"
-params.reads = "$projectDir/ocrd-workspace/OCR-D-IMG" // The first input directory
-params.outs = "$projectDir/ocrd-workspace/OCR-D-BIN"
+params.mets_path = ""  // Just a placeholder for the value to be passed by the caller
+// The entry point of the workflow
+params.input_file_grp = ""  // Just a placeholder for the value to be passed by the caller
 
-// nextflow run <my script> --foo Hello
-// Then, the parameter is accessed with: params.foo
-
-// log pipeline parameters to the console
-log.info """\
-         O P E R A N D I - T E S T   P I P E L I N E 4
-         ===========================================
-         venv          : ${params.venv}
-         ocrd-workpace : ${params.workspace}
-         mets          : ${params.mets}
-         reads         : ${params.reads}
-         outs          : ${params.outs}
-         """
-         .stripIndent()
-```
-### Definition of processes
+// The caller of the script then executes with
+// nextflow run "path/to/nf_script" --mets_path "path/to/mets" --input_file_grp "file group"
 
 ```
-process tesserocr_deskew {
-  maxForks 1
-	
+### Definition of a process
+
+```nextflow
+process < name > {
+
+  [ directives ]
+
   input:
-    path mets_file
-    val input_dir
-    val output_dir
-	
+    < process inputs >
+
   output:
-    val output_dir
-	
-  script:
-  """
-  source "${params.venv}"
-  ocrd-tesserocr-deskew -I ${input_dir} -O ${output_dir} -P operation_level page
-  deactivate
-  """	
+    < process outputs >
+
+  when:
+    < condition >
+
+  [script|shell|exec]:
+    < user script to be executed >
+
 }
 ```
-### Definition of workflows
-
-### Main workflow
-
-```
-// This is the main workflow
+### Definition of a workflow
+```nextflow
 workflow {
-
   main:
-    ocr_d_img = Channel.value("OCR-D-IMG")
-    ocr_d_bin = Channel.value("OCR-D-BIN")
-    ocr_d_crop = Channel.value("OCR-D-CROP")
-    ocr_d_bin2 = Channel.value("OCR-D-BIN2")
-    ocr_d_denoise = Channel.value("OCR-D-BIN-DENOISE")
-    ocr_d_deskew = Channel.value("OCR-D-BIN-DENOISE-DESKEW")
-    ocr_d_seg = Channel.value("OCR-D-SEG")
-    ocr_d_dewarp = Channel.value("OCR-D-SEG-LINE-RESEG-DEWARP")
-    ocr_d_oc = Channel.value("OCR-D-OC")
-  
-  
-    // input_dir_ch = Channel.fromPath(params.reads, type: 'dir')
-    ocropy_binarize(params.mets, ocr_d_img, ocr_d_bin)
-    anybaseocr_crop(params.mets, ocropy_binarize.out, ocr_d_crop)
-    skimage_binarize(params.mets, anybaseocr_crop.out, ocr_d_bin2)
-    skimage_denoise(params.mets, skimage_binarize.out, ocr_d_denoise)
-    tesserocr_deskew(params.mets, skimage_denoise.out, ocr_d_deskew)
-    cis_ocropy_segment(params.mets, tesserocr_deskew.out, ocr_d_seg)
-    cis_ocropy_dewarp(params.mets, cis_ocropy_segment.out, ocr_d_dewarp)
-    calamari_recognize(params.mets, cis_ocropy_dewarp.out, ocr_d_oc)
-
+    process_one(...)
+    process_two(process_one.out, ...)
+    process_three(process_two.out, ...)
 }
 ```
 
-### Code example
-Check this source code example: [seq_ocrd_wf_many.nf](https://github.com/subugoe/operandi/blob/main/ExampleWorkflows/Nextflow/workflow4/seq_ocrd_wf_many.nf)
-TODO: We will provide more structure-related details here based on the example above.
+### An example Nextflow script
+```nextflow
+nextflow.enable.dsl=2
+
+params.mets_path = ""
+params.input_file_grp = ""
+
+process step_1 {
+  input:
+    val in_dir
+    val out_dir
+  output:
+    val out_dir
+  script:
+    """
+    ocrd-cis-ocropy-binarize --mets ${params.mets_path} -I ${in_dir} -O ${out_dir}
+    """
+}
+
+process step_2 {
+  input:
+    val in_dir
+    val out_dir
+  output:
+    val out_dir
+  script:
+    """
+    ocrd-anybaseocr-crop --mets ${params.mets_path} -I ${in_dir} -O ${out_dir}
+    """
+}
+
+process step_3 {
+  input:
+    val in_dir
+    val out_dir
+  output:
+    val out_dir
+  script:
+    """
+    ocrd-skimage-binarize --mets ${params.mets_path} -I ${in_dir} -O ${out_dir} -P method li
+    """
+}
+
+process step_4 {
+  input:
+    val in_dir
+    val out_dir
+  output:
+    val out_dir
+  script:
+    """
+    ocrd-skimage-denoise --mets ${params.mets_path} -I ${in_dir} -O ${out_dir} -P level-of-operation page
+    """
+}
+
+process step_5 {
+  input:
+    val in_dir
+    val out_dir
+  output:
+    val out_dir
+  script:
+    """
+    ocrd-tesserocr-deskew --mets ${params.mets_path} -I ${in_dir} -O ${out_dir} -P operation_level page
+    """
+}
+
+process step_6 {
+  input:
+    val in_dir
+    val out_dir
+  output:
+    val out_dir
+  script:
+    """
+    ocrd-cis-ocropy-segment --mets ${params.mets_path} -I ${in_dir} -O ${out_dir} -P level-of-operation page
+    """
+}
+
+process step_7 {
+  input:
+    val in_dir
+    val out_dir
+  output:
+    val out_dir
+  script:
+    """
+    ocrd-cis-ocropy-dewarp --mets ${params.mets_path} -I ${in_dir} -O ${out_dir}
+    """
+}
+
+process step_8 {
+  input:
+    val in_dir
+    val out_dir
+  output:
+    val out_dir
+  script:
+    """
+    ocrd-calamari-recognize --mets ${params.mets_path} -I ${in_dir} -O ${out_dir} -P checkpoint_dir qurator-gt4histocr-1.0
+    """
+}
+
+workflow {
+  main:
+    step_1(params.input_file_grp, "OCR-D-BIN")
+    step_2(step_1.out[0], "OCR-D-CROP")
+    step_3(step_2.out[0], "OCR-D-BIN2")
+    step_4(step_3.out[0], "OCR-D-BIN-DENOISE")
+    step_5(step_4.out[0], "OCR-D-BIN-DENOISE-DESKEW")
+    step_6(step_5.out[0], "OCR-D-SEG")
+    step_7(step_6.out[0], "OCR-D-SEG-LINE-RESEG-DEWARP")
+    step_8(step_7.out[0], "OCR-D-OCR")
+}
+```
+
+Note: the provided example does not cover error handling, limiting resources for specific processes, or other useful process [directives](https://www.nextflow.io/docs/latest/process.html#directives).
 
 ## For users and developers:
 Detailed instructions for local executions and example Nextflow workflow scripts can be found here: [Nextflow](https://github.com/subugoe/operandi/tree/master/ExampleWorkflows/Nextflow)
@@ -141,8 +216,6 @@ Communication between the processes is possible only through data channels (simi
 Any process can define one or more channels as input and output. 
 The order of interaction between these processes, and ultimately the order of workflow execution depends on the communication channel dependencies between processes. 
 For example, if process A writes data to channel A and process B reads data from channel A, then Nextflow knows that process A must be executed before process B.
-
-Check this source code example: [seq_ocrd_wf_many.nf](https://github.com/subugoe/operandi/blob/master/ExampleWorkflows/Nextflow/workflow4/seq_ocrd_wf_many.nf)
 
 TODO: We will provide more parallelization details here based on the example above.
 
